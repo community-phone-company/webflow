@@ -57,9 +57,10 @@ const getResponseFromCache = (zip) => {
  * Verifies zip code using backend API and sends a response to the callback.
  * @param {string | number} zip String or number containing zip code to check.
  * @param {((response: any | undefined, isValid: boolean) => void)} callback The function that is called when the result comes from the server.
+ * @param {boolean} legacyAPI If `true`, request will be sent to the legacy API.
  * @returns {XMLHttpRequest | undefined} Request instance or `undefined`.
  */
-const checkZip = (zip, callback) => {
+const checkZip = (zip, callback, legacyAPI) => {
     /**
      * If zip code has wrong format, we return result via `callback` immediately
      * without sending request to the server.
@@ -70,7 +71,13 @@ const checkZip = (zip, callback) => {
     }
 
     const handleResponse = (response) => {
-        const isValid = response ? response.message === "Has Coverage" : false;
+        const isValid = (() => {
+            if (legacyAPI) {
+                return response ? response.toString(response).includes("It will work!") : false;
+            } else {
+                return response ? response.message === "Has Coverage" : false;
+            }
+        })();
         callback(response, isValid);
     };
 
@@ -89,9 +96,12 @@ const checkZip = (zip, callback) => {
          * Looks like a response for `zip` was not cached.
          * So we are sending a new request.
          */
+        const url = legacyAPI
+            ? `https://www.silvacode.com/clients/community/fn_ajax.php?callback=jQuery110007498869777800927_1623945075974&z=${zip}&_=1623945075978`
+            : `https://landline.phone.community/api/v1/coverage/${zip}/check`;
         return $.ajax({
             method: "GET",
-            url: `https://landline.phone.community/api/v1/coverage/${zip}/check`,
+            url: url,
             crossDomain: true,
             dataType: 'jsonp',
             success: function (response) {
