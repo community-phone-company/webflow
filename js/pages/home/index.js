@@ -42,29 +42,32 @@ $(document).ready(() => {
                  * We currently replace it with predefined content on the client side.
                  * Remove the next `if(response) {...}` block when it's fixed on the server side.
                  */
-                if (response) {
-                    if (isValid) {
-                        response = `
-                            Great news! We do have coverage in your area.
-                            Click below to choose your landline service plan,
-                            or give us a call at <a href="tel:8556150667">(855) 615-0667</a>
-                        `;
-                    } else {
-                        response = `
-                            We are launching here soon.
-                            Please email us at <a href="mailto:help@communityphone.org">help@communityphone.org</a>
-                            or call us at <a href="tel:8556150667">(855) 615-0667</a>
-                            if you would like us to come to you sooner.
-                        `;
+                const message = (() => {
+                    if (response) {
+                        if (isValid) {
+                            return `
+                                Great news! We do have coverage in your area.
+                                Click below to choose your landline service plan,
+                                or give us a call at <a href="tel:8556150667">(855) 615-0667</a>
+                            `;
+                        } else {
+                            return `
+                                We are launching here soon.
+                                Please email us at <a href="mailto:help@communityphone.org">help@communityphone.org</a>
+                                or call us at <a href="tel:8556150667">(855) 615-0667</a>
+                                if you would like us to come to you sooner.
+                            `;
+                        }
                     }
 
-                    console.log(`Replaced response with: ${response}`);
-                }
+                    return undefined;
+                });
 
                 const mode = isValid ? ZipFormStateMode.success : ZipFormStateMode.error;
                 form.setState(
                     new ZipFormState(
                         mode,
+                        message,
                         response
                     )
                 );

@@ -70,7 +70,7 @@ const checkZip = (zip, callback) => {
     }
 
     const handleResponse = (response) => {
-        const isValid = response ? response.toString(response).includes("It will work!") : false;
+        const isValid = response ? response.message === "Has Coverage" : false;
         callback(response, isValid);
     };
 
@@ -91,7 +91,7 @@ const checkZip = (zip, callback) => {
          */
         return $.ajax({
             method: "GET",
-            url: `https://www.silvacode.com/clients/community/fn_ajax.php?callback=jQuery110007498869777800927_1623945075974&z=${zip}&_=1623945075978`,
+            url: `https://landline.phone.community/api/v1/coverage/${zip}/check`,
             crossDomain: true,
             dataType: 'jsonp',
             success: function (response) {

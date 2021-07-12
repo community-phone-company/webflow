@@ -107,7 +107,7 @@ class ZipForm {
                 this.setMessage(
                     new ZipFormMessage(
                         ZipFormMessageType.success,
-                        newState.response
+                        newState.message
                     )
                 );
                 break;
@@ -126,7 +126,7 @@ class ZipForm {
                     this.setMessage(
                         new ZipFormMessage(
                             ZipFormMessageType.error,
-                            newState.response
+                            newState.message
                         )
                     );
                 } else {
@@ -401,10 +401,12 @@ class ZipFormState {
      * Creates a new instance of `ZipFormState` type.
      * @constructor
      * @param {string} mode Use {@link ZipFormStateMode} values to set the mode.
+     * @param {string | undefined} message String containing message HTML to display. Also, can be `undefined`.
      * @param {any | undefined} response Response that comes from the server. See {@link checkZip} for more information.
      */
-    constructor(mode, response) {
+    constructor(mode, message, response) {
         this.mode = mode;
+        this.message = message;
         this.response = response;
     }
 
@@ -414,7 +416,11 @@ class ZipFormState {
      * @returns {ZipFormState} New {@link ZipFormState} instance with specified mode.
      */
     static withMode = (mode) => {
-        return new ZipFormState(mode, undefined);
+        return new ZipFormState(
+            mode,
+            undefined,
+            undefined
+        );
     }
 }
 
