@@ -127,8 +127,9 @@ var lastCheckZipCodeRequest = undefined;
  * @param {HTMLInputElement} textField Text field.
  * @param {((zip: string) => void)} beforeRequest The function that is called just before the request will be sent to the server. Use it to show preloader.
  * @param {((zip: string, response: any | undefined, isValid: boolean) => void)} afterRequest The function that is called when the result comes from the server.
+ * @param {boolean} legacyAPI If `true`, requests will be sent to the legacy API.
  */
-const checkZipOnChange = (textField, beforeRequest, afterRequest) => {
+const checkZipOnChange = (textField, beforeRequest, afterRequest, legacyAPI) => {
     /**
      * Here we subscribe to text field's `oninput` event.
      */
@@ -150,8 +151,12 @@ const checkZipOnChange = (textField, beforeRequest, afterRequest) => {
         /**
          * Send new request.
          */
-        lastCheckZipCodeRequest = checkZip(zip, (response, isValid) => {
-            afterRequest(zip, response, isValid);
-        });
+        lastCheckZipCodeRequest = checkZip(
+            zip,
+            (response, isValid) => {
+                afterRequest(zip, response, isValid);
+            },
+            legacyAPI
+        );
     };
 };

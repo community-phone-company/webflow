@@ -71,7 +71,8 @@ $(document).ready(() => {
                         response
                     )
                 );
-            }
+            },
+            true
         );
     });
 
