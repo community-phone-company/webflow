@@ -64,13 +64,27 @@ class ActiveCampaignContact {
      * @returns {any}
      */
     toJSON = () => {
-        return {
-            "email": this.email,
-            "firstName": this.firstName,
-            "lastName": this.lastName,
-            "phone": this.phone,
-            "fieldValues": this.fields.map(field => field.toJSON())
+        var result = {};
+
+        if (this.email) {
+            result = {
+                ...result,
+                "email": this.email,
+                
+            };
         }
+
+        if (this.firstName) {
+            result = {}
+        }
+
+        return {
+            ...this.email ? {"email": this.email} : undefined,
+            ...this.firstName ? {"email": this.firstName} : undefined,
+            ...this.lastName ? {"email": this.lastName} : undefined,
+            ...this.phone ? {"email": this.phone} : undefined,
+            ...this.fields.length ? {"fieldValues": this.fields.map(field => field.toJSON())} : undefined
+        };
     }
 }
 
@@ -97,3 +111,9 @@ class ActiveCampaignContactCustomField {
         };
     }
 }
+
+ActiveCampaignIntegration.createOrUpdateContact(
+    new ActiveCampaignContact(
+        "igor@"
+    )
+)
