@@ -91,6 +91,7 @@ const checkZip = (zip, callback, legacyAPI) => {
     if (responseFromCache) {
         console.log("Response loaded from cache");
         handleResponse(responseFromCache);
+        return undefined;
     } else {
         /**
          * Looks like a response for `zip` was not cached.
