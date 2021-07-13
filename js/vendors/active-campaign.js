@@ -18,7 +18,7 @@ class ActiveCampaignIntegration {
         return $.ajax({
             url: url,
             method: "POST",
-            headers: acth(),
+            headers: acth()["_0x1b8a9b"],
             crossDomain: true,
             dataType: "json",
             data: data,
