@@ -111,9 +111,3 @@ class ActiveCampaignContactCustomField {
         };
     }
 }
-
-ActiveCampaignIntegration.createOrUpdateContact(
-    new ActiveCampaignContact(
-        "igor@"
-    )
-)
