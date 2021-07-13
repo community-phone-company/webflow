@@ -75,7 +75,7 @@ const checkZip = (zip, callback, legacyAPI) => {
             if (legacyAPI) {
                 return response ? response.toString(response).includes("It will work!") : false;
             } else {
-                return response ? response.message === "Has Coverage" : false;
+                return response ? response.message === "True" : false;
             }
         })();
         callback(response, isValid);
