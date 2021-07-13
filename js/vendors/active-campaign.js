@@ -83,7 +83,7 @@ class ActiveCampaignContact {
             ...this.firstName ? {"email": this.firstName} : undefined,
             ...this.lastName ? {"email": this.lastName} : undefined,
             ...this.phone ? {"email": this.phone} : undefined,
-            ...this.fields.length ? {"fieldValues": this.fields.map(field => field.toJSON())} : undefined
+            ...(this.fields && this.fields.length) ? {"fieldValues": this.fields.map(field => field.toJSON())} : undefined
         };
     }
 }
