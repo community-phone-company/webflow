@@ -1,4 +1,4 @@
-const useLegacyApiForZipRequest = false;
+const useLegacyApiForZipRequest = true;
 
 $(document).ready(() => {
     
