@@ -92,10 +92,10 @@ $("#annual-plan-p").on("click", function(e) {
                 url: `https://landline.phone.community/api/v1/coverage/${zip_code}/check`,
                 success: function(resp) {
                     
-                    if (resp.message == "Has Coverage") {
+                    if (resp.message) {
                         $(".zip-check").html("Great news! We do have coverage in your area. Click below to choose your landline service plan, or give us a call at (855) 615-0667.")
                         $(".zipcode-container").css("display", "none")
-                        $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start your landline service</button></a>')
+                        $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start my landline service</button></a>')
 
                     } else {
                         $(".zip-check").html("We are launching here soon. Please email us at help@communityphone.org or call us at 888-582-4177 if you would like us to come to you sooner.")
@@ -140,7 +140,7 @@ $("#annual-plan-p").on("click", function(e) {
             //     }
             // })
         } else {
-            $(".start-landline-btn").val("Start my landline service")
+            //$(".start-landline-btn").val("Start my landline service")
             $(".zip-check").html('<p style="color: #ff0000">Please type your zip code<p>')
 
         }
@@ -157,10 +157,10 @@ $("#annual-plan-p").on("click", function(e) {
                 url: `https://landline.phone.community/api/v1/coverage/${zip_code}/check`,
                 success: function(resp) {
                     
-                    if (resp.message == "Has Coverage") {
+                    if (resp.message) {
                         $(".zip-check").html("Great news! We do have coverage in your area. Click below to choose your landline service plan, or give us a call at (855) 615-0667.")
                         $(".zipcode-container").css("display", "none")
-                        $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start your landline service</button></a>')
+                        $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start my landline service</button></a>')
 
                     } else {
                         $(".zip-check").html("We are launching here soon. Please email us at help@communityphone.org or call us at 888-582-4177 if you would like us to come to you sooner.")
@@ -205,7 +205,7 @@ $("#annual-plan-p").on("click", function(e) {
             //     }
             // })
         } else {
-            $(".start-landline-btn").val("Start my landline service")
+            //$(".start-landline-btn").val("Start my landline service")
             $("#zip-check-bottom").html('<p style="color: #ff0000">Please type your zip code<p>')
 
         }
