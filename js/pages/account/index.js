@@ -44,6 +44,7 @@ $(document).ready(() => {
             "Email": email
         });
 
+        console.log("Active Campaign");
         ActiveCampaignIntegration.createOrUpdateContact(
             new ActiveCampaignContact(
                 email,
