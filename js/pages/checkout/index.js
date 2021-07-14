@@ -31,7 +31,10 @@ const exportCheckoutFlowDataFromAccountStepToActiveCampaign = () => {
             lastName,
             phone,
             []
-        )
+        ),
+        (response, error, success) => {
+            console.log(`Response: ${response}\nError: ${error}\nSuccess: ${success}`);
+        }
     );
 };
 
