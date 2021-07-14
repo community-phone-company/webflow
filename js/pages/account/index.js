@@ -15,9 +15,9 @@ $(document).ready(() => {
             const isEmail = emailRegularExpression.test(email);
 
             if (isEmail) {
-                /*HotjarIntegration.send({
+                HotjarIntegration.send({
                     "Email": email
-                });*/
+                });
             }
         };
     }
@@ -39,20 +39,5 @@ $(document).ready(() => {
 
         const email = $("#Email").val();
         Store.local.write(CheckoutFlowStoreKey.email, email);
-
-        HotjarIntegration.send({
-            "Email": email
-        });
-
-        console.log("Active Campaign");
-        ActiveCampaignIntegration.createOrUpdateContact(
-            new ActiveCampaignContact(
-                email,
-                firstName,
-                lastName,
-                phone,
-                []
-            )
-        );
     });
 });

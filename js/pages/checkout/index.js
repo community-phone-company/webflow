@@ -6,17 +6,6 @@
 const initializeAddressLine = (id, apiKey) => {
 };
 
-const exportEmailToHotjar = () => {
-    const email = Store.local.read(CheckoutFlowStoreKey.email);
-    
-    if (email) {
-        console.log("Hotjar");
-        HotjarIntegration.send({
-            "Email": email
-        });
-    }
-};
-
 const exportCheckoutFlowDataFromAccountStepToActiveCampaign = () => {
     const firstName = Store.local.read(CheckoutFlowStoreKey.firstName);
     const lastName = Store.local.read(CheckoutFlowStoreKey.lastName);
@@ -50,7 +39,6 @@ $(document).ready(() => {
             console.log(`Address: ${address}`);
         };
     }
-
-    exportEmailToHotjar();
+    
     exportCheckoutFlowDataFromAccountStepToActiveCampaign();
 });
