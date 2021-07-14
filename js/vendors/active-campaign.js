@@ -11,14 +11,13 @@ class ActiveCampaignIntegration {
      * @returns {XMLHttpRequest} Request instance.
      */
     static createOrUpdateContact = (contact, callback) => {
-        const url = "https://communityphone52268.api-us1.com/api/3/contact/sync";
+        const url = "https://hooks.zapier.com/hooks/catch/4227833/b2bqu31";
         const data = {
             "contact": contact.toJSON()
         };
         return $.ajax({
             url: url,
             method: "POST",
-            headers: acth()["_0x1b8a9b"],
             crossDomain: true,
             dataType: "json",
             data: data,
