@@ -88,7 +88,7 @@ $("#annual-plan-p").on("click", function(e) {
         
         if (zip_code.length == 5) {
             $(this).val("Please wait...")
-            
+
             $.ajax({
                 method: "GET",
                 url: `https://landline.phone.community/api/v1/coverage/${zip_code}/check`,
@@ -101,8 +101,8 @@ $("#annual-plan-p").on("click", function(e) {
 
                     } else {
                         $(".zip-check").html("We are launching here soon. Please email us at help@communityphone.org or call us at 888-582-4177 if you would like us to come to you sooner.")
-                        $(".start-landline-btn").attr("data-wait", "Start my landline service")
-                        $(".start-landline-btn").val("Start my landline service")
+                        $(".start-landline-btn").attr("data-wait", "Check coverage")
+                        $(".start-landline-btn").val("Check coverage")
                     }
                     $(".coverage_response").css("font-size", "12px")
                     $(".coverage_response").css("line-height", "0")
@@ -168,8 +168,8 @@ $("#annual-plan-p").on("click", function(e) {
 
                     } else {
                         $(".zip-check").html("We are launching here soon. Please email us at help@communityphone.org or call us at 888-582-4177 if you would like us to come to you sooner.")
-                        $(".start-landline-btn").attr("data-wait", "Start my landline service")
-                        $(".start-landline-btn").val("Start my landline service")
+                        $(".start-landline-btn").attr("data-wait", "Check coverage")
+                        $(".start-landline-btn").val("Check coverage")
                     }
                     $(".coverage_response").css("font-size", "12px")
                     $(".coverage_response").css("line-height", "0")
