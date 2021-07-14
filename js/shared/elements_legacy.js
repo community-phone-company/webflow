@@ -85,8 +85,10 @@ $("#annual-plan-p").on("click", function(e) {
     $("#zipcode-check-1").on("click", function(e) {
         e.preventDefault()
         let zip_code = $("#zipcode-2").val();
-        $(this).val("Please wait...")
+        
         if (zip_code.length == 5) {
+            $(this).val("Please wait...")
+            
             $.ajax({
                 method: "GET",
                 url: `https://landline.phone.community/api/v1/coverage/${zip_code}/check`,
@@ -150,8 +152,10 @@ $("#annual-plan-p").on("click", function(e) {
     $("#zipcode-check-2").on("click", function(e) {
         e.preventDefault()
         let zip_code = $("#zipcode-bottom").val();
-        $(this).val("Please wait...")
+        
         if (zip_code.length == 5) {
+            $(this).val("Please wait...")
+
             $.ajax({
                 method: "GET",
                 url: `https://landline.phone.community/api/v1/coverage/${zip_code}/check`,
