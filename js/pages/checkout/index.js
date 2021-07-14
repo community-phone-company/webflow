@@ -6,6 +6,35 @@
 const initializeAddressLine = (id, apiKey) => {
 };
 
+const exportEmailToHotjar = () => {
+    const email = Store.local.read(CheckoutFlowStoreKey.email);
+    
+    if (email) {
+        console.log("Hotjar");
+        HotjarIntegration.send({
+            "Email": email
+        });
+    }
+};
+
+const exportCheckoutFlowDataFromAccountStepToActiveCampaign = () => {
+    const firstName = Store.local.read(CheckoutFlowStoreKey.firstName);
+    const lastName = Store.local.read(CheckoutFlowStoreKey.lastName);
+    const phone = Store.local.read(CheckoutFlowStoreKey.phone);
+    const email = Store.local.read(CheckoutFlowStoreKey.email);
+
+    console.log("Active Campaign");
+    ActiveCampaignIntegration.createOrUpdateContact(
+        new ActiveCampaignContact(
+            email,
+            firstName,
+            lastName,
+            phone,
+            []
+        )
+    );
+};
+
 $(document).ready(() => {
     /*
      * Address line 1.
@@ -18,4 +47,7 @@ $(document).ready(() => {
             console.log(`Address: ${address}`);
         };
     }
+
+    exportEmailToHotjar();
+    exportCheckoutFlowDataFromAccountStepToActiveCampaign();
 });
