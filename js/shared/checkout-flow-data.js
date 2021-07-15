@@ -40,7 +40,7 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
             Store.local.read(CheckoutFlowStoreKey.phone),
             [
                 new ActiveCampaignContactCustomField(
-                    "SHIPPING_ADDRESS",
+                    "%SHIPPING_ADDRESS%",
                     "test"
                 ),
                 /*new ActiveCampaignContactCustomField(
