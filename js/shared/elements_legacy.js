@@ -95,12 +95,11 @@ $("#annual-plan-p").on("click", function(e) {
                 success: function(resp) {
                     
                     if (resp.message) {
-                        $(".zip-check").html("Great news! We do have coverage in your area. Click below to choose your landline service plan, or give us a call at (855) 615-0667.")
+                        $(".zip-check").html("Click below to get started, or give us a call…")
                         $(".zipcode-container").css("display", "none")
                         $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start my landline service</button></a>')
-
                     } else {
-                        $(".zip-check").html("We are launching here soon. Please email us at help@communityphone.org or call us at 888-582-4177 if you would like us to come to you sooner.")
+                        $(".zip-check").html("We might have coverage at your address! Call us at <a href='tel:8885824177'>888-582-4177</a> so we can check our coverage at your address.")
                         $(".start-landline-btn").attr("data-wait", "Check coverage")
                         $(".start-landline-btn").val("Check coverage")
                     }
@@ -162,12 +161,12 @@ $("#annual-plan-p").on("click", function(e) {
                 success: function(resp) {
                     
                     if (resp.message) {
-                        $(".zip-check").html("Great news! We do have coverage in your area. Click below to choose your landline service plan, or give us a call at (855) 615-0667.")
+                        $(".zip-check").html("Click below to get started, or give us a call…")
                         $(".zipcode-container").css("display", "none")
                         $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start my landline service</button></a>')
 
                     } else {
-                        $(".zip-check").html("We are launching here soon. Please email us at help@communityphone.org or call us at 888-582-4177 if you would like us to come to you sooner.")
+                        $(".zip-check").html("We might have coverage at your address! Call us at <a href='tel:8885824177'>888-582-4177</a> so we can check our coverage at your address.")
                         $(".start-landline-btn").attr("data-wait", "Check coverage")
                         $(".start-landline-btn").val("Check coverage")
                     }

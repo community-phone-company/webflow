@@ -48,16 +48,13 @@ $(document).ready(() => {
                     if (response) {
                         if (isValid) {
                             return `
-                                Great news! We do have coverage in your area.
-                                Click below to choose your landline service plan,
-                                or give us a call at <a href="tel:8556150667">(855) 615-0667</a>
+                                Click below to get started, or give us a call…
                             `;
                         } else {
                             return `
-                                We are launching here soon.
-                                Please email us at <a href="mailto:help@communityphone.org">help@communityphone.org</a>
-                                or call us at <a href="tel:8556150667">(855) 615-0667</a>
-                                if you would like us to come to you sooner.
+                                We might have coverage at your address!
+                                Call us at <a href="tel:8885824177">888-582-4177</a>
+                                so we can check our coverage at your address.
                             `;
                         }
                     }
