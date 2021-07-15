@@ -39,6 +39,39 @@ class ActiveCampaignIntegration {
             }
         });
     }
+
+    /**
+     * Creates or updates existing contact using the custom JSON sent as request data.
+     * Active Campaign API reference: https://developers.activecampaign.com/reference#create-or-update-contact-new
+     * @param {any} json Custom JSON object containing request data.
+     * @param {(response: any, error: any, success: boolean) => void} callback Function that is called when response comes from the server.
+     * @returns {XMLHttpRequest} Request instance.
+     */
+    static createOrUpdateContactWithJson = (json, callback) => {
+        const url = "https://hooks.zapier.com/hooks/catch/4227833/b2bqu31";
+        return $.ajax({
+            url: url,
+            method: "POST",
+            crossDomain: true,
+            dataType: "json",
+            data: json,
+            success: function (response) {
+                callback(
+                    response,
+                    undefined,
+                    true
+                );
+            },
+            error: function (error) {
+                console.log(error);
+                callback(
+                    undefined,
+                    error,
+                    false
+                );
+            }
+        });
+    }
 }
 
 class ActiveCampaignContact {
