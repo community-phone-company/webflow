@@ -15,7 +15,6 @@ class ActiveCampaignIntegration {
         const data = {
             "contact": contact.toJSON()
         };
-        console.log(`data: ${data}`);
         return $.ajax({
             url: url,
             method: "POST",
@@ -64,20 +63,6 @@ class ActiveCampaignContact {
      * @returns {any}
      */
     toJSON = () => {
-        var result = {};
-
-        if (this.email) {
-            result = {
-                ...result,
-                "email": this.email,
-                
-            };
-        }
-
-        if (this.firstName) {
-            result = {}
-        }
-
         return {
             ...this.email ? {"email": this.email} : undefined,
             ...this.firstName ? {"email": this.firstName} : undefined,
