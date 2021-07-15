@@ -15,6 +15,7 @@ class ActiveCampaignIntegration {
         const data = {
             "contact": contact.toJSON()
         };
+        console.log(data);
         return $.ajax({
             url: url,
             method: "POST",
