@@ -100,11 +100,12 @@ const checkZip = (zip, callback, legacyAPI) => {
         const url = legacyAPI
             ? `https://www.silvacode.com/clients/community/fn_ajax.php?callback=jQuery110007498869777800927_1623945075974&z=${zip}&_=1623945075978`
             : `https://landline.phone.community/api/v1/coverage/${zip}/check`;
+        const dataType = legacyAPI ? 'jsonp' : 'json';
         return $.ajax({
-            method: "GET",
             url: url,
+            method: "GET",
             crossDomain: true,
-            dataType: 'jsonp',
+            dataType: dataType,
             success: function (response) {
                 putResponseToCache(response, zip);
                 handleResponse(response);
