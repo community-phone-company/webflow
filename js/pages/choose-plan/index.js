@@ -6,7 +6,7 @@ $(document).ready(() => {
     const submitButton = document.querySelectorAll(".continue_choose_plan")[0];
 
     $(submitButton).on("click", (event) => {
-        const getNewNumber = $(".tabs_phonenumber_service .tab-new-number").hasClass("w--current");
+        const getNewNumber = $(".tabs_phonenumber_service .tab-new-number").hasClass("w--current") ? "Yes" : "No";
         Store.local.write(CheckoutFlowStoreKey.getNewNumber, getNewNumber);
 
         const period = (() => {
