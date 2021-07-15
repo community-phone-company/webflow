@@ -28,7 +28,7 @@ $(document).ready(() => {
          const shippingAddress_firstName = $("#First-name").val();
          Store.local.write(CheckoutFlowStoreKey.shippingAddress_firstName, shippingAddress_firstName);
 
-         const shippingAddress_firstName = $("#Last-name").val();
+         const shippingAddress_lastName = $("#Last-name").val();
          Store.local.write(CheckoutFlowStoreKey.shippingAddress_lastName, shippingAddress_lastName);
  
          const shippingAddress_addressLine1 = $("#Adress-line").val();
