@@ -40,5 +40,5 @@ $(document).ready(() => {
         };
     }
     
-    exportCheckoutFlowDataFromAccountStepToActiveCampaign();
+    //exportCheckoutFlowDataFromAccountStepToActiveCampaign();
 });
