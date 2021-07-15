@@ -23,7 +23,7 @@ const CheckoutFlowStoreKey = Object.freeze({
     billingAddress_state: "checkout-flow-billing-address-state",
 });
 
-const exportCheckoutFlowDataToActiveCampaign = () => {
+const exportCheckoutFlowDataToActiveCampaign = (callback) => {
     ActiveCampaignIntegration.createOrUpdateContact(
         new ActiveCampaignContact(
             Store.local.read(CheckoutFlowStoreKey.email),
@@ -104,6 +104,11 @@ const exportCheckoutFlowDataToActiveCampaign = () => {
                     Store.local.read(CheckoutFlowStoreKey.billingAddress_state)
                 ),
             ]
-        )
+        ),
+        (response, error, success) => {
+            if (callback) {
+                callback();
+            }
+        }
     );
 };

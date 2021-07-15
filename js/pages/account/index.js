@@ -1,24 +1,3 @@
-const exportCheckoutFlowDataToActiveCampaign = () => {
-    const firstName = Store.local.read(CheckoutFlowStoreKey.firstName);
-    const lastName = Store.local.read(CheckoutFlowStoreKey.lastName);
-    const phone = Store.local.read(CheckoutFlowStoreKey.phone);
-    const email = Store.local.read(CheckoutFlowStoreKey.email);
-
-    console.log("Active Campaign");
-    ActiveCampaignIntegration.createOrUpdateContact(
-        new ActiveCampaignContact(
-            email,
-            firstName,
-            lastName,
-            phone,
-            []
-        ),
-        (response, error, success) => {
-            console.log(`Response: ${response}\nError: ${error}\nSuccess: ${success}`);
-        }
-    );
-};
-
 $(document).ready(() => {
     
     /**
@@ -63,7 +42,7 @@ $(document).ready(() => {
         const email = $("#Email").val();
         Store.local.write(CheckoutFlowStoreKey.email, email);
 
-        ActiveCampaignIntegration.createOrUpdateContact(
+        /*ActiveCampaignIntegration.createOrUpdateContact(
             new ActiveCampaignContact(
                 email,
                 firstName,
@@ -73,6 +52,12 @@ $(document).ready(() => {
             ),
             (response, error, success) => {
                 console.log(`Response: ${response}\nError: ${error}\nSuccess: ${success}`);
+            }
+        );*/
+
+        exportCheckoutFlowDataToActiveCampaign(
+            () => {
+                console.log("exportCheckoutFlowDataToActiveCampaign() finished");
             }
         );
     });
