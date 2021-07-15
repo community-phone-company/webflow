@@ -28,8 +28,6 @@ $(document).ready(() => {
     const submitButton = document.querySelectorAll("input.continue_account")[0];
 
     $(submitButton).on("click", (event) => {
-        event.preventDefault();
-
         const firstName = $("#First-name").val();
         Store.local.write(CheckoutFlowStoreKey.firstName, firstName);
 
@@ -54,11 +52,5 @@ $(document).ready(() => {
                 console.log(`Response: ${response}\nError: ${error}\nSuccess: ${success}`);
             }
         );*/
-
-        exportCheckoutFlowDataToActiveCampaign(
-            () => {
-                console.log("exportCheckoutFlowDataToActiveCampaign() finished");
-            }
-        );
     });
 });

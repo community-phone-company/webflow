@@ -40,5 +40,9 @@ $(document).ready(() => {
         };
     }
     
-    //exportCheckoutFlowDataFromAccountStepToActiveCampaign();
+    exportCheckoutFlowDataToActiveCampaign(
+        () => {
+            console.log("exportCheckoutFlowDataToActiveCampaign() finished");
+        }
+    );
 });
