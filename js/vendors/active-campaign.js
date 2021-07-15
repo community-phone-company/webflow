@@ -48,7 +48,7 @@ class ActiveCampaignContact {
      * @param {string | undefined} firstName String containing contact's first name.
      * @param {string | undefined} lastName String containing contact's last name.
      * @param {string | undefined} phone String containing contact's phone.
-     * @param {ActiveCampaignContactCustomField[]} fields Array of custom fields.
+     * @param {ActiveCampaignContactCustomField[] | undefined} fields Array of custom fields.
      */
     constructor(email, firstName, lastName, phone, fields) {
         this.email = email;
@@ -65,9 +65,9 @@ class ActiveCampaignContact {
     toJSON = () => {
         return {
             ...this.email ? {"email": this.email} : undefined,
-            ...this.firstName ? {"email": this.firstName} : undefined,
-            ...this.lastName ? {"email": this.lastName} : undefined,
-            ...this.phone ? {"email": this.phone} : undefined,
+            ...this.firstName ? {"firstName": this.firstName} : undefined,
+            ...this.lastName ? {"lastName": this.lastName} : undefined,
+            ...this.phone ? {"phone": this.phone} : undefined,
             ...(() => {
                 if (this.fields) {
                     const filteredFields = this.fields.filter(field => field.value != undefined);
