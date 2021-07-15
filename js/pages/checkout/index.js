@@ -6,27 +6,6 @@
 const initializeAddressLine = (id, apiKey) => {
 };
 
-const exportCheckoutFlowDataFromAccountStepToActiveCampaign = () => {
-    const firstName = Store.local.read(CheckoutFlowStoreKey.firstName);
-    const lastName = Store.local.read(CheckoutFlowStoreKey.lastName);
-    const phone = Store.local.read(CheckoutFlowStoreKey.phone);
-    const email = Store.local.read(CheckoutFlowStoreKey.email);
-
-    console.log("Active Campaign");
-    ActiveCampaignIntegration.createOrUpdateContact(
-        new ActiveCampaignContact(
-            email,
-            firstName,
-            lastName,
-            phone,
-            []
-        ),
-        (response, error, success) => {
-            console.log(`Response: ${response}\nError: ${error}\nSuccess: ${success}`);
-        }
-    );
-};
-
 $(document).ready(() => {
     /*
      * Address line 1.
@@ -41,8 +20,8 @@ $(document).ready(() => {
     }
     
     exportCheckoutFlowDataToActiveCampaign(
-        () => {
-            console.log("exportCheckoutFlowDataToActiveCampaign() finished");
+        (response, error, success) => {
+            console.log("Active Campaign");
         }
     );
 });

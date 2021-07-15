@@ -1,3 +1,6 @@
+/**
+ * Enumeration of store keys used for checkout flow data.
+ */
 const CheckoutFlowStoreKey = Object.freeze({
     getNewNumber: "checkout-flow-get-new-number",
     period: "checkout-flow-period",
@@ -23,8 +26,13 @@ const CheckoutFlowStoreKey = Object.freeze({
     billingAddress_state: "checkout-flow-billing-address-state",
 });
 
+/**
+ * Exports data stored in the local storage to Active Campaign.
+ * @param {(response: any, error: any, success: boolean) => void} callback Function that is called when request to Active Campaign API is finished.
+ * @returns {XMLHttpRequest} Request instance.
+ */
 const exportCheckoutFlowDataToActiveCampaign = (callback) => {
-    ActiveCampaignIntegration.createOrUpdateContact(
+    return ActiveCampaignIntegration.createOrUpdateContact(
         new ActiveCampaignContact(
             Store.local.read(CheckoutFlowStoreKey.email),
             Store.local.read(CheckoutFlowStoreKey.firstName),

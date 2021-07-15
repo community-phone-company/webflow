@@ -23,7 +23,7 @@ $(document).ready(() => {
     }
 
     /**
-     * Here we handle submit button's click.
+     * Here we handle submit button click.
      */
     const submitButton = document.querySelectorAll("input.continue_account")[0];
 
@@ -39,18 +39,11 @@ $(document).ready(() => {
 
         const email = $("#Email").val();
         Store.local.write(CheckoutFlowStoreKey.email, email);
-
-        /*ActiveCampaignIntegration.createOrUpdateContact(
-            new ActiveCampaignContact(
-                email,
-                firstName,
-                lastName,
-                phone,
-                []
-            ),
-            (response, error, success) => {
-                console.log(`Response: ${response}\nError: ${error}\nSuccess: ${success}`);
-            }
-        );*/
     });
+
+    exportCheckoutFlowDataToActiveCampaign(
+        (response, error, success) => {
+            console.log("Active Campaign");
+        }
+    );
 });
