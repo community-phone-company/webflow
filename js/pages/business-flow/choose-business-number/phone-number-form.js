@@ -1,3 +1,19 @@
+/**
+ * Represents phone number form.
+ * 
+ * Usage example:
+ * 
+ * ```
+ * const form = new PhoneNumberForm("form");
+ * form.getLeftColumn().setItems([
+ *     new PhoneNumberFormColumnItem(
+ *         "(000) 000-0000",
+ *         "Cupertino",
+ *         "CA"
+ *     )
+ * ]);
+ * ```
+ */
 class PhoneNumberForm {
 
     /**
@@ -119,11 +135,10 @@ class PhoneNumberForm {
     }
 
     /**
-     * Column.
-     * @param {number} index Column index.
-     * @returns {PhoneNumberFormColumn} `PhoneNumberFormColumn` instance.
+     * Columns.
+     * @returns {PhoneNumberFormColumn[]} Array of {@link PhoneNumberFormColumn} instances.
      */
-    getColumnWithIndex = (index) => {
+    getColumns = () => {
         if (!this._columns) {
             const selector = "div.columns-6.w-row div.w-col.w-col-6";
             this._columns = Array.from(
@@ -133,7 +148,7 @@ class PhoneNumberForm {
             });
         }
 
-        return this._columns[index];
+        return this._columns;
     }
 
     /**
@@ -141,7 +156,7 @@ class PhoneNumberForm {
      * @returns {PhoneNumberFormColumn} `PhoneNumberFormColumn` instance.
      */
     getLeftColumn = () => {
-        return this.getColumnWithIndex(0);
+        return this.getColumns()[0];
     }
 
     /**
@@ -149,7 +164,7 @@ class PhoneNumberForm {
      * @returns {PhoneNumberFormColumn} `PhoneNumberFormColumn` instance.
      */
     getRightColumn = () => {
-        return this.getColumnWithIndex(1);
+        return this.getColumns()[1];
     }
 
     /**
