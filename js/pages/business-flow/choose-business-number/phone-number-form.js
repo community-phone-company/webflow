@@ -97,7 +97,7 @@ class PhoneNumberForm {
      * Toll free switcher.
      * @returns {HTMLDivElement} `HTMLDivElement` instance.
      */
-     getDigitsInput = () => {
+     getTollFreeSwitcher = () => {
         /**
          * Some kind of lazy load implementation.
          * Once we call this method, it will remember the element
