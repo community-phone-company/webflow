@@ -196,7 +196,7 @@ class PhoneNumberFormColumn {
     setItems = (items) => {
         this._items = items;
         
-        const columnInternalHtml = ``;
+        var columnInternalHtml = ``;
 
         for (const item of items) {
             const html = item.toHTML();
