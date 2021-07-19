@@ -186,5 +186,71 @@ class PhoneNumberFormColumn {
      */
     constructor(columnDiv) {
         this.columnDiv = columnDiv;
+        this._items = new Array<PhoneNumberFormColumnItem>(0);
+    }
+
+    /**
+     * 
+     * @param {PhoneNumberFormColumnItem[]} items Items.
+     */
+    setItems = (items) => {
+        this._items = items;
+        
+        const columnInternalHtml = ``;
+
+        for (const item of items) {
+            const html = item.toHTML();
+            columnInternalHtml += html;
+        }
+
+        $(this.columnDiv).html(columnInternalHtml);
+    }
+}
+
+class PhoneNumberFormColumnItem {
+
+    /**
+     * @constructor
+     * @param {string} phone Phone.
+     * @param {string} city City.
+     * @param {string} stateCode State code.
+     */
+    constructor(
+        phone,
+        city,
+        stateCode
+    ) {
+        this.phone = phone;
+        this.city = city;
+        this.stateCode = stateCode;
+    }
+
+    /**
+     * Converts `PhoneNumberFormColumnItem` instance into HTML string.
+     * @returns {string} String containing HTML structure for `PhoneNumberFormColumnItem` instance.
+     */
+    toHTML = () => {
+        return `
+            <div class="phone-number">
+                <div class="columns-8 w-row">
+                    <div class="column-9 w-col w-col-2">
+                        <div class="div-block-11">
+                        </div>
+                    </div>
+                    <div class="w-col w-col-5">
+                        <div class="txt-phone-number">
+                            ${this.phone}
+                        </div>
+                    </div>
+                    <div class="w-col w-col-5">
+                        <div class="txt-lacation">
+                            ${this.city}, ${this.stateCode}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="devider-8px">
+            </div>
+        `;
     }
 }
