@@ -110,7 +110,7 @@ class PhoneNumberForm {
         const selector = ".switcher";
         const switcher = this.getForm().querySelectorAll(selector)[0];
         
-        if (input instanceof HTMLDivElement) {
+        if (switcher instanceof HTMLDivElement) {
             this._tollFreeSwitcher = switcher;
             return switcher;
         } else {
