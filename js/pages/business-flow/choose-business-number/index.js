@@ -10,7 +10,7 @@ $(document).ready(() => {
             column.setItems(
                 [0, 1, 2, 3, 4]
                     .map(el => `(${el}${el}${el}) ${el}${el}${el}-${el}${el}${el}${el}`)
-                    .map(el => new PhoneNumberFormColumnItem(el, "Cupertino", "CA"))
+                    .map(el => new PhoneNumberFormColumnItem(el, city, "CA"))
             );
         });
     };
