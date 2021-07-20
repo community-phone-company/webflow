@@ -16,7 +16,9 @@ $(document).ready(() => {
     var lastCityFilterRequest = undefined;
     
     const cityInput = phoneNumberForm.getCityInput();
-    cityInput.oninput = () => {
+    
+    //cityInput.oninput = () => {
+    new InputValueObserver(cityInput).startObserving((cityInput) => {
         formData.city = cityInput.value;
         console.log(`City: ${formData.city}`);
 
@@ -40,10 +42,7 @@ $(document).ready(() => {
                 }
             );
         }
-    };
-    cityInput.onchange = () => {
-        console.log(`on change: ${cityInput.value}`);
-    };
+    });
 
     const areaCodeInput = phoneNumberForm.getAreaCodeInput();
     areaCodeInput.oninput = () => {
@@ -57,3 +56,8 @@ $(document).ready(() => {
         console.log(`Digits: ${formData.digits}`);
     };
 });
+
+HTMLInputElement.subscribeForValueChanges = () => {
+    setInterval(() => {
+    }, 10);
+};
