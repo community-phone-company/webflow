@@ -1,6 +1,6 @@
 const IndexConfiguration = Object.freeze({
     minimumCityLengthForSearch: 3,
-    minimumAreaCodeLengthForSearch: 3
+    minimumAreaCodeLengthForSearch: 0
 });
 
 $(document).ready(() => {
