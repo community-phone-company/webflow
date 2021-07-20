@@ -15,34 +15,8 @@ $(document).ready(() => {
 
     var lastCityFilterRequest = undefined;
     
-    const cityInput = phoneNumberForm.getCityInput();
-    /*new InputValueObserver(cityInput).startObserving((newValue) => {
-        formData.city = newValue;
-        console.log(`City: ${newValue}`);
-
-        if (lastCityFilterRequest) {
-            lastCityFilterRequest.abort();
-        }
-
-        if (formData.city.length < minimumCityLengthForSearch) {
-            phoneNumberForm.setCityInputAutocompleteItems([]);
-        } else {
-            lastCityFilterRequest = PhoneNumberManager.getCities(
-                formData.city,
-                (cities, error) => {
-                    const autocompleteItems = cities.map(city => new InputAutocompleteItem(
-                        `${city.name}, ${city.stateCode}`,
-                        city
-                    ));
-                    phoneNumberForm.setCityInputAutocompleteItems(
-                        autocompleteItems
-                    );
-                }
-            );
-        }
-    });*/
-
-    phoneNumberForm.getCitySearchField().onQuery((query, response) => {
+    const citySearchField = phoneNumberForm.getCitySearchField();
+    citySearchField.onQuery((query, response) => {
         formData.city = query;
 
         if (lastCityFilterRequest) {
@@ -66,7 +40,7 @@ $(document).ready(() => {
             );
         }
     });
-    phoneNumberForm.getCitySearchField().startObserving();
+    citySearchField.startObserving();
 
     const areaCodeInput = phoneNumberForm.getAreaCodeInput();
     areaCodeInput.oninput = () => {
