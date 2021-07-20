@@ -38,12 +38,12 @@ class City {
 
     /**
      * @constructor
-     * @param {string} city City.
+     * @param {string} name City.
      * @param {string} stateCode State code.
      * @param {string[]} areaCodes Array containing area codes.
      */
-    constructor(city, stateCode, areaCodes) {
-        this.city = city;
+    constructor(name, stateCode, areaCodes) {
+        this.name = name;
         this.stateCode = stateCode;
         this.areaCodes = areaCodes;
     }
