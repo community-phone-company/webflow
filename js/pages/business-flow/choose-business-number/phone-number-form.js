@@ -296,7 +296,7 @@ class PhoneNumberFormSearchField {
     }
 
     startObserving = () => {
-        const valueObserver = new InputValueObserver(input);
+        const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
         });
         this.valueObserver = valueObserver;
