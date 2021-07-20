@@ -5,16 +5,6 @@ $(document).ready(() => {
         column.setItems([]);
     });
 
-    const fillColumnsWithTestNumbers = (city, areaCode, digits) => {
-        phoneNumberForm.getColumns().forEach(column => {
-            column.setItems(
-                [0, 1, 2, 3, 4]
-                    .map(el => `(${el}${el}${el}) ${el}${el}${el}-${el}${el}${el}${el}`)
-                    .map(el => new PhoneNumberFormColumnItem(el, city, "CA"))
-            );
-        });
-    };
-
     const formData = {
         city: "",
         filteredCities: [],
@@ -28,8 +18,6 @@ $(document).ready(() => {
     cityInput.oninput = () => {
         formData.city = cityInput.value;
         console.log(`City: ${formData.city}`);
-        
-        //fillColumnsWithTestNumbers(formData.city, areaCode, digits);
 
         if (lastCitiesRequest) {
             lastCitiesRequest.abort();
@@ -39,6 +27,9 @@ $(document).ready(() => {
             formData.city,
             (cities, error) => {
                 formData.filteredCities = cities;
+                $(cityInput).autocomplete({
+                    source: cities.map(city => `${city.name}, ${city.stateCode}`)
+                });
             }
         );
     };
