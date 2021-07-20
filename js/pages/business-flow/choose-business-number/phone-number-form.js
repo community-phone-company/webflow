@@ -277,6 +277,12 @@ class PhoneNumberFormSearchField {
     }
 
     startObserving = () => {
+        $(this.input).autocomplete({
+            select: (event, ui) => {
+                console.log("Selected: ", ui.item);
+            }
+        });
+
         const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
             console.log(`Changed input value for ${this.input.id}: ${newValue}`);
