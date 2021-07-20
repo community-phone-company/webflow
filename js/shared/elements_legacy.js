@@ -95,7 +95,7 @@ $("#annual-plan-p").on("click", function(e) {
                 success: function(resp) {
                     
                     if (resp.message) {
-                        $(".zip-check").html("Click below to get started, or give us a call to talk to one of our landline specialists.")
+                        $(".zip-check").html("We have coverage in your area! Click below to get started, or give us a call to talk to one of our landline specialists.")
                         $(".zipcode-container").css("display", "none")
                         $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start my landline service</button></a>')
                     } else {
@@ -161,7 +161,7 @@ $("#annual-plan-p").on("click", function(e) {
                 success: function(resp) {
                     
                     if (resp.message) {
-                        $(".zip-check").html("Click below to get started, or give us a call to talk to one of our landline specialists.")
+                        $(".zip-check").html("We have coverage in your area! Click below to get started, or give us a call to talk to one of our landline specialists.")
                         $(".zipcode-container").css("display", "none")
                         $(".zip-check").append('<br><a href="/checkout-landline/choose-a-plan"><button class="primary-button" style="top: auto; right: auto;">Start my landline service</button></a>')
 

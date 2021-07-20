@@ -48,7 +48,9 @@ $(document).ready(() => {
                     if (response) {
                         if (isValid) {
                             return `
-                            Click below to get started, or give us a call to talk to one of our landline specialists.
+                                We have coverage in your area!
+                                Click below to get started, or give us a call
+                                to talk to one of our landline specialists.
                             `;
                         } else {
                             return `
