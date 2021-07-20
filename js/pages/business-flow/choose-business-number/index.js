@@ -9,29 +9,27 @@ $(document).ready(() => {
 
     const formData = {
         city: "",
-        filteredCities: [],
         areaCode: "",
         digits: ""
     };
 
-    var lastCitiesRequest = undefined;
+    var lastCityFilterRequest = undefined;
     
     const cityInput = phoneNumberForm.getCityInput();
     cityInput.oninput = () => {
         formData.city = cityInput.value;
         console.log(`City: ${formData.city}`);
 
-        if (lastCitiesRequest) {
-            lastCitiesRequest.abort();
+        if (lastCityFilterRequest) {
+            lastCityFilterRequest.abort();
         }
 
         if (formData.city.length < minimumCityLengthForSearch) {
             phoneNumberForm.setCityInputAutocompleteItems([]);
         } else {
-            lastCitiesRequest = PhoneNumberManager.getCities(
+            lastCityFilterRequest = PhoneNumberManager.getCities(
                 formData.city,
                 (cities, error) => {
-                    formData.filteredCities = cities;
                     const autocompleteItems = cities.map(city => new InputAutocompleteItem(
                         `${city.name}, ${city.stateCode}`,
                         `${city.name}, ${city.stateCode}`
@@ -42,6 +40,9 @@ $(document).ready(() => {
                 }
             );
         }
+    };
+    cityInput.onchange = () => {
+        console.log(`on change: ${cityInput.value}`);
     };
 
     const areaCodeInput = phoneNumberForm.getAreaCodeInput();
