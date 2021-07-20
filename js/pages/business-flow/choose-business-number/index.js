@@ -8,13 +8,9 @@ $(document).ready(() => {
     });
 
     const formData = {
-        input: {
-            city: "",
-            areaCode: "",
-            digits: ""
-        },
-        payload: {
-        }
+        city: "",
+        areaCode: "",
+        digits: ""
     };
 
     var lastCityFilterRequest = undefined;
@@ -47,6 +43,8 @@ $(document).ready(() => {
     });*/
 
     phoneNumberForm.getCitySearchField().onQuery((query, response) => {
+        formData.city = query;
+
         if (lastCityFilterRequest) {
             lastCityFilterRequest.abort();
         }
