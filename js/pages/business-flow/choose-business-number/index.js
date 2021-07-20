@@ -16,11 +16,11 @@ $(document).ready(() => {
     var lastCityFilterRequest = undefined;
     
     const cityInput = phoneNumberForm.getCityInput();
-    
+
     //cityInput.oninput = () => {
-    new InputValueObserver(cityInput).startObserving((cityInput) => {
-        formData.city = cityInput.value;
-        console.log(`City: ${formData.city}`);
+    new InputValueObserver(cityInput).startObserving((newValue) => {
+        formData.city = newValue;
+        console.log(`City: ${newValue}`);
 
         if (lastCityFilterRequest) {
             lastCityFilterRequest.abort();

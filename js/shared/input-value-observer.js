@@ -10,16 +10,15 @@ class InputValueObserver {
     }
 
     /**
-     * @param {(input: HTMLInputElement) => void} callback 
+     * @param {(newValue: string) => void} onValueChanged 
      */
-    startObserving = (callback) => {
-        this._callback = callback;
+    startObserving = (onValueChanged) => {
         this._timerId = setInterval(() => {
             const currentValue = this.input.value;
 
             if (this._lastValue !== currentValue) {
                 this._lastValue = currentValue;
-                this._callback(this.input);
+                onValueChanged(currentValue);
             }
         }, 10);
     }
