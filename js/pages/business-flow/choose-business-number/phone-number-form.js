@@ -298,9 +298,8 @@ class PhoneNumberFormSearchField {
     startObserving = () => {
         const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
-            console.log(`Observed input value: ${newValue}`);
+            console.log(`Changed input value for ${this.input.id}: ${newValue}`);
             if (this._queryHandler) {
-                console.log(`Sending request for input value: ${newValue}`);
                 this._queryHandler(newValue, (autocompleteItems) => {
                     this.setAutocompleteItems(
                         autocompleteItems
