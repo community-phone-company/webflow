@@ -13,17 +13,22 @@ class InputValueObserver {
      * @param {(newValue: string) => void} onValueChanged 
      */
     startObserving = (onValueChanged) => {
+        this._onValueChanged = onValueChanged;
         this._timerId = setInterval(() => {
             const currentValue = this.input.value;
 
             if (this._lastValue !== currentValue) {
                 this._lastValue = currentValue;
-                onValueChanged(currentValue);
+                
+                if (this._onValueChanged instanceof Function) {
+                    this._onValueChanged(currentValue);
+                }
             }
         }, 10);
     }
 
     stopObserving = () => {
+        this._onValueChanged = undefined;
         if (this._timerId) {
             clearInterval(
                 this._timerId
