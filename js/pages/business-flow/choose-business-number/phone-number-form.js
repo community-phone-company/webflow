@@ -60,6 +60,25 @@ class PhoneNumberForm {
     }
 
     /**
+     * @param {InputAutocompleteItem[]} items Autocomplete items.
+     */
+    setCityInputAutocompleteItems(items) {
+        this.cityInputAutocompleteItems = items;
+        $(this.getCityInput()).autocomplete({
+            source: items.map(item => item.text)
+        });
+    }
+
+    /**
+     * @returns {InputAutocompleteItem | undefined} Instance of {@link InputAutocompleteItem} type or `undefined`.
+     */
+    getSelectedCityAutocompleteItem = () => {
+        const currentValue = this.getCityInput().value;
+        const autocompleteItems = this.cityInputAutocompleteItems ?? [];
+        return autocompleteItems.find(item => item.text === currentValue);
+    }
+
+    /**
      * Area code input.
      * @returns {HTMLInputElement} `HTMLInputElement` instance.
      */
@@ -190,6 +209,19 @@ class PhoneNumberForm {
         } else {
             throw new Error(`${selector} is not an HTMLInputElement.`);
         }
+    }
+}
+
+class InputAutocompleteItem {
+
+    /**
+     * 
+     * @param {string} text Item's text that will be displayed.
+     * @param {string} value Item's value that is hidden from the user.
+     */
+    constructor(text, value) {
+        this.text = text;
+        this.value = value;
     }
 }
 

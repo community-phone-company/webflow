@@ -1,3 +1,5 @@
+const minimumCityLengthForSearch = 3;
+
 $(document).ready(() => {
 
     const phoneNumberForm = new PhoneNumberForm("form#wf-form-business-phone-number");
@@ -23,15 +25,23 @@ $(document).ready(() => {
             lastCitiesRequest.abort();
         }
 
-        lastCitiesRequest = PhoneNumberManager.getCities(
-            formData.city,
-            (cities, error) => {
-                formData.filteredCities = cities;
-                $(cityInput).autocomplete({
-                    source: cities.map(city => `${city.name}, ${city.stateCode}`)
-                });
-            }
-        );
+        if (formData.city.length < minimumCityLengthForSearch) {
+            phoneNumberForm.setCityInputAutocompleteItems([]);
+        } else {
+            lastCitiesRequest = PhoneNumberManager.getCities(
+                formData.city,
+                (cities, error) => {
+                    formData.filteredCities = cities;
+                    const autocompleteItems = cities.map(city => new InputAutocompleteItem(
+                        `${city.name}, ${city.stateCode}`,
+                        `${city.name}, ${city.stateCode}`
+                    ));
+                    phoneNumberForm.setCityInputAutocompleteItems(
+                        autocompleteItems
+                    );
+                }
+            );
+        }
     };
 
     const areaCodeInput = phoneNumberForm.getAreaCodeInput();
