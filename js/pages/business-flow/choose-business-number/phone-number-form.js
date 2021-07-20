@@ -60,6 +60,19 @@ class PhoneNumberForm {
     }
 
     /**
+     * @returns {PhoneNumberFormSearchField} Instance of {@link PhoneNumberFormSearchField} type.
+     */
+    getCitySearchField = () => {
+        if (!this._citySearchField) {
+            this._citySearchField = new PhoneNumberFormSearchField(
+                this.getCityInput()
+            );
+        }
+
+        return this._citySearchField;
+    }
+
+    /**
      * @param {InputAutocompleteItem[]} items Autocomplete items.
      */
     setCityInputAutocompleteItems(items) {
@@ -82,7 +95,7 @@ class PhoneNumberForm {
      * Area code input.
      * @returns {HTMLInputElement} `HTMLInputElement` instance.
      */
-     getAreaCodeInput = () => {
+    getAreaCodeInput = () => {
         /**
          * Some kind of lazy load implementation.
          * Once we call this method, it will remember the element
@@ -104,10 +117,23 @@ class PhoneNumberForm {
     }
 
     /**
+     * @returns {PhoneNumberFormSearchField} Instance of {@link PhoneNumberFormSearchField} type.
+     */
+     getAreaCodeSearchField = () => {
+        if (!this._areaCodeSearchField) {
+            this._areaCodeSearchField = new PhoneNumberFormSearchField(
+                this.getAreaCodeInput()
+            );
+        }
+
+        return this._areaCodeSearchField;
+    }
+
+    /**
      * Digits input.
      * @returns {HTMLInputElement} `HTMLInputElement` instance.
      */
-     getDigitsInput = () => {
+    getDigitsInput = () => {
         /**
          * Some kind of lazy load implementation.
          * Once we call this method, it will remember the element
@@ -129,10 +155,23 @@ class PhoneNumberForm {
     }
 
     /**
+     * @returns {PhoneNumberFormSearchField} Instance of {@link PhoneNumberFormSearchField} type.
+     */
+    getDigitsSearchField = () => {
+        if (!this._digitsSearchField) {
+            this._digitsSearchField = new PhoneNumberFormSearchField(
+                this.getDigitsInput()
+            );
+        }
+
+        return this._digitsSearchField;
+    }
+
+    /**
      * Toll free switcher.
      * @returns {HTMLDivElement} `HTMLDivElement` instance.
      */
-     getTollFreeSwitcher = () => {
+    getTollFreeSwitcher = () => {
         /**
          * Some kind of lazy load implementation.
          * Once we call this method, it will remember the element
@@ -212,12 +251,79 @@ class PhoneNumberForm {
     }
 }
 
+class PhoneNumberFormSearchField {
+
+    /**
+     * @constructor
+     * @param {HTMLInputElement} input 
+     */
+    constructor(input) {
+        this.input = input;
+        this.setAutocompleteItems([]);
+        this.setMenuExpandingOnFocus(true);
+        this.startObserving();
+    }
+
+    /**
+     * @param {InputAutocompleteItem[]} items Autocomplete items.
+     */
+    setAutocompleteItems(items) {
+        this.autocompleteItems = items;
+        $(this.input).autocomplete({
+            source: items.map(item => item.text)
+        });
+    }
+
+    /**
+     * @returns {InputAutocompleteItem | undefined} Instance of {@link InputAutocompleteItem} type or `undefined`.
+     */
+    getSelectedAutocompleteItem = () => {
+        const currentValue = this.input.value;
+        const autocompleteItems = this.autocompleteItems ?? [];
+        return autocompleteItems.find(item => item.text === currentValue);
+    }
+
+    /**
+     * @param {boolean} expanding 
+     */
+    setMenuExpandingOnFocus = (expanding) => {
+        this._expandingMenuOnFocus = expanding;
+        this.input.onfocus = this.input.onfocus = () => {
+            if (this._expandingMenuOnFocus) {
+                $(this.input).autocomplete("search", this.input.value);
+            }
+        };
+    }
+
+    startObserving = () => {
+        const valueObserver = new InputValueObserver(input);
+        valueObserver.startObserving((newValue) => {
+        });
+        this.valueObserver = valueObserver;
+    }
+
+    stopObserving = () => {
+        if (this.valueObserver) {
+            this.valueObserver.stopObserving();
+            this.valueObserver = undefined;
+        }
+    }
+
+    /**
+     * @param {string} query 
+     * @param {(autocompleteItems: InputAutocompleteItem[]) => void} response 
+     */
+    onQuery = (query, response) => {
+        response([]);
+    }
+}
+
 class InputAutocompleteItem {
 
     /**
      * 
      * @param {string} text Item's text that will be displayed.
-     * @param {string} value Item's value that is hidden from the user.
+     * @param {any} value Item's value that is hidden from the user.
      */
     constructor(text, value) {
         this.text = text;

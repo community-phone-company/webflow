@@ -8,17 +8,19 @@ $(document).ready(() => {
     });
 
     const formData = {
-        city: "",
-        areaCode: "",
-        digits: ""
+        input: {
+            city: "",
+            areaCode: "",
+            digits: ""
+        },
+        payload: {
+        }
     };
 
     var lastCityFilterRequest = undefined;
     
     const cityInput = phoneNumberForm.getCityInput();
-
-    //cityInput.oninput = () => {
-    new InputValueObserver(cityInput).startObserving((newValue) => {
+    /*new InputValueObserver(cityInput).startObserving((newValue) => {
         formData.city = newValue;
         console.log(`City: ${newValue}`);
 
@@ -34,7 +36,7 @@ $(document).ready(() => {
                 (cities, error) => {
                     const autocompleteItems = cities.map(city => new InputAutocompleteItem(
                         `${city.name}, ${city.stateCode}`,
-                        `${city.name}, ${city.stateCode}`
+                        city
                     ));
                     phoneNumberForm.setCityInputAutocompleteItems(
                         autocompleteItems
@@ -42,7 +44,32 @@ $(document).ready(() => {
                 }
             );
         }
-    });
+    });*/
+
+    phoneNumberForm.getCitySearchField().onQuery = (query, response) => {
+        console.log(`Observed value for city: ${newValue}`);
+
+        if (lastCityFilterRequest) {
+            lastCityFilterRequest.abort();
+        }
+
+        if (formData.city.length < minimumCityLengthForSearch) {
+            response([]);
+        } else {
+            lastCityFilterRequest = PhoneNumberManager.getCities(
+                query,
+                (cities, error) => {
+                    const autocompleteItems = cities.map(city => new InputAutocompleteItem(
+                        `${city.name}, ${city.stateCode}`,
+                        city
+                    ));
+                    response(
+                        autocompleteItems
+                    );
+                }
+            );
+        }
+    };
 
     const areaCodeInput = phoneNumberForm.getAreaCodeInput();
     areaCodeInput.oninput = () => {
