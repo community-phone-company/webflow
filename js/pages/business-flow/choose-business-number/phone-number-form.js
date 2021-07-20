@@ -73,25 +73,6 @@ class PhoneNumberForm {
     }
 
     /**
-     * @param {InputAutocompleteItem[]} items Autocomplete items.
-     */
-    setCityInputAutocompleteItems(items) {
-        this.cityInputAutocompleteItems = items;
-        $(this.getCityInput()).autocomplete({
-            source: items.map(item => item.text)
-        });
-    }
-
-    /**
-     * @returns {InputAutocompleteItem | undefined} Instance of {@link InputAutocompleteItem} type or `undefined`.
-     */
-    getSelectedCityAutocompleteItem = () => {
-        const currentValue = this.getCityInput().value;
-        const autocompleteItems = this.cityInputAutocompleteItems ?? [];
-        return autocompleteItems.find(item => item.text === currentValue);
-    }
-
-    /**
      * Area code input.
      * @returns {HTMLInputElement} `HTMLInputElement` instance.
      */

@@ -1,4 +1,7 @@
-const minimumCityLengthForSearch = 3;
+const IndexConfiguration = Object.freeze({
+    minimumCityLengthForSearch: 3,
+    minimumAreaCodeLengthForSearch: 3
+});
 
 $(document).ready(() => {
 
@@ -23,7 +26,7 @@ $(document).ready(() => {
             formData.lastCityFilterRequest.abort();
         }
 
-        if (formData.city.length < minimumCityLengthForSearch) {
+        if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
             response([]);
         } else {
             formData.lastCityFilterRequest = PhoneNumberManager.getCities(
@@ -50,8 +53,26 @@ $(document).ready(() => {
             formData.lastAreaCodeFilterRequest.abort();
         }
 
-        // TODO: Implement request to endpoint here.
-        response([]);
+        if (query.length < IndexConfiguration.minimumAreaCodeLengthForSearch) {
+            response([]);
+        } else {
+            const selectedCity = citySearchField.getSelectedAutocompleteItem().value;
+            const cityName = selectedCity ? selectedCity.name : "";
+            const stateCode = selectedCity ? selectedCity.stateCode : "";
+            formData.lastAreaCodeFilterRequest = PhoneNumberManager.getAreaCodes(
+                cityName,
+                stateCode,
+                (areaCodes, error) => {
+                    const autocompleteItems = areaCodes.map(areaCode => new InputAutocompleteItem(
+                        `${areaCode} ${stateCode.toUpperCase()}`,
+                        areaCode
+                    ));
+                    response(
+                        autocompleteItems
+                    );
+                }
+            )
+        }
     });
     areaCodeSearchField.startObserving();
 
