@@ -9,24 +9,24 @@ $(document).ready(() => {
 
     const formData = {
         city: "",
+        lastCityFilterRequest: undefined,
         areaCode: "",
+        lastAreaCodeFilterRequest: undefined,
         digits: ""
     };
-
-    var lastCityFilterRequest = undefined;
     
     const citySearchField = phoneNumberForm.getCitySearchField();
     citySearchField.onQuery((query, response) => {
         formData.city = query;
 
-        if (lastCityFilterRequest) {
-            lastCityFilterRequest.abort();
+        if (formData.lastCityFilterRequest) {
+            formData.lastCityFilterRequest.abort();
         }
 
         if (formData.city.length < minimumCityLengthForSearch) {
             response([]);
         } else {
-            lastCityFilterRequest = PhoneNumberManager.getCities(
+            formData.lastCityFilterRequest = PhoneNumberManager.getCities(
                 query,
                 (cities, error) => {
                     const autocompleteItems = cities.map(city => new InputAutocompleteItem(
@@ -42,11 +42,18 @@ $(document).ready(() => {
     });
     citySearchField.startObserving();
 
-    const areaCodeInput = phoneNumberForm.getAreaCodeInput();
-    areaCodeInput.oninput = () => {
-        formData.areaCode = areaCodeInput.value;
-        console.log(`Area code: ${formData.areaCode}`);
-    };
+    const areaCodeSearchField = phoneNumberForm.getAreaCodeSearchField();
+    areaCodeSearchField.onQuery((query, response) => {
+        formData.areaCode = query;
+
+        if (formData.lastAreaCodeFilterRequest) {
+            formData.lastAreaCodeFilterRequest.abort();
+        }
+
+        // TODO: Implement request to endpoint here.
+        response([]);
+    });
+    areaCodeSearchField.startObserving();
 
     const digitsInput = phoneNumberForm.getDigitsInput();
     digitsInput.oninput = () => {
@@ -54,8 +61,3 @@ $(document).ready(() => {
         console.log(`Digits: ${formData.digits}`);
     };
 });
-
-HTMLInputElement.subscribeForValueChanges = () => {
-    setInterval(() => {
-    }, 10);
-};
