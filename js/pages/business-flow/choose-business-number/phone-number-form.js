@@ -262,6 +262,7 @@ class PhoneNumberFormSearchField {
         this.setAutocompleteItems([]);
         this.setMenuExpandingOnFocus(true);
         this.startObserving();
+        this._queryHandler = undefined;
     }
 
     /**
@@ -298,6 +299,15 @@ class PhoneNumberFormSearchField {
     startObserving = () => {
         const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
+            if (this._queryHandler) {
+                this._queryHandler(newValue, (autocompleteItems) => {
+                    this.setAutocompleteItems(
+                        autocompleteItems
+                    );
+                });
+            } else {
+                this.setAutocompleteItems([]);
+            }
         });
         this.valueObserver = valueObserver;
     }
@@ -310,11 +320,10 @@ class PhoneNumberFormSearchField {
     }
 
     /**
-     * @param {string} query 
-     * @param {(autocompleteItems: InputAutocompleteItem[]) => void} response 
+     * @param {(query: string, response: (autocompleteItems: InputAutocompleteItem[]) => void) => void} handler 
      */
-    onQuery = (query, response) => {
-        response([]);
+    onQuery = (handler) => {
+        this._queryHandler = handler;
     }
 }
 

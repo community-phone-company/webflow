@@ -46,7 +46,7 @@ $(document).ready(() => {
         }
     });*/
 
-    phoneNumberForm.getCitySearchField().onQuery = (query, response) => {
+    phoneNumberForm.getCitySearchField().onQuery((query, response) => {
         console.log(`Observed value for city: ${newValue}`);
 
         if (lastCityFilterRequest) {
@@ -69,7 +69,7 @@ $(document).ready(() => {
                 }
             );
         }
-    };
+    });
 
     const areaCodeInput = phoneNumberForm.getAreaCodeInput();
     areaCodeInput.oninput = () => {
