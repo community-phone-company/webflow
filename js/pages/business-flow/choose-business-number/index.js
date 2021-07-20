@@ -14,26 +14,44 @@ $(document).ready(() => {
             );
         });
     };
+
+    const formData = {
+        city: "",
+        filteredCities: [],
+        areaCode: "",
+        digits: ""
+    };
+
+    var lastCitiesRequest = undefined;
     
     const cityInput = phoneNumberForm.getCityInput();
-    var city = "";
     cityInput.oninput = () => {
-        city = cityInput.value;
-        console.log(`City: ${city}`);
-        fillColumnsWithTestNumbers(city, areaCode, digits);
+        formData.city = cityInput.value;
+        console.log(`City: ${formData.city}`);
+        
+        //fillColumnsWithTestNumbers(formData.city, areaCode, digits);
+
+        if (lastCitiesRequest) {
+            lastCitiesRequest.abort();
+        }
+
+        lastCitiesRequest = PhoneNumberManager.getCities(
+            formData.city,
+            (cities, error) => {
+                formData.filteredCities = cities;
+            }
+        );
     };
 
     const areaCodeInput = phoneNumberForm.getAreaCodeInput();
-    var areaCode = "";
     areaCodeInput.oninput = () => {
-        areaCode = areaCodeInput.value;
-        console.log(`Area code: ${areaCode}`);
+        formData.areaCode = areaCodeInput.value;
+        console.log(`Area code: ${formData.areaCode}`);
     };
 
     const digitsInput = phoneNumberForm.getDigitsInput();
-    var digits = "";
     digitsInput.oninput = () => {
-        digits = digitsInput.value;
-        console.log(`Digits: ${digits}`);
+        formData.digits = digitsInput.value;
+        console.log(`Digits: ${formData.digits}`);
     };
 });
