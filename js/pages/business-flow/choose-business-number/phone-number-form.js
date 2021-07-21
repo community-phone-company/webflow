@@ -241,7 +241,6 @@ class PhoneNumberFormSearchField {
     constructor(input) {
         this.input = input;
         this.setAutocompleteItems([]);
-        this.setMenuExpandingOnFocus(true);
         this._onQuery = undefined;
         this._onSelectedAutocompleteItem = undefined;
     }
@@ -349,9 +348,11 @@ class PhoneNumberFormSearchField {
 
     /**
      * @param {(query: string, response: (autocompleteItems: InputAutocompleteItem[]) => void) => void} handler 
+     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     onQuery = (handler) => {
         this._onQuery = handler;
+        return this;
     }
 
     /**

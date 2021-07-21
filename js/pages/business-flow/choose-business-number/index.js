@@ -32,67 +32,71 @@ $(document).ready(() => {
     };
     
     const citySearchField = phoneNumberForm.getCitySearchField();
-    citySearchField.onQuery((query, response) => {
-        formData.city = query;
+    citySearchField
+        .onQuery((query, response) => {
+            formData.city = query;
 
-        if (formData.lastCityFilterRequest) {
-            formData.lastCityFilterRequest.abort();
-            formData.lastCityFilterRequest = undefined;
-        }
+            if (formData.lastCityFilterRequest) {
+                formData.lastCityFilterRequest.abort();
+                formData.lastCityFilterRequest = undefined;
+            }
 
-        if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
-            response([]);
-        } else {
-            formData.lastCityFilterRequest = PhoneNumberManager.getCities(
-                query,
-                (cities, error) => {
-                    const autocompleteItems = cities.map(city => new InputAutocompleteItem(
-                        `${city.name}, ${city.stateCode}`,
-                        city
-                    ));
-                    response(
-                        autocompleteItems
-                    );
-                }
-            );
-        }
-    });
-    citySearchField.startObserving();
+            if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
+                response([]);
+            } else {
+                formData.lastCityFilterRequest = PhoneNumberManager.getCities(
+                    query,
+                    (cities, error) => {
+                        const autocompleteItems = cities.map(city => new InputAutocompleteItem(
+                            `${city.name}, ${city.stateCode}`,
+                            city
+                        ));
+                        response(
+                            autocompleteItems
+                        );
+                    }
+                );
+            }
+        })
+        .setMenuExpandingOnFocus(true)
+        .startObserving();
 
     const areaCodeSearchField = phoneNumberForm.getAreaCodeSearchField();
-    areaCodeSearchField.onQuery((query, response) => {
-        formData.input.areaCode = query;
+    areaCodeSearchField
+        .onQuery((query, response) => {
+            formData.input.areaCode = query;
 
-        if (formData.lastAreaCodeFilterRequest) {
-            formData.lastAreaCodeFilterRequest.abort();
-            formData.lastAreaCodeFilterRequest = undefined;
-        }
+            if (formData.lastAreaCodeFilterRequest) {
+                formData.lastAreaCodeFilterRequest.abort();
+                formData.lastAreaCodeFilterRequest = undefined;
+            }
 
-        if (query.length < IndexConfiguration.minimumAreaCodeLengthForSearch) {
-            response([]);
-        } else {
-            //const selectedCity = citySearchField.getSelectedAutocompleteItem().value;
-            //const cityName = selectedCity ? selectedCity.name : "";
-            //const stateCode = selectedCity ? selectedCity.stateCode : "";
-            const parsedInputData = formData.methods.parseCityInput();
-            const cityName = parsedInputData.city;
-            const stateCode = parsedInputData.stateCode;
-            formData.lastAreaCodeFilterRequest = PhoneNumberManager.getAreaCodes(
-                cityName,
-                stateCode,
-                (areaCodes, error) => {
-                    const autocompleteItems = areaCodes.map(areaCode => new InputAutocompleteItem(
-                        `${areaCode} ${stateCode.toUpperCase()}`,
-                        areaCode
-                    ));
-                    response(
-                        autocompleteItems
-                    );
-                }
-            )
-        }
-    });
-    areaCodeSearchField.startObserving();
+            if (query.length < IndexConfiguration.minimumAreaCodeLengthForSearch) {
+                response([]);
+            } else {
+                //const selectedCity = citySearchField.getSelectedAutocompleteItem().value;
+                //const cityName = selectedCity ? selectedCity.name : "";
+                //const stateCode = selectedCity ? selectedCity.stateCode : "";
+                const parsedInputData = formData.methods.parseCityInput();
+                const cityName = parsedInputData.city;
+                const stateCode = parsedInputData.stateCode;
+                formData.lastAreaCodeFilterRequest = PhoneNumberManager.getAreaCodes(
+                    cityName,
+                    stateCode,
+                    (areaCodes, error) => {
+                        const autocompleteItems = areaCodes.map(areaCode => new InputAutocompleteItem(
+                            `${areaCode} ${stateCode.toUpperCase()}`,
+                            areaCode
+                        ));
+                        response(
+                            autocompleteItems
+                        );
+                    }
+                )
+            }
+        })
+        .setMenuExpandingOnFocus(true)
+        .startObserving();
 
     const digitsInput = phoneNumberForm.getDigitsInput();
     digitsInput.oninput = () => {
