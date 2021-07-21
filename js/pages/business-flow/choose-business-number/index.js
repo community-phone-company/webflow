@@ -35,15 +35,11 @@ $(document).ready(() => {
         .onQuery((query, response) => {
             formData.input.city = query;
 
-            if (formData.lastCityFilterRequest) {
-                formData.lastCityFilterRequest.abort();
-                formData.lastCityFilterRequest = undefined;
-            }
-
             if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
                 response([]);
+                return undefined;
             } else {
-                formData.lastCityFilterRequest = PhoneNumberManager.getCities(
+                return PhoneNumberManager.getCities(
                     query,
                     (cities, error) => {
                         const autocompleteItems = cities.map(city => new InputAutocompleteItem(

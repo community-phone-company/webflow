@@ -24,7 +24,7 @@ class InputValueObserver {
                     this._onValueChanged(currentValue);
                 }
             }
-        }, 10);
+        }, InputValueObserverConfiguration.timerInterval);
     }
 
     stopObserving = () => {
@@ -37,3 +37,7 @@ class InputValueObserver {
         }
     }
 }
+
+const InputValueObserverConfiguration = Object.freeze({
+    timerInterval: 200
+});

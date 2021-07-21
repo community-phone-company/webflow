@@ -288,7 +288,7 @@ class PhoneNumberFormSearchField {
      * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     startObserving = () => {
-        const handleValueChange = (newValue) => {
+        /*const handleValueChange = (newValue) => {
             if (this._onQuery) {
                 this._onQuery(newValue, (autocompleteItems) => {
                     this.setAutocompleteItems(
@@ -322,13 +322,18 @@ class PhoneNumberFormSearchField {
 
                 handleValueChange(this.input.value);
             }
-        });
+        });*/
 
-        /*const valueObserver = new InputValueObserver(this.input);
+        const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
             console.log(`Changed input value for ${this.input.id}: ${newValue}`);
+
+            if (this._lastRequest) {
+                this._lastRequest.abort();
+            }
+            
             if (this._onQuery) {
-                this._onQuery(newValue, (autocompleteItems) => {
+                this._lastRequest = this._onQuery(newValue, (autocompleteItems) => {
                     this.setAutocompleteItems(
                         autocompleteItems
                     );
@@ -337,7 +342,7 @@ class PhoneNumberFormSearchField {
                 this.setAutocompleteItems([]);
             }
         });
-        this.valueObserver = valueObserver;*/
+        this.valueObserver = valueObserver;
         console.log(`Started observing input value for ${this.input.id}`);
         return this;
     }
@@ -355,7 +360,7 @@ class PhoneNumberFormSearchField {
     }
 
     /**
-     * @param {(query: string, response: (autocompleteItems: InputAutocompleteItem[]) => void) => void} handler 
+     * @param {(query: string, response: (autocompleteItems: InputAutocompleteItem[]) => void) => (XMLHttpRequest | undefined)} handler 
      * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     onQuery = (handler) => {
