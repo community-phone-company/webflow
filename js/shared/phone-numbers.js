@@ -51,7 +51,7 @@ class PhoneNumberManager {
             },
             success: function (response) {
                 if (response) {
-                    const areaCodes = response.areaCodes ?? [];
+                    const areaCodes = response.area_codes ?? [];
                     callback(areaCodes, undefined);
                 } else {
                     callback([], undefined);
