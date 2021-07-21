@@ -83,6 +83,7 @@ $(document).ready(() => {
                     cityName,
                     stateCode,
                     (areaCodes, error) => {
+                        console.log(`Response: `, areaCodes);
                         const autocompleteItems = areaCodes.map(areaCode => new InputAutocompleteItem(
                             `${areaCode} ${stateCode.toUpperCase()}`,
                             areaCode
