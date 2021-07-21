@@ -336,8 +336,8 @@ class PhoneNumberFormSearchField {
             } else {
                 this.setAutocompleteItems([]);
             }
-        });*/
-        this.valueObserver = valueObserver;
+        });
+        this.valueObserver = valueObserver;*/
         console.log(`Started observing input value for ${this.input.id}`);
         return this;
     }
