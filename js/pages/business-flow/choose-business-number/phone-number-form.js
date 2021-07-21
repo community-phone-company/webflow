@@ -242,7 +242,8 @@ class PhoneNumberFormSearchField {
         this.input = input;
         this.setAutocompleteItems([]);
         this.setMenuExpandingOnFocus(true);
-        this._queryHandler = undefined;
+        this._onQuery = undefined;
+        this._onSelectedAutocompleteItem = undefined;
     }
 
     /**
@@ -259,6 +260,10 @@ class PhoneNumberFormSearchField {
      * @returns {InputAutocompleteItem | undefined} Instance of {@link InputAutocompleteItem} type or `undefined`.
      */
     getSelectedAutocompleteItem = () => {
+        if (this._selectedAutocompleteItem) {
+            return this._selectedAutocompleteItem;
+        }
+
         const currentValue = this.input.value;
         const autocompleteItems = this.autocompleteItems ?? [];
         return autocompleteItems.find(item => item.text === currentValue);
@@ -277,17 +282,39 @@ class PhoneNumberFormSearchField {
     }
 
     startObserving = () => {
+        this.input.oninput = () => {
+            this._selectedAutocompleteItem = undefined;
+            const newValue = this.input.value;
+            console.log(`Changed input value for ${this.input.id}: ${newValue}`);
+            if (this._onQuery) {
+                this._onQuery(newValue, (autocompleteItems) => {
+                    this.setAutocompleteItems(
+                        autocompleteItems
+                    );
+                });
+            } else {
+                this.setAutocompleteItems([]);
+            }
+        };
+
         $(this.input).autocomplete({
             select: (event, ui) => {
-                console.log("Selected: ", ui.item);
+                const selectedItem = this.autocompleteItems.find(item => item.text === ui.item.label);
+                this._selectedAutocompleteItem = selectedItem;
+
+                if (this._onSelectedAutocompleteItem) {
+                    this._onSelectedAutocompleteItem(
+                        selectedItem
+                    );
+                }
             }
         });
 
-        const valueObserver = new InputValueObserver(this.input);
+        /*const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
             console.log(`Changed input value for ${this.input.id}: ${newValue}`);
-            if (this._queryHandler) {
-                this._queryHandler(newValue, (autocompleteItems) => {
+            if (this._onQuery) {
+                this._onQuery(newValue, (autocompleteItems) => {
                     this.setAutocompleteItems(
                         autocompleteItems
                     );
@@ -296,7 +323,7 @@ class PhoneNumberFormSearchField {
                 this.setAutocompleteItems([]);
             }
         });
-        this.valueObserver = valueObserver;
+        this.valueObserver = valueObserver;*/
     }
 
     stopObserving = () => {
@@ -310,7 +337,14 @@ class PhoneNumberFormSearchField {
      * @param {(query: string, response: (autocompleteItems: InputAutocompleteItem[]) => void) => void} handler 
      */
     onQuery = (handler) => {
-        this._queryHandler = handler;
+        this._onQuery = handler;
+    }
+
+    /**
+     * @param {(item: InputAutocompleteItem) => void} handler 
+     */
+    onSelectedAutocompleteItem = (handler) => {
+        this._onSelectedAutocompleteItem = handler;
     }
 }
 
