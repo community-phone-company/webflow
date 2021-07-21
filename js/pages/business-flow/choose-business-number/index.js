@@ -11,11 +11,24 @@ $(document).ready(() => {
     });
 
     const formData = {
-        city: "",
+        input: {
+            city: "",
+            areaCode: "",
+            digits: ""
+        },
         lastCityFilterRequest: undefined,
-        areaCode: "",
         lastAreaCodeFilterRequest: undefined,
-        digits: ""
+        methods: {
+            parseCityInput = () => {
+                var input = formData.input.city;
+                while (input.indexOf(" ") > -1) { input = input.replace(" ", ""); }
+                const components = input.split(",");
+                return {
+                    city: components[0],
+                    stateCode: components[1]
+                };
+            }
+        }
     };
     
     const citySearchField = phoneNumberForm.getCitySearchField();
@@ -24,6 +37,7 @@ $(document).ready(() => {
 
         if (formData.lastCityFilterRequest) {
             formData.lastCityFilterRequest.abort();
+            formData.lastCityFilterRequest = undefined;
         }
 
         if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
@@ -47,18 +61,22 @@ $(document).ready(() => {
 
     const areaCodeSearchField = phoneNumberForm.getAreaCodeSearchField();
     areaCodeSearchField.onQuery((query, response) => {
-        formData.areaCode = query;
+        formData.input.areaCode = query;
 
         if (formData.lastAreaCodeFilterRequest) {
             formData.lastAreaCodeFilterRequest.abort();
+            formData.lastAreaCodeFilterRequest = undefined;
         }
 
         if (query.length < IndexConfiguration.minimumAreaCodeLengthForSearch) {
             response([]);
         } else {
-            const selectedCity = citySearchField.getSelectedAutocompleteItem().value;
-            const cityName = selectedCity ? selectedCity.name : "";
-            const stateCode = selectedCity ? selectedCity.stateCode : "";
+            //const selectedCity = citySearchField.getSelectedAutocompleteItem().value;
+            //const cityName = selectedCity ? selectedCity.name : "";
+            //const stateCode = selectedCity ? selectedCity.stateCode : "";
+            const parsedInputData = formData.methods.parseCityInput();
+            const cityName = parsedInputData.city;
+            const stateCode = parsedInputData.stateCode;
             formData.lastAreaCodeFilterRequest = PhoneNumberManager.getAreaCodes(
                 cityName,
                 stateCode,
@@ -78,7 +96,7 @@ $(document).ready(() => {
 
     const digitsInput = phoneNumberForm.getDigitsInput();
     digitsInput.oninput = () => {
-        formData.digits = digitsInput.value;
-        console.log(`Digits: ${formData.digits}`);
+        formData.input.digits = digitsInput.value;
+        console.log(`Digits: ${formData.input.digits}`);
     };
 });

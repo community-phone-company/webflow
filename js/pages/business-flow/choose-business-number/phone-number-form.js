@@ -248,12 +248,14 @@ class PhoneNumberFormSearchField {
 
     /**
      * @param {InputAutocompleteItem[]} items Autocomplete items.
+     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     setAutocompleteItems(items) {
         this.autocompleteItems = items;
         $(this.input).autocomplete({
             source: items.map(item => item.text)
         });
+        return this;
     }
 
     /**
@@ -271,6 +273,7 @@ class PhoneNumberFormSearchField {
 
     /**
      * @param {boolean} expanding 
+     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     setMenuExpandingOnFocus = (expanding) => {
         this._expandingMenuOnFocus = expanding;
@@ -279,10 +282,14 @@ class PhoneNumberFormSearchField {
                 $(this.input).autocomplete("search", this.input.value);
             }
         };
+        return this;
     }
 
+    /**
+     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     */
     startObserving = () => {
-        this.input.oninput = () => {
+        /*this.input.oninput = () => {
             this._selectedAutocompleteItem = undefined;
             const newValue = this.input.value;
             console.log(`Changed input value for "${this.input.id}": ${newValue}`);
@@ -308,9 +315,9 @@ class PhoneNumberFormSearchField {
                     );
                 }
             }
-        });
+        });*/
 
-        /*const valueObserver = new InputValueObserver(this.input);
+        const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
             console.log(`Changed input value for ${this.input.id}: ${newValue}`);
             if (this._onQuery) {
@@ -323,14 +330,21 @@ class PhoneNumberFormSearchField {
                 this.setAutocompleteItems([]);
             }
         });
-        this.valueObserver = valueObserver;*/
+        this.valueObserver = valueObserver;
+
+        return this;
     }
 
+    /**
+     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     */
     stopObserving = () => {
         if (this.valueObserver) {
             this.valueObserver.stopObserving();
             this.valueObserver = undefined;
         }
+
+        return this;
     }
 
     /**
@@ -342,9 +356,11 @@ class PhoneNumberFormSearchField {
 
     /**
      * @param {(item: InputAutocompleteItem) => void} handler 
+     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     onSelectedAutocompleteItem = (handler) => {
         this._onSelectedAutocompleteItem = handler;
+        return this;
     }
 }
 
