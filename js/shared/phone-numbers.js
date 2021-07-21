@@ -63,6 +63,42 @@ class PhoneNumberManager {
             }
         });
     }
+
+    /**
+     * Finds available phone numbers.
+     * @param {string} city City.
+     * @param {string} stateCode State code.
+     * @param {string} areaCode Area code.
+     * @param {string} digits Digits.
+     * @param {(number: PhoneNumber[], error: any | undefined) => void} callback Function that is called when response comes from the server.
+     * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
+     */
+    static getNumbers = (city, stateCode, areaCode, digits, callback) => {
+        return $.ajax({
+            method: "GET",
+            url: `https://landline.phone.community/api/v1/search/numbers`,
+            dataType: 'json',
+            data: {
+                "city": city,
+                "stateCode": stateCode,
+                "areaCode": areaCode,
+                "numberContains": digits
+            },
+            success: function (response) {
+                if (response) {
+                    const numbers = (response.numbers ?? []).map(number => {
+                    });
+                    callback(areaCodes, undefined);
+                } else {
+                    callback([], undefined);
+                }
+            },
+            error: function (error) {
+                console.log(`Error: `, error);
+                callback([], error);
+            }
+        });
+    }
 }
 
 class City {
@@ -77,5 +113,27 @@ class City {
         this.name = name;
         this.stateCode = stateCode;
         this.areaCodes = areaCodes;
+    }
+}
+
+class PhoneNumber {
+
+    /**
+     * @constructor
+     * @param {string} areaCode Area code.
+     * @param {string} number Number.
+     * @param {string | undefined} city City.
+     * @param {string | undefined} stateCode State code.
+     */
+    constructor(
+        areaCode,
+        number,
+        city,
+        stateCode
+    ) {
+        this.areaCode = areaCode;
+        this.number = number;
+        this.city = city;
+        this.stateCode = stateCode;
     }
 }
