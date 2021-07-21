@@ -16,8 +16,6 @@ $(document).ready(() => {
             areaCode: "",
             digits: ""
         },
-        lastCityFilterRequest: undefined,
-        lastAreaCodeFilterRequest: undefined,
         methods: {
             parseCityInput: () => {
                 var input = formData.input.city;
@@ -60,22 +58,15 @@ $(document).ready(() => {
         .onQuery((query, response) => {
             formData.input.areaCode = query;
 
-            if (formData.lastAreaCodeFilterRequest) {
-                formData.lastAreaCodeFilterRequest.abort();
-                formData.lastAreaCodeFilterRequest = undefined;
-            }
-
             if (query.length < IndexConfiguration.minimumAreaCodeLengthForSearch) {
                 response([]);
+                return undefined;
             } else {
-                //const selectedCity = citySearchField.getSelectedAutocompleteItem().value;
-                //const cityName = selectedCity ? selectedCity.name : "";
-                //const stateCode = selectedCity ? selectedCity.stateCode : "";
                 const parsedInputData = formData.methods.parseCityInput();
                 const cityName = parsedInputData.city;
                 const stateCode = parsedInputData.stateCode;
                 console.log(`Parsed: `, parsedInputData);
-                formData.lastAreaCodeFilterRequest = PhoneNumberManager.getAreaCodes(
+                return PhoneNumberManager.getAreaCodes(
                     cityName,
                     stateCode,
                     (areaCodes, error) => {
