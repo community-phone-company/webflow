@@ -285,7 +285,7 @@ class PhoneNumberFormSearchField {
         this.input.oninput = () => {
             this._selectedAutocompleteItem = undefined;
             const newValue = this.input.value;
-            console.log(`Changed input value for ${this.input.id}: ${newValue}`);
+            console.log(`Changed input value for "${this.input.id}": ${newValue}`);
             if (this._onQuery) {
                 this._onQuery(newValue, (autocompleteItems) => {
                     this.setAutocompleteItems(
