@@ -25,6 +25,9 @@ $(document).ready(() => {
                     city: components[0],
                     stateCode: components[1]
                 };
+            },
+
+            handleUpdatedInput: () => {
             }
         }
     };
@@ -42,7 +45,7 @@ $(document).ready(() => {
                     (cities, error) => {
                         const autocompleteItems = cities.map(city => new InputAutocompleteItem(
                             `${city.name}, ${city.stateCode}`,
-                            city
+                            city.name
                         ));
                         response(
                             autocompleteItems
@@ -70,7 +73,7 @@ $(document).ready(() => {
                     cityName,
                     stateCode,
                     (areaCodes, error) => {
-                        console.log(`Response: `, areaCodes);
+                        console.log(`Available area codes: `, areaCodes);
                         const autocompleteItems = areaCodes.map(areaCode => new InputAutocompleteItem(
                             `${areaCode} ${stateCode.toUpperCase()}`,
                             areaCode
