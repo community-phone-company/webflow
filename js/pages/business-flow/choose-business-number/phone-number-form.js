@@ -288,10 +288,7 @@ class PhoneNumberFormSearchField {
      * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     startObserving = () => {
-        /*this.input.oninput = () => {
-            this._selectedAutocompleteItem = undefined;
-            const newValue = this.input.value;
-            console.log(`Changed input value for "${this.input.id}": ${newValue}`);
+        const handleValueChange = (newValue) => {
             if (this._onQuery) {
                 this._onQuery(newValue, (autocompleteItems) => {
                     this.setAutocompleteItems(
@@ -303,8 +300,17 @@ class PhoneNumberFormSearchField {
             }
         };
 
+        this.input.oninput = () => {
+            this._selectedAutocompleteItem = undefined;
+            const newValue = this.input.value;
+            console.log(`Changed input value for "${this.input.id}": ${newValue}`);
+            handleValueChange(newValue);
+        };
+
         $(this.input).autocomplete({
             select: (event, ui) => {
+                console.log(`Selected autocomplete item for "${this.input.id}"`);
+                
                 const selectedItem = this.autocompleteItems.find(item => item.text === ui.item.label);
                 this._selectedAutocompleteItem = selectedItem;
 
@@ -313,10 +319,12 @@ class PhoneNumberFormSearchField {
                         selectedItem
                     );
                 }
-            }
-        });*/
 
-        const valueObserver = new InputValueObserver(this.input);
+                handleValueChange(this.input.value);
+            }
+        });
+
+        /*const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
             console.log(`Changed input value for ${this.input.id}: ${newValue}`);
             if (this._onQuery) {
@@ -328,7 +336,7 @@ class PhoneNumberFormSearchField {
             } else {
                 this.setAutocompleteItems([]);
             }
-        });
+        });*/
         this.valueObserver = valueObserver;
         console.log(`Started observing input value for ${this.input.id}`);
         return this;
