@@ -27,7 +27,18 @@ $(document).ready(() => {
                 };
             },
 
-            handleUpdatedInput: () => {
+            updateNumbers: () => {
+                const cityInputData = formData.methods.parseCityInput();
+
+                PhoneNumberManager.getNumbers(
+                    cityInputData.city,
+                    cityInputData.stateCode,
+                    formData.input.areaCode,
+                    formData.input.digits,
+                    (numbers, error) => {
+                        console.log(`Received ${numbers.length} numbers: ${numbers.map(number => number.number)}`);
+                    }
+                )
             }
         }
     };
@@ -35,6 +46,8 @@ $(document).ready(() => {
     const citySearchField = phoneNumberForm.getCitySearchField()
         .onQuery((query, response) => {
             formData.input.city = query;
+            areaCodeSearchField.refreshAutocompleteItemsForValue(formData.input.areaCode);
+            formData.methods.updateNumbers();
 
             if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
                 response([]);
@@ -60,6 +73,8 @@ $(document).ready(() => {
     const areaCodeSearchField = phoneNumberForm.getAreaCodeSearchField()
         .onQuery((query, response) => {
             formData.input.areaCode = query;
+            citySearchField.refreshAutocompleteItemsForValue(formData.input.city);
+            formData.methods.updateNumbers();
 
             if (query.length < IndexConfiguration.minimumAreaCodeLengthForSearch) {
                 response([]);

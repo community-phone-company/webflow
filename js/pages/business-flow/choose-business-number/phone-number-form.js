@@ -252,7 +252,12 @@ class PhoneNumberFormSearchField {
     setAutocompleteItems(items) {
         this.autocompleteItems = items;
         $(this.input).autocomplete({
-            source: items.map(item => item.text)
+            source: items.map(item => {
+                return {
+                    label: item.text,
+                    value: item.value
+                };
+            })
         });
         return this;
     }
@@ -271,11 +276,17 @@ class PhoneNumberFormSearchField {
                 this.setAutocompleteItems(
                     autocompleteItems
                 );
-                callback();
+                
+                if (callback) {
+                    callback();
+                }
             });
         } else {
             this.setAutocompleteItems([]);
-            callback();
+            
+            if (callback) {
+                callback();
+            }
         }
     }
 

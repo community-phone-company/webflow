@@ -70,7 +70,7 @@ class PhoneNumberManager {
      * @param {string} stateCode State code.
      * @param {string} areaCode Area code.
      * @param {string} digits Digits.
-     * @param {(number: PhoneNumber[], error: any | undefined) => void} callback Function that is called when response comes from the server.
+     * @param {(numbers: PhoneNumber[], error: any | undefined) => void} callback Function that is called when response comes from the server.
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
      */
     static getNumbers = (city, stateCode, areaCode, digits, callback) => {
