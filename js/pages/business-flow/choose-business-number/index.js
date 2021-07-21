@@ -19,7 +19,7 @@ $(document).ready(() => {
         lastCityFilterRequest: undefined,
         lastAreaCodeFilterRequest: undefined,
         methods: {
-            parseCityInput = () => {
+            parseCityInput: () => {
                 var input = formData.input.city;
                 while (input.indexOf(" ") > -1) { input = input.replace(" ", ""); }
                 const components = input.split(",");
