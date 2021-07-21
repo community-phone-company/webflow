@@ -330,7 +330,7 @@ class PhoneNumberFormSearchField {
             }
         });
         this.valueObserver = valueObserver;
-
+        console.log(`Started observing input value for ${this.input.id}`);
         return this;
     }
 
