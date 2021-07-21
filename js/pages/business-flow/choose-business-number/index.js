@@ -60,8 +60,7 @@ $(document).ready(() => {
         .setMenuExpandingOnFocus(true)
         .startObserving();
 
-    const areaCodeSearchField = phoneNumberForm.getAreaCodeSearchField();
-    areaCodeSearchField
+    const areaCodeSearchField = phoneNumberForm.getAreaCodeSearchField()
         .onQuery((query, response) => {
             formData.input.areaCode = query;
 
@@ -79,6 +78,7 @@ $(document).ready(() => {
                 const parsedInputData = formData.methods.parseCityInput();
                 const cityName = parsedInputData.city;
                 const stateCode = parsedInputData.stateCode;
+                console.log(`Parsed: `, parsedInputData);
                 formData.lastAreaCodeFilterRequest = PhoneNumberManager.getAreaCodes(
                     cityName,
                     stateCode,
