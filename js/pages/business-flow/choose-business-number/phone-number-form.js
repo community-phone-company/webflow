@@ -288,7 +288,7 @@ class PhoneNumberFormSearchField {
      * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
      */
     startObserving = () => {
-        this.input.oninput = () => {
+        /*this.input.oninput = () => {
             this._selectedAutocompleteItem = undefined;
             const newValue = this.input.value;
             console.log(`Changed input value for "${this.input.id}": ${newValue}`);
@@ -314,9 +314,9 @@ class PhoneNumberFormSearchField {
                     );
                 }
             }
-        });
+        });*/
 
-        /*const valueObserver = new InputValueObserver(this.input);
+        const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
             console.log(`Changed input value for ${this.input.id}: ${newValue}`);
             if (this._onQuery) {
@@ -331,7 +331,7 @@ class PhoneNumberFormSearchField {
         });
         this.valueObserver = valueObserver;
         console.log(`Started observing input value for ${this.input.id}`);
-        return this;*/
+        return this;
     }
 
     /**

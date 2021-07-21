@@ -33,7 +33,7 @@ $(document).ready(() => {
     
     const citySearchField = phoneNumberForm.getCitySearchField()
         .onQuery((query, response) => {
-            formData.city = query;
+            formData.input.city = query;
 
             if (formData.lastCityFilterRequest) {
                 formData.lastCityFilterRequest.abort();
