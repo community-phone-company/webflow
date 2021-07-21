@@ -32,34 +32,33 @@ $(document).ready(() => {
     };
     
     const citySearchField = phoneNumberForm.getCitySearchField();
-    citySearchField
-        .onQuery((query, response) => {
-            formData.city = query;
+    citySearchField.onQuery((query, response) => {
+        formData.city = query;
 
-            if (formData.lastCityFilterRequest) {
-                formData.lastCityFilterRequest.abort();
-                formData.lastCityFilterRequest = undefined;
-            }
+        if (formData.lastCityFilterRequest) {
+            formData.lastCityFilterRequest.abort();
+            formData.lastCityFilterRequest = undefined;
+        }
 
-            if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
-                response([]);
-            } else {
-                formData.lastCityFilterRequest = PhoneNumberManager.getCities(
-                    query,
-                    (cities, error) => {
-                        const autocompleteItems = cities.map(city => new InputAutocompleteItem(
-                            `${city.name}, ${city.stateCode}`,
-                            city
-                        ));
-                        response(
-                            autocompleteItems
-                        );
-                    }
-                );
-            }
-        })
-        .setMenuExpandingOnFocus(true)
-        .startObserving();
+        if (query.length < IndexConfiguration.minimumCityLengthForSearch) {
+            response([]);
+        } else {
+            formData.lastCityFilterRequest = PhoneNumberManager.getCities(
+                query,
+                (cities, error) => {
+                    const autocompleteItems = cities.map(city => new InputAutocompleteItem(
+                        `${city.name}, ${city.stateCode}`,
+                        city
+                    ));
+                    response(
+                        autocompleteItems
+                    );
+                }
+            );
+        }
+    });
+    citySearchField.setMenuExpandingOnFocus(true);
+    citySearchField.startObserving();
 
     const areaCodeSearchField = phoneNumberForm.getAreaCodeSearchField();
     areaCodeSearchField
