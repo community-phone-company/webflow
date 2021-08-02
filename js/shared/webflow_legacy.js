@@ -127,6 +127,7 @@ $(document).ready(function () {
 
 
         let is_valid = handleValidateCheckoutForm(first_name, last_name, address_1, city, zip_code, s_first_name, s_last_name, s_address_1, s_city, s_zip_code, card_number, card_expiry, card_cvv)
+        console.log("Is valid: ", is_valid);
 
         if (is_valid) {
             let cp_checkout_payload = localStorage.getItem("cp_checkout_payload")
