@@ -95,6 +95,7 @@ $(document).ready(function () {
 
 
     $(".buy_now_checkout").on("click", function (e) {
+        console.log(`Clicked Buy Now`);
         e.preventDefault()
         let s_first_name = $(".shipping_first_name").val()
         let s_last_name = $(".shipping_last_name").val()
@@ -126,6 +127,7 @@ $(document).ready(function () {
         $(".buy_now_checkout").val("Please wait....")
 
 
+        console.log(`Before checking data`);
         let is_valid = handleValidateCheckoutForm(first_name, last_name, address_1, city, zip_code, s_first_name, s_last_name, s_address_1, s_city, s_zip_code, card_number, card_expiry, card_cvv)
         console.log("Is valid: ", is_valid);
 
