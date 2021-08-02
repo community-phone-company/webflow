@@ -92,7 +92,7 @@ $(document).ready(function () {
 
     handleCardCvv()
 
-    const submitButton = document.getElementById("submit-button");
+    const submitButton = document.querySelectorAll("input#submit-button.buy_now_checkout")[0];
 
     $(submitButton).on("click", function (event) {
         event.preventDefault();
