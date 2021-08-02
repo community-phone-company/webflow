@@ -132,6 +132,8 @@ $(document).ready(function () {
             let cp_checkout_payload = localStorage.getItem("cp_checkout_payload")
 
             if (cp_checkout_payload != null) {
+                console.log("Branch 1")
+
                 let current_payload = JSON.parse(cp_checkout_payload)
                 let shipping_address = {}
                 let billing_address = {}
@@ -219,6 +221,7 @@ $(document).ready(function () {
 
                 // window.location.href = "/checkout-landline/checkout-step"
             } else {
+                console.log("Branch 2")
                 // must have skipped first step
                 alert("Please select your plan")
                 window.location.href = "/checkout-landline/choose-a-plan"
