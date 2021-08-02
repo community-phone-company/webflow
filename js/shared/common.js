@@ -36,6 +36,6 @@ logger.setBlockedDomains([
         HotjarIntegration.send({
             "Email": emailToSend
         });
-        console.log(`Hotjar: ${emailToSend}`);
+        logger.print(`Hotjar: ${emailToSend}`);
     }
 })();
