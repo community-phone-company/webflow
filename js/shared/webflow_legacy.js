@@ -184,7 +184,7 @@ $(document).ready(function () {
                             $(".buy_now_checkout").val("Buy Now")
                             // window.location.href = "/checkout-landline/thank-you"
                         } else {
-                            ActiveCampaignIntegration.createOrUpdateContact(
+                            /*ActiveCampaignIntegration.createOrUpdateContact(
                                 new ActiveCampaignContact(
                                     Store.local.read(
                                         Store.keys.checkoutFlow.email
@@ -203,7 +203,8 @@ $(document).ready(function () {
                                 (response, error, success) => {
                                     window.location.href = "/checkout-landline/thank-you";
                                 }
-                            )
+                            )*/
+                            window.location.href = "/checkout-landline/thank-you";
                         }
                     },
                     error: function (error) {
