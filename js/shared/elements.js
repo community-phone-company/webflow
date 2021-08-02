@@ -17,10 +17,10 @@ $(document).ready(function () {
 
     $("#monthly-plan").on("click", function (e) {
         e.preventDefault()
-        console.log("*********************************M")
+        logger.print("*********************************M")
         var current_selection = localStorage.getItem("cp_selected_plan")
         var text_on_tab = $(this).data("plantype")
-        console.log(text_on_tab, "----")
+        logger.print(text_on_tab, "----")
 
         localStorage.setItem("cp_selected_plan", text_on_tab)
 
@@ -29,10 +29,10 @@ $(document).ready(function () {
 
     $("#annual-plan").on("click", function (e) {
         e.preventDefault()
-        console.log("*********************************A")
+        logger.print("*********************************A")
 
         var text_on_tab = $(this).data("plantype")
-        console.log(text_on_tab, "00000000")
+        logger.print(text_on_tab, "00000000")
 
         localStorage.setItem("cp_selected_plan", text_on_tab)
 
@@ -40,10 +40,10 @@ $(document).ready(function () {
 
     $("#monthly-plan-p").on("click", function (e) {
         e.preventDefault()
-        console.log("*********************************M")
+        logger.print("*********************************M")
         var current_selection = localStorage.getItem("cp_selected_plan")
         var text_on_tab = $(this).data("plantype")
-        console.log(text_on_tab, "----")
+        logger.print(text_on_tab, "----")
 
         localStorage.setItem("cp_selected_plan", text_on_tab)
 
@@ -52,10 +52,10 @@ $(document).ready(function () {
 
     $("#annual-plan-p").on("click", function (e) {
         e.preventDefault()
-        console.log("*********************************A")
+        logger.print("*********************************A")
 
         var text_on_tab = $(this).data("plantype")
-        console.log(text_on_tab, "00000000")
+        logger.print(text_on_tab, "00000000")
 
         localStorage.setItem("cp_selected_plan", text_on_tab)
 
@@ -68,7 +68,7 @@ $(document).ready(function () {
         localStorage.setItem("cp_addons", JSON.stringify(cp_order_summary))
 
         total_cost = $(".device-")
-        console.log("clicked handset", handset_is_selected)
+        logger.print("clicked handset", handset_is_selected)
     })
 
 
@@ -77,6 +77,6 @@ $(document).ready(function () {
         insuarance_is_selected = !insuarance_is_selected
         cp_order_summary["insuarance_is_selected"] = insuarance_is_selected
         localStorage.setItem("cp_addons", JSON.stringify(cp_order_summary))
-        console.log("clicked insuarance", insuarance_is_selected)
+        logger.print("clicked insuarance", insuarance_is_selected)
     })
 })

@@ -39,5 +39,5 @@ class InputValueObserver {
 }
 
 const InputValueObserverConfiguration = Object.freeze({
-    timerInterval: 200
+    timerInterval: 20
 });

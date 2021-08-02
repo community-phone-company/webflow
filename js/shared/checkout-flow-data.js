@@ -1,32 +1,4 @@
 /**
- * Enumeration of store keys used for checkout flow data.
- */
-const CheckoutFlowStoreKey = Object.freeze({
-    getNewNumber: "checkout-flow-get-new-number",
-    period: "checkout-flow-period",
-    addHandsetPhone: "checkout-flow-add-handset-phone",
-    addInsurance: "checkout-flow-add-insurance",
-    firstName: "checkout-flow-first-name",
-    lastName: "checkout-flow-last-name",
-    phone: "checkout-flow-phone",
-    email: "checkout-flow-email",
-    shippingAddress_firstName: "checkout-flow-shipping-address-first-name",
-    shippingAddress_lastName: "checkout-flow-shipping-address-last-name",
-    shippingAddress_addressLine1: "checkout-flow-shipping-address-address-line-1",
-    shippingAddress_addressLine2: "checkout-flow-shipping-address-address-line-2",
-    shippingAddress_city: "checkout-flow-shipping-address-city",
-    shippingAddress_zip: "checkout-flow-shipping-address-zip",
-    shippingAddress_state: "checkout-flow-shipping-address-state",
-    billingAddress_firstName: "checkout-flow-billing-address-first-name",
-    billingAddress_lastName: "checkout-flow-billing-address-last-name",
-    billingAddress_addressLine1: "checkout-flow-billing-address-address-line-1",
-    billingAddress_addressLine2: "checkout-flow-billing-address-address-line-2",
-    billingAddress_city: "checkout-flow-billing-address-city",
-    billingAddress_zip: "checkout-flow-billing-address-zip",
-    billingAddress_state: "checkout-flow-billing-address-state",
-});
-
-/**
  * Exports data stored in the local storage to Active Campaign.
  * @param {(response: any, error: any, success: boolean) => void} callback Function that is called when request to Active Campaign API is finished.
  * @returns {XMLHttpRequest} Request instance.
@@ -34,10 +6,10 @@ const CheckoutFlowStoreKey = Object.freeze({
 const exportCheckoutFlowDataToActiveCampaign = (callback) => {
     return ActiveCampaignIntegration.createOrUpdateContact(
         new ActiveCampaignContact(
-            Store.local.read(CheckoutFlowStoreKey.email),
-            Store.local.read(CheckoutFlowStoreKey.firstName),
-            Store.local.read(CheckoutFlowStoreKey.lastName),
-            Store.local.read(CheckoutFlowStoreKey.phone),
+            Store.local.read(Store.keys.checkoutFlow.email),
+            Store.local.read(Store.keys.checkoutFlow.firstName),
+            Store.local.read(Store.keys.checkoutFlow.lastName),
+            Store.local.read(Store.keys.checkoutFlow.phone),
             [
                 new ActiveCampaignContactCustomField(
                     "From checkout flow",
@@ -45,78 +17,79 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
                 ),
                 new ActiveCampaignContactCustomField(
                     "Get a new number",
-                    Store.local.read(CheckoutFlowStoreKey.getNewNumber)
+                    Store.local.read(Store.keys.checkoutFlow.getNewNumber)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Period",
-                    Store.local.read(CheckoutFlowStoreKey.period)
+                    Store.local.read(Store.keys.checkoutFlow.period)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Add a handset / phone",
-                    Store.local.read(CheckoutFlowStoreKey.addHandsetPhone)
+                    Store.local.read(Store.keys.checkoutFlow.addHandsetPhone)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Add insurance",
-                    Store.local.read(CheckoutFlowStoreKey.addInsurance)
+                    Store.local.read(Store.keys.checkoutFlow.addInsurance)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address first name",
-                    Store.local.read(CheckoutFlowStoreKey.shippingAddress_firstName)
+                    Store.local.read(Store.keys.checkoutFlow.shippingAddress_firstName)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address last name",
-                    Store.local.read(CheckoutFlowStoreKey.shippingAddress_lastName)
+                    Store.local.read(Store.keys.checkoutFlow.shippingAddress_lastName)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address address line 1",
-                    Store.local.read(CheckoutFlowStoreKey.shippingAddress_addressLine1)
+                    Store.local.read(Store.keys.checkoutFlow.shippingAddress_addressLine1)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address address line 2",
-                    Store.local.read(CheckoutFlowStoreKey.shippingAddress_addressLine2)
+                    Store.local.read(Store.keys.checkoutFlow.shippingAddress_addressLine2)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address city",
-                    Store.local.read(CheckoutFlowStoreKey.shippingAddress_city)
+                    Store.local.read(Store.keys.checkoutFlow.shippingAddress_city)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address zip",
-                    Store.local.read(CheckoutFlowStoreKey.shippingAddress_zip)
+                    Store.local.read(Store.keys.checkoutFlow.shippingAddress_zip)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address state",
-                    Store.local.read(CheckoutFlowStoreKey.shippingAddress_state)
+                    Store.local.read(Store.keys.checkoutFlow.shippingAddress_state)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Billing address first name",
-                    Store.local.read(CheckoutFlowStoreKey.billingAddress_firstName)
+                    Store.local.read(Store.keys.checkoutFlow.billingAddress_firstName)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Billing address last name",
-                    Store.local.read(CheckoutFlowStoreKey.billingAddress_lastName)
+                    Store.local.read(Store.keys.checkoutFlow.billingAddress_lastName)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Billing address address line 1",
-                    Store.local.read(CheckoutFlowStoreKey.billingAddress_addressLine1)
+                    Store.local.read(Store.keys.checkoutFlow.billingAddress_addressLine1)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Billing address address line 2",
-                    Store.local.read(CheckoutFlowStoreKey.billingAddress_addressLine2)
+                    Store.local.read(Store.keys.checkoutFlow.billingAddress_addressLine2)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Billing address city",
-                    Store.local.read(CheckoutFlowStoreKey.billingAddress_city)
+                    Store.local.read(Store.keys.checkoutFlow.billingAddress_city)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Billing address zip",
-                    Store.local.read(CheckoutFlowStoreKey.billingAddress_zip)
+                    Store.local.read(Store.keys.checkoutFlow.billingAddress_zip)
                 ),
                 new ActiveCampaignContactCustomField(
                     "Billing address state",
-                    Store.local.read(CheckoutFlowStoreKey.billingAddress_state)
-                ),
+                    Store.local.read(Store.keys.checkoutFlow.billingAddress_state)
+                )
             ]
         ),
+        ActiveCampaignList.chargebeeAbandonedCarts(),
         (response, error, success) => {
             if (callback) {
                 callback();

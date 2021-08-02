@@ -28,7 +28,7 @@ $(document).ready(() => {
         checkZipOnChange(
             form.getZipInput(),
             (zip) => {
-                console.log(`sending zip code: ${zip}`);
+                logger.print(`sending zip code: ${zip}`);
                 form.setState(
                     ZipFormState.withMode(
                         ZipFormStateMode.loading
@@ -36,7 +36,7 @@ $(document).ready(() => {
                 );
             },
             (zip, response, isValid) => {
-                console.log(`zip: ${zip}\nresponse: ${response}\nisValid: ${isValid}`)
+                logger.print(`zip: ${zip}\nresponse: ${response}\nisValid: ${isValid}`)
 
                 /**
                  * This is a temporary workaround.

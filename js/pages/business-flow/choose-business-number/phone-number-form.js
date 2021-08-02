@@ -60,6 +60,7 @@ class PhoneNumberForm {
     }
 
     /**
+     * City search field.
      * @returns {PhoneNumberFormSearchField} Instance of {@link PhoneNumberFormSearchField} type.
      */
     getCitySearchField = () => {
@@ -98,9 +99,10 @@ class PhoneNumberForm {
     }
 
     /**
+     * Area code search field.
      * @returns {PhoneNumberFormSearchField} Instance of {@link PhoneNumberFormSearchField} type.
      */
-     getAreaCodeSearchField = () => {
+    getAreaCodeSearchField = () => {
         if (!this._areaCodeSearchField) {
             this._areaCodeSearchField = new PhoneNumberFormSearchField(
                 this.getAreaCodeInput()
@@ -136,41 +138,55 @@ class PhoneNumberForm {
     }
 
     /**
-     * @returns {PhoneNumberFormSearchField} Instance of {@link PhoneNumberFormSearchField} type.
+     * Toll free switcher.
+     * @returns {Switcher} Instance of {@link Switcher} type.
      */
-    getDigitsSearchField = () => {
-        if (!this._digitsSearchField) {
-            this._digitsSearchField = new PhoneNumberFormSearchField(
-                this.getDigitsInput()
+    getTollFreeSwitcher = () => {
+        if (!this._tollFreeSwitcher) {
+            const selector = "#toll-free-switcher";
+            const switcherDiv = this.getForm().querySelectorAll(selector)[0];
+
+            if (!(switcherDiv instanceof HTMLDivElement)) {
+                throw new Error(`${selector} is not an HTMLDivElement.`);
+            }
+
+            this._tollFreeSwitcher = new Switcher(
+                switcherDiv,
+                false
             );
         }
-
-        return this._digitsSearchField;
+        
+        return this._tollFreeSwitcher;
     }
 
     /**
-     * Toll free switcher.
-     * @returns {HTMLDivElement} `HTMLDivElement` instance.
+     * Location link.
+     * @returns {HTMLAnchorElement} `HTMLAnchorElement` instance.
      */
-    getTollFreeSwitcher = () => {
-        /**
-         * Some kind of lazy load implementation.
-         * Once we call this method, it will remember the element
-         * so we won't need to search it again over the entire document.
-         */
-        if (this._tollFreeSwitcher) {
-            return this._tollFreeSwitcher;
+    getLocationLink = () => {
+        if (!this._locationLink) {
+            const selector = "#link-location";
+            const locationLink = this.getForm().querySelectorAll(selector)[0];
+
+            if (!(locationLink instanceof HTMLAnchorElement)) {
+                throw new Error(`${selector} is not an HTMLAnchorElement.`);
+            }
+
+            this._locationLink = locationLink;
         }
 
-        const selector = ".switcher";
-        const switcher = this.getForm().querySelectorAll(selector)[0];
-        
-        if (switcher instanceof HTMLDivElement) {
-            this._tollFreeSwitcher = switcher;
-            return switcher;
-        } else {
-            throw new Error(`${selector} is not an HTMLDivElement.`);
-        }
+        return this._locationLink;
+    }
+
+    /**
+     * Updates visiblity of the location link.
+     * @param {boolean} visible Defines whether the location link should be visible.
+     */
+    setLocationLinkVisible = (visible) => {
+        $(this.getLocationLink()).css(
+            "visibility",
+            visible ? "visible" : "hidden"
+        );
     }
 
     /**
@@ -207,10 +223,53 @@ class PhoneNumberForm {
     }
 
     /**
+     * Available numbers container.
+     * @returns {HTMLDivElement} `HTMLDivElement` instance.
+     */
+    getAvailableNumbersContainer = () => {
+        if (!this._availableNumbersContainer) {
+            this._availableNumbersContainer = this.getForm().querySelectorAll("div#available-numbers")[0];
+        }
+
+        return this._availableNumbersContainer;
+    }
+
+    /**
+     * Empty state container.
+     * @returns {HTMLDivElement} `HTMLDivElement` instance.
+     */
+    getEmptyStateContainer = () => {
+        if (!this._emptyStateDiv) {
+            this._emptyStateDiv = this.getForm().querySelectorAll("div#phone-numbers-empty-state")[0];
+        }
+
+        return this._emptyStateDiv;
+    }
+
+    /**
+     * @param {boolean} visible 
+     */
+    setEmptyStateVisible = (visible) => {
+        if (visible) {
+            $(this.getAvailableNumbersContainer()).hide();
+            $(this.getForm()).find("#available-numbers-title").hide();
+            $(this.getForm()).find("#available-numbers-subtitle").hide();
+            $(this.getEmptyStateContainer()).show();
+            $(this.getSubmitButton()).hide();
+        } else {
+            $(this.getAvailableNumbersContainer()).show();
+            $(this.getForm()).find("#available-numbers-title").show();
+            $(this.getForm()).find("#available-numbers-subtitle").show();
+            $(this.getEmptyStateContainer()).hide();
+            $(this.getSubmitButton()).show();
+        }
+    }
+
+    /**
      * Submit button.
      * @returns {HTMLInputElement} `HTMLInputElement` instance.
      */
-     getSubmitButton = () => {
+    getSubmitButton = () => {
         /**
          * Some kind of lazy load implementation.
          * Once we call this method, it will remember the element
@@ -220,7 +279,7 @@ class PhoneNumberForm {
             return this._submitButton;
         }
 
-        const selector = "input[type='submit']";
+        const selector = "#submit-button";
         const input = this.getForm().querySelectorAll(selector)[0];
         
         if (input instanceof HTMLInputElement) {
@@ -241,21 +300,22 @@ class PhoneNumberFormSearchField {
     constructor(input) {
         this.input = input;
         this.setAutocompleteItems([]);
+        this._refreshAutocompleteItemsAutomatically = false;
         this._onQuery = undefined;
         this._onSelectedAutocompleteItem = undefined;
     }
 
     /**
      * @param {InputAutocompleteItem[]} items Autocomplete items.
-     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhoneNumberFormSearchField} instance.
      */
     setAutocompleteItems(items) {
         this.autocompleteItems = items;
         $(this.input).autocomplete({
             source: items.map(item => {
                 return {
-                    label: item.text,
-                    value: item.value
+                    label: ` ${item.text.trimStart()}`,
+                    value: item.text.trimStart()
                 };
             })
         });
@@ -291,6 +351,17 @@ class PhoneNumberFormSearchField {
     }
 
     /**
+     * Defines whether autocomplete items should be refreshed automatically
+     * every time when input value has changed.
+     * @param {boolean} refresh If `true`, autocomplete items will be automatically refreshed.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhoneNumberFormSearchField} instance.
+     */
+    refreshAutocompleteItemsAutomatically = (refresh) => {
+        this._refreshAutocompleteItemsAutomatically = refresh;
+        return this;
+    };
+
+    /**
      * @returns {InputAutocompleteItem | undefined} Instance of {@link InputAutocompleteItem} type or `undefined`.
      */
     getSelectedAutocompleteItem = () => {
@@ -305,7 +376,7 @@ class PhoneNumberFormSearchField {
 
     /**
      * @param {boolean} expanding 
-     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhoneNumberFormSearchField} instance.
      */
     setMenuExpandingOnFocus = (expanding) => {
         this._expandingMenuOnFocus = expanding;
@@ -313,7 +384,7 @@ class PhoneNumberFormSearchField {
             if (this._expandingMenuOnFocus) {
                 $(this.input).autocomplete(
                     "search",
-                    this.input.value
+                    this.input.value.length ? this.input.value : " "
                 );
             }
         };
@@ -321,14 +392,14 @@ class PhoneNumberFormSearchField {
     }
 
     /**
-     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhoneNumberFormSearchField} instance.
      */
     startObserving = () => {
         $(this.input).autocomplete({
             select: (event, ui) => {
-                console.log(`Selected autocomplete item for "${this.input.id}"`);
+                logger.print(`Selected autocomplete item for "${this.input.id}"`);
                 
-                const selectedItem = this.autocompleteItems.find(item => item.text === ui.item.label);
+                const selectedItem = this.autocompleteItems.find(item => item.text === ui.item.text);
                 this._selectedAutocompleteItem = selectedItem;
 
                 if (this._onSelectedAutocompleteItem) {
@@ -341,20 +412,27 @@ class PhoneNumberFormSearchField {
 
         const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
-            console.log(`Changed input value for ${this.input.id}: ${newValue}`);
-            this.refreshAutocompleteItemsForValue(
-                newValue,
-                () => {
-                }
-            );
+            logger.print(`Changed input value for ${this.input.id}: ${newValue}`);
+            
+            if (this._onValueChanged) {
+                this._onValueChanged(newValue);
+            }
+
+            if (this._refreshAutocompleteItemsAutomatically) {
+                this.refreshAutocompleteItemsForValue(
+                    newValue,
+                    () => {
+                    }
+                );
+            }
         });
         this.valueObserver = valueObserver;
-        console.log(`Started observing input value for ${this.input.id}`);
+        logger.print(`Started observing input value for ${this.input.id}`);
         return this;
     }
 
     /**
-     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhoneNumberFormSearchField} instance.
      */
     stopObserving = () => {
         if (this.valueObserver) {
@@ -366,8 +444,17 @@ class PhoneNumberFormSearchField {
     }
 
     /**
+     * @param {(newValue: string) => void} handler Function that is called when value has changed.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhoneNumberFormSearchField} instance.
+     */
+    onValueChanged = (handler) => {
+        this._onValueChanged = handler;
+        return this;
+    }
+
+    /**
      * @param {(query: string, response: (autocompleteItems: InputAutocompleteItem[]) => void) => (XMLHttpRequest | undefined)} handler 
-     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhonPhoneNumberFormSearchFieldeNumberForm} instance.
      */
     onQuery = (handler) => {
         this._onQuery = handler;
@@ -376,7 +463,7 @@ class PhoneNumberFormSearchField {
 
     /**
      * @param {(item: InputAutocompleteItem) => void} handler 
-     * @returns {PhoneNumberForm} Current {@link PhoneNumberForm} instance.
+     * @returns {PhoneNumberFormSearchField} Current {@link PhoneNumberFormSearchField} instance.
      */
     onSelectedAutocompleteItem = (handler) => {
         this._onSelectedAutocompleteItem = handler;
@@ -450,10 +537,10 @@ class PhoneNumberFormColumnItem {
      */
     toHTML = () => {
         return `
-            <div class="phone-number">
+            <div class="phone-number" phone-number="${this.phone}">
                 <div class="columns-8 w-row">
                     <div class="column-9 w-col w-col-2">
-                        <div class="div-block-11">
+                        <div class="div-radio-button">
                         </div>
                     </div>
                     <div class="w-col w-col-5">
@@ -463,7 +550,18 @@ class PhoneNumberFormColumnItem {
                     </div>
                     <div class="w-col w-col-5">
                         <div class="txt-lacation">
-                            ${this.city}, ${this.stateCode}
+                            ${
+                                (() => {
+                                    const city = this.city ?? ""
+                                    const stateCode = this.stateCode ?? ""
+                                    
+                                    if (city.length && stateCode.length) {
+                                        return `${city}, ${stateCode}`;
+                                    } else {
+                                        return "";
+                                    }
+                                })()
+                            }
                         </div>
                     </div>
                 </div>

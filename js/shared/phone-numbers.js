@@ -27,7 +27,7 @@ class PhoneNumberManager {
                 }
             },
             error: function (error) {
-                console.log(`Error: `, error);
+                logger.print(`Error: `, error);
                 callback([], error);
             }
         });
@@ -37,17 +37,19 @@ class PhoneNumberManager {
      * Finds area codes using city and state code.
      * @param {string} city City.
      * @param {string} stateCode State code.
+     * @param {boolean} tollFreeOnly Toll free only.
      * @param {(areaCodes: string[], error: any | undefined) => void} callback Function that is called when response comes from the server.
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
      */
-    static getAreaCodes = (city, stateCode, callback) => {
+    static getAreaCodes = (city, stateCode, tollFreeOnly, callback) => {
         return $.ajax({
             method: "GET",
             url: `https://landline.phone.community/api/v1/search/city/areacodes`,
             dataType: 'json',
             data: {
                 "city": city,
-                "stateCode": stateCode
+                "stateCode": stateCode,
+                ...tollFreeOnly ? {"tollFree": true} : undefined
             },
             success: function (response) {
                 if (response) {
@@ -58,7 +60,7 @@ class PhoneNumberManager {
                 }
             },
             error: function (error) {
-                console.log(`Error: `, error);
+                logger.print(`Error: `, error);
                 callback([], error);
             }
         });
@@ -70,10 +72,12 @@ class PhoneNumberManager {
      * @param {string} stateCode State code.
      * @param {string} areaCode Area code.
      * @param {string} digits Digits.
+     * @param {boolean} tollFreeOnly Toll free only.
      * @param {(numbers: PhoneNumber[], error: any | undefined) => void} callback Function that is called when response comes from the server.
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
      */
-    static getNumbers = (city, stateCode, areaCode, digits, callback) => {
+    static getNumbers = (city, stateCode, areaCode, digits, tollFreeOnly, callback) => {
+        logger.print(`getNumbers request\ncity: ${city}\nstateCode: ${stateCode}\nareaCode: ${areaCode}\ndigits: ${digits}`);
         return $.ajax({
             method: "GET",
             url: `https://landline.phone.community/api/v1/search/numbers`,
@@ -82,20 +86,50 @@ class PhoneNumberManager {
                 "city": city,
                 "stateCode": stateCode,
                 "areaCode": areaCode,
-                "numberContains": digits
+                "numberContains": digits,
+                ...tollFreeOnly ? {"tollFree": true} : undefined
             },
             success: function (response) {
-                if (response) {
-                    const numbers = (response.numbers ?? []).map(number => {
-                    });
-                    callback(areaCodes, undefined);
-                } else {
-                    callback([], undefined);
-                }
+                logger.print(`getNumbers response: `, response);
+                const numbers = response.numbers.map(element => new PhoneNumber(
+                    element.area_code,
+                    element.number,
+                    element.city,
+                    element.state_code
+                ));
+                callback(numbers, undefined);
             },
             error: function (error) {
-                console.log(`Error: `, error);
+                logger.print(`Error: `, error);
                 callback([], error);
+            }
+        });
+    }
+
+    /**
+     * Retrieves user's location based on IP address.
+     * @param {(city: City | undefined, error: any) => void} callback Function that is called when response comes from the server.
+     * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
+     */
+    static getUserLocation = (callback) => {
+        return $.ajax({
+            method: "GET",
+            url: "https://landline.phone.community/api/v1/search/user/current-location",
+            dataType: 'json',
+            data: {},
+            success: function (response) {
+                const cityName = response.city;
+                const stateCode = response.state_code;
+                const city = new City(
+                    cityName,
+                    stateCode,
+                    []
+                );
+                callback(city, undefined);
+            },
+            error: function (error) {
+                logger.print(`Error: `, error);
+                callback(undefined, error);
             }
         });
     }

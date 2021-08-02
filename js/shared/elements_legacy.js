@@ -18,10 +18,10 @@ localStorage.setItem("cp_selected_plan", text_on_tab)
 
 $("#monthly-plan").on("click", function(e) {
     e.preventDefault()
-    console.log("*********************************M")
+    logger.print("*********************************M")
     var current_selection = localStorage.getItem("cp_selected_plan")
     var text_on_tab = $(this).data("plantype")
-    console.log(text_on_tab, "----")
+    logger.print(text_on_tab, "----")
         
     localStorage.setItem("cp_selected_plan", text_on_tab)
     
@@ -30,10 +30,10 @@ $("#monthly-plan").on("click", function(e) {
 
 $("#annual-plan").on("click", function(e) {
     e.preventDefault()
-    console.log("*********************************A")
+    logger.print("*********************************A")
     
     var text_on_tab = $(this).data("plantype")
-    console.log(text_on_tab, "00000000")
+    logger.print(text_on_tab, "00000000")
         
     localStorage.setItem("cp_selected_plan", text_on_tab)
     
@@ -41,10 +41,10 @@ $("#annual-plan").on("click", function(e) {
 
 $("#monthly-plan-p").on("click", function(e) {
     e.preventDefault()
-    console.log("*********************************M")
+    logger.print("*********************************M")
     var current_selection = localStorage.getItem("cp_selected_plan")
     var text_on_tab = $(this).data("plantype")
-    console.log(text_on_tab, "----")
+    logger.print(text_on_tab, "----")
         
     localStorage.setItem("cp_selected_plan", text_on_tab)
     
@@ -53,10 +53,10 @@ $("#monthly-plan-p").on("click", function(e) {
 
 $("#annual-plan-p").on("click", function(e) {
     e.preventDefault()
-    console.log("*********************************A")
+    logger.print("*********************************A")
     
     var text_on_tab = $(this).data("plantype")
-    console.log(text_on_tab, "00000000")
+    logger.print(text_on_tab, "00000000")
         
     localStorage.setItem("cp_selected_plan", text_on_tab)
     
@@ -69,7 +69,7 @@ $("#annual-plan-p").on("click", function(e) {
         localStorage.setItem("cp_addons", JSON.stringify(cp_order_summary))
 
         total_cost = $(".device-")
-        console.log("clicked handset", handset_is_selected)
+        logger.print("clicked handset", handset_is_selected)
     })
 
 
@@ -78,7 +78,7 @@ $("#annual-plan-p").on("click", function(e) {
         insuarance_is_selected = !insuarance_is_selected
         cp_order_summary["insuarance_is_selected"] = insuarance_is_selected
         localStorage.setItem("cp_addons", JSON.stringify(cp_order_summary))
-        console.log("clicked insuarance", insuarance_is_selected)
+        logger.print("clicked insuarance", insuarance_is_selected)
     })
 
     
@@ -108,8 +108,8 @@ $("#annual-plan-p").on("click", function(e) {
                     $(".coverage_response").css("margin-top", "0")
                 },
                 error: function(error) {
-                    console.log("************************************")
-                    console.log(error)
+                    logger.print("************************************")
+                    logger.print(error)
                 }
             })
             // $.ajax({
@@ -136,8 +136,8 @@ $("#annual-plan-p").on("click", function(e) {
             //         $(".coverage_response").css("margin-top", "0")
             //     },
             //     error: function(error) {
-            //         console.log("************************************")
-            //         console.log(error)
+            //         logger.print("************************************")
+            //         logger.print(error)
             //     }
             // })
         } else {
@@ -175,8 +175,8 @@ $("#annual-plan-p").on("click", function(e) {
                     $(".coverage_response").css("margin-top", "0")
                 },
                 error: function(error) {
-                    console.log("************************************")
-                    console.log(error)
+                    logger.print("************************************")
+                    logger.print(error)
                 }
             })
             // $.ajax({
@@ -203,8 +203,8 @@ $("#annual-plan-p").on("click", function(e) {
             //         $(".coverage_response").css("margin-top", "0")
             //     },
             //     error: function(error) {
-            //         console.log("************************************")
-            //         console.log(error)
+            //         logger.print("************************************")
+            //         logger.print(error)
             //     }
             // })
         } else {

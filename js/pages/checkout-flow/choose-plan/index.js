@@ -7,7 +7,7 @@ $(document).ready(() => {
 
     $(submitButton).on("click", (event) => {
         const getNewNumber = $(".tabs_phonenumber_service .tab-new-number").hasClass("w--current") ? "Yes" : "No";
-        Store.local.write(CheckoutFlowStoreKey.getNewNumber, getNewNumber);
+        Store.local.write(Store.keys.checkoutFlow.getNewNumber, getNewNumber);
 
         const period = (() => {
             const monthly = $("#monthly-plan").hasClass("w--current");
@@ -21,13 +21,13 @@ $(document).ready(() => {
                 return "";
             }
         })();
-        Store.local.write(CheckoutFlowStoreKey.period, period);
+        Store.local.write(Store.keys.checkoutFlow.period, period);
 
         const addHandsetPhone = undefined;
-        Store.local.write(CheckoutFlowStoreKey.addHandsetPhone, addHandsetPhone);
+        Store.local.write(Store.keys.checkoutFlow.addHandsetPhone, addHandsetPhone);
 
         const addInsurance = undefined;
-        Store.local.write(CheckoutFlowStoreKey.addInsurance, addInsurance);
+        Store.local.write(Store.keys.checkoutFlow.addInsurance, addInsurance);
     });
 
     /**
@@ -35,7 +35,7 @@ $(document).ready(() => {
      */
     exportCheckoutFlowDataToActiveCampaign(
         (response, error, success) => {
-            console.log("Active Campaign");
+            logger.print("Active Campaign");
         }
     );
 });

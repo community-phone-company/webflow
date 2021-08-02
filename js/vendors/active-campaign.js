@@ -1,4 +1,34 @@
 /**
+ * Active Campaign list.
+ */
+class ActiveCampaignList {
+
+    static chargebeeAbandonedCarts = () => {
+        return new ActiveCampaignList(
+            "Chargebee abandoned carts",
+            "https://hooks.zapier.com/hooks/catch/10210393/b209e9x/"
+        );
+    }
+
+    static chooseNumber = () => {
+        return new ActiveCampaignList(
+            "Choose number",
+            "https://hooks.zapier.com/hooks/catch/10558854/b2lg463/"
+        );
+    }
+
+    /**
+     * @constructor
+     * @param {string} name List name.
+     * @param {string} webhookUrl Zapier webhook URL.
+     */
+    constructor(name, webhookUrl) {
+        this.name = name;
+        this.webhookUrl = webhookUrl;
+    }
+}
+
+/**
  * Class made for a simple integration of Active Campaign functionality.
  */
 class ActiveCampaignIntegration {
@@ -7,17 +37,27 @@ class ActiveCampaignIntegration {
      * Creates or updates existing contact.
      * Active Campaign API reference: https://developers.activecampaign.com/reference#create-or-update-contact-new
      * @param {ActiveCampaignContact} contact Contact data.
+     * @param {ActiveCampaignList} list List.
      * @param {(response: any, error: any, success: boolean) => void} callback Function that is called when response comes from the server.
-     * @returns {XMLHttpRequest} Request instance.
+     * @returns {XMLHttpRequest | undefined} Request instance.
      */
-    static createOrUpdateContact = (contact, callback) => {
-        const url = "https://hooks.zapier.com/hooks/catch/4227833/b2bqu31";
-        const data = {
+    static createOrUpdateContact = (contact, list, callback) => {
+        if (!(contact.email ?? "").length) {
+            callback(
+                undefined,
+                new Error("Email is empty or undefined"),
+                false
+            );
+            return undefined;
+        }
+
+        /*const data = {
             "contact": contact.toJSON()
-        };
-        console.log(data);
+        };*/
+        const data = contact.toJSON();
+        logger.print(data);
         return $.ajax({
-            url: url,
+            url: list.webhookUrl,
             method: "POST",
             crossDomain: true,
             dataType: "json",
@@ -30,7 +70,7 @@ class ActiveCampaignIntegration {
                 );
             },
             error: function (error) {
-                console.log(error);
+                logger.print(error);
                 callback(
                     undefined,
                     error,
@@ -44,13 +84,13 @@ class ActiveCampaignIntegration {
      * Creates or updates existing contact using the custom JSON sent as request data.
      * Active Campaign API reference: https://developers.activecampaign.com/reference#create-or-update-contact-new
      * @param {any} json Custom JSON object containing request data.
+     * @param {ActiveCampaignList} list List.
      * @param {(response: any, error: any, success: boolean) => void} callback Function that is called when response comes from the server.
      * @returns {XMLHttpRequest} Request instance.
      */
-    static createOrUpdateContactWithJson = (json, callback) => {
-        const url = "https://hooks.zapier.com/hooks/catch/4227833/b2bqu31";
+    static createOrUpdateContactWithJson = (json, list, callback) => {
         return $.ajax({
-            url: url,
+            url: list.webhookUrl,
             method: "POST",
             crossDomain: true,
             dataType: "json",
@@ -63,7 +103,7 @@ class ActiveCampaignIntegration {
                 );
             },
             error: function (error) {
-                console.log(error);
+                logger.print(error);
                 callback(
                     undefined,
                     error,
@@ -96,7 +136,7 @@ class ActiveCampaignContact {
      * JSON object.
      * @returns {any}
      */
-    toJSON = () => {
+    /*toJSON = () => {
         return {
             ...this.email ? {"email": this.email} : undefined,
             ...this.firstName ? {"firstName": this.firstName} : undefined,
@@ -116,6 +156,27 @@ class ActiveCampaignContact {
                 return undefined;
             })()
         };
+    }*/
+
+    toJSON = () => {
+        var json = {
+            ...this.email ? {"email": this.email} : undefined,
+            ...this.firstName ? {"firstName": this.firstName} : undefined,
+            ...this.lastName ? {"lastName": this.lastName} : undefined,
+            ...this.phone ? {"phone": this.phone} : undefined
+        };
+
+        if (this.fields) {
+            const filteredFields = this.fields.filter(field => field.value != undefined);
+
+            if (filteredFields.length) {
+                filteredFields.forEach(field => {
+                    json[field.name] = field.value;
+                });
+            }
+        }
+
+        return json;
     }
 }
 

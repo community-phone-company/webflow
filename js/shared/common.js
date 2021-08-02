@@ -3,6 +3,13 @@
  */
 
 /**
+ * Block printing in console log on production domain.
+ */
+logger.setBlockedDomains([
+    //"www.communityphone.org"
+]);
+
+/**
  * Send user ID and other information to Hotjar.
  */
 HotjarIntegration.send({

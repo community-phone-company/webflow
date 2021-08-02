@@ -87,11 +87,17 @@ class Store {
      * @param {any | undefined} value Value. Can be anything: string, number, boolean, object, etc.
      */
     write = (key, value) => {
+        if (!(typeof key === "string" && key.length)) {
+            logger.print(`Can't write to storage for key: ${key}`);
+            return;
+        }
+
         const json = {
             value: value
         };
         const jsonString = JSON.stringify(json);
         this.internalStorage.setItem(key, jsonString);
+        logger.print(`Written to storage: ${value}\nfor key: ${key}`);
     }
 
     clear = () => {

@@ -15,7 +15,7 @@ $(document).ready(() => {
     if (addressLineOneInput instanceof HTMLInputElement) {
         addressLineOneInput.oninput = () => {
             const address = addressLineOneInput.value;
-            console.log(`Address: ${address}`);
+            logger.print(`Address: ${address}`);
         };
     }
 
@@ -26,25 +26,25 @@ $(document).ready(() => {
 
      $(submitButton).on("click", (event) => {
          const shippingAddress_firstName = $("#First-name").val();
-         Store.local.write(CheckoutFlowStoreKey.shippingAddress_firstName, shippingAddress_firstName);
+         Store.local.write(Store.keys.checkoutFlow.shippingAddress_firstName, shippingAddress_firstName);
 
          const shippingAddress_lastName = $("#Last-name").val();
-         Store.local.write(CheckoutFlowStoreKey.shippingAddress_lastName, shippingAddress_lastName);
+         Store.local.write(Store.keys.checkoutFlow.shippingAddress_lastName, shippingAddress_lastName);
  
          const shippingAddress_addressLine1 = $("#Adress-line").val();
-         Store.local.write(CheckoutFlowStoreKey.shippingAddress_addressLine1, shippingAddress_addressLine1);
+         Store.local.write(Store.keys.checkoutFlow.shippingAddress_addressLine1, shippingAddress_addressLine1);
 
          const shippingAddress_addressLine2 = $("#Adress-line-2").val();
-         Store.local.write(CheckoutFlowStoreKey.shippingAddress_addressLine2, shippingAddress_addressLine2);
+         Store.local.write(Store.keys.checkoutFlow.shippingAddress_addressLine2, shippingAddress_addressLine2);
 
          const shippingAddress_city = $("#City").val();
-         Store.local.write(CheckoutFlowStoreKey.shippingAddress_city, shippingAddress_city);
+         Store.local.write(Store.keys.checkoutFlow.shippingAddress_city, shippingAddress_city);
 
          const shippingAddress_zip = $("#Zip").val();
-         Store.local.write(CheckoutFlowStoreKey.shippingAddress_zip, shippingAddress_zip);
+         Store.local.write(Store.keys.checkoutFlow.shippingAddress_zip, shippingAddress_zip);
 
          const shippingAddress_state = $("#State").val();
-         Store.local.write(CheckoutFlowStoreKey.shippingAddress_state, shippingAddress_state);
+         Store.local.write(Store.keys.checkoutFlow.shippingAddress_state, shippingAddress_state);
 
          const useDifferentShippingAddress = $(".billing-fields").css("display") === "block";
      });
@@ -54,7 +54,7 @@ $(document).ready(() => {
      */
     exportCheckoutFlowDataToActiveCampaign(
         (response, error, success) => {
-            console.log("Active Campaign");
+            logger.print("Active Campaign");
         }
     );
 });

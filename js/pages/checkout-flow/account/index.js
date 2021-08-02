@@ -29,16 +29,16 @@ $(document).ready(() => {
 
     $(submitButton).on("click", (event) => {
         const firstName = $("#First-name").val();
-        Store.local.write(CheckoutFlowStoreKey.firstName, firstName);
+        Store.local.write(Store.keys.checkoutFlow.firstName, firstName);
 
         const lastName = $("#Last-name").val();
-        Store.local.write(CheckoutFlowStoreKey.lastName, lastName);
+        Store.local.write(Store.keys.checkoutFlow.lastName, lastName);
 
         const phone = $("#Contact-number").val();
-        Store.local.write(CheckoutFlowStoreKey.phone, phone);
+        Store.local.write(Store.keys.checkoutFlow.phone, phone);
 
         const email = $("#Email").val();
-        Store.local.write(CheckoutFlowStoreKey.email, email);
+        Store.local.write(Store.keys.checkoutFlow.email, email);
     });
 
     /**
@@ -46,7 +46,7 @@ $(document).ready(() => {
      */
     exportCheckoutFlowDataToActiveCampaign(
         (response, error, success) => {
-            console.log("Active Campaign");
+            logger.print("Active Campaign");
         }
     );
 });
