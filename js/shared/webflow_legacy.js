@@ -92,86 +92,94 @@ $(document).ready(function () {
 
     handleCardCvv()
 
+    const submitButton = document.getElementById("submit-button");
 
+    $(submitButton).on("click", function (event) {
+        event.preventDefault();
 
-    $(".buy_now_checkout").on("click", function (e) {
-        console.log(`Clicked Buy Now`);
-        e.preventDefault()
-        let s_first_name = $(".shipping_first_name").val()
-        let s_last_name = $(".shipping_last_name").val()
-        let s_address_1 = $(".shipping_address_1").val()
-        let s_address_2 = $(".shipping_address_2").val()
-        let s_city = $(".shipping_city").val()
-        let s_zip_code = $(".shipping_zip").val()
-        let s_state = $(".shipping_state").val()
+        let s_first_name = $(".shipping_first_name").val();
+        let s_last_name = $(".shipping_last_name").val();
+        let s_address_1 = $(".shipping_address_1").val();
+        let s_address_2 = $(".shipping_address_2").val();
+        let s_city = $(".shipping_city").val();
+        let s_zip_code = $(".shipping_zip").val();
+        let s_state = $(".shipping_state").val();
 
-        let first_name = $(".billing_first_name").val()
-        let last_name = $(".billing_last_name").val()
-        let address_1 = $(".billing_address_1").val()
-        let address_2 = $(".billing_address_2").val()
-        let city = $(".billing_city").val()
-        let zip_code = $(".billing_zip").val()
-        let state = $(".billing_state").val()
-        let card_number = $("#card_number").val()
-        let card_cvv = $("#card_cvv").val()
-        let card_expiry = $("#card_expiry").val()
-
+        let first_name = $(".billing_first_name").val();
+        let last_name = $(".billing_last_name").val();
+        let address_1 = $(".billing_address_1").val();
+        let address_2 = $(".billing_address_2").val();
+        let city = $(".billing_city").val();
+        let zip_code = $(".billing_zip").val();
+        let state = $(".billing_state").val();
+        let card_number = $("#card_number").val();
+        let card_cvv = $("#card_cvv").val();
+        let card_expiry = $("#card_expiry").val();
 
         let card_expiry_month = card_expiry.substr(0, card_expiry.indexOf('/'));
         let card_expiry_year = card_expiry.substr(-2, card_expiry.indexOf('/'));
 
-
-
-        $(".buy_now_checkout").css("background-color", "#D8DAE1")
-        $(".buy_now_checkout").attr("disabled", true)
-        $(".buy_now_checkout").val("Please wait....")
-
-
-        console.log(`Before checking data`);
-        let is_valid = handleValidateCheckoutForm(first_name, last_name, address_1, city, zip_code, s_first_name, s_last_name, s_address_1, s_city, s_zip_code, card_number, card_expiry, card_cvv)
-        console.log("Is valid: ", is_valid);
+        $(submitButton).css("background-color", "#D8DAE1");
+        $(submitButton).attr("disabled", true);
+        $(submitButton).val("Please wait....");
+        
+        let is_valid = handleValidateCheckoutForm(
+            first_name,
+            last_name,
+            address_1,
+            city,
+            zip_code,
+            s_first_name,
+            s_last_name,
+            s_address_1,
+            s_city,
+            s_zip_code,
+            card_number,
+            card_expiry,
+            card_cvv
+        );
 
         if (is_valid) {
             let cp_checkout_payload = localStorage.getItem("cp_checkout_payload")
 
             if (cp_checkout_payload != null) {
-                console.log("Branch 1")
+                let current_payload = JSON.parse(cp_checkout_payload);
+                let shipping_address = {};
+                let billing_address = {};
+                let card = {};
 
-                let current_payload = JSON.parse(cp_checkout_payload)
-                let shipping_address = {}
-                let billing_address = {}
-                let card = {}
+                card["card_number"] = card_number;
+                card["card_cvv"] = card_cvv;
+                card["card_expiry_month"] = card_expiry_month;
+                card["card_expiry_year"] = card_expiry_year;
 
-                card["card_number"] = card_number
-                card["card_cvv"] = card_cvv
-                card["card_expiry_month"] = card_expiry_month
-                card["card_expiry_year"] = card_expiry_year
+                shipping_address["first_name"] = s_first_name;
+                shipping_address["last_name"] = s_last_name;
+                shipping_address["email"] = current_payload.email;
+                shipping_address["phone"] = current_payload.phonenumber;
+                shipping_address["line1"] = s_address_1;
+                shipping_address["line2"] = s_address_2;
+                shipping_address["state"] = s_state;
+                shipping_address["city"] = s_city;
+                shipping_address["zip"] = s_zip_code;
+                current_payload["shipping_address"] = shipping_address;
 
-                shipping_address["first_name"] = s_first_name,
-                    shipping_address["last_name"] = s_last_name,
-                    shipping_address["email"] = current_payload.email,
-                    shipping_address["phone"] = current_payload.phonenumber,
-                    shipping_address["line1"] = s_address_1,
-                    shipping_address["line2"] = s_address_2,
-                    shipping_address["state"] = s_state,
-                    shipping_address["city"] = s_city,
-                    shipping_address["zip"] = s_zip_code,
-                    current_payload["shipping_address"] = shipping_address
+                billing_address["first_name"] = first_name;
+                billing_address["last_name"] = last_name;
+                billing_address["email"] = current_payload.email;
+                billing_address["phone"] = current_payload.phonenumber;
+                billing_address["line1"] = address_1;
+                billing_address["line2"] = address_2;
+                billing_address["state"] = state;
+                billing_address["city"] = city;
+                billing_address["zip"] = zip_code;
+                current_payload["billing_address"] = billing_address;
+                current_payload["card"] = card;
 
-                billing_address["first_name"] = first_name,
-                    billing_address["last_name"] = last_name,
-                    billing_address["email"] = current_payload.email,
-                    billing_address["phone"] = current_payload.phonenumber,
-                    billing_address["line1"] = address_1,
-                    billing_address["line2"] = address_2,
-                    billing_address["state"] = state,
-                    billing_address["city"] = city,
-                    // billing_address["city"] = city,
-                    billing_address["zip"] = zip_code,
-                    current_payload["billing_address"] = billing_address
-                current_payload["card"] = card
-
-                localStorage.setItem("cp_checkout_payload", JSON.stringify(current_payload))
+                localStorage.setItem(
+                    "cp_checkout_payload",
+                    JSON.stringify(current_payload)
+                );
 
                 $.ajax({
                     method: "POST",
@@ -184,12 +192,12 @@ $(document).ready(function () {
 
                         if (resp.message == "failed") {
                             alert("A problem was detected. Please call us at (855) 615-0667 to complete your order")
-                            $(".buy_now_checkout").css("background-color", "#0019f9")
-                            $(".buy_now_checkout").attr("disabled", false)
-                            $(".buy_now_checkout").val("Buy Now")
+                            $(submitButton).css("background-color", "#0019f9")
+                            $(submitButton).attr("disabled", false)
+                            $(submitButton).val("Buy Now")
                             // window.location.href = "/checkout-landline/thank-you"
                         } else {
-                            /*ActiveCampaignIntegration.createOrUpdateContact(
+                            ActiveCampaignIntegration.createOrUpdateContact(
                                 new ActiveCampaignContact(
                                     Store.local.read(
                                         Store.keys.checkoutFlow.email
@@ -208,33 +216,32 @@ $(document).ready(function () {
                                 (response, error, success) => {
                                     window.location.href = "/checkout-landline/thank-you";
                                 }
-                            )*/
-                            window.location.href = "/checkout-landline/thank-you";
+                            )
+                            //window.location.href = "/checkout-landline/thank-you";
                         }
                     },
                     error: function (error) {
-                        logger.print(error.responseJSON)
-                        message = error.responseJSON.message
-                        alert(`${message} OR call us at (855) 615-0667 to complete your order`)
-                        $(".buy_now_checkout").css("background-color", "#0019f9")
-                        $(".buy_now_checkout").attr("disabled", false)
-                        $(".buy_now_checkout").val("Buy Now")
+                        logger.print(error.responseJSON);
+                        const message = error.responseJSON.message;
+                        alert(`${message} OR call us at (855) 615-0667 to complete your order`);
+                        $(submitButton).css("background-color", "#0019f9");
+                        $(submitButton).attr("disabled", false);
+                        $(submitButton).val("Buy Now");
                     }
                 })
 
                 // window.location.href = "/checkout-landline/checkout-step"
             } else {
-                console.log("Branch 2")
                 // must have skipped first step
-                alert("Please select your plan")
-                window.location.href = "/checkout-landline/choose-a-plan"
+                alert("Please select your plan");
+                window.location.href = "/checkout-landline/choose-a-plan";
             }
         } else {
-            $(".buy_now_checkout").css("background-color", "#0019f9")
-            $(".buy_now_checkout").attr("disabled", false)
-            $(".buy_now_checkout").val("Buy Now")
+            $(submitButton).css("background-color", "#0019f9")
+            $(submitButton).attr("disabled", false)
+            $(submitButton).val("Buy Now")
+            alert(`Something went wrong. Please try again later.`);
         }
-
     })
 
     // handleBuyNow(cardComponent) // handle buy now button in checkout view 
