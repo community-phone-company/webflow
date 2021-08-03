@@ -28,6 +28,8 @@ $(document).ready(() => {
     };
 
     const submitFormData = () => {
+        logger.print(`Submit form data`);
+
         const email = $(emailTextField).val();
         
         if (email.length) {
