@@ -34,8 +34,9 @@ $(document).ready(() => {
         formData.email = newValue;
         handleFormChange();
     });
-    
-    $(submitButton).on("click", (event) => {
+
+    const form = document.getElementById("wf-form-onboarding-flow");
+    $(form).submit((event) => {
         event.preventDefault();
         const email = $(emailTextField).val();
         
@@ -63,6 +64,11 @@ $(document).ready(() => {
                 false
             );
         }
+    });
+    
+    $(submitButton).on("click", (event) => {
+        event.preventDefault();
+        form.submit();
     });
 
     handleFormChange();
