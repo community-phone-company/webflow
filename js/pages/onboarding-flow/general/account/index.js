@@ -26,18 +26,8 @@ $(document).ready(() => {
             new EmailValidator().check(formData.email)
         );
     };
-    
-    const submitButton = document.getElementById("submit-button");
-    
-    const emailTextField = document.getElementById("email");
-    new InputValueObserver(emailTextField).startObserving((newValue) => {
-        formData.email = newValue;
-        handleFormChange();
-    });
 
-    const form = document.getElementById("wf-form-onboarding-flow");
-    $(form).submit((event) => {
-        event.preventDefault();
+    const submitFormData = () => {
         const email = $(emailTextField).val();
         
         if (email.length) {
@@ -64,11 +54,25 @@ $(document).ready(() => {
                 false
             );
         }
+    };
+    
+    const submitButton = document.getElementById("submit-button");
+    
+    const emailTextField = document.getElementById("email");
+    new InputValueObserver(emailTextField).startObserving((newValue) => {
+        formData.email = newValue;
+        handleFormChange();
+    });
+
+    const form = document.getElementById("wf-form-onboarding-flow");
+    $(form).submit((event) => {
+        event.preventDefault();
+        submitFormData();
     });
     
     $(submitButton).on("click", (event) => {
         event.preventDefault();
-        form.submit();
+        submitFormData();
     });
 
     handleFormChange();
