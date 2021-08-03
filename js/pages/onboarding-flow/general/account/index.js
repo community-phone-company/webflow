@@ -14,10 +14,30 @@ const clearOnboardingFlowSettings = () => {
 };
 
 $(document).ready(() => {
+
+    const formData = {
+        email: ""
+    };
+
+    const handleFormChange = () => {
+        logger.print(`Form has changed`);
+        UserInterface.setElementEnabled(
+            submitButton,
+            formData.email.length
+        );
+    };
     
-    $("#submit-button").on("click", (event) => {
+    const submitButton = document.getElementById("submit-button");
+    
+    const emailTextField = document.getElementById("email");
+    new InputValueObserver(emailTextField).startObserving((newValue) => {
+        formData.email = newValue;
+        handleFormChange();
+    });
+    
+    $(submitButton).on("click", (event) => {
         event.preventDefault();
-        const email = $("#email").val();
+        const email = $(emailTextField).val();
         
         if (email.length) {
             clearOnboardingFlowSettings();
@@ -34,11 +54,16 @@ $(document).ready(() => {
                 false,
                 false,
                 (response, error, success) => {
-                    $("form").submit();
+                    window.location.href = $(submitButton).attr("href");
                 }
             );
         } else {
-            $("form").submit();
+            UserInterface.setElementEnabled(
+                submitButton,
+                false
+            );
         }
     });
+
+    handleFormChange();
 });
