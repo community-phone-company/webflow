@@ -23,7 +23,7 @@ $(document).ready(() => {
         logger.print(`Form has changed`);
         UserInterface.setElementEnabled(
             submitButton,
-            formData.email.length
+            new EmailValidator().check(formData.email)
         );
     };
     
