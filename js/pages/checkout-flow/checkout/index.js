@@ -121,6 +121,7 @@ $(document).ready(() => {
             form.data.shippingAddress.firstName = newValue;
             handleFormChanges();
         });
+        form.data.shippingAddress.firstName = form.elements.shippingAddress.firstNameInput.value;
     
         new InputValueObserver(
             form.elements.shippingAddress.lastNameInput
@@ -128,6 +129,7 @@ $(document).ready(() => {
             form.data.shippingAddress.lastName = newValue;
             handleFormChanges();
         });
+        form.data.shippingAddress.lastName = form.elements.shippingAddress.lastNameInput.value;
     
         new InputValueObserver(
             form.elements.shippingAddress.addressLineOneInput
@@ -135,6 +137,7 @@ $(document).ready(() => {
             form.data.shippingAddress.addressLineOne = newValue;
             handleFormChanges();
         });
+        form.data.shippingAddress.addressLineOne = form.elements.shippingAddress.addressLineOneInput.value;
     
         new InputValueObserver(
             form.elements.shippingAddress.addressLineTwoInput
@@ -142,6 +145,7 @@ $(document).ready(() => {
             form.data.shippingAddress.addressLineTwo = newValue;
             handleFormChanges();
         });
+        form.data.shippingAddress.addressLineTwo = form.elements.shippingAddress.addressLineTwoInput.value;
     
         new InputValueObserver(
             form.elements.shippingAddress.cityInput
@@ -149,6 +153,7 @@ $(document).ready(() => {
             form.data.shippingAddress.city = newValue;
             handleFormChanges();
         });
+        form.data.shippingAddress.city = form.elements.shippingAddress.cityInput.value;
     
         new InputValueObserver(
             form.elements.shippingAddress.zipInput
@@ -156,16 +161,19 @@ $(document).ready(() => {
             form.data.shippingAddress.zip = newValue;
             handleFormChanges();
         });
+        form.data.shippingAddress.zip = form.elements.shippingAddress.zipInput.value;
     
         form.elements.shippingAddress.stateSelect.onchange = () => {
             form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
             handleFormChanges();
         };
+        form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
     
         form.elements.differentBillingAddressSwitcher.startWatchingForStateChanges((switcher) => {
             form.data.useShippingAddressForBilling = switcher.isOn();
             handleFormChanges();
         });
+        form.data.useShippingAddressForBilling = form.elements.differentBillingAddressSwitcher.isOn();
     
         new InputValueObserver(
             form.elements.billingAddress.firstNameInput
@@ -173,6 +181,7 @@ $(document).ready(() => {
             form.data.billingAddress.firstName = newValue;
             handleFormChanges();
         });
+        form.data.billingAddress.firstName = form.elements.billingAddress.firstNameInput.value;
     
         new InputValueObserver(
             form.elements.billingAddress.lastNameInput
@@ -180,6 +189,7 @@ $(document).ready(() => {
             form.data.billingAddress.lastName = newValue;
             handleFormChanges();
         });
+        form.data.billingAddress.lastName = form.elements.billingAddress.lastNameInput.value;
     
         new InputValueObserver(
             form.elements.billingAddress.addressLineOneInput
@@ -187,6 +197,7 @@ $(document).ready(() => {
             form.data.billingAddress.addressLineOne = newValue;
             handleFormChanges();
         });
+        form.data.billingAddress.addressLineOne = form.elements.billingAddress.addressLineOneInput.value;
     
         new InputValueObserver(
             form.elements.billingAddress.addressLineTwoInput
@@ -194,6 +205,7 @@ $(document).ready(() => {
             form.data.billingAddress.addressLineTwo = newValue;
             handleFormChanges();
         });
+        form.data.billingAddress.addressLineTwo = form.elements.billingAddress.addressLineTwoInput.value;
     
         new InputValueObserver(
             form.elements.billingAddress.cityInput
@@ -201,6 +213,7 @@ $(document).ready(() => {
             form.data.billingAddress.city = newValue;
             handleFormChanges();
         });
+        form.data.billingAddress.city = form.elements.billingAddress.cityInput.value;
     
         new InputValueObserver(
             form.elements.billingAddress.zipInput
@@ -208,11 +221,13 @@ $(document).ready(() => {
             form.data.billingAddress.zip = newValue;
             handleFormChanges();
         });
+        form.data.billingAddress.zip = form.elements.billingAddress.zipInput.value;
     
         form.elements.billingAddress.stateSelect.onchange = () => {
             form.data.billingAddress.state = form.elements.billingAddress.stateSelect.value;
             handleFormChanges();
         };
+        form.data.billingAddress.state = form.elements.billingAddress.stateSelect.value;
     
         new InputValueObserver(
             form.elements.paymentDetails.cardNumberInput
@@ -220,6 +235,7 @@ $(document).ready(() => {
             form.data.paymentDetails.cardNumber = newValue;
             handleFormChanges();
         });
+        form.data.paymentDetails.cardNumber = form.elements.paymentDetails.cardNumberInput.value;
     
         new InputValueObserver(
             form.elements.paymentDetails.cardExpiryInput
@@ -227,6 +243,7 @@ $(document).ready(() => {
             form.data.paymentDetails.cardExpiry = newValue;
             handleFormChanges();
         });
+        form.data.paymentDetails.cardExpiry = form.elements.paymentDetails.cardExpiryInput.value;
     
         new InputValueObserver(
             form.elements.paymentDetails.cardVerificationValueInput
@@ -234,6 +251,7 @@ $(document).ready(() => {
             form.data.paymentDetails.cardVerificationValue = newValue;
             handleFormChanges();
         });
+        form.data.paymentDetails.cardVerificationValue = form.elements.paymentDetails.cardVerificationValueInput.value;
 
         makeAddressTextField(form.elements.shippingAddress.addressLineOneInput);
         handleFormChanges();
