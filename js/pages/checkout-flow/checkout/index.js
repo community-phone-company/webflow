@@ -15,7 +15,7 @@ $(document).ready(() => {
     const addressLineOneInput = document.getElementById("Adress-line");
     
     if ($(addressLineOneInput).hasClass("gpa-input")) {
-        var autocomplete = new google.maps.places.Autocomplete(gpaInput);
+        var autocomplete = new google.maps.places.Autocomplete(addressLineOneInput);
     }
     
     if (addressLineOneInput instanceof HTMLInputElement) {
