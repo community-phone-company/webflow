@@ -76,7 +76,6 @@ $(document).ready(() => {
         const isShippingAddressValid = formData.data.shippingAddress.firstName.length
             && formData.data.shippingAddress.lastName.length
             && formData.data.shippingAddress.addressLineOne.length
-            && formData.data.shippingAddress.addressLineTwo.length
             && formData.data.shippingAddress.city.length
             && formData.data.shippingAddress.zip.length
             && formData.data.shippingAddress.state.length;
@@ -88,7 +87,6 @@ $(document).ready(() => {
                 return formData.data.billingAddress.firstName.length
                     && formData.data.billingAddress.lastName.length
                     && formData.data.billingAddress.addressLineOne.length
-                    && formData.data.billingAddress.addressLineTwo.length
                     && formData.data.billingAddress.city.length
                     && formData.data.billingAddress.zip.length
                     && formData.data.billingAddress.state.length;
@@ -244,32 +242,32 @@ $(document).ready(() => {
     /**
      * Here we handle submit button click.
      */
-     const submitButton = document.querySelectorAll(".buy_now_checkout")[0];
+    $(formData.elements.submitButton).on("click", (event) => {
+        const shippingAddress_firstName = $("#First-name").val();
+        Store.local.write(Store.keys.checkoutFlow.shippingAddress_firstName, shippingAddress_firstName);
 
-     $(submitButton).on("click", (event) => {
-         const shippingAddress_firstName = $("#First-name").val();
-         Store.local.write(Store.keys.checkoutFlow.shippingAddress_firstName, shippingAddress_firstName);
+        const shippingAddress_lastName = $("#Last-name").val();
+        Store.local.write(Store.keys.checkoutFlow.shippingAddress_lastName, shippingAddress_lastName);
 
-         const shippingAddress_lastName = $("#Last-name").val();
-         Store.local.write(Store.keys.checkoutFlow.shippingAddress_lastName, shippingAddress_lastName);
- 
-         const shippingAddress_addressLine1 = $(addressLineOneInput).val();
-         Store.local.write(Store.keys.checkoutFlow.shippingAddress_addressLine1, shippingAddress_addressLine1);
+        const shippingAddress_addressLine1 = $(addressLineOneInput).val();
+        Store.local.write(Store.keys.checkoutFlow.shippingAddress_addressLine1, shippingAddress_addressLine1);
 
-         const shippingAddress_addressLine2 = $("#Adress-line-2").val();
-         Store.local.write(Store.keys.checkoutFlow.shippingAddress_addressLine2, shippingAddress_addressLine2);
+        const shippingAddress_addressLine2 = $("#Adress-line-2").val();
+        Store.local.write(Store.keys.checkoutFlow.shippingAddress_addressLine2, shippingAddress_addressLine2);
 
-         const shippingAddress_city = $("#City").val();
-         Store.local.write(Store.keys.checkoutFlow.shippingAddress_city, shippingAddress_city);
+        const shippingAddress_city = $("#City").val();
+        Store.local.write(Store.keys.checkoutFlow.shippingAddress_city, shippingAddress_city);
 
-         const shippingAddress_zip = $("#Zip").val();
-         Store.local.write(Store.keys.checkoutFlow.shippingAddress_zip, shippingAddress_zip);
+        const shippingAddress_zip = $("#Zip").val();
+        Store.local.write(Store.keys.checkoutFlow.shippingAddress_zip, shippingAddress_zip);
 
-         const shippingAddress_state = $("#State").val();
-         Store.local.write(Store.keys.checkoutFlow.shippingAddress_state, shippingAddress_state);
+        const shippingAddress_state = $("#State").val();
+        Store.local.write(Store.keys.checkoutFlow.shippingAddress_state, shippingAddress_state);
 
-         const useDifferentShippingAddress = $(".billing-fields").css("display") === "block";
-     });
+        const useDifferentShippingAddress = $(".billing-fields").css("display") === "block";
+    });
+
+    handleFormChanges();
     
     /**
      * Send user's data to Active Campaign.
