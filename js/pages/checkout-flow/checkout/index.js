@@ -10,9 +10,11 @@ const makeAddressTextField = (textField) => {
 
 var clipboard = new ClipboardJS('.btn');
 
+var _formData = undefined;
+
 $(document).ready(() => {
 
-    const formData = {
+    const form = {
         elements: {
             form: document.getElementById("wf-form-Checkout-form"),
             shippingAddress: {
@@ -73,176 +75,174 @@ $(document).ready(() => {
     };
 
     const handleFormChanges = () => {
-        const isShippingAddressValid = formData.data.shippingAddress.firstName.length
-            && formData.data.shippingAddress.lastName.length
-            && formData.data.shippingAddress.addressLineOne.length
-            && formData.data.shippingAddress.city.length
-            && formData.data.shippingAddress.zip.length
-            && formData.data.shippingAddress.state.length;
+        const isShippingAddressValid = form.data.shippingAddress.firstName.length
+            && form.data.shippingAddress.lastName.length
+            && form.data.shippingAddress.addressLineOne.length
+            && form.data.shippingAddress.city.length
+            && form.data.shippingAddress.zip.length
+            && form.data.shippingAddress.state.length;
         
         const isBillingAddressValid = (() => {
-            if (formData.data.useShippingAddressForBilling) {
+            if (form.data.useShippingAddressForBilling) {
                 return isShippingAddressValid;
             } else {
-                return formData.data.billingAddress.firstName.length
-                    && formData.data.billingAddress.lastName.length
-                    && formData.data.billingAddress.addressLineOne.length
-                    && formData.data.billingAddress.city.length
-                    && formData.data.billingAddress.zip.length
-                    && formData.data.billingAddress.state.length;
+                return form.data.billingAddress.firstName.length
+                    && form.data.billingAddress.lastName.length
+                    && form.data.billingAddress.addressLineOne.length
+                    && form.data.billingAddress.city.length
+                    && form.data.billingAddress.zip.length
+                    && form.data.billingAddress.state.length;
             }
         })();
 
-        const isPaymentDetailsValid = formData.data.paymentDetails.cardNumber.length
-            && formData.data.paymentDetails.cardExpiry.length
-            && formData.data.paymentDetails.cardVerificationValue.length;
+        const isPaymentDetailsValid = form.data.paymentDetails.cardNumber.length
+            && form.data.paymentDetails.cardExpiry.length
+            && form.data.paymentDetails.cardVerificationValue.length;
         
         const isEverythingCorrect = isShippingAddressValid
             && isBillingAddressValid
             && isPaymentDetailsValid;
         
         UserInterface.setElementEnabled(
-            formData.elements.submitButton,
+            form.elements.submitButton,
             isEverythingCorrect
         );
+
+        _formData = form.data;
     };
 
-    new InputValueObserver(
-        formData.elements.shippingAddress.firstNameInput
-    ).startObserving((newValue) => {
-        formData.data.shippingAddress.firstName = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.shippingAddress.lastNameInput
-    ).startObserving((newValue) => {
-        formData.data.shippingAddress.lastName = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.shippingAddress.addressLineOneInput
-    ).startObserving((newValue) => {
-        formData.data.shippingAddress.addressLineOne = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.shippingAddress.addressLineTwoInput
-    ).startObserving((newValue) => {
-        formData.data.shippingAddress.addressLineTwo = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.shippingAddress.cityInput
-    ).startObserving((newValue) => {
-        formData.data.shippingAddress.city = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.shippingAddress.zipInput
-    ).startObserving((newValue) => {
-        formData.data.shippingAddress.zip = newValue;
-        handleFormChanges();
-    });
-
-    formData.elements.shippingAddress.stateSelect.onchange = () => {
-        formData.data.shippingAddress.state = formData.elements.shippingAddress.stateSelect.value;
-        handleFormChanges();
-    };
-
-    formData.elements.differentBillingAddressSwitcher.startWatchingForStateChanges((switcher) => {
-        formData.data.useShippingAddressForBilling = switcher.isOn();
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.billingAddress.firstNameInput
-    ).startObserving((newValue) => {
-        formData.data.billingAddress.firstName = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.billingAddress.lastNameInput
-    ).startObserving((newValue) => {
-        formData.data.billingAddress.lastName = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.billingAddress.addressLineOneInput
-    ).startObserving((newValue) => {
-        formData.data.billingAddress.addressLineOne = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.billingAddress.addressLineTwoInput
-    ).startObserving((newValue) => {
-        formData.data.billingAddress.addressLineTwo = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.billingAddress.cityInput
-    ).startObserving((newValue) => {
-        formData.data.billingAddress.city = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.billingAddress.zipInput
-    ).startObserving((newValue) => {
-        formData.data.billingAddress.zip = newValue;
-        handleFormChanges();
-    });
-
-    formData.elements.billingAddress.stateSelect.onchange = () => {
-        formData.data.billingAddress.state = formData.elements.billingAddress.stateSelect.value;
-        handleFormChanges();
-    };
-
-    new InputValueObserver(
-        formData.elements.paymentDetails.cardNumberInput
-    ).startObserving((newValue) => {
-        formData.data.paymentDetails.cardNumber = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.paymentDetails.cardExpiryInput
-    ).startObserving((newValue) => {
-        formData.data.paymentDetails.cardExpiry = newValue;
-        handleFormChanges();
-    });
-
-    new InputValueObserver(
-        formData.elements.paymentDetails.cardVerificationValueInput
-    ).startObserving((newValue) => {
-        formData.data.paymentDetails.cardVerificationValue = newValue;
-        handleFormChanges();
-    });
-
-    /*
-     * Address line 1.
+    /**
+     * Currently we test this functionality, so that's why we excluded production domain here.
      */
-    const addressLineOneInput = formData.elements.shippingAddress.addressLineOneInput;
-    
     if (!IS_PRODUCTION) {
-        /**
-         * Current we test this functionality, so that's why we excluded production domain here.
-         */
-        makeAddressTextField(addressLineOneInput);
+        new InputValueObserver(
+            form.elements.shippingAddress.firstNameInput
+        ).startObserving((newValue) => {
+            form.data.shippingAddress.firstName = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.shippingAddress.lastNameInput
+        ).startObserving((newValue) => {
+            form.data.shippingAddress.lastName = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.shippingAddress.addressLineOneInput
+        ).startObserving((newValue) => {
+            form.data.shippingAddress.addressLineOne = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.shippingAddress.addressLineTwoInput
+        ).startObserving((newValue) => {
+            form.data.shippingAddress.addressLineTwo = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.shippingAddress.cityInput
+        ).startObserving((newValue) => {
+            form.data.shippingAddress.city = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.shippingAddress.zipInput
+        ).startObserving((newValue) => {
+            form.data.shippingAddress.zip = newValue;
+            handleFormChanges();
+        });
+    
+        form.elements.shippingAddress.stateSelect.onchange = () => {
+            form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
+            handleFormChanges();
+        };
+    
+        form.elements.differentBillingAddressSwitcher.startWatchingForStateChanges((switcher) => {
+            form.data.useShippingAddressForBilling = switcher.isOn();
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.billingAddress.firstNameInput
+        ).startObserving((newValue) => {
+            form.data.billingAddress.firstName = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.billingAddress.lastNameInput
+        ).startObserving((newValue) => {
+            form.data.billingAddress.lastName = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.billingAddress.addressLineOneInput
+        ).startObserving((newValue) => {
+            form.data.billingAddress.addressLineOne = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.billingAddress.addressLineTwoInput
+        ).startObserving((newValue) => {
+            form.data.billingAddress.addressLineTwo = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.billingAddress.cityInput
+        ).startObserving((newValue) => {
+            form.data.billingAddress.city = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.billingAddress.zipInput
+        ).startObserving((newValue) => {
+            form.data.billingAddress.zip = newValue;
+            handleFormChanges();
+        });
+    
+        form.elements.billingAddress.stateSelect.onchange = () => {
+            form.data.billingAddress.state = form.elements.billingAddress.stateSelect.value;
+            handleFormChanges();
+        };
+    
+        new InputValueObserver(
+            form.elements.paymentDetails.cardNumberInput
+        ).startObserving((newValue) => {
+            form.data.paymentDetails.cardNumber = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.paymentDetails.cardExpiryInput
+        ).startObserving((newValue) => {
+            form.data.paymentDetails.cardExpiry = newValue;
+            handleFormChanges();
+        });
+    
+        new InputValueObserver(
+            form.elements.paymentDetails.cardVerificationValueInput
+        ).startObserving((newValue) => {
+            form.data.paymentDetails.cardVerificationValue = newValue;
+            handleFormChanges();
+        });
+
+        makeAddressTextField(form.elements.shippingAddress.addressLineOneInput);
+        handleFormChanges();
     }
 
     /**
      * Here we handle submit button click.
      */
-    $(formData.elements.submitButton).on("click", (event) => {
+    $(form.elements.submitButton).on("click", (event) => {
         const shippingAddress_firstName = $("#First-name").val();
         Store.local.write(Store.keys.checkoutFlow.shippingAddress_firstName, shippingAddress_firstName);
 
@@ -266,8 +266,6 @@ $(document).ready(() => {
 
         const useDifferentShippingAddress = $(".billing-fields").css("display") === "block";
     });
-
-    handleFormChanges();
     
     /**
      * Send user's data to Active Campaign.
