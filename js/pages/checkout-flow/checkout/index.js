@@ -35,7 +35,7 @@ $(document).ready(() => {
                 addressLineTwoInput: document.getElementById("billing-address-line-two-input"),
                 cityInput: document.getElementById("billing-address-city-input"),
                 zipInput: document.getElementById("billing-address-zip-input"),
-                stateInput: document.getElementById("billing-address-state-input")
+                stateSelect: document.getElementById("billing-address-state-input")
             },
             paymentDetails: {
                 cardNumberInput: document.getElementById("card_number"),
