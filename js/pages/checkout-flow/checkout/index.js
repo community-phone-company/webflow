@@ -233,7 +233,13 @@ $(document).ready(() => {
      * Address line 1.
      */
     const addressLineOneInput = formData.elements.shippingAddress.addressLineOneInput;
-    makeAddressTextField(addressLineOneInput);
+    
+    if (!IS_PRODUCTION) {
+        /**
+         * Current we test this functionality, so that's why we excluded production domain here.
+         */
+        makeAddressTextField(addressLineOneInput);
+    }
 
     /**
      * Here we handle submit button click.

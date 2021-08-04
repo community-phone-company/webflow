@@ -1,0 +1,1 @@
+const IS_PRODUCTION = window.location.hostname === Domain.production;
