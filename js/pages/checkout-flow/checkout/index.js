@@ -6,11 +6,17 @@
 const initializeAddressLine = (id, apiKey) => {
 };
 
+var clipboard = new ClipboardJS('.btn');
+
 $(document).ready(() => {
     /*
      * Address line 1.
      */
     const addressLineOneInput = document.getElementById("Adress-line");
+    
+    if ($(addressLineOneInput).hasClass("gpa-input")) {
+        var autocomplete = new google.maps.places.Autocomplete(gpaInput);
+    }
     
     if (addressLineOneInput instanceof HTMLInputElement) {
         addressLineOneInput.oninput = () => {
