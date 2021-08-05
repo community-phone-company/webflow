@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    // TODO: REMOVE WHEN FINISHED WITH TESTING!
+    if (!IS_PRODUCTION) {
+        console.log("elements_legacy.js blocked");
+        return;
+    }
+
     let handset_is_selected = false
     let insuarance_is_selected = false
     let cp_order_summary = { "handset_is_selected": false, "insuarance_is_selected": false, "phone_service": "New Number", "plan_type": "Monthly" }
