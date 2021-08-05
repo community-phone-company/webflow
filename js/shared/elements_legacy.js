@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     // TODO: REMOVE WHEN FINISHED WITH TESTING!
     if (!IS_PRODUCTION) {
-        console.log("webflow-legacy.js blocked");
+        console.log("elements-legacy.js blocked");
         return;
     }
 
