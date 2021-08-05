@@ -13,6 +13,12 @@ $(document).ready(() => {
             ProductIdentifier.landlineBase,
         ];
 
+        if (!formData.getNewNumber) {
+            identifiers.push(
+                formData.monthly ? ProductIdentifier.portingLandlineNumberMonthly : ProductIdentifier.portingLandlineNumberYearly
+            );
+        }
+
         if (formData.addHandset) {
             identifiers.push(
                 ProductIdentifier.handset
