@@ -17,7 +17,7 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
                 ),
                 new ActiveCampaignContactCustomField(
                     "Get a new number",
-                    Store.local.read(Store.keys.checkoutFlow.getNewNumber)
+                    Store.local.read(Store.keys.checkoutFlow.getNewNumber) ? "Yes": "No"
                 ),
                 new ActiveCampaignContactCustomField(
                     "Period",
@@ -25,11 +25,11 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
                 ),
                 new ActiveCampaignContactCustomField(
                     "Add a handset / phone",
-                    Store.local.read(Store.keys.checkoutFlow.addHandsetPhone)
+                    Store.local.read(Store.keys.checkoutFlow.addHandsetPhone) ? "Yes": "No"
                 ),
                 new ActiveCampaignContactCustomField(
                     "Add insurance",
-                    Store.local.read(Store.keys.checkoutFlow.addInsurance)
+                    Store.local.read(Store.keys.checkoutFlow.addInsurance) ? "Yes": "No"
                 ),
                 new ActiveCampaignContactCustomField(
                     "Shipping address first name",
