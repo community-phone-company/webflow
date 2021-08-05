@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    // TODO: REMOVE WHEN FINISHED WITH TESTING!
+    if (!IS_PRODUCTION) {
+        console.log("webflow-legacy.js blocked");
+        return;
+    }
+
     prepopulateShippingAddress() // prepopulate shipping info
     // handlePlanPeriod() // handle plan period tab
     handlePhonenumberService()
