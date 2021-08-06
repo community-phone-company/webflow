@@ -349,31 +349,31 @@ $(document).ready(() => {
         const useShippingAddressForBilling = form.data.useShippingAddressForBilling;
 
         Store.local.write(
-            Store.keys.checkoutFlow.shippingAddress_firstName,
+            Store.keys.checkoutFlow.billingAddress_firstName,
             useShippingAddressForBilling ? form.data.shippingAddress.firstName : form.data.billingAddress.firstName
         );
         Store.local.write(
-            Store.keys.checkoutFlow.shippingAddress_lastName,
+            Store.keys.checkoutFlow.billingAddress_lastName,
             useShippingAddressForBilling ? form.data.shippingAddress.lastName : form.data.billingAddress.lastName
         );
         Store.local.write(
-            Store.keys.checkoutFlow.shippingAddress_addressLine1,
+            Store.keys.checkoutFlow.billingAddress_addressLine1,
             useShippingAddressForBilling ? form.data.shippingAddress.addressLineOne : form.data.billingAddress.addressLineOne
         );
         Store.local.write(
-            Store.keys.checkoutFlow.shippingAddress_addressLine2,
+            Store.keys.checkoutFlow.billingAddress_addressLine2,
             useShippingAddressForBilling ? form.data.shippingAddress.addressLineTwo : form.data.billingAddress.addressLineTwo
         );
         Store.local.write(
-            Store.keys.checkoutFlow.shippingAddress_city,
+            Store.keys.checkoutFlow.billingAddress_city,
             useShippingAddressForBilling ? form.data.shippingAddress.city : form.data.billingAddress.city
         );
         Store.local.write(
-            Store.keys.checkoutFlow.shippingAddress_zip,
+            Store.keys.checkoutFlow.billingAddress_zip,
             useShippingAddressForBilling ? form.data.shippingAddress.zip : form.data.billingAddress.zip
         );
         Store.local.write(
-            Store.keys.checkoutFlow.shippingAddress_state,
+            Store.keys.checkoutFlow.billingAddress_state,
             useShippingAddressForBilling ? form.data.shippingAddress.state : form.data.billingAddress.state
         );
 
