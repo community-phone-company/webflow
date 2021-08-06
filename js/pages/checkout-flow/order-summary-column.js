@@ -26,11 +26,11 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         ? $(cards.newNumberYearly).show()
         : $(cards.newNumberYearly).hide();
     
-    productIdentifiers.includes(ProductIdentifier.keepNumberMonthly)
+    productIdentifiers.includes(ProductIdentifier.portingLandlineNumberMonthly)
         ? $(cards.keepNumberMonthly).show()
         : $(cards.keepNumberMonthly).hide();
     
-    productIdentifiers.includes(ProductIdentifier.keepNumberYearly)
+    productIdentifiers.includes(ProductIdentifier.portingLandlineNumberYearly)
         ? $(cards.keepNumberYearly).show()
         : $(cards.keepNumberYearly).hide();
     
