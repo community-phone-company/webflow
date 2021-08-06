@@ -45,15 +45,4 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
     productIdentifiers.includes(ProductIdentifier.insuranceYearly)
         ? $(cards.insuranceYearly).show()
         : $(cards.insuranceYearly).hide();
-
-    const cards = [
-        {
-            productId: ProductIdentifier.landlineBase,
-            card: document.getElementById("order-summary-product-landline-base")
-        }
-    ];
-    const getProductIdFromCardId = (cardId) => {
-        switch (cardId) {
-        }
-    };
 };
