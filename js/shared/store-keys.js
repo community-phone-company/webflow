@@ -15,6 +15,7 @@ const CheckoutFlowStoreKey = Object.freeze({
     lastName: "checkout-flow-last-name",
     phone: "checkout-flow-phone",
     email: "checkout-flow-email",
+    howDidYouHearAboutUs: "checkout-flow-how-did-you-hear-about-us",
     shippingAddress_firstName: "checkout-flow-shipping-address-first-name",
     shippingAddress_lastName: "checkout-flow-shipping-address-last-name",
     shippingAddress_addressLine1: "checkout-flow-shipping-address-address-line-1",

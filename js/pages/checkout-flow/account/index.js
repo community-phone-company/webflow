@@ -9,13 +9,15 @@ $(document).ready(() => {
             lastNameTextField: document.getElementById("Last-name"),
             phoneTextField: document.getElementById("Contact-number"),
             emailTextField: document.getElementById("Email"),
+            howDidYouHearAboutUs: document.getElementById("how-did-you-hear-about-us-select"),
             submitButton: document.getElementById("submit-button")
         },
         data: {
             firstName: "",
             lastName: "",
             phone: "",
-            email: ""
+            email: "",
+            howDidYouHearAboutUs: ""
         }
     };
 
@@ -23,7 +25,8 @@ $(document).ready(() => {
         const isFormValid = form.data.firstName.length
             && form.data.lastName.length
             && form.data.phone.length
-            && form.data.email.length;
+            && form.data.email.length
+            && form.data.howDidYouHearAboutUs.length;
         UserInterface.setElementEnabled(
             form.elements.submitButton,
             isFormValid
@@ -69,6 +72,19 @@ $(document).ready(() => {
     form.elements.emailTextField.value = Store.local.read(
         Store.keys.checkoutFlow.email
     ) ?? "";
+
+    const howDidYouHearAboutUsPlaceholder = "Select";
+    form.elements.howDidYouHearAboutUs.oninput = () => {
+        const visibleValue = form.elements.howDidYouHearAboutUs.value;
+        const value = visibleValue === howDidYouHearAboutUsPlaceholder ? "" : visibleValue;
+        form.data.howDidYouHearAboutUs = value;
+    };
+    form.elements.howDidYouHearAboutUs.value = (() => {
+        const valueFromStore = Store.local.read(
+            Store.keys.checkoutFlow.howDidYouHearAboutUs
+        ) ?? "";
+        return valueFromStore.length ? valueFromStore : howDidYouHearAboutUsPlaceholder;
+    })();
 
     $(form.elements.form).submit((event) => {
         event.preventDefault();
