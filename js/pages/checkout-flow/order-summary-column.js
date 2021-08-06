@@ -13,36 +13,40 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         insuranceMonthly: document.getElementById("order-summary-product-insurance-monthly"),
         insuranceYearly: document.getElementById("order-summary-product-insurance-yearly")
     };
+
+    const hasProduct = (id) => {
+        return productIdentifiers.includes(id);
+    }
     
-    productIdentifiers.includes(ProductIdentifier.landlineBase)
+    hasProduct(ProductIdentifier.landlineBase)
         ? $(cards.landlineBase).show()
         : $(cards.landlineBase).hide();
 
-    productIdentifiers.includes(ProductIdentifier.landlinePhoneServiceMonthly)
-        ? $(cards.newNumberMonthly).show()
-        : $(cards.newNumberMonthly).hide();
-
-    productIdentifiers.includes(ProductIdentifier.landlinePhoneServiceYearly)
-        ? $(cards.newNumberYearly).show()
-        : $(cards.newNumberYearly).hide();
-    
-    productIdentifiers.includes(ProductIdentifier.portingLandlineNumberMonthly)
+    hasProduct(ProductIdentifier.portingLandlineNumberMonthly)
         ? $(cards.keepNumberMonthly).show()
         : $(cards.keepNumberMonthly).hide();
     
-    productIdentifiers.includes(ProductIdentifier.portingLandlineNumberYearly)
+    hasProduct(ProductIdentifier.portingLandlineNumberYearly)
         ? $(cards.keepNumberYearly).show()
         : $(cards.keepNumberYearly).hide();
     
-    productIdentifiers.includes(ProductIdentifier.handset)
+    hasProduct(ProductIdentifier.landlinePhoneServiceMonthly) && !hasProduct(ProductIdentifier.portingLandlineNumberMonthly)
+        ? $(cards.newNumberMonthly).show()
+        : $(cards.newNumberMonthly).hide();
+
+    hasProduct(ProductIdentifier.landlinePhoneServiceYearly) && !hasProduct(ProductIdentifier.portingLandlineNumberYearly)
+        ? $(cards.newNumberYearly).show()
+        : $(cards.newNumberYearly).hide();
+    
+    hasProduct(ProductIdentifier.handset)
         ? $(cards.handset).show()
         : $(cards.handset).hide();
     
-    productIdentifiers.includes(ProductIdentifier.insuranceMonthly)
+    hasProduct(ProductIdentifier.insuranceMonthly)
         ? $(cards.insuranceMonthly).show()
         : $(cards.insuranceMonthly).hide();
     
-    productIdentifiers.includes(ProductIdentifier.insuranceYearly)
+    hasProduct(ProductIdentifier.insuranceYearly)
         ? $(cards.insuranceYearly).show()
         : $(cards.insuranceYearly).hide();
 };
