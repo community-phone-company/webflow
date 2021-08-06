@@ -187,8 +187,9 @@ class Chargebee {
             },
             error: function (error) {
                 logger.print(`Error: ${error}`);
+                const message = error && error.responseJSON && error.responseJSON.message;
                 callback(
-                    "",
+                    message,
                     false
                 );
             }
