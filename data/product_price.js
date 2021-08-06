@@ -1,0 +1,13 @@
+/**
+ * Edit prices here.
+ */
+ const PRODUCT_PRICE = Object.freeze({
+    LANDLINE_BASE: 99,
+    NEW_NUMBER_MONTHLY: 29,
+    NEW_NUMBER_YEARLY: 264,
+    KEEP_NUMBER_MONTHLY: 39,
+    KEEP_NUMBER_YEARLY: 384,
+    INSURANCE_MONTHLY: 5,
+    INSURANCE_YEARLY: 50,
+    HANDSET: 39
+});

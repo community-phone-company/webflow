@@ -1,17 +1,3 @@
-/**
- * Edit prices here.
- */
-const PRODUCT_STORE_PRICES = Object.freeze({
-    LANDLINE_BASE: 99,
-    NEW_NUMBER_MONTHLY: 29,
-    NEW_NUMBER_YEARLY: 264,
-    KEEP_NUMBER_MONTHLY: 39,
-    KEEP_NUMBER_YEARLY: 384,
-    INSURANCE_MONTHLY: 5,
-    INSURANCE_YEARLY: 50,
-    HANDSET: 39
-});
-
 class ProductStore {
 
     constructor() {
@@ -19,42 +5,42 @@ class ProductStore {
             new Product(
                 ProductIdentifier.landlineBase,
                 false,
-                PRODUCT_STORE_PRICES.LANDLINE_BASE
+                PRODUCT_PRICE.LANDLINE_BASE
             ),
             new Product(
                 ProductIdentifier.landlinePhoneServiceMonthly,
                 true,
-                PRODUCT_STORE_PRICES.NEW_NUMBER_MONTHLY
+                PRODUCT_PRICE.NEW_NUMBER_MONTHLY
             ),
             new Product(
                 ProductIdentifier.landlinePhoneServiceYearly,
                 true,
-                PRODUCT_STORE_PRICES.NEW_NUMBER_YEARLY
+                PRODUCT_PRICE.NEW_NUMBER_YEARLY
             ),
             new Product(
                 ProductIdentifier.portingLandlineNumberMonthly,
                 true,
-                PRODUCT_STORE_PRICES.KEEP_NUMBER_MONTHLY
+                PRODUCT_PRICE.KEEP_NUMBER_MONTHLY
             ),
             new Product(
                 ProductIdentifier.portingLandlineNumberYearly,
                 true,
-                PRODUCT_STORE_PRICES.KEEP_NUMBER_YEARLY
+                PRODUCT_PRICE.KEEP_NUMBER_YEARLY
             ),
             new Product(
                 ProductIdentifier.insuranceMonthly,
                 true,
-                PRODUCT_STORE_PRICES.INSURANCE_MONTHLY
+                PRODUCT_PRICE.INSURANCE_MONTHLY
             ),
             new Product(
                 ProductIdentifier.insuranceYearly,
                 true,
-                PRODUCT_STORE_PRICES.INSURANCE_YEARLY
+                PRODUCT_PRICE.INSURANCE_YEARLY
             ),
             new Product(
                 ProductIdentifier.handset,
                 false,
-                PRODUCT_STORE_PRICES.HANDSET
+                PRODUCT_PRICE.HANDSET
             )
         ];
     }
