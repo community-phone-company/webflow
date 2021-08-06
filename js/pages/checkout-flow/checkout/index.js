@@ -114,8 +114,6 @@ $(document).ready(() => {
             form.elements.submitButton,
             isEverythingCorrect
         );
-
-        console.log(form.data);
     };
 
     /**
