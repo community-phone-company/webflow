@@ -58,7 +58,7 @@ const getUrlForCheckoutFlowStep = (step) => {
             return "/checkout-landline/choose-a-plan";
         }
         case CheckoutFlowStep.account: {
-            return "checkout-landline/account";
+            return "/checkout-landline/account";
         }
         case CheckoutFlowStep.checkout: {
             return "/checkout-landline/checkout-step";
