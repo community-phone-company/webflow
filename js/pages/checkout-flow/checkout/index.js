@@ -220,6 +220,7 @@ $(document).ready(() => {
         form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
         handleFormDataChanges();
     };
+    form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
 
     form.elements.differentBillingAddressSwitcher.startWatchingForStateChanges((switcher) => {
         form.data.useShippingAddressForBilling = switcher.isOn();
@@ -272,6 +273,8 @@ $(document).ready(() => {
         form.data.billingAddress.state = form.elements.billingAddress.stateSelect.value;
         handleFormDataChanges();
     };
+    form.data.billingAddress.state = form.elements.billingAddress.stateSelect.value;
+
     new InputValueObserver(
         form.elements.paymentDetails.cardNumberInput
     ).startObserving((newValue) => {
