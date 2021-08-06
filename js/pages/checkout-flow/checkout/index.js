@@ -176,7 +176,6 @@ $(document).ready(() => {
         form.data.shippingAddress.firstName = newValue;
         handleFormDataChanges();
     });
-    form.data.shippingAddress.firstName = form.elements.shippingAddress.firstNameInput.value;
 
     new InputValueObserver(
         form.elements.shippingAddress.lastNameInput
@@ -184,7 +183,6 @@ $(document).ready(() => {
         form.data.shippingAddress.lastName = newValue;
         handleFormDataChanges();
     });
-    form.data.shippingAddress.lastName = form.elements.shippingAddress.lastNameInput.value;
 
     new InputValueObserver(
         form.elements.shippingAddress.addressLineOneInput
@@ -192,7 +190,6 @@ $(document).ready(() => {
         form.data.shippingAddress.addressLineOne = newValue;
         handleFormDataChanges();
     });
-    form.data.shippingAddress.addressLineOne = form.elements.shippingAddress.addressLineOneInput.value;
 
     new InputValueObserver(
         form.elements.shippingAddress.addressLineTwoInput
@@ -200,7 +197,6 @@ $(document).ready(() => {
         form.data.shippingAddress.addressLineTwo = newValue;
         handleFormDataChanges();
     });
-    form.data.shippingAddress.addressLineTwo = form.elements.shippingAddress.addressLineTwoInput.value;
 
     new InputValueObserver(
         form.elements.shippingAddress.cityInput
@@ -208,7 +204,6 @@ $(document).ready(() => {
         form.data.shippingAddress.city = newValue;
         handleFormDataChanges();
     });
-    form.data.shippingAddress.city = form.elements.shippingAddress.cityInput.value;
 
     new InputValueObserver(
         form.elements.shippingAddress.zipInput
@@ -216,19 +211,16 @@ $(document).ready(() => {
         form.data.shippingAddress.zip = newValue;
         handleFormDataChanges();
     });
-    form.data.shippingAddress.zip = form.elements.shippingAddress.zipInput.value;
 
     form.elements.shippingAddress.stateSelect.onchange = () => {
         form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
         handleFormDataChanges();
     };
-    form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
 
     form.elements.differentBillingAddressSwitcher.startWatchingForStateChanges((switcher) => {
         form.data.useShippingAddressForBilling = switcher.isOn();
         handleFormDataChanges();
     });
-    form.data.useShippingAddressForBilling = form.elements.differentBillingAddressSwitcher.isOn();
 
     new InputValueObserver(
         form.elements.billingAddress.firstNameInput
@@ -236,7 +228,6 @@ $(document).ready(() => {
         form.data.billingAddress.firstName = newValue;
         handleFormDataChanges();
     });
-    form.data.billingAddress.firstName = form.elements.billingAddress.firstNameInput.value;
 
     new InputValueObserver(
         form.elements.billingAddress.lastNameInput
@@ -244,7 +235,6 @@ $(document).ready(() => {
         form.data.billingAddress.lastName = newValue;
         handleFormDataChanges();
     });
-    form.data.billingAddress.lastName = form.elements.billingAddress.lastNameInput.value;
 
     new InputValueObserver(
         form.elements.billingAddress.addressLineOneInput
@@ -252,7 +242,6 @@ $(document).ready(() => {
         form.data.billingAddress.addressLineOne = newValue;
         handleFormDataChanges();
     });
-    form.data.billingAddress.addressLineOne = form.elements.billingAddress.addressLineOneInput.value;
 
     new InputValueObserver(
         form.elements.billingAddress.addressLineTwoInput
@@ -260,7 +249,6 @@ $(document).ready(() => {
         form.data.billingAddress.addressLineTwo = newValue;
         handleFormDataChanges();
     });
-    form.data.billingAddress.addressLineTwo = form.elements.billingAddress.addressLineTwoInput.value;
 
     new InputValueObserver(
         form.elements.billingAddress.cityInput
@@ -268,7 +256,6 @@ $(document).ready(() => {
         form.data.billingAddress.city = newValue;
         handleFormDataChanges();
     });
-    form.data.billingAddress.city = form.elements.billingAddress.cityInput.value;
 
     new InputValueObserver(
         form.elements.billingAddress.zipInput
@@ -276,21 +263,17 @@ $(document).ready(() => {
         form.data.billingAddress.zip = newValue;
         handleFormDataChanges();
     });
-    form.data.billingAddress.zip = form.elements.billingAddress.zipInput.value;
 
     form.elements.billingAddress.stateSelect.onchange = () => {
         form.data.billingAddress.state = form.elements.billingAddress.stateSelect.value;
         handleFormDataChanges();
     };
-    form.data.billingAddress.state = form.elements.billingAddress.stateSelect.value;
-
     new InputValueObserver(
         form.elements.paymentDetails.cardNumberInput
     ).startObserving((newValue) => {
         form.data.paymentDetails.cardNumber = newValue;
         handleFormDataChanges();
     });
-    form.data.paymentDetails.cardNumber = form.elements.paymentDetails.cardNumberInput.value;
 
     new InputValueObserver(
         form.elements.paymentDetails.cardExpiryInput
@@ -298,7 +281,6 @@ $(document).ready(() => {
         form.data.paymentDetails.cardExpiry = newValue;
         handleFormDataChanges();
     });
-    form.data.paymentDetails.cardExpiry = form.elements.paymentDetails.cardExpiryInput.value;
 
     new InputValueObserver(
         form.elements.paymentDetails.cardVerificationValueInput
@@ -306,7 +288,6 @@ $(document).ready(() => {
         form.data.paymentDetails.cardVerificationValue = newValue;
         handleFormDataChanges();
     });
-    form.data.paymentDetails.cardVerificationValue = form.elements.paymentDetails.cardVerificationValueInput.value;
 
     //makeAddressTextField(form.elements.shippingAddress.addressLineOneInput);
 
