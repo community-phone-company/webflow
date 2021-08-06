@@ -66,10 +66,17 @@ const getUrlForCheckoutFlowStep = (step) => {
     }
 };
 
-const redirectToPreviousCheckoutFlowStepIfNeeded = () => {
+/**
+ * @param {string} currentStep Current step.
+ */
+const redirectToPreviousCheckoutFlowStepIfNeeded = (currentStep) => {
     const steps = getCheckoutFlowStepsOrder();
 
     for (const step of steps) {
+        if (step === currentStep) {
+            return;
+        }
+
         if (!storeHasDataFromCheckoutFlowStep(step)) {
             const stepUrl = getUrlForCheckoutFlowStep(step);
             
