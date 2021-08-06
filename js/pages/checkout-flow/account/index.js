@@ -85,6 +85,9 @@ $(document).ready(() => {
         ) ?? "";
         return valueFromStore.length ? valueFromStore : howDidYouHearAboutUsPlaceholder;
     })();
+    form.data.howDidYouHearAboutUs = Store.local.read(
+        Store.keys.checkoutFlow.howDidYouHearAboutUs
+    ) ?? "";
 
     $(form.elements.form).submit((event) => {
         event.preventDefault();
