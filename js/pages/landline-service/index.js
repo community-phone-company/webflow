@@ -5,7 +5,7 @@ $(document).ready(() => {
     const zipForms = Object.freeze({
         top: new ZipForm(
             "#zip-code-form-hero",
-            "#zip-check"
+            "#zip-check-top"
         ),
         bottom: new ZipForm(
             "#zip-code-form-bottom",
