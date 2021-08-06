@@ -373,4 +373,11 @@ $(document).ready(() => {
     });
 
     handleFormDataChanges();
+
+    const productIdentifiers = Store.local.read(
+        Store.keys.checkoutFlow.selectedProductIdentifiers
+    );
+    updateOrderSummaryColumn(
+        productIdentifiers
+    );
 });

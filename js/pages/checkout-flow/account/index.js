@@ -76,5 +76,12 @@ $(document).ready(() => {
         );
     });
 
-    handleFormDataChange(); 
+    handleFormDataChange();
+
+    const productIdentifiers = Store.local.read(
+        Store.keys.checkoutFlow.selectedProductIdentifiers
+    );
+    updateOrderSummaryColumn(
+        productIdentifiers
+    );
 });
