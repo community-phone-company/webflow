@@ -36,6 +36,9 @@ $(document).ready(() => {
         form.data.firstName = newValue;
         handleFormDataChange();
     });
+    form.elements.firstNameTextField.value = Store.local.read(
+        Store.keys.checkoutFlow.firstName
+    ) ?? "";
 
     new InputValueObserver(
         form.elements.lastNameTextField
@@ -43,6 +46,9 @@ $(document).ready(() => {
         form.data.lastName = newValue;
         handleFormDataChange();
     });
+    form.elements.lastNameTextField.value = Store.local.read(
+        Store.keys.checkoutFlow.lastName
+    ) ?? "";
 
     new InputValueObserver(
         form.elements.phoneTextField
@@ -50,6 +56,9 @@ $(document).ready(() => {
         form.data.phone = newValue;
         handleFormDataChange();
     });
+    form.elements.phoneTextField.value = Store.local.read(
+        Store.keys.checkoutFlow.phone
+    ) ?? "";
 
     new InputValueObserver(
         form.elements.emailTextField
@@ -57,6 +66,9 @@ $(document).ready(() => {
         form.data.email = newValue;
         handleFormDataChange();
     });
+    form.elements.emailTextField.value = Store.local.read(
+        Store.keys.checkoutFlow.email
+    ) ?? "";
 
     $(form.elements.form).submit((event) => {
         event.preventDefault();
