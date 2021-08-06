@@ -114,8 +114,6 @@ $(document).ready(() => {
         );
     };
 
-    console.log("********************************************");
-
     /**
      * @param {(message: string, success: boolean) => void} callback 
      */
@@ -383,6 +381,11 @@ $(document).ready(() => {
             (response, error, success) => {
                 logger.print("Active Campaign");
                 buyProducts((message, success) => {
+                    if (success) {
+                        window.location.href = "/checkout-landline/thank-you";
+                    } else {
+                        alert(message);
+                    }
                 });
             }
         );
