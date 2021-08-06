@@ -1,3 +1,17 @@
+/**
+ * Edit prices here.
+ */
+const PRODUCT_STORE_PRICES = Object.freeze({
+    LANDLINE_BASE: 99,
+    NEW_NUMBER_MONTHLY: 29,
+    NEW_NUMBER_YEARLY: 264,
+    KEEP_NUMBER_MONTHLY: 39,
+    KEEP_NUMBER_YEARLY: 384,
+    INSURANCE_MONTHLY: 5,
+    INSURANCE_YEARLY: 50,
+    HANDSET: 39
+});
+
 class ProductStore {
 
     constructor() {
@@ -5,42 +19,42 @@ class ProductStore {
             new Product(
                 ProductIdentifier.landlineBase,
                 false,
-                99
+                PRODUCT_STORE_PRICES.LANDLINE_BASE
             ),
             new Product(
                 ProductIdentifier.landlinePhoneServiceMonthly,
                 true,
-                29
+                PRODUCT_STORE_PRICES.NEW_NUMBER_MONTHLY
             ),
             new Product(
                 ProductIdentifier.landlinePhoneServiceYearly,
                 true,
-                264
+                PRODUCT_STORE_PRICES.NEW_NUMBER_YEARLY
             ),
             new Product(
                 ProductIdentifier.portingLandlineNumberMonthly,
                 true,
-                39
+                PRODUCT_STORE_PRICES.KEEP_NUMBER_MONTHLY
             ),
             new Product(
                 ProductIdentifier.portingLandlineNumberYearly,
                 true,
-                384
+                PRODUCT_STORE_PRICES.KEEP_NUMBER_YEARLY
             ),
             new Product(
                 ProductIdentifier.insuranceMonthly,
                 true,
-                5
+                PRODUCT_STORE_PRICES.INSURANCE_MONTHLY
             ),
             new Product(
                 ProductIdentifier.insuranceYearly,
                 true,
-                50
+                PRODUCT_STORE_PRICES.INSURANCE_YEARLY
             ),
             new Product(
                 ProductIdentifier.handset,
                 false,
-                39
+                PRODUCT_STORE_PRICES.HANDSET
             )
         ];
     }
