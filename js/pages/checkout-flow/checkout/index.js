@@ -1,11 +1,4 @@
 /**
- * For test only.
- */
-if (IS_PRODUCTION) {
-    return;
-}
-
-/**
  * Adds Google Maps functionality to the text field.
  * @param {HTMLInputElement} textField `HTMLInputElement` instance.
  */
@@ -17,9 +10,14 @@ const makeAddressTextField = (textField) => {
 
 var clipboard = new ClipboardJS('.btn');
 
-var _formData = undefined;
-
 $(document).ready(() => {
+
+    /**
+     * For test only.
+     */
+    if (IS_PRODUCTION) {
+        return;
+    }
 
     const form = {
         elements: {
@@ -114,8 +112,6 @@ $(document).ready(() => {
             form.elements.submitButton,
             isEverythingCorrect
         );
-
-        _formData = form.data;
     };
 
     /**
