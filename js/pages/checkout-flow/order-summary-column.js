@@ -30,11 +30,11 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         ? $(cards.keepNumberYearly).show()
         : $(cards.keepNumberYearly).hide();
     
-    hasProduct(ProductIdentifier.landlinePhoneServiceMonthly) && !hasProduct(ProductIdentifier.portingLandlineNumberMonthly)
+    hasProduct(ProductIdentifier.landlinePhoneServiceMonthly)
         ? $(cards.newNumberMonthly).show()
         : $(cards.newNumberMonthly).hide();
 
-    hasProduct(ProductIdentifier.landlinePhoneServiceYearly) && !hasProduct(ProductIdentifier.portingLandlineNumberYearly)
+    hasProduct(ProductIdentifier.landlinePhoneServiceYearly)
         ? $(cards.newNumberYearly).show()
         : $(cards.newNumberYearly).hide();
     
@@ -64,7 +64,7 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         .reduce((left, right) => left + right);
     
     $(".device-price-with-handset").remove();
-    $(".device-price device-price-without-handset").html(`$${oneTimeChargePrice}`);
+    $(".device-price-without-handset").html(`$${oneTimeChargePrice}`);
     $(".service-price-new-number-y").remove();
     $(".service-price-porting-m").remove();
     $(".service-price-porting-y").remove();

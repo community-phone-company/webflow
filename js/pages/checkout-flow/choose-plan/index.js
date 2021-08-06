@@ -9,11 +9,14 @@ $(document).ready(() => {
 
     const getProductIdentifiers = () => {
         var identifiers = [
-            formData.monthly ? ProductIdentifier.landlinePhoneServiceMonthly : ProductIdentifier.landlinePhoneServiceYearly,
             ProductIdentifier.landlineBase,
         ];
 
-        if (!formData.getNewNumber) {
+        if (formData.getNewNumber) {
+            identifiers.push(
+                formData.monthly ? ProductIdentifier.landlinePhoneServiceMonthly : ProductIdentifier.landlinePhoneServiceYearly,
+            );
+        } else {
             identifiers.push(
                 formData.monthly ? ProductIdentifier.portingLandlineNumberMonthly : ProductIdentifier.portingLandlineNumberYearly
             );
