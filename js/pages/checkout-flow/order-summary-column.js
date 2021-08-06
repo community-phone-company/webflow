@@ -56,10 +56,10 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
     logger.print(productIdentifiers);
     const oneTimeChargePrice = products
         .filter(product => !product.isSubscription)
-        .reduce((left, right) => left.price + right.price, 0);
+        .reduce((left, right) => left.price + right.price);
     const subscriptionPrice = products
         .filter(product => product.isSubscription)
-        .reduce((left, right) => left.price + right.price, 0);
+        .reduce((left, right) => left.price + right.price);
     
     $(".device-price-with-handset").remove();
     $(".device-price device-price-without-handset").html(`$${oneTimeChargePrice}`);
