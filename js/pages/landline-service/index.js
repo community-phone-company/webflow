@@ -15,7 +15,7 @@ $(document).ready(() => {
 
     const allZipForms = [
         zipForms.top,
-        zipForms.bottom
+        //zipForms.bottom
     ];
 
     allZipForms.forEach(form => {
