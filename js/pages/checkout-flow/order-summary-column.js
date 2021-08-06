@@ -49,4 +49,22 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
     hasProduct(ProductIdentifier.insuranceYearly)
         ? $(cards.insuranceYearly).show()
         : $(cards.insuranceYearly).hide();
+    
+    const productStore = new ProductStore();
+    const products = productIdentifiers.map(id => productStore.getProductById(id));
+    
+    const oneTimeChargePrice = products
+        .filter(product => !product.isSubscription)
+        .reduce((left, right) => left.price + right.price, 0);
+    const subscriptionPrice = products
+        .filter(product => product.isSubscription)
+        .reduce((left, right) => left.price + right.price, 0);
+    
+    $(".device-price-with-handset").remove();
+    $(".device-price device-price-without-handset").html(`$${oneTimeChargePrice}`);
+    $(".service-price-new-number-y").remove();
+    $(".service-price-porting-m").remove();
+    $(".service-price-porting-y").remove();
+    $(".cost-plus-insurance").remove();
+    $(".service-price-new-number-m").html(`$${subscriptionPrice}`);
 };
