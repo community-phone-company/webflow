@@ -1,30 +1,80 @@
 $(document).ready(() => {
-    
-    /**
-     * Here we handle submit button click.
-     */
-    const submitButton = document.querySelectorAll("input.continue_account")[0];
 
-    $(submitButton).on("click", (event) => {
-        const firstName = $("#First-name").val();
-        Store.local.write(Store.keys.checkoutFlow.firstName, firstName);
+    const form = {
+        elements: {
+            form: document.getElementById("wf-form-Account-form"),
+            firstNameTextField: document.getElementById("First-name"),
+            lastNameTextField: document.getElementById("Last-name"),
+            phoneTextField: document.getElementById("Contact-number"),
+            emailTextField: document.getElementById("Email"),
+            submitButton: document.getElementById("submit-button")
+        },
+        data: {
+            firstName: "",
+            lastName: "",
+            phone: "",
+            email: ""
+        }
+    };
 
-        const lastName = $("#Last-name").val();
-        Store.local.write(Store.keys.checkoutFlow.lastName, lastName);
+    const handleFormDataChange = () => {
+        const isFormValid = form.data.firstName.length
+            && form.data.lastName.length
+            && form.data.phone.length
+            && form.data.email.length;
+        UserInterface.setElementEnabled(
+            form.elements.submitButton,
+            isFormValid
+        );
+    };
 
-        const phone = $("#Contact-number").val();
-        Store.local.write(Store.keys.checkoutFlow.phone, phone);
-
-        const email = $("#Email").val();
-        Store.local.write(Store.keys.checkoutFlow.email, email);
+    new InputValueObserver(
+        form.elements.firstNameTextField
+    ).startObserving((newValue) => {
+        form.data.firstName = newValue;
+        handleFormDataChange();
     });
 
-    /**
-     * Send user's data to Active Campaign.
-     */
-    exportCheckoutFlowDataToActiveCampaign(
-        (response, error, success) => {
-            logger.print("Active Campaign");
-        }
-    );
+    new InputValueObserver(
+        form.elements.lastNameTextField
+    ).startObserving((newValue) => {
+        form.data.lastName = newValue;
+        handleFormDataChange();
+    });
+
+    new InputValueObserver(
+        form.elements.phoneTextField
+    ).startObserving((newValue) => {
+        form.data.phone = newValue;
+        handleFormDataChange();
+    });
+
+    new InputValueObserver(
+        form.elements.emailTextField
+    ).startObserving((newValue) => {
+        form.data.email = newValue;
+        handleFormDataChange();
+    });
+
+    $(form.elements.form).submit((event) => {
+        event.preventDefault();
+    });
+    
+    $(form.elements.submitButton).on("click", (event) => {
+        event.preventDefault();
+
+        Store.local.write(Store.keys.checkoutFlow.firstName, form.data.firstName);
+        Store.local.write(Store.keys.checkoutFlow.lastName, form.data.lastName);
+        Store.local.write(Store.keys.checkoutFlow.phone, form.data.phone);
+        Store.local.write(Store.keys.checkoutFlow.email, form.data.email);
+
+        exportCheckoutFlowDataToActiveCampaign(
+            (response, error, success) => {
+                logger.print("Active Campaign");
+                window.location.href = "/checkout-landline/checkout-step";
+            }
+        );
+    });
+
+    handleFormDataChange(); 
 });
