@@ -71,7 +71,11 @@ const redirectToPreviousCheckoutFlowStepIfNeeded = () => {
 
     for (const step of steps) {
         if (!storeHasDataFromCheckoutFlowStep(step)) {
-            window.location.href = getUrlForCheckoutFlowStep(step);
+            const stepUrl = getUrlForCheckoutFlowStep(step);
+            
+            if (!window.location.href.endsWith(stepUrl)) {
+                window.location.href = stepUrl;
+            }
             return;
         }
     }
