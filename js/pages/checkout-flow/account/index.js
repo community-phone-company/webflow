@@ -1,3 +1,5 @@
+redirectToPreviousCheckoutFlowStepIfNeeded();
+
 $(document).ready(() => {
 
     const form = {

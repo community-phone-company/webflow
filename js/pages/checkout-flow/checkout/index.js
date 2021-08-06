@@ -8,6 +8,8 @@ const makeAddressTextField = (textField) => {
     }
 };
 
+redirectToPreviousCheckoutFlowStepIfNeeded();
+
 var clipboard = new ClipboardJS('.btn');
 
 $(document).ready(() => {
