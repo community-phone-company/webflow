@@ -93,7 +93,7 @@ $(document).ready(() => {
         form.elements.emailTextField.value = Store.local.read(
             Store.keys.checkoutFlow.email
         ) ?? "";
-    }, 20);
+    }, 2000);
 
     const productIdentifiers = Store.local.read(
         Store.keys.checkoutFlow.selectedProductIdentifiers
