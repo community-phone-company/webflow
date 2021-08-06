@@ -114,6 +114,8 @@ $(document).ready(() => {
         );
     };
 
+    console.log("********************************************");
+
     /**
      * @param {(message: string, success: boolean) => void} callback 
      */
