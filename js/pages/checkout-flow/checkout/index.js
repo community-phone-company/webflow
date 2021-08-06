@@ -114,6 +114,8 @@ $(document).ready(() => {
             form.elements.submitButton,
             isEverythingCorrect
         );
+
+        console.log(form.data);
     };
 
     /**
@@ -273,7 +275,7 @@ $(document).ready(() => {
     new InputValueObserver(
         form.elements.paymentDetails.cardNumberInput
     ).startObserving((newValue) => {
-        form.data.paymentDetails.cardNumber = newValue;
+        form.data.paymentDetails.cardNumber = newValue.replaceAll(" ", "");
         handleFormDataChanges();
     });
 
