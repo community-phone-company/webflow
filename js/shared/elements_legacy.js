@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    console.log("elements_legacy.js blocked");
+    return;
+
     // TODO: REMOVE WHEN FINISHED WITH TESTING!
     if (!IS_PRODUCTION) {
         console.log("elements_legacy.js blocked");

@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    console.log("webflow-legacy.js blocked");
+    return;
+
     // TODO: REMOVE WHEN FINISHED WITH TESTING!
     if (!IS_PRODUCTION) {
         console.log("webflow-legacy.js blocked");
