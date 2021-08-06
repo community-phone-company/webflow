@@ -1,6 +1,4 @@
-redirectToPreviousCheckoutFlowStepIfNeeded(
-    CheckoutFlowStep.account
-);
+redirectToPreviousCheckoutFlowStepIfNeeded();
 
 $(document).ready(() => {
 

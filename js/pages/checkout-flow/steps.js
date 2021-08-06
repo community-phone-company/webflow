@@ -66,23 +66,18 @@ const getUrlForCheckoutFlowStep = (step) => {
     }
 };
 
-/**
- * @param {string} currentStep Current step.
- */
-const redirectToPreviousCheckoutFlowStepIfNeeded = (currentStep) => {
+const redirectToPreviousCheckoutFlowStepIfNeeded = () => {
     const steps = getCheckoutFlowStepsOrder();
 
     for (const step of steps) {
-        if (step === currentStep) {
+        const stepUrl = getUrlForCheckoutFlowStep(step);
+
+        if (window.location.href.endsWith(stepUrl)) {
             return;
         }
 
         if (!storeHasDataFromCheckoutFlowStep(step)) {
-            const stepUrl = getUrlForCheckoutFlowStep(step);
-            
-            if (!window.location.href.endsWith(stepUrl)) {
-                window.location.href = stepUrl;
-            }
+            window.location.href = stepUrl;
             return;
         }
     }
