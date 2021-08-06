@@ -3,11 +3,9 @@ class InputValueObserver {
     /**
      * @constructor
      * @param {HTMLInputElement} input 
-     * @param {boolean} highPerformance
      */
-    constructor(input, highPerformance) {
+    constructor(input) {
         this.input = input;
-        this.highPerformance = highPerformance;
         this._lastValue = input.value;
     }
 
@@ -17,7 +15,7 @@ class InputValueObserver {
     startObserving = (onValueChanged) => {
         this._onValueChanged = onValueChanged;
 
-        const checkValue = () => {
+        this._timerId = setInterval(() => {
             const currentValue = this.input.value;
 
             if (this._lastValue !== currentValue) {
@@ -27,31 +25,17 @@ class InputValueObserver {
                     this._onValueChanged(currentValue);
                 }
             }
-        };
-        
-        if (this.highPerformance) {
-            this.input.oninput = () => {
-                checkValue();
-            };
-        } else {
-            this._timerId = setInterval(() => {
-                checkValue();
-            }, InputValueObserverConfiguration.timerInterval);
-        }
+        }, InputValueObserverConfiguration.timerInterval);
     }
 
     stopObserving = () => {
         this._onValueChanged = undefined;
         
-        if (this.highPerformance) {
-            this.input.oninput = undefined;
-        } else {
-            if (this._timerId) {
-                clearInterval(
-                    this._timerId
-                );
-                this._timerId = undefined;
-            }
+        if (this._timerId) {
+            clearInterval(
+                this._timerId
+            );
+            this._timerId = undefined;
         }
     }
 }
