@@ -88,7 +88,6 @@ $(document).ready(() => {
             && form.data.shippingAddress.city.length
             && form.data.shippingAddress.zip.length
             && form.data.shippingAddress.state.length;
-        console.log(`Shipping details: ${isShippingAddressValid}`);
         
         const isBillingAddressValid = (() => {
             if (form.data.useShippingAddressForBilling) {
@@ -102,12 +101,10 @@ $(document).ready(() => {
                     && form.data.billingAddress.state.length;
             }
         })();
-        console.log(`Billing details: ${isBillingAddressValid}`);
 
         const isPaymentDetailsValid = form.data.paymentDetails.cardNumber.length
             && form.data.paymentDetails.cardExpiry.length
             && form.data.paymentDetails.cardVerificationValue.length;
-        console.log(`Payment details: ${isPaymentDetailsValid}`);
         
         const isEverythingCorrect = isShippingAddressValid
             && isBillingAddressValid
