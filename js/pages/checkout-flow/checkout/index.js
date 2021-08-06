@@ -178,6 +178,9 @@ $(document).ready(() => {
         form.data.shippingAddress.firstName = newValue;
         handleFormDataChanges();
     });
+    form.elements.shippingAddress.firstNameInput.value = Store.local.read(
+        Store.keys.checkoutFlow.firstName
+    ) ?? "";
 
     new InputValueObserver(
         form.elements.shippingAddress.lastNameInput
@@ -185,6 +188,9 @@ $(document).ready(() => {
         form.data.shippingAddress.lastName = newValue;
         handleFormDataChanges();
     });
+    form.elements.shippingAddress.lastNameInput.value = Store.local.read(
+        Store.keys.checkoutFlow.lastName
+    ) ?? "";
 
     new InputValueObserver(
         form.elements.shippingAddress.addressLineOneInput
