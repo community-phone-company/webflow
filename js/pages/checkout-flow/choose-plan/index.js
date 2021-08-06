@@ -44,12 +44,18 @@ $(document).ready(() => {
 
     $("#monthly-plan").on("click", (event) => {
         formData.monthly = true;
-        console.log(formData);
     });
 
     $("#annual-plan").on("click", (event) => {
         formData.monthly = false;
-        console.log(formData);
+    });
+
+    $("#monthly-plan-p").on("click", (event) => {
+        formData.monthly = true;
+    });
+
+    $("#annual-plan-p").on("click", (event) => {
+        formData.monthly = false;
     });
 
     $("#handset-addon-card").on("click", (event) => {
