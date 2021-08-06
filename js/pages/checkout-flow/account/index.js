@@ -97,6 +97,7 @@ $(document).ready(() => {
         Store.local.write(Store.keys.checkoutFlow.lastName, form.data.lastName);
         Store.local.write(Store.keys.checkoutFlow.phone, form.data.phone);
         Store.local.write(Store.keys.checkoutFlow.email, form.data.email);
+        Store.local.write(Store.keys.checkoutFlow.howDidYouHearAboutUs, form.data.howDidYouHearAboutUs);
 
         exportCheckoutFlowDataToActiveCampaign(
             (response, error, success) => {
