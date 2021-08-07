@@ -31,6 +31,7 @@ $(document).ready(() => {
             form.elements.submitButton,
             isFormValid
         );
+        console.log(form.data);
     };
 
     new InputValueObserver(
