@@ -76,9 +76,9 @@ $(document).ready(() => {
 
     const howDidYouHearAboutUsPlaceholder = "Select";
     form.elements.howDidYouHearAboutUs.oninput = () => {
+        logger.print(`new value: ${form.elements.howDidYouHearAboutUs.value}`);
         const visibleValue = form.elements.howDidYouHearAboutUs.value;
         const value = visibleValue === howDidYouHearAboutUsPlaceholder ? "" : visibleValue;
-        logger.print(`new value: ${value}`);
         form.data.howDidYouHearAboutUs = value;
     };
     form.elements.howDidYouHearAboutUs.value = (() => {
