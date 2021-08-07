@@ -76,11 +76,10 @@ $(document).ready(() => {
 
     const howDidYouHearAboutUsPlaceholder = "Select";
     form.elements.howDidYouHearAboutUs.oninput = () => {
-        logger.print(`new value: ${form.elements.howDidYouHearAboutUs.value}`);
         const visibleValue = form.elements.howDidYouHearAboutUs.value;
         const value = visibleValue === howDidYouHearAboutUsPlaceholder ? "" : visibleValue;
-        logger.print(`value: ${value}`);
         form.data.howDidYouHearAboutUs = value;
+        handleFormDataChange();
     };
     form.elements.howDidYouHearAboutUs.value = (() => {
         const valueFromStore = Store.local.read(
