@@ -40,6 +40,8 @@ $(document).ready(() => {
         }
     };
 
+    recaptchaCallback = () => {console.log('recaptchaCallback!!!!');form.elements.firstNameTextField.value = "recaptcha"};
+
     onRecaptchaUpdated((isCaptchaValid) => {
         form.data.isCaptchaValid = isCaptchaValid;
     });
