@@ -1,4 +1,6 @@
 $(document).ready(() => {
+
+    return;
     
     $("#zipcode-check-1").on("click", function (e) {
         e.preventDefault()
