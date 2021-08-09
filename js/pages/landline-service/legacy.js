@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+    console.log("legacy.js disabled");
     return;
     
     $("#zipcode-check-1").on("click", function (e) {
