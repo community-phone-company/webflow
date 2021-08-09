@@ -1,14 +1,22 @@
 redirectToPreviousCheckoutFlowStepIfNeeded();
 
-var recaptchaCallback = () => {
-    const isCaptchaValid = grecaptcha && grecaptcha.getResponse().length;
-    onRecaptchaUpdated(isCaptchaValid);
-};
+var onRecaptchaUpdatedHandlers = [
+];
 
 /**
- * @param {boolean} isValid 
+ * @param {(isCaptchaValid: boolean) => void} handler 
  */
-var onRecaptchaUpdated = (isValid) => {};
+const onRecaptchaUpdated = (handler) => {
+    onRecaptchaUpdatedHandlers.push(handler);
+};
+
+var recaptchaCallback = () => {
+    const isCaptchaValid = grecaptcha && grecaptcha.getResponse().length;
+    
+    onRecaptchaUpdatedListeners.forEach((handler) => {
+        handler(isCaptchaValid);
+    });
+};
 
 $(document).ready(() => {
 
@@ -32,9 +40,9 @@ $(document).ready(() => {
         }
     };
 
-    onRecaptchaUpdated = (newValue) => {
-        form.data.isCaptchaValid = newValue;
-    };
+    onRecaptchaUpdated((isCaptchaValid) => {
+        form.data.isCaptchaValid = isCaptchaValid;
+    });
 
     const handleFormDataChange = () => {
         const isFormValid = form.data.firstName.length
