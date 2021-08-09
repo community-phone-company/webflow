@@ -20,13 +20,8 @@ $(document).ready(() => {
             phone: "",
             email: "",
             howDidYouHearAboutUs: "",
-            isCaptchaValid: false
+            isCaptchaValid: RecaptchaManager.getDefault().isValid()
         }
-    };
-
-    recaptchaCallback = () => {
-        form.data.isCaptchaValid = grecaptcha && grecaptcha.getResponse().length;
-        handleFormDataChange();
     };
 
     const handleFormDataChange = () => {
@@ -99,6 +94,11 @@ $(document).ready(() => {
     form.data.howDidYouHearAboutUs = Store.local.read(
         Store.keys.checkoutFlow.howDidYouHearAboutUs
     ) ?? "";
+
+    RecaptchaManager.getDefault().startObserving((isCaptchaValid) => {
+        form.data.isCaptchaValid = isCaptchaValid;
+        handleFormDataChange();
+    });
 
     $(form.elements.form).submit((event) => {
         event.preventDefault();

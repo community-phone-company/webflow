@@ -3,6 +3,17 @@
  */
 class RecaptchaManager {
 
+    /**
+     * @returns {RecaptchaManager} Default `RecaptchaManager` instance.
+     */
+    static getDefault = () => {
+        if (!this._default) {
+            this._default = new RecaptchaManager();
+        }
+
+        return this._default;
+    }
+
     constructor() {
         this._lastValue = this.getCurrentValue();
     }
