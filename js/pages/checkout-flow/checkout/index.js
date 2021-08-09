@@ -126,6 +126,36 @@ $(document).ready(() => {
         const phone = Store.local.read(Store.keys.checkoutFlow.phone);
         const getNewNumber = Store.local.read(Store.keys.checkoutFlow.getNewNumber);
         const productIdentifiers = Store.local.read(Store.keys.checkoutFlow.selectedProductIdentifiers);
+
+        const shippingAddress = new ChargebeeCheckoutAddress(
+            form.data.shippingAddress.firstName,
+            form.data.shippingAddress.lastName,
+            email,
+            phone,
+            form.data.shippingAddress.addressLineOne,
+            form.data.shippingAddress.addressLineTwo,
+            form.data.shippingAddress.state,
+            form.data.shippingAddress.city,
+            form.data.shippingAddress.zip
+        );
+
+        const billingAddress = (() => {
+            if (form.data.useShippingAddressForBilling) {
+                return shippingAddress;
+            } else {
+                return new ChargebeeCheckoutAddress(
+                    form.data.billingAddress.firstName,
+                    form.data.billingAddress.lastName,
+                    email,
+                    phone,
+                    form.data.billingAddress.addressLineOne,
+                    form.data.billingAddress.addressLineTwo,
+                    form.data.billingAddress.state,
+                    form.data.billingAddress.city,
+                    form.data.billingAddress.zip
+                );
+            }
+        })();
         
         Chargebee.checkout(
             new ChargebeeCheckoutCustomer(
@@ -136,28 +166,8 @@ $(document).ready(() => {
                 ChargebeeCheckoutCustomerType.business
             ),
             getNewNumber ? ChargebeeCheckoutPhoneNumberServiceType.getNewNumber : ChargebeeCheckoutPhoneNumberServiceType.portExistingNumber,
-            new ChargebeeCheckoutAddress(
-                form.data.shippingAddress.firstName,
-                form.data.shippingAddress.lastName,
-                email,
-                phone,
-                form.data.shippingAddress.addressLineOne,
-                form.data.shippingAddress.addressLineTwo,
-                form.data.shippingAddress.state,
-                form.data.shippingAddress.city,
-                form.data.shippingAddress.zip
-            ),
-            new ChargebeeCheckoutAddress(
-                form.data.billingAddress.firstName,
-                form.data.billingAddress.lastName,
-                email,
-                phone,
-                form.data.billingAddress.addressLineOne,
-                form.data.billingAddress.addressLineTwo,
-                form.data.billingAddress.state,
-                form.data.billingAddress.city,
-                form.data.billingAddress.zip
-            ),
+            shippingAddress,
+            billingAddress,
             productIdentifiers,
             new ChargebeeCheckoutCardInformation(
                 form.data.paymentDetails.cardNumber,
