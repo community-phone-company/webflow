@@ -22,7 +22,17 @@ class RecaptchaManager {
      * @returns {string}
      */
     getCurrentValue = () => {
-        const response = grecaptcha && grecaptcha.getResponse();
+        const response = (() => {
+            if (grecaptcha) {
+                const getResponse = grecaptcha.getResponse;
+
+                if (getResponse instanceof Function) {
+                    return getResponse();
+                }
+            } else {
+                return undefined;
+            }
+        })();
         return typeof response === "string" ? response : "";
     }
 
