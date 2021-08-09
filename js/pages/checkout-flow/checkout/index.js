@@ -17,9 +17,9 @@ $(document).ready(() => {
     /**
      * For test only.
      */
-    if (IS_PRODUCTION) {
+    /*if (IS_PRODUCTION) {
         return;
-    }
+    }*/
 
     const form = {
         elements: {
