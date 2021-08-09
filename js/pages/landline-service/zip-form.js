@@ -328,6 +328,7 @@ class ZipForm {
      * @param {ZipFormMessage | undefined} message Message to show below the form. If `undefined`, the current message will be hidden.
      */
     setMessage = (message) => {
+        console.log(message);
         const messageBlocks = Object.freeze({
             normal: this.getNormalMessageBlock(),
             success: this.getSuccessMessageBlock(),
