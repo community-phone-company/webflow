@@ -1,22 +1,6 @@
 redirectToPreviousCheckoutFlowStepIfNeeded();
 
-var onRecaptchaUpdatedHandlers = [
-];
-
-/**
- * @param {(isCaptchaValid: boolean) => void} handler 
- */
-const onRecaptchaUpdated = (handler) => {
-    onRecaptchaUpdatedHandlers.push(handler);
-};
-
-var recaptchaCallback = () => {
-    const isCaptchaValid = grecaptcha && grecaptcha.getResponse().length;
-    
-    onRecaptchaUpdatedListeners.forEach((handler) => {
-        handler(isCaptchaValid);
-    });
-};
+var recaptchaCallback = () => {};
 
 $(document).ready(() => {
 
@@ -40,11 +24,10 @@ $(document).ready(() => {
         }
     };
 
-    recaptchaCallback = () => {console.log('recaptchaCallback!!!!');form.elements.firstNameTextField.value = "recaptcha"};
-
-    onRecaptchaUpdated((isCaptchaValid) => {
-        form.data.isCaptchaValid = isCaptchaValid;
-    });
+    recaptchaCallback = () => {
+        form.data.isCaptchaValid = grecaptcha && grecaptcha.getResponse().length;
+        handleFormDataChange();
+    };
 
     const handleFormDataChange = () => {
         const isFormValid = form.data.firstName.length
