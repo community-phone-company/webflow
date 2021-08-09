@@ -78,7 +78,12 @@ $(document).ready(() => {
 
         $(form.getForm()).submit(event => {
             event.preventDefault();
-            console.log(`Form submitted!`);
+            const zipCode = form.getZipInput().value;
+            Store.local.write(
+                Store.keys.checkoutFlow.shippingAddress_zip,
+                zipCode
+            );
+            window.location.href = "/checkout-landline/choose-a-plan";
         });
     });
 });

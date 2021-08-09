@@ -229,6 +229,9 @@ $(document).ready(() => {
         form.data.shippingAddress.zip = newValue;
         handleFormDataChanges();
     });
+    form.elements.shippingAddress.zipInput.value = Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_zip
+    ) ?? "";
 
     form.elements.shippingAddress.stateSelect.onchange = () => {
         form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
