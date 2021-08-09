@@ -1,5 +1,15 @@
 redirectToPreviousCheckoutFlowStepIfNeeded();
 
+var recaptchaCallback = () => {
+    const isCaptchaValid = grecaptcha && grecaptcha.getResponse().length;
+    onRecaptchaUpdated(isCaptchaValid);
+};
+
+/**
+ * @param {boolean} isValid 
+ */
+var onRecaptchaUpdated = (isValid) => {};
+
 $(document).ready(() => {
 
     const form = {
@@ -17,8 +27,13 @@ $(document).ready(() => {
             lastName: "",
             phone: "",
             email: "",
-            howDidYouHearAboutUs: ""
+            howDidYouHearAboutUs: "",
+            isCaptchaValid: false
         }
+    };
+
+    onRecaptchaUpdated = (newValue) => {
+        form.data.isCaptchaValid = newValue;
     };
 
     const handleFormDataChange = () => {
@@ -26,12 +41,13 @@ $(document).ready(() => {
             && form.data.lastName.length
             && form.data.phone.length
             && form.data.email.length
-            && form.data.howDidYouHearAboutUs.length;
+            && form.data.howDidYouHearAboutUs.length
+            && form.data.isCaptchaValid;
         UserInterface.setElementEnabled(
             form.elements.submitButton,
             isFormValid
         );
-        console.log(form.data);
+        logger.print(form.data);
     };
 
     new InputValueObserver(

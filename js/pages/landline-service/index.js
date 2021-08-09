@@ -87,7 +87,6 @@ $(document).ready(() => {
                 Store.keys.checkoutFlow.shippingAddress_zip,
                 zipCode
             );
-            console.log("")
             window.location.href = "/checkout-landline/choose-a-plan";
         });
     });
