@@ -62,7 +62,7 @@ $(document).ready(() => {
                     }
 
                     return undefined;
-                });
+                })();
 
                 const mode = isValid ? ZipFormStateMode.success : ZipFormStateMode.error;
                 form.setState(
