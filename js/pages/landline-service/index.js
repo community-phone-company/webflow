@@ -49,7 +49,7 @@ $(document).ready(() => {
                         if (isValid) {
                             return `
                                 We have coverage in your area!
-                                Click below to get started, or give us a call
+                                Click to get started, or give us a call
                                 to talk to one of our landline specialists.
                             `;
                         } else {
