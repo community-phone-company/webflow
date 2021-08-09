@@ -328,7 +328,6 @@ class ZipForm {
      * @param {ZipFormMessage | undefined} message Message to show below the form. If `undefined`, the current message will be hidden.
      */
     setMessage = (message) => {
-        console.log(message);
         const messageBlocks = Object.freeze({
             normal: this.getNormalMessageBlock(),
             success: this.getSuccessMessageBlock(),
@@ -360,12 +359,12 @@ class ZipForm {
                     break;
                 }
                 case ZipFormMessageType.success: {
-                    $(messageBlocks.success).find(".success_message-2").html(message.html);
+                    $(messageBlocks.success).find(".success_message").html(message.html);
                     $(messageBlocks.success).show();
                     break;
                 }
                 case ZipFormMessageType.error: {
-                    $(messageBlocks.error).find(".success_message-2").html(message.html);
+                    $(messageBlocks.error).find(".success_message").html(message.html);
                     $(messageBlocks.error).show();
                     break;
                 }
