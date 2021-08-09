@@ -14,34 +14,30 @@ class RecaptchaManager {
         return this._default;
     }
 
-    constructor() {
-        this._lastValue = this.getCurrentValue();
-    }
-
     /**
-     * @returns {string}
+     * @constructor
      */
-    getCurrentValue = () => {
-        const response = (() => {
-            if (grecaptcha) {
-                const getResponse = grecaptcha.getResponse;
-
-                if (getResponse instanceof Function) {
-                    return getResponse();
-                }
-            } else {
-                return undefined;
-            }
-        })();
-        return typeof response === "string" ? response : "";
+    constructor() {
+        this._isValid = this.isValid();
     }
 
     /**
      * @returns {boolean}
      */
     isValid = () => {
-        const currentValue = this.getCurrentValue();
-        return currentValue.length > 0;
+        const response = (() => {
+            if (grecaptcha) {
+                const getResponse = grecaptcha.getResponse;
+
+                if (getResponse instanceof Function) {
+                    const response = getResponse();
+                    return typeof response === "string" ? response : "";
+                }
+            }
+
+            return "";
+        })();
+        return response.length > 0;
     }
 
     /**
@@ -49,15 +45,14 @@ class RecaptchaManager {
      */
     startObserving = (callback) => {
         this._timer = setInterval(() => {
-            const newValue = this.getCurrentValue();
+            const currentValue = this.isValid();
 
-            if (this._lastValue !== newValue) {
-                this._lastValue = newValue;
-                const isCaptchaValid = newValue.length > 0;
+            if (this._isValid !== currentValue) {
+                this._isValid = currentValue;
                 
                 if (callback) {
                     callback(
-                        isCaptchaValid
+                        currentValue
                     );
                 }
             }
