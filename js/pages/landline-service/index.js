@@ -63,6 +63,7 @@ $(document).ready(() => {
 
                     return undefined;
                 })();
+                logger.print(`Message: ${message}`);
 
                 const mode = isValid ? ZipFormStateMode.success : ZipFormStateMode.error;
                 form.setState(
