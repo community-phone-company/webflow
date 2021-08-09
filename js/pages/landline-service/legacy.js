@@ -1,8 +1,5 @@
 $(document).ready(() => {
 
-    console.log("legacy.js disabled");
-    return;
-    
     $("#zipcode-check-1").on("click", function (e) {
         e.preventDefault()
         let zip_code = $("#zipcode-2").val();

@@ -75,5 +75,10 @@ $(document).ready(() => {
             },
             useLegacyApiForZipRequest
         );
+
+        $(form.getForm()).submit(event => {
+            event.preventDefault();
+            console.log(`Form submitted!`);
+        });
     });
 });
