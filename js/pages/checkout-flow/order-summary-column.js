@@ -59,11 +59,16 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         .filter(product => !product.isSubscription)
         .map(product => product.price)
         .reduce((left, right) => left + right);
-    $(".price-total-due-today").html(`$${oneTimeChargePrice}`);
-
     const subscriptionPrice = products
         .filter(product => product.isSubscription)
         .map(product => product.price)
         .reduce((left, right) => left + right);
-    $(".price-service-total").html(`$${subscriptionPrice}`);
+    
+    $(".device-price-with-handset").remove();
+    $(".device-price-without-handset").html(`$${oneTimeChargePrice}`);
+    $(".service-price-new-number-y").remove();
+    $(".service-price-porting-m").remove();
+    $(".service-price-porting-y").remove();
+    $(".cost-plus-insurance").remove();
+    $(".service-price-new-number-m").html(`$${subscriptionPrice}`);
 };
