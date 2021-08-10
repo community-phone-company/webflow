@@ -2,6 +2,10 @@ redirectToPreviousCheckoutFlowStepIfNeeded();
 
 var recaptchaCallback = () => {};
 
+const PageSettings = Object.freeze({
+    useCaptcha: false
+});
+
 $(document).ready(() => {
 
     const form = {
@@ -20,17 +24,18 @@ $(document).ready(() => {
             phone: "",
             email: "",
             howDidYouHearAboutUs: "",
-            isCaptchaValid: RecaptchaManager.getDefault().isValid()
+            isCaptchaValid: PageSettings.useCaptcha ? RecaptchaManager.getDefault().isValid() : false
         }
     };
 
     const handleFormDataChange = () => {
+        const isCaptchAccepted = PageSettings.useCaptcha ? form.data.isCaptchaValid : true;
         const isFormValid = form.data.firstName.length
             && form.data.lastName.length
             && form.data.phone.length
             && form.data.email.length
             && form.data.howDidYouHearAboutUs.length
-            && form.data.isCaptchaValid;
+            && isCaptchAccepted;
         UserInterface.setElementEnabled(
             form.elements.submitButton,
             isFormValid
@@ -95,10 +100,12 @@ $(document).ready(() => {
         Store.keys.checkoutFlow.howDidYouHearAboutUs
     ) ?? "";
 
-    RecaptchaManager.getDefault().startObserving((isCaptchaValid) => {
-        form.data.isCaptchaValid = isCaptchaValid;
-        handleFormDataChange();
-    });
+    if (PageSettings.useCaptcha) {
+        RecaptchaManager.getDefault().startObserving((isCaptchaValid) => {
+            form.data.isCaptchaValid = isCaptchaValid;
+            handleFormDataChange();
+        });
+    }
 
     $(form.elements.form).submit((event) => {
         event.preventDefault();
