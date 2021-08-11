@@ -1,4 +1,4 @@
-console.log(`VERSION: `, 2);
+console.log(`VERSION: `, 3);
 
 const checkCoveragePopup = document.getElementById("wf-form-service-address");
 const checkCoveragePopupSubmitButton = checkCoveragePopup.querySelectorAll("input[type='submit']")[0];
