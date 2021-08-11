@@ -1,3 +1,5 @@
+console.log(`VERSION: `, 2);
+
 const checkCoveragePopup = document.getElementById("wf-form-service-address");
 const checkCoveragePopupSubmitButton = checkCoveragePopup.querySelectorAll("input[type='submit']")[0];
 
@@ -44,8 +46,6 @@ const checkCoverageVM = new Vue({
         }
     }
 });
-
-console.log(`VERSION: `, 1);
 
 const useLegacyApiForZipRequest = false;
 
@@ -149,12 +149,10 @@ $(document).ready(() => {
      * Setup check coverage popup.
      */
     $("#Home").off().on("click", (event) => {
-        event.preventDefault();
-        checkCoverageVM.$data.isBusiness = false;
+        checkCoverageVM.isBusiness = false;
     });
     $("#Business").off().on("click", (event) => {
-        event.preventDefault();
-        checkCoverageVM.$data.isBusiness = true;
+        checkCoverageVM.isBusiness = true;
     });
     $(checkCoverageVM.getSubmitButton()).off().on("click", (event) => {
         event.preventDefault();
