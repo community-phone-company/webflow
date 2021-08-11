@@ -9,7 +9,7 @@ const checkCoverageVM = new Vue({
         isBusiness: false
     },
     methods: {
-        isBusiness = () => {
+        isBusiness: () => {
             return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
         }
     }
