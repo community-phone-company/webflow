@@ -15,6 +15,7 @@ const checkCoverageVM = new Vue({
             return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
         },
         handleDataChange() {
+            console.log("!!!! handleDataChange");
             const isFormValid = this.addressLineOne.length
                 && this.city.length
                 && this.zip.length
