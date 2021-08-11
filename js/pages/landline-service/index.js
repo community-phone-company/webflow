@@ -90,4 +90,45 @@ $(document).ready(() => {
             window.location.href = "/checkout-landline/choose-a-plan";
         });
     });
+
+    const checkCoverageButtons = [
+        document.getElementById("check-coverage"),
+        document.getElementById("check-coverage-2")
+    ];
+
+    const checkCoveragePopup = document.getElementById("wf-form-service-address");
+
+    /**
+     * Setup check coverage popup.
+     */
+    if (checkCoveragePopup) {
+        /**
+         * Handle submit button click.
+         */
+        $(checkCoveragePopup).find("input[type='submit']").on("click", (event) => {
+            const address = $("#service-address-line-one-input").val();
+            const city = $("#service-address-city-input").val();
+            const state = $("#service-address-state-input").val();
+            const zip = $("#service-address-zip-input").val();
+            const isBusiness = $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
+
+            GoogleDocIntegration.addLineToServiceAddressCheck(
+                address,
+                city,
+                state,
+                zip,
+                isBusiness
+            );
+
+            const checkCoverageButtonTitle = "Start your service";
+            const checkCoverageButtonClickHandler = (event) => {
+                event.preventDefault();
+                window.location.href = "/checkout-landline/choose-a-plan";
+            };
+            checkCoverageButtons.forEach(button => {
+                $(button).find("div").html(checkCoverageButtonTitle);
+                $(button).off().on("click", checkCoverageButtonClickHandler);
+            });
+        });
+    }
 });
