@@ -1,5 +1,3 @@
-console.log(`VERSION: `, 3);
-
 const checkCoveragePopup = document.getElementById("wf-form-service-address");
 const checkCoveragePopupSubmitButton = checkCoveragePopup.querySelectorAll("input[type='submit']")[0];
 
@@ -155,12 +153,32 @@ $(document).ready(() => {
         checkCoverageVM.isBusiness = true;
     });
     $(checkCoverageVM.getSubmitButton()).off().on("click", (event) => {
-        const address = $("#service-address-line-one-input").val();
-        const city = $("#service-address-city-input").val();
-        const state = $("#service-address-state-input").val();
-        const zip = $("#service-address-zip-input").val();
-        const isBusiness = $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
+        const address = checkCoverageVM.addressLineOne;
+        Store.local.write(
+            Store.keys.checkoutFlow.shippingAddress_addressLine1,
+            address
+        );
 
+        const city = checkCoverageVM.city;
+        Store.local.write(
+            Store.keys.checkoutFlow.shippingAddress_city,
+            city
+        );
+
+        const state = checkCoverageVM.state;
+        Store.local.write(
+            Store.keys.checkoutFlow.shippingAddress_state,
+            state
+        );
+
+        const zip = checkCoverageVM.zip;
+        Store.local.write(
+            Store.keys.checkoutFlow.shippingAddress_zip,
+            zip
+        );
+
+        const isBusiness = checkCoverageVM.isBusiness;
+        
         GoogleDocIntegration.addLineToServiceAddressCheck(
             address,
             city,
