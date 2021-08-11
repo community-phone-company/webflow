@@ -130,13 +130,13 @@ $(document).ready(() => {
         document.getElementById("check-coverage-2")
     ];
 
+    /**
+     * Setup check coverage popup.
+     */
     checkCoverageVM.$data.state = $("#service-address-state-input").val();
     checkCoverageVM.handleDataChange();
     
-    /**
-     * Handle submit button click.
-     */
-    $(checkCoveragePopup).find("input[type='submit']").on("click", (event) => {
+    $(checkCoveragePopupSubmitButton).off().on("click", (event) => {
         const address = $("#service-address-line-one-input").val();
         const city = $("#service-address-city-input").val();
         const state = $("#service-address-state-input").val();
