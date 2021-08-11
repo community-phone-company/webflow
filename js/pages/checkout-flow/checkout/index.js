@@ -208,6 +208,9 @@ $(document).ready(() => {
         form.data.shippingAddress.addressLineOne = newValue;
         handleFormDataChanges();
     });
+    form.elements.shippingAddress.addressLineOneInput.value = Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_addressLine1
+    ) ?? "";
 
     new InputValueObserver(
         form.elements.shippingAddress.addressLineTwoInput
@@ -222,6 +225,9 @@ $(document).ready(() => {
         form.data.shippingAddress.city = newValue;
         handleFormDataChanges();
     });
+    form.elements.shippingAddress.cityInput.value = Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_city
+    ) ?? "";
 
     new InputValueObserver(
         form.elements.shippingAddress.zipInput
@@ -237,7 +243,11 @@ $(document).ready(() => {
         form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
         handleFormDataChanges();
     };
-    form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
+    const initialState = Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_zip
+    ) ?? form.elements.shippingAddress.stateSelect.value;
+    form.data.shippingAddress.state = initialState;
+    form.elements.shippingAddress.stateSelect.value = initialState;
 
     form.elements.differentBillingAddressSwitcher.startWatchingForStateChanges((switcher) => {
         form.data.useShippingAddressForBilling = switcher.isOn();
