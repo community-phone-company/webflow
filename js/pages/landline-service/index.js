@@ -1,5 +1,36 @@
 const checkCoveragePopup = document.getElementById("wf-form-service-address");
+const checkCoveragePopupSubmitButton = checkCoveragePopup.querySelectorAll("input[type='submit']")[0];
 
+const checkCoverageVM = new Vue({
+    el: checkCoveragePopup,
+    data: {
+        addressLineOne: "",
+        city: "",
+        zip: "",
+        state: "",
+        isBusiness: false
+    },
+    methods: {
+        isBusinessSelected: () => {
+            return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
+        },
+        handleDataChange: () => {
+            const isFormValid = this.addressLineOne.length
+                && this.city.length
+                && this.zip.length
+                && this.state.length;
+            UserInterface.setElementEnabled(
+                checkCoveragePopupSubmitButton,
+                isFormValid
+            );
+        }
+    },
+    watch: {
+        addressLineOne: (newValue) => {
+            console.log(`Address line one has changed to: ${newValue}`);
+        }
+    }
+});
 
 const useLegacyApiForZipRequest = false;
 
@@ -99,37 +130,35 @@ $(document).ready(() => {
         document.getElementById("check-coverage-2")
     ];
 
+    checkCoverageVM.$data.state = $("#service-address-state-input").val();
+    checkCoverageVM.handleDataChange();
+    
     /**
-     * Setup check coverage popup.
+     * Handle submit button click.
      */
-    if (checkCoveragePopup) {
-        /**
-         * Handle submit button click.
-         */
-        $(checkCoveragePopup).find("input[type='submit']").on("click", (event) => {
-            const address = $("#service-address-line-one-input").val();
-            const city = $("#service-address-city-input").val();
-            const state = $("#service-address-state-input").val();
-            const zip = $("#service-address-zip-input").val();
-            const isBusiness = $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
+    $(checkCoveragePopup).find("input[type='submit']").on("click", (event) => {
+        const address = $("#service-address-line-one-input").val();
+        const city = $("#service-address-city-input").val();
+        const state = $("#service-address-state-input").val();
+        const zip = $("#service-address-zip-input").val();
+        const isBusiness = $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
 
-            GoogleDocIntegration.addLineToServiceAddressCheck(
-                address,
-                city,
-                state,
-                zip,
-                isBusiness
-            );
+        GoogleDocIntegration.addLineToServiceAddressCheck(
+            address,
+            city,
+            state,
+            zip,
+            isBusiness
+        );
 
-            const checkCoverageButtonTitle = "Start your service";
-            const checkCoverageButtonClickHandler = (event) => {
-                event.preventDefault();
-                window.location.href = "/checkout-landline/choose-a-plan";
-            };
-            checkCoverageButtons.forEach(button => {
-                $(button).find("div").html(checkCoverageButtonTitle);
-                $(button).off().on("click", checkCoverageButtonClickHandler);
-            });
+        const checkCoverageButtonTitle = "Start your service";
+        const checkCoverageButtonClickHandler = (event) => {
+            event.preventDefault();
+            window.location.href = "/checkout-landline/choose-a-plan";
+        };
+        checkCoverageButtons.forEach(button => {
+            $(button).find("div").html(checkCoverageButtonTitle);
+            $(button).off().on("click", checkCoverageButtonClickHandler);
         });
-    }
+    });
 });
