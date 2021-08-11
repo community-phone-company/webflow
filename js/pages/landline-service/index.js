@@ -4,7 +4,7 @@ const checkCoveragePopup = document.getElementById("wf-form-service-address");
 const checkCoveragePopupSubmitButton = checkCoveragePopup.querySelectorAll("input[type='submit']")[0];
 
 const checkCoverageVM = new Vue({
-    el: "#wf-form-service-address",
+    el: "#form-normal",
     data: {
         addressLineOne: "",
         city: "",
@@ -14,7 +14,7 @@ const checkCoverageVM = new Vue({
     },
     methods: {
         getSubmitButton() {
-            return $("#wf-form-service-address input[type='submit']")[0];
+            return $("#form-normal input[type='submit']")[0];
         },
         handleDataChange() {
             const isFormValid = this.addressLineOne.length > 0
