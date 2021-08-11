@@ -1,3 +1,20 @@
+const checkCoveragePopup = document.getElementById("wf-form-service-address");
+const checkCoverageVM = new Vue({
+    el: checkCoveragePopup,
+    data: {
+        addressLineOne: "",
+        city: "",
+        zip: "",
+        state: "",
+        isBusiness: false
+    },
+    methods: {
+        isBusiness = () => {
+            return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
+        }
+    }
+});
+
 const useLegacyApiForZipRequest = false;
 
 $(document).ready(() => {
@@ -95,8 +112,6 @@ $(document).ready(() => {
         document.getElementById("check-coverage"),
         document.getElementById("check-coverage-2")
     ];
-
-    const checkCoveragePopup = document.getElementById("wf-form-service-address");
 
     /**
      * Setup check coverage popup.
