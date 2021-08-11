@@ -45,6 +45,8 @@ const checkCoverageVM = new Vue({
     }
 });
 
+console.log(`VERSION: `, 1);
+
 const useLegacyApiForZipRequest = false;
 
 $(document).ready(() => {
