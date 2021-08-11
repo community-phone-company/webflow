@@ -1,24 +1,5 @@
 const checkCoveragePopup = document.getElementById("wf-form-service-address");
-const checkCoverageVM = new Vue({
-    el: checkCoveragePopup,
-    data: {
-        addressLineOne: "",
-        city: "",
-        zip: "",
-        state: "",
-        isBusiness: false
-    },
-    methods: {
-        isBusinessSelected: () => {
-            return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
-        }
-    },
-    watch: {
-        addressLineOne: (newValue) => {
-            console.log(`Address line one has changed to: ${newValue}`);
-        }
-    }
-});
+
 
 const useLegacyApiForZipRequest = false;
 
