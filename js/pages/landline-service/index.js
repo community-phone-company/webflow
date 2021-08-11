@@ -2,7 +2,7 @@ const checkCoveragePopup = document.getElementById("wf-form-service-address");
 const checkCoveragePopupSubmitButton = checkCoveragePopup.querySelectorAll("input[type='submit']")[0];
 
 const checkCoverageVM = new Vue({
-    el: checkCoveragePopup,
+    el: "#wf-form-service-address",
     data: {
         addressLineOne: "",
         city: "",
@@ -14,15 +14,17 @@ const checkCoverageVM = new Vue({
         isBusinessSelected() {
             return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
         },
+        getSubmitButton() {
+            return $("#wf-form-service-address input[type='submit']")[0];
+        },
         handleDataChange() {
             const isFormValid = this.addressLineOne.length > 0
                 && this.city.length > 0
                 && this.zip.length > 0
                 && this.state.length > 0;
             logger.print(`is form valid: ${isFormValid}`);
-            console.log(checkCoveragePopupSubmitButton);
             UserInterface.setElementEnabled(
-                checkCoveragePopupSubmitButton,
+                this.getSubmitButton(),
                 isFormValid
             );
         }
@@ -147,9 +149,7 @@ $(document).ready(() => {
     /**
      * Setup check coverage popup.
      */
-    checkCoverageVM.handleDataChange();
-
-    $(checkCoveragePopupSubmitButton).off().on("click", (event) => {
+    $(checkCoverageVM.getSubmitButton()).off().on("click", (event) => {
         const address = $("#service-address-line-one-input").val();
         const city = $("#service-address-city-input").val();
         const state = $("#service-address-state-input").val();
@@ -174,4 +174,5 @@ $(document).ready(() => {
             $(button).off().on("click", checkCoverageButtonClickHandler);
         });
     });
+    checkCoverageVM.handleDataChange();
 });
