@@ -7,19 +7,19 @@ const checkCoverageVM = new Vue({
         addressLineOne: "",
         city: "",
         zip: "",
-        state: "",
+        state: "AL",
         isBusiness: false
     },
     methods: {
-        isBusinessSelected: () => {
+        isBusinessSelected() {
             return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
         },
         handleDataChange() {
-            console.log("!!!! handleDataChange");
             const isFormValid = this.addressLineOne.length
                 && this.city.length
                 && this.zip.length
                 && this.state.length;
+            console.log(`is form valid: ${isFormValid}`);
             UserInterface.setElementEnabled(
                 checkCoveragePopupSubmitButton,
                 isFormValid
@@ -27,8 +27,20 @@ const checkCoverageVM = new Vue({
         }
     },
     watch: {
-        addressLineOne: (newValue) => {
-            console.log(`Address line one has changed to: ${newValue}`);
+        addressLineOne(newValue) {
+            this.handleDataChange();
+        },
+        city(newValue) {
+            this.handleDataChange();
+        },
+        zip(newValue) {
+            this.handleDataChange();
+        },
+        state(newValue) {
+            this.handleDataChange();
+        },
+        isBusiness(newValue) {
+            this.handleDataChange();
         }
     }
 });
@@ -134,7 +146,6 @@ $(document).ready(() => {
     /**
      * Setup check coverage popup.
      */
-    checkCoverageVM.$data.state = $("#service-address-state-input").val();
     checkCoverageVM.handleDataChange();
 
     $(checkCoveragePopupSubmitButton).off().on("click", (event) => {
