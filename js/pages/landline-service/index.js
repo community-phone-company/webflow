@@ -11,9 +11,6 @@ const checkCoverageVM = new Vue({
         isBusiness: false
     },
     methods: {
-        isBusinessSelected() {
-            return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
-        },
         getSubmitButton() {
             return $("#wf-form-service-address input[type='submit']")[0];
         },
@@ -149,7 +146,17 @@ $(document).ready(() => {
     /**
      * Setup check coverage popup.
      */
+    $("#Home").off().on("click", (event) => {
+        event.preventDefault();
+        checkCoverageVM.$data.isBusiness = false;
+    });
+    $("#Business").off().on("click", (event) => {
+        event.preventDefault();
+        checkCoverageVM.$data.isBusiness = true;
+    });
     $(checkCoverageVM.getSubmitButton()).off().on("click", (event) => {
+        event.preventDefault();
+
         const address = $("#service-address-line-one-input").val();
         const city = $("#service-address-city-input").val();
         const state = $("#service-address-state-input").val();
