@@ -20,6 +20,7 @@ const checkCoverageVM = new Vue({
                 && this.zip.length > 0
                 && this.state.length > 0;
             logger.print(`is form valid: ${isFormValid}`);
+            console.log(checkCoveragePopupSubmitButton);
             UserInterface.setElementEnabled(
                 checkCoveragePopupSubmitButton,
                 isFormValid
