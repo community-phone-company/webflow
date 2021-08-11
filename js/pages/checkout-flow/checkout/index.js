@@ -243,11 +243,11 @@ $(document).ready(() => {
         form.data.shippingAddress.state = form.elements.shippingAddress.stateSelect.value;
         handleFormDataChanges();
     };
-    const initialState = Store.local.read(
-        Store.keys.checkoutFlow.shippingAddress_zip
+    const initialStateCode = Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_state
     ) ?? form.elements.shippingAddress.stateSelect.value;
-    form.data.shippingAddress.state = initialState;
-    form.elements.shippingAddress.stateSelect.value = initialState;
+    form.data.shippingAddress.state = initialStateCode;
+    form.elements.shippingAddress.stateSelect.value = initialStateCode;
 
     form.elements.differentBillingAddressSwitcher.startWatchingForStateChanges((switcher) => {
         form.data.useShippingAddressForBilling = switcher.isOn();
