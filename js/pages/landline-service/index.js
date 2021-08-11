@@ -155,8 +155,6 @@ $(document).ready(() => {
         checkCoverageVM.isBusiness = true;
     });
     $(checkCoverageVM.getSubmitButton()).off().on("click", (event) => {
-        event.preventDefault();
-
         const address = $("#service-address-line-one-input").val();
         const city = $("#service-address-city-input").val();
         const state = $("#service-address-state-input").val();
