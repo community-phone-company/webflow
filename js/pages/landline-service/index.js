@@ -15,10 +15,10 @@ const checkCoverageVM = new Vue({
             return $("#w-node-f7515ffa-3407-918c-7cec-5d3e91068396-6039eb5a div.w-form-formradioinput").hasClass("w--redirected-checked");
         },
         handleDataChange() {
-            const isFormValid = this.addressLineOne.length
-                && this.city.length
-                && this.zip.length
-                && this.state.length;
+            const isFormValid = this.addressLineOne.length > 0
+                && this.city.length > 0
+                && this.zip.length > 0
+                && this.state.length > 0;
             console.log(`is form valid: ${isFormValid}`);
             UserInterface.setElementEnabled(
                 checkCoveragePopupSubmitButton,
