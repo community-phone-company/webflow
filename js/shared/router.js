@@ -23,7 +23,8 @@ class Router {
 
             return "";
         })();
-        window.location.href = `${window.location.host}/${path}${parametersSegment}`;
+        const absoluteUrl = `${window.location.protocol}//${window.location.host}/${path}${parametersSegment}`;
+        window.location.href = absoluteUrl;
     }
 
     /**
