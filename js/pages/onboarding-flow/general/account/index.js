@@ -1,4 +1,4 @@
-logger.print(`VERSION: `, 1);
+logger.print(`VERSION: `, 2);
 
 const clearOnboardingFlowSettings = () => {
     Store.local.write(
@@ -34,19 +34,23 @@ if (!IS_PRODUCTION) {
         methods: {
             isEmailValid() {
                 return new EmailValidator().check(
-                    formData.email
+                    this.email
                 );
-            }
-        },
-        watch: {
-            email(newValue) {
+            },
+            handleFormDataChange() {
                 UserInterface.setElementEnabled(
                     $("#submit-button"),
                     this.isEmailValid()
                 );
+            },
+        },
+        watch: {
+            email(newValue) {
+                this.handleFormDataChange();
             }
         }
     });
+    formVM.handleFormDataChange();
 } else {
     $(document).ready(() => {
 
