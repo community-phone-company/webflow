@@ -1,4 +1,4 @@
-logger.print(`VERSION: `, 2);
+logger.print(`VERSION: `, 3);
 
 const clearOnboardingFlowSettings = () => {
     Store.local.write(
@@ -23,109 +23,80 @@ const isNewNumberActivated = router.getParameterValue(
     RouterPathParameter.newNumberActivated
 ) == 1;
 
-var formVM;
+$(document).ready(() => {
 
-if (!IS_PRODUCTION) {
-    formVM = new Vue({
-        el: "#wf-form-onboarding-flow",
-        data: {
-            email: ""
-        },
-        methods: {
-            isEmailValid() {
-                return new EmailValidator().check(
-                    this.email
-                );
-            },
-            handleFormDataChange() {
-                UserInterface.setElementEnabled(
-                    $("#submit-button"),
-                    this.isEmailValid()
-                );
-            },
-        },
-        watch: {
-            email(newValue) {
-                this.handleFormDataChange();
-            }
-        }
-    });
-    formVM.handleFormDataChange();
-} else {
-    $(document).ready(() => {
+    const formData = {
+        email: ""
+    };
 
-        const formData = {
-            email: ""
-        };
-    
-        const handleFormChange = () => {
-            logger.print(`Form has changed`);
+    const handleFormChange = () => {
+        logger.print(`Form has changed`);
+        UserInterface.setElementEnabled(
+            submitButton,
+            new EmailValidator().check(formData.email)
+        );
+    };
+
+    const submitFormData = () => {
+        logger.print(`Submit form data`);
+
+        const email = $(emailTextField).val();
+        const isEmailValid = new EmailValidator().check(email);
+        
+        if (isEmailValid) {
+            clearOnboardingFlowSettings();
+            Store.local.write(
+                Store.keys.onboardingFlow.email,
+                email
+            );
+            GoogleDocIntegration.addLineToOnboarding(
+                email,
+                undefined,
+                false,
+                undefined,
+                undefined,
+                false,
+                false,
+                (response, error, success) => {
+                    if (isPortingActivated || isNewNumberActivated) {
+                        router.open(
+                            RouterPath.onboarding_onboarding_step_1,
+                            router.getParameters()
+                        );
+                    } else {
+                        router.open(
+                            RouterPath.onboarding_general_account,
+                            router.getParameters()
+                        );
+                    }
+                }
+            );
+        } else {
             UserInterface.setElementEnabled(
                 submitButton,
-                new EmailValidator().check(formData.email)
+                false
             );
-        };
+        }
+    };
     
-        const submitFormData = () => {
-            logger.print(`Submit form data`);
+    const submitButton = document.getElementById("submit-button");
     
-            const email = $(emailTextField).val();
-            
-            if (email.length) {
-                clearOnboardingFlowSettings();
-                Store.local.write(
-                    Store.keys.onboardingFlow.email,
-                    email
-                );
-                GoogleDocIntegration.addLineToOnboarding(
-                    email,
-                    undefined,
-                    false,
-                    undefined,
-                    undefined,
-                    false,
-                    false,
-                    (response, error, success) => {
-                        if (isPortingActivated || isNewNumberActivated) {
-                            router.open(
-                                RouterPath.onboarding_onboarding_step_1,
-                                router.getParameters()
-                            );
-                        } else {
-                            router.open(
-                                RouterPath.onboarding_general_account,
-                                router.getParameters()
-                            );
-                        }
-                    }
-                );
-            } else {
-                UserInterface.setElementEnabled(
-                    submitButton,
-                    false
-                );
-            }
-        };
-        
-        const submitButton = document.getElementById("submit-button");
-        
-        const emailTextField = document.getElementById("email");
-        new InputValueObserver(emailTextField).startObserving((newValue) => {
-            formData.email = newValue;
-            handleFormChange();
-        });
-    
-        const form = document.getElementById("wf-form-onboarding-flow");
-        $(form).submit((event) => {
-            event.preventDefault();
-            submitFormData();
-        });
-        
-        $(submitButton).on("click", (event) => {
-            event.preventDefault();
-            submitFormData();
-        });
-    
+    const emailTextField = document.getElementById("email");
+    new InputValueObserver(emailTextField).startObserving((newValue) => {
+        formData.email = newValue;
         handleFormChange();
     });
-}
+
+    const form = document.getElementById("wf-form-onboarding-flow");
+    $(form).submit((event) => {
+        event.preventDefault();
+        submitFormData();
+    });
+    
+    $(submitButton).on("click", (event) => {
+        event.preventDefault();
+        submitFormData();
+    });
+
+    handleFormChange();
+});
