@@ -1,3 +1,5 @@
+logger.print(`VERSION: `, 1);
+
 const clearOnboardingFlowSettings = () => {
     Store.local.write(
         Store.keys.onboardingFlow.didSetupCallerId,
@@ -20,6 +22,33 @@ const isPortingActivated = router.getParameterValue(
 const isNewNumberActivated = router.getParameterValue(
     RouterPathParameter.newNumberActivated
 ) == 1;
+
+var formVM;
+
+if (!IS_PRODUCTION) {
+    formVM = new Vue({
+        el: "#wf-form-onboarding-flow",
+        data: {
+            email: ""
+        },
+        methods: {
+            isEmailValid() {
+                return new EmailValidator().check(
+                    formData.email
+                );
+            }
+        },
+        watch: {
+            email(newValue) {
+                UserInterface.setElementEnabled(
+                    $("#submit-button"),
+                    this.isEmailValid()
+                );
+            }
+        }
+    });
+    return;
+}
 
 $(document).ready(() => {
 
