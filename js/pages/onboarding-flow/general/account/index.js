@@ -13,6 +13,14 @@ const clearOnboardingFlowSettings = () => {
     );
 };
 
+const isPortingActivated = router.getParameterValue(
+    RouterPathParameter.portingActivated
+) != undefined;
+
+const isNewNumberActivated = router.getParameterValue(
+    RouterPathParameter.newNumberActivated
+) != undefined;
+
 $(document).ready(() => {
 
     const formData = {
@@ -47,7 +55,16 @@ $(document).ready(() => {
                 false,
                 false,
                 (response, error, success) => {
-                    window.location.href = $(submitButton).attr("href");
+                    if (isPortingActivated || isNewNumberActivated) {
+                        router.open(
+                            RouterPath.onboarding_onboarding_step_1,
+                            router.getParameters()
+                        );
+                    } else {
+                        router.open(
+                            RouterPath.onboarding_general_numberType
+                        );
+                    }
                 }
             );
         } else {
