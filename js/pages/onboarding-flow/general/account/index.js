@@ -15,11 +15,11 @@ const clearOnboardingFlowSettings = () => {
 
 const isPortingActivated = router.getParameterValue(
     RouterPathParameter.portingActivated
-) != undefined;
+) == 1;
 
 const isNewNumberActivated = router.getParameterValue(
     RouterPathParameter.newNumberActivated
-) != undefined;
+) == 1;
 
 $(document).ready(() => {
 

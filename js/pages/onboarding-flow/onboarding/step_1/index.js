@@ -41,6 +41,11 @@ updateStepStatistics(1);
 
 $(document).ready(() => {
     
-    $("#submit-button").on("click", () => {
+    $("#submit-button").on("click", (event) => {
+        event.preventDefaults();
+        router.open(
+            RouterPath.onboarding_onboarding_step_2,
+            router.getParameters()
+        );
     });
 });

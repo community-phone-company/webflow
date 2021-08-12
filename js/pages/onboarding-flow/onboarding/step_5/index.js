@@ -41,9 +41,19 @@ updateStepStatistics(5);
 
 $(document).ready(() => {
     
-    $("#test-call-did-work-button").on("click", () => {
+    $("#test-call-did-work-button").on("click", (event) => {
+        event.preventDefault();
+        router.open(
+            RouterPath.onboarding_onboarding_setupServices,
+            router.getParameters()
+        );
     });
 
-    $("#test-call-did-not-work-button").on("click", () => {
+    $("#test-call-did-not-work-button").on("click", (event) => {
+        event.preventDefault();
+        router.open(
+            RouterPath.onboarding_onboarding_testCallDidNotWork,
+            router.getParameters()
+        );
     });
 });

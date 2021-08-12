@@ -58,12 +58,17 @@ const RouterPath = Object.freeze({
     onboarding_onboarding_step_2: "onboarding/onboarding/step-2",
     onboarding_onboarding_step_3: "onboarding/onboarding/step-3",
     onboarding_onboarding_step_4: "onboarding/onboarding/step-4",
-    onboarding_onboarding_step_5: "onboarding/onboarding/step-5"
+    onboarding_onboarding_step_5: "onboarding/onboarding/step-5",
+    onboarding_onboarding_setupServices: "onboarding/onboarding/set-up-service",
+    onboarding_onboarding_testCallDidNotWork: "onboarding/onboarding/not-successful-state",
+    onboarding_onboarding_voicemail: "onboarding/onboarding/voicemail",
+    onboarding_onboarding_callerId: "onboarding/onboarding/caller-id",
+    onboarding_onboarding_thankYou: "onboarding/onboarding/thank-you-for-onboarding"
 });
 
 const RouterPathParameter = Object.freeze({
-    portingActivated: "porting_activated",
-    newNumberActivated: "new_number_activated"
+    portingActivated: "p",
+    newNumberActivated: "n"
 });
 
 const router = new Router();
