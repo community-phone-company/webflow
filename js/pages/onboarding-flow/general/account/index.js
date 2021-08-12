@@ -1,5 +1,3 @@
-logger.print(`VERSION: `, 3);
-
 const clearOnboardingFlowSettings = () => {
     Store.local.write(
         Store.keys.onboardingFlow.didSetupCallerId,
