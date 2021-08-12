@@ -61,9 +61,12 @@ $(document).ready(() => {
                                 )
                             };
                             const didSetupEverything = didSetup.callerId && didSetup.voicemail;
-                            window.location.href = didSetupEverything
-                                ? "/onboarding/onboarding/thank-you-for-onboarding"
-                                : "/onboarding/onboarding/set-up-service";
+                            router.open(
+                                didSetupEverything
+                                    ? RouterPath.onboarding_onboarding_thankYou
+                                    : RouterPath.onboarding_onboarding_setupService,
+                                router.getParameters()
+                            );
                         }
                     )
                 }

@@ -22,4 +22,20 @@ $(document).ready(() => {
             true
         );
     }
+
+    $("#voicemail-link").click(event => {
+        event.preventDefault();
+        router.open(
+            RouterPath.onboarding_onboarding_voicemail,
+            router.getParameters()
+        );
+    });
+
+    $("#caller-id-link").click(event => {
+        event.preventDefault();
+        router.open(
+            RouterPath.onboarding_onboarding_callerId,
+            router.getParameters()
+        );
+    });
 });

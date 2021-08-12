@@ -44,7 +44,7 @@ $(document).ready(() => {
     $("#test-call-did-work-button").on("click", (event) => {
         event.preventDefault();
         router.open(
-            RouterPath.onboarding_onboarding_setupServices,
+            RouterPath.onboarding_onboarding_setupService,
             router.getParameters()
         );
     });

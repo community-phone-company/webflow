@@ -62,7 +62,8 @@ $(document).ready(() => {
                         );
                     } else {
                         router.open(
-                            RouterPath.onboarding_general_numberType
+                            RouterPath.onboarding_general_account,
+                            router.getParameters()
                         );
                     }
                 }
