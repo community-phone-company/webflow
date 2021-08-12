@@ -17,7 +17,10 @@ class Router {
                 const keys = Object.keys(parameters);
 
                 if (keys.length) {
-                    return keys.reduce((previous, current) => previous + `${current}=${parameters[current]}&`, "?");
+                    return keys.reduce(
+                        (previous, current, index) => `${previous}${index > 0 ? "&" : ""}${current}=${parameters[current]}`,
+                        "?"
+                    );
                 }
             }
 
