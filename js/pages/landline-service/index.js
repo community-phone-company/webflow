@@ -145,13 +145,6 @@ $(document).ready(() => {
         document.getElementById("check-coverage-middle-2")
     ];
 
-    checkCoverageButtons.forEach(button => {
-        $(button).off().on("click", (event) => {
-            event.preventDefault();
-            $(".popup-service-address").show();
-        });
-    });
-
     /**
      * Setup check coverage popup.
      */
@@ -207,7 +200,8 @@ $(document).ready(() => {
             $(button).find("div,strong").html(checkCoverageButtonTitle);
             $(button).off().on("click", checkCoverageButtonClickHandler);
         });
+        $(".popup-service-address").remove();
     });
     checkCoverageVM.handleDataChange();
 });
-logger.print(`VERSION `, 1);
+logger.print(`VERSION `, 2);
