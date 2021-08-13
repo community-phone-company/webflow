@@ -66,7 +66,8 @@ const RouterPath = Object.freeze({
     onboarding_onboarding_testCallDidNotWork: "onboarding/onboarding/not-successful-state",
     onboarding_onboarding_voicemail: "onboarding/onboarding/voicemail",
     onboarding_onboarding_callerId: "onboarding/onboarding/caller-id",
-    onboarding_onboarding_thankYou: "onboarding/onboarding/thank-you-for-onboarding"
+    onboarding_onboarding_thankYou: "onboarding/onboarding/thank-you-for-onboarding",
+    checkoutLandline_choosePlan: "checkout-landline/choose-a-plan"
 });
 
 const RouterPathParameter = Object.freeze({
