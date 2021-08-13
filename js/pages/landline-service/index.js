@@ -192,6 +192,7 @@ $(document).ready(() => {
         const checkCoverageButtonTitle = "Start your service";
         const checkCoverageButtonClickHandler = (event) => {
             event.preventDefault();
+            $(".popup-service-address").remove();
             router.open(
                 RouterPath.checkoutLandline_choosePlan
             );
@@ -200,8 +201,7 @@ $(document).ready(() => {
             $(button).find("div,strong").html(checkCoverageButtonTitle);
             $(button).off().on("click", checkCoverageButtonClickHandler);
         });
-        $(".popup-service-address").remove();
     });
     checkCoverageVM.handleDataChange();
 });
-logger.print(`VERSION `, 2);
+logger.print(`VERSION `, 3);
