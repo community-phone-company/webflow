@@ -3,6 +3,8 @@
  * @param {string[]} productIdentifiers Product identifiers.
  */
 const updateOrderSummaryColumn = (productIdentifiers) => {
+    console.log("updateOrderSummaryColumn");
+
     const useNewImplementation = router.isTestEnvironment();
 
     if (useNewImplementation) {
