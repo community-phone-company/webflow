@@ -3,8 +3,6 @@
  * @param {string[]} productIdentifiers Product identifiers.
  */
 const updateOrderSummaryColumn = (productIdentifiers) => {
-    console.log("updateOrderSummaryColumn");
-
     const useNewImplementation = router.isTestEnvironment();
 
     if (useNewImplementation) {
@@ -78,6 +76,7 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         $(".service-price-porting-m").remove();
         $(".service-price-porting-y").remove();
         $(".cost-plus-insurance").remove();
+        $(".insurance-item").remove();
         $(".service-price-new-number-m").html(`$${subscriptionPrice}`);
     }
 };
