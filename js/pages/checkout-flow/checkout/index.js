@@ -323,7 +323,7 @@ $(document).ready(() => {
     new InputValueObserver(
         form.elements.paymentDetails.cardVerificationValueInput
     ).startObserving((newValue) => {
-        form.data.paymentDetails.cardVerificationValue = newValue;
+        form.data.paymentDetails.cardVerificationValue = newValue.replaceAll("_", "");
         handleFormDataChanges();
     });
 
