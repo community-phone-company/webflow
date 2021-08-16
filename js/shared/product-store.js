@@ -17,6 +17,9 @@ class ProductStore {
         this._products = [];
     }
 
+    /**
+     * @returns {Product[]}
+     */
     getAllProducts = () => {
         return Array.from(
             this._products
@@ -59,7 +62,7 @@ class ProductStore {
                                                 product.pricing.subscription_price.annually
                                             );
                                         }
-                                        
+
                                         return undefined;
                                     })();
                                     return new ProductPricing(

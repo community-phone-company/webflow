@@ -65,6 +65,15 @@ class ProductPricing {
         this.oneTimeChargePrice = oneTimeChargePrice;
         this.subscriptionPrice = subscriptionPrice;
     }
+
+    /**
+     * @returns {number}
+     */
+    getPrice = () => {
+        return this.isSubscription
+            ? this.subscriptionPrice.monthly ?? this.subscriptionPrice.annually
+            : this.oneTimeChargePrice;
+    }
 }
 
 class ProductSubscriptionPrice {
