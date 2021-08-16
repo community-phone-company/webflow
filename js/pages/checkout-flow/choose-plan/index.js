@@ -45,6 +45,11 @@ const choosePlanVM = new Vue({
         allProducts: []
     },
     methods: {
+    },
+    watch: {
+        allProducts(newValue) {
+            logger.print(`Updated products: `, newValue);
+        }
     }
 });
 
