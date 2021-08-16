@@ -76,7 +76,8 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         $(".service-price-porting-m").remove();
         $(".service-price-porting-y").remove();
         $(".cost-plus-insurance").remove();
-        $(".insurance-item").remove();
         $(".service-price-new-number-m").html(`$${subscriptionPrice}`);
+        $(".order-summary-card .tabs").remove();
+        $(".insurance-item").remove();
     }
 };
