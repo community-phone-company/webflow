@@ -6,6 +6,7 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
     const useNewImplementation = router.isTestEnvironment;
 
     if (useNewImplementation) {
+        console.log("Use new implementation");
     } else {
         console.log("Use old implementation");
         const cards = {
