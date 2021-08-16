@@ -9,7 +9,7 @@ const ProductIdentifier = Object.freeze({
     handset: "landline-handset"
 });
 
-class Product {
+class OrderProduct {
 
     /**
      * 

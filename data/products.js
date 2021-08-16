@@ -1,43 +1,43 @@
-class ProductStore {
+class StaticProductStore {
 
     constructor() {
         this.products = [
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.landlineBase,
                 false,
                 PRODUCT_PRICE.LANDLINE_BASE
             ),
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.landlinePhoneServiceMonthly,
                 true,
                 PRODUCT_PRICE.NEW_NUMBER_MONTHLY
             ),
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.landlinePhoneServiceYearly,
                 true,
                 PRODUCT_PRICE.NEW_NUMBER_YEARLY
             ),
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.portingLandlineNumberMonthly,
                 true,
                 PRODUCT_PRICE.KEEP_NUMBER_MONTHLY
             ),
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.portingLandlineNumberYearly,
                 true,
                 PRODUCT_PRICE.KEEP_NUMBER_YEARLY
             ),
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.insuranceMonthly,
                 true,
                 PRODUCT_PRICE.INSURANCE_MONTHLY
             ),
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.insuranceYearly,
                 true,
                 PRODUCT_PRICE.INSURANCE_YEARLY
             ),
-            new Product(
+            new OrderProduct(
                 ProductIdentifier.handset,
                 false,
                 PRODUCT_PRICE.HANDSET
@@ -47,7 +47,7 @@ class ProductStore {
 
     /**
      * @param {string} id Product identifier.
-     * @returns {Product | undefined} Instance of {@link Product} type of `undefined`.
+     * @returns {OrderProduct | undefined} Instance of {@link OrderProduct} type of `undefined`.
      */
     getProductById = (id) => {
         return this.products.find(product => product.id === id);
