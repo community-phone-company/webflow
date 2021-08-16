@@ -16,8 +16,6 @@ const PageSettings = Object.freeze({
     minimumTimeIntervalBetweenSubmits: 2000
 });
 
-var _form;
-
 $(document).ready(() => {
 
     const form = {
@@ -79,7 +77,6 @@ $(document).ready(() => {
             }
         }
     };
-    _form = form;
 
     const handleFormDataChanges = () => {
         const isShippingAddressValid = form.data.shippingAddress.firstName.length > 0
