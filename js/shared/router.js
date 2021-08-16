@@ -7,11 +7,13 @@ class Router {
     }
 
     /**
-     * Redirects to the specified page.
-     * @param {string} path Path for the page. It's recommended to use {@link RouterPath} values here.
+     * Absolute URL.
+     * @param {string} path Relative path.
      * @param {any | undefined} parameters Plain object containing URL parameters.
+     * @param {boolean | undefined} testEnvironment Defines whether the page is from test environment.
+     * @returns {string} Absolute URL.
      */
-    open = (path, parameters) => {
+    getAbsoluteUrl = (path, parameters, testEnvironment) => {
         const parametersSegment = (() => {
             if (parameters) {
                 const keys = Object.keys(parameters);
@@ -26,12 +28,28 @@ class Router {
 
             return "";
         })();
-        const absoluteUrl = `${window.location.protocol}//${window.location.host}/${path}${parametersSegment}`;
+        return testEnvironment
+            ? `${window.location.protocol}//${window.location.host}/test-environment/${path}${parametersSegment}`
+            : `${window.location.protocol}//${window.location.host}/${path}${parametersSegment}`;
+    }
+
+    /**
+     * Redirects to the specified page.
+     * @param {string} path Path for the page. It's recommended to use {@link RouterPath} values here.
+     * @param {any | undefined} parameters Plain object containing URL parameters.
+     * @param {boolean | undefined} testEnvironment Defines whether the page is from test environment.
+     */
+    open = (path, parameters, testEnvironment) => {
+        const absoluteUrl = this.getAbsoluteUrl(
+            path,
+            parameters,
+            testEnvironment
+        );
         window.location.href = absoluteUrl;
     }
 
     /**
-     * @returns {any}
+     * @returns {any} Plain object containing URL parameters.
      */
     getParameters = () => {
         return Object.fromEntries(
@@ -67,7 +85,13 @@ const RouterPath = Object.freeze({
     onboarding_onboarding_voicemail: "onboarding/onboarding/voicemail",
     onboarding_onboarding_callerId: "onboarding/onboarding/caller-id",
     onboarding_onboarding_thankYou: "onboarding/onboarding/thank-you-for-onboarding",
-    checkoutLandline_choosePlan: "checkout-landline/choose-a-plan"
+    onboarding_porting_previousCarrier: "onboarding/porting/previous-carrier",
+    onboarding_porting_numberTransfer: "onboarding/porting/number-transfer",
+    onboarding_porting_thankYou: "onboarding/porting/thank-you-for-porting",
+    checkoutLandline_choosePlan: "checkout-landline/choose-a-plan",
+    checkoutLandline_account: "checkout-landline/account",
+    checkoutLandline_checkoutStep: "checkout-landline/checkout-step",
+    checkoutLandline_thankYou: "checkout-landline/thank-you"
 });
 
 const RouterPathParameter = Object.freeze({
