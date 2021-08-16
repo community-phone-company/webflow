@@ -29,8 +29,17 @@ class Router {
             return "";
         })();
         return testEnvironment
-            ? `${window.location.protocol}//${window.location.host}/test-environment/${path}${parametersSegment}`
+            ? `${window.location.protocol}//${window.location.host}/${RouterPathTestEnvironmentPrefix}/${path}${parametersSegment}`
             : `${window.location.protocol}//${window.location.host}/${path}${parametersSegment}`;
+    }
+
+    /**
+     * Checks whether the current page is in the test environment.
+     * @returns {boolean} `true` if the current page is in the test environment.
+     */
+    isTestEnvironment = () => {
+        const segments = window.location.pathname.replace(/^\/|\/$/g, '').split("/");
+        return segments[0] === RouterPathTestEnvironmentPrefix;
     }
 
     /**
@@ -69,6 +78,8 @@ class Router {
         return allParameters[key];
     }
 }
+
+const RouterPathTestEnvironmentPrefix = "test-environment";
 
 const RouterPath = Object.freeze({
     home: "",
