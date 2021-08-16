@@ -86,29 +86,29 @@ $(document).ready(() => {
     };
 
     const handleFormDataChanges = () => {
-        const isShippingAddressValid = form.data.shippingAddress.firstName.length
-            && form.data.shippingAddress.lastName.length
-            && form.data.shippingAddress.addressLineOne.length
-            && form.data.shippingAddress.city.length
-            && form.data.shippingAddress.zip.length
-            && form.data.shippingAddress.state.length;
+        const isShippingAddressValid = form.data.shippingAddress.firstName.length > 0
+            && form.data.shippingAddress.lastName.length > 0
+            && form.data.shippingAddress.addressLineOne.length > 0
+            && form.data.shippingAddress.city.length > 0
+            && form.data.shippingAddress.zip.length >= 5
+            && form.data.shippingAddress.state.length > 0;
         
         const isBillingAddressValid = (() => {
             if (form.data.useShippingAddressForBilling) {
                 return isShippingAddressValid;
             } else {
-                return form.data.billingAddress.firstName.length
-                    && form.data.billingAddress.lastName.length
-                    && form.data.billingAddress.addressLineOne.length
-                    && form.data.billingAddress.city.length
-                    && form.data.billingAddress.zip.length
-                    && form.data.billingAddress.state.length;
+                return form.data.billingAddress.firstName.length > 0
+                    && form.data.billingAddress.lastName.length > 0
+                    && form.data.billingAddress.addressLineOne.length > 0
+                    && form.data.billingAddress.city.length > 0
+                    && form.data.billingAddress.zip.length >= 5
+                    && form.data.billingAddress.state.length > 0;
             }
         })();
 
-        const isPaymentDetailsValid = form.data.paymentDetails.cardNumber.length
-            && form.data.paymentDetails.cardExpiry.length
-            && form.data.paymentDetails.cardVerificationValue.length;
+        const isPaymentDetailsValid = form.data.paymentDetails.cardNumber.length > 0
+            && form.data.paymentDetails.cardExpiry.length > 0
+            && form.data.paymentDetails.cardVerificationValue.length >= 3;
         
         const isEverythingCorrect = isShippingAddressValid
             && isBillingAddressValid
