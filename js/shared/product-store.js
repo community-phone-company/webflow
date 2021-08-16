@@ -41,8 +41,8 @@ class ProductStore {
             },
             success: function (response) {
                 _this._products = (() => {
-                    if (response && response.products instanceof Array) {
-                        return response.products.map(product => {
+                    if (response instanceof Array) {
+                        return response.map(product => {
                             const addonInformation = (() => {
                                 if (product.addon_information) {
                                     return new ProductAddonInformation(
