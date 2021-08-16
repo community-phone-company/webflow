@@ -204,4 +204,3 @@ $(document).ready(() => {
     });
     checkCoverageVM.handleDataChange();
 });
-logger.print(`VERSION `, 3);

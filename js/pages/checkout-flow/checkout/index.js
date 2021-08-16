@@ -329,8 +329,21 @@ $(document).ready(() => {
         event.preventDefault();
     });
 
+    var lastSubmitTimestamp = undefined;
+    const minimumTimeIntervalBetweenSubmits = 2000;
+
     $(form.elements.submitButton).on("click", (event) => {
         event.preventDefault();
+
+        const currentTimestamp = Date.now();
+
+        if (lastSubmitTimestamp) {
+            const timeIntervalSinceLastSubmit = currentTimestamp - lastSubmitTimestamp;
+
+            if (timeIntervalSinceLastSubmit < minimumTimeIntervalBetweenSubmits) {
+                return;
+            }
+        }
 
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_firstName,
