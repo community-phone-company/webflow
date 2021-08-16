@@ -7,6 +7,7 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
 
     if (useNewImplementation) {
     } else {
+        console.log("Use old implementation");
         const cards = {
             landlineBase: document.getElementById("order-summary-product-landline-base"),
             newNumberMonthly: document.getElementById("order-summary-product-new-number-monthly"),
