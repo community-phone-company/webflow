@@ -232,7 +232,7 @@ $(document).ready(() => {
     new InputValueObserver(
         form.elements.shippingAddress.zipInput
     ).startObserving((newValue) => {
-        form.data.shippingAddress.zip = newValue;
+        form.data.shippingAddress.zip = newValue.replaceAll("_", "");
         handleFormDataChanges();
     });
     form.elements.shippingAddress.zipInput.value = Store.local.read(
@@ -292,7 +292,7 @@ $(document).ready(() => {
     new InputValueObserver(
         form.elements.billingAddress.zipInput
     ).startObserving((newValue) => {
-        form.data.billingAddress.zip = newValue;
+        form.data.billingAddress.zip = newValue.replaceAll("_", "");
         handleFormDataChanges();
     });
 
@@ -305,14 +305,16 @@ $(document).ready(() => {
     new InputValueObserver(
         form.elements.paymentDetails.cardNumberInput
     ).startObserving((newValue) => {
-        form.data.paymentDetails.cardNumber = newValue.replaceAll(" ", "");
+        form.data.paymentDetails.cardNumber = newValue
+            .replaceAll(" ", "")
+            .replaceAll("_", "");
         handleFormDataChanges();
     });
 
     new InputValueObserver(
         form.elements.paymentDetails.cardExpiryInput
     ).startObserving((newValue) => {
-        form.data.paymentDetails.cardExpiry = newValue;
+        form.data.paymentDetails.cardExpiry = newValue.replaceAll("_", "");
         handleFormDataChanges();
     });
 
