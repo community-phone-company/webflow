@@ -12,6 +12,10 @@ redirectToPreviousCheckoutFlowStepIfNeeded();
 
 var clipboard = new ClipboardJS('.btn');
 
+const PageSettings = Object.freeze({
+    minimumTimeIntervalBetweenSubmits: 2000
+});
+
 $(document).ready(() => {
 
     /**
@@ -330,7 +334,6 @@ $(document).ready(() => {
     });
 
     var lastSubmitTimestamp = undefined;
-    const minimumTimeIntervalBetweenSubmits = 2000;
 
     $(form.elements.submitButton).on("click", (event) => {
         event.preventDefault();
@@ -340,7 +343,7 @@ $(document).ready(() => {
         if (lastSubmitTimestamp) {
             const timeIntervalSinceLastSubmit = currentTimestamp - lastSubmitTimestamp;
 
-            if (timeIntervalSinceLastSubmit < minimumTimeIntervalBetweenSubmits) {
+            if (timeIntervalSinceLastSubmit < PageSettings.minimumTimeIntervalBetweenSubmits) {
                 return;
             }
         }
