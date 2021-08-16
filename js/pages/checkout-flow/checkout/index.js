@@ -18,13 +18,6 @@ const PageSettings = Object.freeze({
 
 $(document).ready(() => {
 
-    /**
-     * For test only.
-     */
-    /*if (IS_PRODUCTION) {
-        return;
-    }*/
-
     const form = {
         elements: {
             form: document.getElementById("wf-form-Checkout-form"),
