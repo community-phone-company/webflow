@@ -50,10 +50,10 @@ const getAddonCardHtmlLayout = (product) => {
             <div id="handset_addon_div" class="w-layout-grid card-addon-handset-phone card-handset">
                 <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-81c6a2a0" style="opacity: 1;" class="div-block-6">
                     <div class="text-block-9">
-                        ${product.addonInformation.title}
+                        Add ${product.id}
                     </div>
                     <div class="text-block-10">
-                        ${product.addonInformation.subtitle}
+                        Subtitle
                     </div>
                 </div>
                 <img
