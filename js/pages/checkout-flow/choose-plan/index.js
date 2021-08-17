@@ -92,6 +92,7 @@ const getAddonSectionInternalHtmlLayout = (products) => {
             (previous, current) => `${previous}${current}`,
             html
         );
+    logger.print(`HTML: ${html}`);
     return html;
 };
 
