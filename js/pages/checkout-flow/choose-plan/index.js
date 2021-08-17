@@ -40,6 +40,61 @@ const getProductCardHtmlLayout = (product) => {
     `;
 };
 
+/**
+ * @param {Product} product Product.
+ * @returns {string}
+ */
+const getAddonCardHtmlLayout = (product) => {
+    return `
+        <a href="#" class="addons-card-bg w-inline-block">
+            <div id="handset_addon_div" class="w-layout-grid card-addon-handset-phone card-handset">
+                <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-81c6a2a0" style="opacity: 1;" class="div-block-6">
+                    <div class="text-block-9">
+                        Add a handset / phone
+                    </div>
+                    <div class="text-block-10">
+                        Extra $39 for a new landline phone
+                    </div>
+                </div>
+                <img
+                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b174b03cb6cee00203a_img-phone.svg"
+                    loading="lazy"
+                    alt=""
+                    class="image-6"
+                >
+                <img
+                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b6e068386753c1fe7da_ic-add.svg"
+                    loading="lazy"
+                    style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
+                    alt=""
+                    class="image-7"
+                >
+            </div>
+        </a>
+    `;
+};
+
+/**
+ * @param {Product[]} products Products.
+ * @returns {string}
+ */
+const getAddonSectionInternalHtmlLayout = (products) => {
+    var html = `
+        <div class="devider-24px"></div>
+        <div class="devider-grey-1px"></div>
+        <div class="devider-24px"></div>
+        <h4 class="heading-4">Addons</h4>
+        <div class="devider-8px"></div>
+    `;
+    products
+        .map(product => getAddonCardHtmlLayout(product))
+        .reduce(
+            (previous, current) => `${previous}${current}`,
+            html
+        );
+    return html;
+};
+
 const choosePlanVM = new Vue({
     data: {
         allProducts: []
@@ -49,6 +104,13 @@ const choosePlanVM = new Vue({
     watch: {
         allProducts(newValue) {
             logger.print(`Updated products: `, newValue);
+            
+            const addons = newValue.filter(product => product.isAddon);
+            $("div.addons").html(
+                getAddonSectionInternalHtmlLayout(
+                    addons
+                )
+            );
         }
     }
 });
