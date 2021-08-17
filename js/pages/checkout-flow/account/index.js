@@ -138,10 +138,4 @@ const onReady = () => {
     );
 };
 
-if (router.isTestEnvironment()) {
-    onReady();
-} else {
-    $(document).ready(() => {
-        onReady();
-    });
-}
+onReady();
