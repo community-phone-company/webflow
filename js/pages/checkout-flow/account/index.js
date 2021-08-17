@@ -6,8 +6,8 @@ const PageSettings = Object.freeze({
     useCaptcha: false
 });
 
-$(document).ready(() => {
-
+const onReady = () => {
+    console.log(`On ready`);
     const form = {
         elements: {
             form: document.getElementById("wf-form-Account-form"),
@@ -136,4 +136,12 @@ $(document).ready(() => {
     updateOrderSummaryColumn(
         productIdentifiers
     );
-});
+};
+
+if (router.isTestEnvironment()) {
+    onReady();
+} else {
+    $(document).ready(() => {
+        onReady();
+    });
+}
