@@ -70,8 +70,8 @@ $(document).ready(() => {
 
     const submitButton = document.getElementById("submit-button");
     $(submitButton).on("click", () => {
-        logger.print(`Zendesk`);
-        logger.print(formData);
+        console.log(`Zendesk`);
+        console.log(formData);
         
         ZendeskIntegration.createTicketForNumberTransfer(
             formData
@@ -104,7 +104,7 @@ $(document).ready(() => {
     };
 
     const handleFormChange = () => {
-        logger.print(`Form has changed`);
+        console.log(`Form has changed`);
         const isFormFilledCorrectly = formData.account_number.length
             && formData.pin.length
             && formData.name_in_account.length

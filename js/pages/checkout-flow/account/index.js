@@ -40,7 +40,7 @@ $(document).ready(() => {
             form.elements.submitButton,
             isFormValid
         );
-        logger.print(form.data);
+        console.log(form.data);
     };
 
     new InputValueObserver(
@@ -122,7 +122,7 @@ $(document).ready(() => {
 
         exportCheckoutFlowDataToActiveCampaign(
             (response, error, success) => {
-                logger.print("Active Campaign");
+                console.log("Active Campaign");
                 window.location.href = "/checkout-landline/checkout-step";
             }
         );

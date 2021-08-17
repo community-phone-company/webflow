@@ -397,7 +397,7 @@ class PhoneNumberFormSearchField {
     startObserving = () => {
         $(this.input).autocomplete({
             select: (event, ui) => {
-                logger.print(`Selected autocomplete item for "${this.input.id}"`);
+                console.log(`Selected autocomplete item for "${this.input.id}"`);
                 
                 const selectedItem = this.autocompleteItems.find(item => item.text === ui.item.text);
                 this._selectedAutocompleteItem = selectedItem;
@@ -412,7 +412,7 @@ class PhoneNumberFormSearchField {
 
         const valueObserver = new InputValueObserver(this.input);
         valueObserver.startObserving((newValue) => {
-            logger.print(`Changed input value for ${this.input.id}: ${newValue}`);
+            console.log(`Changed input value for ${this.input.id}: ${newValue}`);
             
             if (this._onValueChanged) {
                 this._onValueChanged(newValue);
@@ -427,7 +427,7 @@ class PhoneNumberFormSearchField {
             }
         });
         this.valueObserver = valueObserver;
-        logger.print(`Started observing input value for ${this.input.id}`);
+        console.log(`Started observing input value for ${this.input.id}`);
         return this;
     }
 

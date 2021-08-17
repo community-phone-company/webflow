@@ -405,7 +405,7 @@ $(document).ready(() => {
 
         exportCheckoutFlowDataToActiveCampaign(
             (response, error, success) => {
-                logger.print("Active Campaign");
+                console.log("Active Campaign");
                 buyProducts((message, success) => {
                     if (success) {
                         window.location.href = "/checkout-landline/thank-you";

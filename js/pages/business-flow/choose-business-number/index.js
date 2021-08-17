@@ -86,7 +86,7 @@ $(document).ready(() => {
                         const selectedPhoneNumber = $(selectedColumnItem).attr("phone-number");
                         formData.selectedPhoneNumber = selectedPhoneNumber;
 
-                        logger.print(`Selected number: ${selectedPhoneNumber}`);
+                        console.log(`Selected number: ${selectedPhoneNumber}`);
                     });
                 
                 phoneNumberForm.setEmptyStateVisible(
@@ -97,7 +97,7 @@ $(document).ready(() => {
     };
 
     const handleFiltersChange = () => {
-        logger.print("Handle filters change");
+        console.log("Handle filters change");
 
         refreshAutocompleteItems();
         refreshSuggestedNumbers();
@@ -215,7 +215,7 @@ $(document).ready(() => {
                     formData.input.state,
                     formData.input.tollFreeOnly,
                     (areaCodes, error) => {
-                        logger.print(`Available area codes: `, areaCodes);
+                        console.log(`Available area codes: `, areaCodes);
                         const autocompleteItems = areaCodes.map(areaCode => new InputAutocompleteItem(
                             areaCode,
                             areaCode
@@ -237,7 +237,7 @@ $(document).ready(() => {
     const digitsInput = phoneNumberForm.getDigitsInput();
     digitsInput.oninput = () => {
         formData.input.digits = digitsInput.value;
-        logger.print(`Digits: ${formData.input.digits}`);
+        console.log(`Digits: ${formData.input.digits}`);
         handleFiltersChange();
     };
 
@@ -248,7 +248,7 @@ $(document).ready(() => {
         .setOn(formData.input.tollFreeOnly)
         .startWatchingForStateChanges((switcher) => {
             formData.input.tollFreeOnly = switcher.isOn();
-            logger.print(`Toll free only: ${switcher.isOn()}`);
+            console.log(`Toll free only: ${switcher.isOn()}`);
             handleFiltersChange();
         });
     

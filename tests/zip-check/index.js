@@ -3,13 +3,13 @@ const subscribe = () => {
     checkZipOnChange(
         zipInput,
         (zip) => {
-            logger.print(`Sending request for ${zip}`);
+            console.log(`Sending request for ${zip}`);
         },
         (zip, response, isValid) => {
-            logger.print(`zip: ${zip}, response: ${response}, isValid: ${isValid}`);
+            console.log(`zip: ${zip}, response: ${response}, isValid: ${isValid}`);
         }
     );
-    logger.print("subscribed");
+    console.log("subscribed");
 }
 
 $(document).ready(() => {

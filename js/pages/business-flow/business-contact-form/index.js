@@ -26,7 +26,7 @@ $(document).ready(() => {
             ),
             ActiveCampaignList.chooseNumber(),
             (response, error, success) => {
-                logger.print(`Active Campaign: ${success}`);
+                console.log(`Active Campaign: ${success}`);
             }
         )
     });

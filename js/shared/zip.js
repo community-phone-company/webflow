@@ -39,7 +39,7 @@ var zipResponseCache = {};
  * @param {string | number} zip String or number containing zip code.
  */
 const putResponseToCache = (response, zip) => {
-    logger.print(`Writing to cache for zip code: ${zip}`);
+    console.log(`Writing to cache for zip code: ${zip}`);
     zipResponseCache[`${zip}`] = response;
 };
 
@@ -49,7 +49,7 @@ const putResponseToCache = (response, zip) => {
  * @returns {any | undefined} Response object or `undefined`.
  */
 const getResponseFromCache = (zip) => {
-    logger.print(`Reading from cache for zip code: ${zip}`);
+    console.log(`Reading from cache for zip code: ${zip}`);
     return zipResponseCache[`${zip}`];
 };
 
@@ -89,7 +89,7 @@ const checkZip = (zip, callback, legacyAPI) => {
      * Otherwise, we will send request to the server and handle the response.
      */
     if (responseFromCache) {
-        logger.print("Response loaded from cache");
+        console.log("Response loaded from cache");
         handleResponse(responseFromCache);
         return undefined;
     } else {
@@ -113,7 +113,7 @@ const checkZip = (zip, callback, legacyAPI) => {
             error: function (error) {
                 putResponseToCache(undefined, zip);
                 handleResponse(undefined);
-                logger.print(error);
+                console.log(error);
             }
         });
     }

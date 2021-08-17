@@ -172,7 +172,7 @@ class Chargebee {
                 "card_cvv": cardInformation.verificationValue
             }
         };
-        logger.print(data);
+        console.log(data);
         $.ajax({
             url: "https://landline.phone.community/api/v1/chargebee/checkout/",
             method: "POST",
@@ -186,7 +186,7 @@ class Chargebee {
                 );
             },
             error: function (error) {
-                logger.print(`Error: ${error}`);
+                console.log(`Error: ${error}`);
                 const message = error && error.responseJSON && error.responseJSON.message;
                 callback(
                     message,

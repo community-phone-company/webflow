@@ -25,7 +25,7 @@ class GoogleDocIntegration {
             "Zip code": zip,
             "Is business": isBusiness ? "yes" : "no"
         };
-        logger.print(`Data: `, data);
+        console.log(`Data: `, data);
         return ZapierIntegration.sendToWebhook(
             "https://hooks.zapier.com/hooks/catch/10558854/b208t38/",
             data,
@@ -64,7 +64,7 @@ class GoogleDocIntegration {
         if (callerIdSent != undefined) data["Caller ID sent"] = callerIdSent ? "yes" : "no";
         if (voicemailSent != undefined) data["Voicemail sent"] = voicemailSent ? "yes" : "no";
 
-        logger.print(`Data: `, data);
+        console.log(`Data: `, data);
         return ZapierIntegration.sendToWebhook(
             "https://hooks.zapier.com/hooks/catch/10558854/b2774te/",
             data,

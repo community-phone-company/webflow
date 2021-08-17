@@ -92,7 +92,7 @@ class ProductStore {
                 callback(undefined);
             },
             error: function (error) {
-                logger.print(`Error: `, error);
+                console.log(`Error: `, error);
                 callback(error);
             }
         });

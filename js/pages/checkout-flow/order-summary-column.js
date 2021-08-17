@@ -59,7 +59,7 @@ const updateOrderSummaryColumn = (productIdentifiers) => {
         const productStore = new StaticProductStore();
         const products = productIdentifiers.map(id => productStore.getProductById(id));
         
-        logger.print(productIdentifiers);
+        console.log(productIdentifiers);
         
         const oneTimeChargePrice = products
             .filter(product => !product.isSubscription)

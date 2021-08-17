@@ -26,8 +26,8 @@ $(document).ready(() => {
                     $(".coverage_response").css("margin-top", "0")
                 },
                 error: function (error) {
-                    logger.print("************************************")
-                    logger.print(error)
+                    console.log("************************************")
+                    console.log(error)
                 }
             })
         } else {
@@ -63,8 +63,8 @@ $(document).ready(() => {
                     $(".coverage_response").css("margin-top", "0")
                 },
                 error: function (error) {
-                    logger.print("************************************")
-                    logger.print(error)
+                    console.log("************************************")
+                    console.log(error)
                 }
             })
         } else {

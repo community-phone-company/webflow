@@ -92,7 +92,7 @@ const getAddonSectionInternalHtmlLayout = (products) => {
             (previous, current) => `${previous}${current}`,
             html
         );
-    logger.print(`HTML: ${html}`);
+    console.log(`HTML: ${html}`);
     return html;
 };
 
@@ -104,7 +104,7 @@ const choosePlanVM = new Vue({
     },
     watch: {
         allProducts(newValue) {
-            logger.print(`Updated products: `, newValue);
+            console.log(`Updated products: `, newValue);
             
             const addons = newValue.filter(product => product.isAddon);
             $("div.addons").html(
@@ -222,7 +222,7 @@ $(document).ready(() => {
      */
     exportCheckoutFlowDataToActiveCampaign(
         (response, error, success) => {
-            logger.print("Active Campaign");
+            console.log("Active Campaign");
         }
     );
 });

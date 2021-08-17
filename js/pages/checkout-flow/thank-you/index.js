@@ -5,7 +5,7 @@ $(document).ready(() => {
      */
     exportCheckoutFlowDataToActiveCampaign(
         (response, error, success) => {
-            logger.print("Active Campaign");
+            console.log("Active Campaign");
         }
     );
 });

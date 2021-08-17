@@ -88,7 +88,7 @@ class Store {
      */
     write = (key, value) => {
         if (!(typeof key === "string" && key.length)) {
-            logger.print(`Can't write to storage for key: ${key}`);
+            console.log(`Can't write to storage for key: ${key}`);
             return;
         }
 
@@ -97,7 +97,7 @@ class Store {
         };
         const jsonString = JSON.stringify(json);
         this.internalStorage.setItem(key, jsonString);
-        logger.print(`Written to storage: ${value}\nfor key: ${key}`);
+        console.log(`Written to storage: ${value}\nfor key: ${key}`);
     }
 
     clear = () => {

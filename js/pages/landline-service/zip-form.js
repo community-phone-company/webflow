@@ -69,7 +69,7 @@ class ZipForm {
      */
     setState = (newState) => {
         this._state = newState;
-        logger.print(`Updated zip form state to ${newState.mode}`);
+        console.log(`Updated zip form state to ${newState.mode}`);
 
         /**
          * UI will change according to data from `newState`.
@@ -262,7 +262,7 @@ class ZipForm {
             buttonSelector.prop("disabled", true);
         }
 
-        logger.print(`Set submit button ${enabled ? "enabled" : "disabled"}`);
+        console.log(`Set submit button ${enabled ? "enabled" : "disabled"}`);
     }
 
     /**

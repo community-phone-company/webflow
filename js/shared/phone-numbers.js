@@ -27,7 +27,7 @@ class PhoneNumberManager {
                 }
             },
             error: function (error) {
-                logger.print(`Error: `, error);
+                console.log(`Error: `, error);
                 callback([], error);
             }
         });
@@ -60,7 +60,7 @@ class PhoneNumberManager {
                 }
             },
             error: function (error) {
-                logger.print(`Error: `, error);
+                console.log(`Error: `, error);
                 callback([], error);
             }
         });
@@ -77,7 +77,7 @@ class PhoneNumberManager {
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
      */
     static getNumbers = (city, stateCode, areaCode, digits, tollFreeOnly, callback) => {
-        logger.print(`getNumbers request\ncity: ${city}\nstateCode: ${stateCode}\nareaCode: ${areaCode}\ndigits: ${digits}`);
+        console.log(`getNumbers request\ncity: ${city}\nstateCode: ${stateCode}\nareaCode: ${areaCode}\ndigits: ${digits}`);
         return $.ajax({
             method: "GET",
             url: `https://landline.phone.community/api/v1/search/numbers`,
@@ -90,7 +90,7 @@ class PhoneNumberManager {
                 ...tollFreeOnly ? {"tollFree": true} : undefined
             },
             success: function (response) {
-                logger.print(`getNumbers response: `, response);
+                console.log(`getNumbers response: `, response);
                 const numbers = response.numbers.map(element => new PhoneNumber(
                     element.area_code,
                     element.number,
@@ -100,7 +100,7 @@ class PhoneNumberManager {
                 callback(numbers, undefined);
             },
             error: function (error) {
-                logger.print(`Error: `, error);
+                console.log(`Error: `, error);
                 callback([], error);
             }
         });
@@ -128,7 +128,7 @@ class PhoneNumberManager {
                 callback(city, undefined);
             },
             error: function (error) {
-                logger.print(`Error: `, error);
+                console.log(`Error: `, error);
                 callback(undefined, error);
             }
         });

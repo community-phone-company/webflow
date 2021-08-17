@@ -14,8 +14,8 @@ $(document).ready(function () {
     let use_shipping_address = true
     $(".handle").on("click", function () {
         use_shipping_address = !use_shipping_address
-        logger.print("==============")
-        logger.print(use_shipping_address)
+        console.log("==============")
+        console.log(use_shipping_address)
     })
 
     function cc_format(value) {
@@ -196,7 +196,7 @@ $(document).ready(function () {
                     data: JSON.stringify(current_payload),
                     contentType: "application/json; charset=utf-8",
                     success: function (resp) {
-                        logger.print(resp)
+                        console.log(resp)
 
                         if (resp.message == "failed") {
                             alert("A problem was detected. Please call us at (855) 615-0667 to complete your order")
@@ -229,7 +229,7 @@ $(document).ready(function () {
                         }
                     },
                     error: function (error) {
-                        logger.print(error.responseJSON);
+                        console.log(error.responseJSON);
                         const message = error.responseJSON.message;
                         alert(`${message} OR call us at (855) 615-0667 to complete your order`);
                         $(submitButton).css("background-color", "#0019f9");
@@ -318,8 +318,8 @@ $(document).ready(function () {
 
         $(".tabs_phonenumber_service").on("click", function () {
             text_on_tab_ = $(".tabs_phonenumber_service").find(".w--current").text()
-            logger.print(";;:::::::::::::")
-            logger.print(text_on_tab_)
+            console.log(";;:::::::::::::")
+            console.log(text_on_tab_)
         })
 
         return text_on_tab_
@@ -333,14 +333,14 @@ $(document).ready(function () {
 
         // $(".tabs_plan_period").on("click", function() {
         //     text_on_tab = $(".tabs_plan_period").find(".w--current").data("plantype")
-        //     logger.print("*********************************544444")
-        //     logger.print(text_on_tab)
+        //     console.log("*********************************544444")
+        //     console.log(text_on_tab)
         // })
 
         // $(".w-tabs").on("click", function() {
         //     text_on_tab = $(".w-tabs").find(".w--current").data("plantype")
-        //     logger.print("*********************************544444")
-        //     logger.print(text_on_tab)
+        //     console.log("*********************************544444")
+        //     console.log(text_on_tab)
         // })
 
         var text_on_tab = $("#monthly-plan").data("plantype")
@@ -349,15 +349,15 @@ $(document).ready(function () {
 
         // $("#w-tabs-2-data-w-tab-0").on("click", function() {
         //     text_on_tab = $("#id_tabs_period").find(".w--current").data("plantype")
-        //     logger.print("*********************************544444")
-        //     logger.print(text_on_tab)
+        //     console.log("*********************************544444")
+        //     console.log(text_on_tab)
         // })
 
         $("#monthly-plan").on("click", function () {
             if ($("#monthly-plan").hasClass("w--current") == true) {
                 text_on_tab = $("#monthly-plan").data("plantype")
-                logger.print("*********************************544444")
-                logger.print(text_on_tab)
+                console.log("*********************************544444")
+                console.log(text_on_tab)
                 return text_on_tab
             }
 
@@ -367,8 +367,8 @@ $(document).ready(function () {
         $("#annual-plan").on("click", function () {
             if ($("#annual-plan").hasClass("w--current") == true) {
                 text_on_tab = $("#annual-plan").data("plantype")
-                logger.print("*********************************544444")
-                logger.print(text_on_tab)
+                console.log("*********************************544444")
+                console.log(text_on_tab)
                 return text_on_tab
             }
 
@@ -413,8 +413,8 @@ $(document).ready(function () {
 
 
             order_summary["phone_service"] = selected_phonenumber_service
-            logger.print("============================================")
-            logger.print(selected_plan)
+            console.log("============================================")
+            console.log(selected_plan)
 
             if (selected_plan == "Monthly") {
                 plan_id = "landline-phone-service-monthly"
@@ -781,19 +781,19 @@ $(document).ready(function () {
         subscription.forEach(function (sub) {
 
             if (sub.item_price_id == "insurance-") {
-                logger.print("----")
-                logger.print(sub.item_price_id)
+                console.log("----")
+                console.log(sub.item_price_id)
                 insurance_ids.push(sub.item_price_id)
             } else if (sub.item_price_id == "insurance-yearly") {
-                logger.print("8*****")
-                logger.print(sub.item_price_id)
+                console.log("8*****")
+                console.log(sub.item_price_id)
                 insurance_ids.push(sub.item_price_id)
             }
 
         })
-        logger.print(subscription)
-        logger.print("===================")
-        logger.print(insurance_ids)
+        console.log(subscription)
+        console.log("===================")
+        console.log(insurance_ids)
 
 
         if (insuarance_is_selected !== true) {

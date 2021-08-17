@@ -55,7 +55,7 @@ class ActiveCampaignIntegration {
             "contact": contact.toJSON()
         };*/
         const data = contact.toJSON();
-        logger.print(data);
+        console.log(data);
         return $.ajax({
             url: list.webhookUrl,
             method: "POST",
@@ -70,7 +70,7 @@ class ActiveCampaignIntegration {
                 );
             },
             error: function (error) {
-                logger.print(error);
+                console.log(error);
                 callback(
                     undefined,
                     error,
@@ -103,7 +103,7 @@ class ActiveCampaignIntegration {
                 );
             },
             error: function (error) {
-                logger.print(error);
+                console.log(error);
                 callback(
                     undefined,
                     error,

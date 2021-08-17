@@ -19,7 +19,7 @@ const checkCoverageVM = new Vue({
                 && this.city.length > 0
                 && this.zip.length > 0
                 && this.state.length > 0;
-            logger.print(`is form valid: ${isFormValid}`);
+            console.log(`is form valid: ${isFormValid}`);
             UserInterface.setElementEnabled(
                 this.getSubmitButton(),
                 isFormValid
@@ -75,7 +75,7 @@ $(document).ready(() => {
         checkZipOnChange(
             form.getZipInput(),
             (zip) => {
-                logger.print(`sending zip code: ${zip}`);
+                console.log(`sending zip code: ${zip}`);
                 form.setState(
                     ZipFormState.withMode(
                         ZipFormStateMode.loading
@@ -83,7 +83,7 @@ $(document).ready(() => {
                 );
             },
             (zip, response, isValid) => {
-                logger.print(`zip: ${zip}\nresponse: ${response}\nisValid: ${isValid}`)
+                console.log(`zip: ${zip}\nresponse: ${response}\nisValid: ${isValid}`)
 
                 /**
                  * This is a temporary workaround.

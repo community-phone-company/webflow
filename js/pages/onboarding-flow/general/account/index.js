@@ -28,7 +28,7 @@ $(document).ready(() => {
     };
 
     const handleFormChange = () => {
-        logger.print(`Form has changed`);
+        console.log(`Form has changed`);
         UserInterface.setElementEnabled(
             submitButton,
             new EmailValidator().check(formData.email)
@@ -36,7 +36,7 @@ $(document).ready(() => {
     };
 
     const submitFormData = () => {
-        logger.print(`Submit form data`);
+        console.log(`Submit form data`);
 
         const email = $(emailTextField).val();
         const isEmailValid = new EmailValidator().check(email);

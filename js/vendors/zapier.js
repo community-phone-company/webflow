@@ -15,7 +15,7 @@ class ZapierIntegration {
             dataType: "json",
             data: data,
             success: function (response) {
-                logger.print(response);
+                console.log(response);
 
                 if (callback) {
                     callback(
@@ -26,7 +26,7 @@ class ZapierIntegration {
                 }
             },
             error: function (error) {
-                logger.print(error);
+                console.log(error);
                 
                 if (callback) {
                     callback(
