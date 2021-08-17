@@ -95,25 +95,33 @@ const getAddonSectionInternalHtmlLayout = (products) => {
     return html;
 };
 
-const choosePlanVM = new Vue({
-    data: {
-        allProducts: []
-    },
-    methods: {
-    },
-    watch: {
-        allProducts(newValue) {
-            console.log(`Updated products: `, newValue);
-            
-            const addons = newValue.filter(product => product.isAddon);
-            $("div.addons").html(
-                getAddonSectionInternalHtmlLayout(
-                    addons
-                )
-            );
+var choosePlanVM = undefined;
+
+if (router.isTestEnvironment()) {
+    choosePlanVM = new Vue({
+        data: {
+            allProducts: []
+        },
+        methods: {
+        },
+        watch: {
+            allProducts(newValue) {
+                console.log(`Updated products: `, newValue);
+                
+                const addons = newValue.filter(product => product.isAddon);
+                $("div.addons").html(
+                    getAddonSectionInternalHtmlLayout(
+                        addons
+                    )
+                );
+            }
         }
-    }
-});
+    });
+
+    ProductStore.getDefault().loadProducts(error => {
+        choosePlanVM.allProducts = ProductStore.getDefault().getAllProducts();
+    });
+}
 
 $(document).ready(() => {
 
@@ -123,10 +131,6 @@ $(document).ready(() => {
         addHandset: false,
         addInsurance: false,
     };
-
-    ProductStore.getDefault().loadProducts(error => {
-        choosePlanVM.allProducts = ProductStore.getDefault().getAllProducts();
-    });
 
     const getProductIdentifiers = () => {
         var identifiers = [
