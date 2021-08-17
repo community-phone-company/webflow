@@ -5,9 +5,9 @@
 /**
  * Block printing in console log on production domain.
  */
-logger.setBlockedDomains([
-    //"www.communityphone.org"
-]);
+if (IS_PRODUCTION) {
+    //console.log = () => {};
+}
 
 /**
  * Send user ID and other information to Hotjar.
