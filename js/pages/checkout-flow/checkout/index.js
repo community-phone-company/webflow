@@ -16,7 +16,9 @@ const PageSettings = Object.freeze({
     minimumTimeIntervalBetweenSubmits: 2000
 });
 
-$(document).ready(() => {
+const onReady = () => {
+
+    console.log(`On ready`);
 
     const form = {
         elements: {
@@ -425,4 +427,6 @@ $(document).ready(() => {
     updateOrderSummaryColumn(
         productIdentifiers
     );
-});
+};
+
+onReady();
