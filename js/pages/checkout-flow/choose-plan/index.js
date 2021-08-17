@@ -124,6 +124,9 @@ if (router.isTestEnvironment()) {
 } else {
     $(document).ready(() => {
 
+        $(".order-summary-card .tabs").remove();
+        $(".insurance-item").remove();
+
         const formData = {
             monthly: $("#monthly-plan").hasClass("w--current"),
             getNewNumber: $(".tabs_phonenumber_service .tab-new-number").hasClass("w--current"),
