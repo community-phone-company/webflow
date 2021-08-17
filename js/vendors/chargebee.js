@@ -187,7 +187,15 @@ class Chargebee {
             },
             error: function (error) {
                 console.log(`Error: ${error}`);
-                const message = error && error.responseJSON && error.responseJSON.message;
+                const message = (() => {
+                    var result = error && error.responseJSON && error.responseJSON.message;
+
+                    if (!result) {
+                        result = "Something went wrong.\nTry again later or call us at 844-685-3562";
+                    }
+
+                    return result;
+                })();
                 callback(
                     message,
                     false
