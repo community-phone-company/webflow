@@ -15,6 +15,7 @@ class ProductStore {
 
     constructor() {
         this._products = [];
+        this._structure = undefined;
     }
 
     /**
@@ -24,6 +25,22 @@ class ProductStore {
         return Array.from(
             this._products
         );
+    }
+
+    /**
+     * @param {string} id Product ID.
+     * @returns {Product} Instance of {@link Product} type.
+     */
+    getProductById = (id) => {
+        return this._products.find(product => product.id === id);
+    }
+
+    /**
+     * Product structure.
+     * @returns {ProductStructure} Instance of {@link ProductStructure} type.
+     */
+    getStructure = () => {
+        return this._structure;
     }
 
     /**
@@ -41,8 +58,8 @@ class ProductStore {
             },
             success: function (response) {
                 _this._products = (() => {
-                    if (response instanceof Array) {
-                        return response.map(product => {
+                    if (response.products instanceof Array) {
+                        return response.products.map(product => {
                             const addonInformation = (() => {
                                 if (product.addon_information) {
                                     return new ProductAddonInformation(
@@ -89,6 +106,9 @@ class ProductStore {
 
                     return [];
                 })();
+                this._structure = response.structure
+                    ? new ProductStructure(response.structure)
+                    : undefined;
                 callback(undefined);
             },
             error: function (error) {

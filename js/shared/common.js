@@ -1,5 +1,5 @@
 /**
- * Here we write any code that should be run on every page of the website.
+ * Here we write any code that should run on every page of the website.
  */
 
 /**

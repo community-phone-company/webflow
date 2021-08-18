@@ -32,6 +32,8 @@ class Product {
     }
 }
 
+new Product()
+
 class ProductAddonInformation {
 
     /**
@@ -89,5 +91,27 @@ class ProductSubscriptionPrice {
     ) {
         this.monthly = monthly;
         this.annually = annually;
+    }
+}
+
+class ProductStructure {
+
+    /**
+     * @constructor
+     * @param {any} json 
+     */
+    constructor(json) {
+        this.landlineBaseProductId = json.landline_base_product_id;
+        this.plans = {
+            newNumber: {
+                monthlyPlanId: json.plans.new_number.monthly_plan_id,
+                yearlyPlanId: json.plans.new_number.yearly_plan_id
+            },
+            keepNumber: {
+                monthlyPlanId: json.plans.keep_my_number.monthly_plan_id,
+                yearlyPlanId: json.plans.keep_my_number.yearly_plan_id
+            }
+        };
+        this.addons = json.addons;
     }
 }
