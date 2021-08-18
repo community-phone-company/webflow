@@ -93,14 +93,14 @@ const getAddonSectionInternalHtmlLayout = (products) => {
         html += getAddonCardHtmlLayout(product);
     }
 
-    console.log(`HTML: ${html}`);
     return html;
 };
 
 if (router.isTestEnvironment()) {
     const choosePlanVM = new Vue({
         data: {
-            allProducts: []
+            allProducts: [],
+            structure: undefined
         },
         methods: {
         },
@@ -114,12 +114,17 @@ if (router.isTestEnvironment()) {
                         addons
                     )
                 );
+            },
+            structure(newValue) {
+                console.log(`Updated structure: `, newValue);
             }
         }
     });
 
     ProductStore.getDefault().loadProducts(error => {
-        choosePlanVM.allProducts = ProductStore.getDefault().getAllProducts();
+        const productStore = ProductStore.getDefault();
+        choosePlanVM.allProducts = productStore.getAllProducts();
+        choosePlanVM.structure = productStore.getStructure();
     });
 } else {
     $(document).ready(() => {
