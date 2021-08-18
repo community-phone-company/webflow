@@ -57,7 +57,7 @@ class ProductStore {
             data: {
             },
             success: function (response) {
-                _this._products = (() => {
+                /*_this._products = (() => {
                     if (response.products instanceof Array) {
                         return response.products.map(product => {
                             const addonInformation = (() => {
@@ -105,7 +105,7 @@ class ProductStore {
                     }
 
                     return [];
-                })();
+                })();*/
                 this._structure = response.structure
                     ? new ProductStructure(response.structure)
                     : undefined;
