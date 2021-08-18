@@ -39,3 +39,10 @@ if (IS_PRODUCTION) {
         console.log(`Hotjar: ${emailToSend}`);
     }
 })();
+
+/**
+ * Remove Chargebee link on production.
+ */
+if (IS_PRODUCTION) {
+    $("#user-portal-v1").remove();
+}
