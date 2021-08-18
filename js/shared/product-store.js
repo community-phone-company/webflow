@@ -106,8 +106,10 @@ class ProductStore {
 
                     return [];
                 })();
-                console.log(`Structure: `, response.structure);
-                this._structure = new ProductStructure(response.structure);
+                this._structure = response.structure
+                    ? new ProductStructure(response.structure)
+                    : undefined;
+                    console.log(`Structure monthly plan ID: `, new ProductStructure(response.structure).plans.newNumber.monthlyPlanId);
                 callback(undefined);
             },
             error: function (error) {
