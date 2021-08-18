@@ -1,10 +1,8 @@
-console.log(`VERSION: `, 1);
-
 /**
  * @param {Product} product Product.
  * @returns {string}
  */
-const getProductCardHtmlLayout = (product) => {
+ const getProductCardHtmlLayout = (product) => {
     return `
         <div class="div-product">
             <div class="devider-16px">
@@ -48,7 +46,11 @@ const getProductCardHtmlLayout = (product) => {
  */
 const getAddonCardHtmlLayout = (product) => {
     return `
-        <a href="#" class="addons-card-bg w-inline-block">
+        <a
+            href="#"
+            class="addons-card-bg w-inline-block"
+            community-phone-product-id="${product.id}"
+        >
             <div id="handset_addon_div" class="w-layout-grid card-addon-handset-phone card-handset">
                 <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-81c6a2a0" style="opacity: 1;" class="div-block-6">
                     <div class="text-block-9">
@@ -98,33 +100,91 @@ const getAddonSectionInternalHtmlLayout = (products) => {
 
 if (router.isTestEnvironment()) {
     const choosePlanVM = new Vue({
+        el: "div.checkuot-section.wf-section",
         data: {
-            allProducts: [],
-            structure: undefined
+            monthly: $("#monthly-plan").hasClass("w--current"),
+            getNewNumber: $(".tabs_phonenumber_service .tab-new-number").hasClass("w--current"),
+            addHandset: false,
+            addInsurance: false,
+            productStore: undefined
         },
         methods: {
+            /**
+             * @returns {string[]}
+             */
+            getSelectedProductsId() {
+                //const store = this.productStore;
+                const store = new ProductStore();
+
+                if (!store) {
+                    return [];
+                }
+                
+                var identifiers = [
+                    store.getStructure().landlineBaseProductId
+                ];
+        
+                if (this.getNewNumber) {
+                    identifiers.push(
+                        this.monthly ? store.getStructure().plans.newNumber.monthlyPlanId : store.getStructure().plans.newNumber.yearlyPlanId
+                    );
+                } else {
+                    identifiers.push(
+                        this.monthly ? store.getStructure().plans.keepNumber.monthlyPlanId : store.getStructure().plans.keepNumber.yearlyPlanId
+                    );
+                }
+        
+                /*if (this.addHandset) {
+                    identifiers.push(
+                        ProductIdentifier.handset
+                    );
+                }
+        
+                if (this.addInsurance) {
+                    identifiers.push(
+                        formData.monthly ? ProductIdentifier.insuranceMonthly : ProductIdentifier.insuranceYearly
+                    );
+                }*/
+        
+                return identifiers;
+            }
         },
         watch: {
-            allProducts(newValue) {
-                console.log(`Updated products: `, newValue);
-                
-                const addons = newValue.filter(product => product.isAddon);
+            productStore(newValue) {
+                console.log(`Updated product store: `, newValue);
+
+                const addons = newValue.getStructure().addons.map(productId => newValue.getProductById(productId));
                 $("div.addons").html(
                     getAddonSectionInternalHtmlLayout(
                         addons
                     )
                 );
-            },
-            structure(newValue) {
-                console.log(`Updated structure: `, newValue);
             }
         }
     });
 
-    ProductStore.getDefault().loadProducts(error => {
-        const productStore = ProductStore.getDefault();
-        choosePlanVM.allProducts = productStore.getAllProducts();
-        choosePlanVM.structure = productStore.getStructure();
+    /**
+     * tab-new-number
+     * 
+     * tab-new-number-monthly-plan
+     * new-number-monthly-price-text
+     * 
+     * tab-new-number-annual-plan
+     * new-number-annual-price-text
+     * 
+     * tab-keep-existing-number
+     * 
+     * tab-keep-existing-number-monthly-plan
+     * keep-existing-number-monthly-price-text
+     * 
+     * tab-keep-existing-number-annual-plan
+     * keep-existing-number-annual-price-text
+     * 
+     */
+
+    const productStore = ProductStore.getDefault();
+    productStore.loadProducts(error => {
+        choosePlanVM.productStore = productStore;
     });
 } else {
     $(document).ready(() => {
