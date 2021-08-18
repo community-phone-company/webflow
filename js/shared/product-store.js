@@ -106,10 +106,9 @@ class ProductStore {
 
                     return [];
                 })();
-                this._structure = response.structure
+                _this._structure = response.structure
                     ? new ProductStructure(response.structure)
                     : undefined;
-                    console.log(`Structure monthly plan ID: `, new ProductStructure(response.structure).plans.newNumber.monthlyPlanId);
                 callback(undefined);
             },
             error: function (error) {
