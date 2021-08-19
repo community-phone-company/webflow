@@ -240,7 +240,45 @@ if (router.isTestEnvironment()) {
         return $(tab).hasClass("w--current");
     };
 
-    $(allTabs).on("click", (event) => {
+    $(tabs.newNumber.plan).on("click", () => {
+        formData.getNewNumber = true;
+        formData.monthly = isTabSelected(tabs.newNumber.periods.month);
+        updateStructure();
+    });
+
+    $(tabs.newNumber.periods.month).on("click", () => {
+        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+        formData.monthly = true;
+        updateStructure();
+    });
+
+    $(tabs.newNumber.periods.year).on("click", () => {
+        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+        formData.monthly = false;
+        updateStructure();
+    });
+
+
+
+    $(tabs.keepNumber.plan).on("click", () => {
+        formData.getNewNumber = false;
+        formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
+        updateStructure();
+    });
+
+    $(tabs.keepNumber.periods.month).on("click", () => {
+        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+        formData.monthly = true;
+        updateStructure();
+    });
+
+    $(tabs.keepNumber.periods.year).on("click", () => {
+        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+        formData.monthly = false;
+        updateStructure();
+    });
+
+    /*$(allTabs).on("click", (event) => {
         if (isTabSelected(tabs.newNumber.plan)) {
             formData.getNewNumber = true;
             formData.monthly = isTabSelected(tabs.newNumber.periods.month);
@@ -250,7 +288,7 @@ if (router.isTestEnvironment()) {
         }
 
         updateStructure();
-    });
+    });*/
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts(error => {
