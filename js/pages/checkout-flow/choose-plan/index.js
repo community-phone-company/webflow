@@ -211,24 +211,39 @@ if (router.isTestEnvironment()) {
         }
     };
 
-    /**
-     * tab-new-number
-     * 
-     * tab-new-number-monthly-plan
-     * new-number-monthly-price-text
-     * 
-     * tab-new-number-annual-plan
-     * new-number-annual-price-text
-     * 
-     * tab-keep-existing-number
-     * 
-     * tab-keep-existing-number-monthly-plan
-     * keep-existing-number-monthly-price-text
-     * 
-     * tab-keep-existing-number-annual-plan
-     * keep-existing-number-annual-price-text
-     * 
-     */
+    $("#tab-new-number").on("click", (event) => {
+        formData.getNewNumber = true;
+        updateStructure();
+    });
+
+    $("#tab-new-number-monthly-plan").on("click", (event) => {
+        formData.getNewNumber = true;
+        formData.monthly = true;
+        updateStructure();
+    });
+
+    $("#tab-new-number-annual-plan").on("click", (event) => {
+        formData.getNewNumber = true;
+        formData.monthly = false;
+        updateStructure();
+    });
+
+    $("#tab-keep-existing-number").on("click", (event) => {
+        formData.getNewNumber = true;
+        updateStructure();
+    });
+
+    $("#tab-keep-existing-number-monthly-plan").on("click", (event) => {
+        formData.getNewNumber = false;
+        formData.monthly = true;
+        updateStructure();
+    });
+
+    $("#tab-keep-existing-number-annual-plan").on("click", (event) => {
+        formData.getNewNumber = false;
+        formData.monthly = false;
+        updateStructure();
+    });
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts(error => {
