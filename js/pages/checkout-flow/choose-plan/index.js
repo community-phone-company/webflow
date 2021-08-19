@@ -175,7 +175,7 @@ if (router.isTestEnvironment()) {
             $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlanMonthPrice} / month *`);
             $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan.pricing.subscriptionPrice.annually}`);
 
-            const addons = productStore.getStructure().addons.map(productId => newValue.getProductById(productId));
+            const addons = productStore.getStructure().addons.map(productId => productStore.getProductById(productId));
             $("div.addons").html(
                 getAddonSectionInternalHtmlLayout(
                     addons
