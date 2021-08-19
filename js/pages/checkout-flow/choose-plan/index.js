@@ -147,6 +147,30 @@ if (router.isTestEnvironment()) {
         return identifiers;
     };
 
+    /**
+     * @returns {Product[]}
+     */
+    getAddonsForCurrentPlan = () => {
+        const productStore = formData.productStore;
+
+        if (!productStore) {
+            return [];
+        }
+
+        return productStore.getStructure().addons.filter(product => {
+            const isNotSubscription = !product.pricing.isSubscription;
+            const isMonthlySubscriptionForMonthlyPlan = product.pricing.isSubscription
+                && product.pricing.subscriptionPrice.monthly
+                && formData.monthly;
+            const isAnnualSubscriptionForAnnualPlan = product.pricing.isSubscription
+                && product.pricing.subscriptionPrice.annually
+                && !formData.monthly;
+            return isNotSubscription
+                || isMonthlySubscriptionForMonthlyPlan
+                || isAnnualSubscriptionForAnnualPlan;
+        });
+    };
+
     const updateStructure = () => {
         const productStore = formData.productStore;
         
@@ -175,7 +199,7 @@ if (router.isTestEnvironment()) {
             $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlanMonthPrice} / month *`);
             $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan.pricing.subscriptionPrice.annually}`);
 
-            const addons = productStore.getStructure().addons.map(productId => productStore.getProductById(productId));
+            const addons = getAddonsForCurrentPlan();
             $("div.addons").html(
                 getAddonSectionInternalHtmlLayout(
                     addons
