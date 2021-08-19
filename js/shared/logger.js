@@ -8,6 +8,7 @@ class Logger {
      */
     constructor() {
         this._blockedDomains = [];
+        this._console_log = console.log;
     }
 
     /**
@@ -45,6 +46,16 @@ class Logger {
         if (!isBlockedDomain) {
             console.log(...data);
         }
+    }
+
+    /**
+     * Blocks or unblocks logging.
+     * @param {boolean} enabled Defines whether logging is enabled.
+     */
+    setLoggingEnabled = (enabled) => {
+        console.log = enabled
+            ? this._console_log
+            : () => {};
     }
 }
 

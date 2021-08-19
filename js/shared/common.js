@@ -6,7 +6,7 @@
  * Block printing in console log on production domain.
  */
 if (IS_PRODUCTION) {
-    //console.log = () => {};
+    //logger.setLoggingEnabled(false);
 }
 
 /**
