@@ -3,7 +3,7 @@ class OrderSummaryPanel {
     /**
      * @param {string | HTMLDivElement} container Selector or `HTMLDivElement` instance.
      */
-    constructor(selector) {
+    constructor(container) {
         if (typeof container === "string") {
             this.container = document.querySelectorAll(selector)[0];
         } else if (container instanceof HTMLDivElement) {
