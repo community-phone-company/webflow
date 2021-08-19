@@ -248,9 +248,9 @@ if (router.isTestEnvironment()) {
             formData.getNewNumber = false;
             formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
         }
-    });
 
-    console.log("Tabs: ", allTabs);
+        updateStructure();
+    });
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts(error => {
