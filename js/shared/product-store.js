@@ -84,8 +84,8 @@ class ProductStore {
                                         return undefined;
                                     })();
                                     return new ProductPricing(
-                                        product.is_subscription,
-                                        product.one_time_charge_price,
+                                        product.pricing.is_subscription,
+                                        product.pricing.one_time_charge_price,
                                         subscriptionPrice
                                     );
                                 }
