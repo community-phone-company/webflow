@@ -111,7 +111,7 @@ if (router.isTestEnvironment()) {
     /**
      * @returns {string[]}
      */
-    const getSelectedProductsId = () => {
+    const getSelectedProductIdentifiers = () => {
         const store = formData.productStore;
 
         if (!store) {
@@ -258,8 +258,6 @@ if (router.isTestEnvironment()) {
         updateStructure();
     });
 
-
-
     $(tabs.keepNumber.plan).on("click", () => {
         formData.getNewNumber = false;
         formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
@@ -278,23 +276,54 @@ if (router.isTestEnvironment()) {
         updateStructure();
     });
 
-    /*$(allTabs).on("click", (event) => {
-        if (isTabSelected(tabs.newNumber.plan)) {
-            formData.getNewNumber = true;
-            formData.monthly = isTabSelected(tabs.newNumber.periods.month);
-        } else {
-            formData.getNewNumber = false;
-            formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
-        }
-
-        updateStructure();
-    });*/
-
     const productStore = ProductStore.getDefault();
     productStore.loadProducts(error => {
         formData.productStore = productStore;
         updateStructure();
     });
+
+    /**
+     * Here we handle submit button click.
+     */
+    const submitButton = document.querySelectorAll(".continue_choose_plan")[0];
+
+    $(submitButton).on("click", (event) => {
+        event.preventDefault();
+
+        const period = (() => {
+            const monthly = $("#monthly-plan").hasClass("w--current");
+            const annual = $("#annual-plan").hasClass("w--current");
+
+            if (monthly) {
+                return "Monthly";
+            } else if (annual) {
+                return "Annual";
+            } else {
+                return "";
+            }
+        })();
+
+        Store.local.write(Store.keys.checkoutFlow.getNewNumber, formData.getNewNumber);
+        Store.local.write(Store.keys.checkoutFlow.period, period);
+        Store.local.write(Store.keys.checkoutFlow.addHandsetPhone, formData.addHandset);
+        Store.local.write(Store.keys.checkoutFlow.addInsurance, formData.addInsurance);
+        Store.local.write(Store.keys.checkoutFlow.selectedProductIdentifiers, getSelectedProductIdentifiers());
+
+        router.open(
+            RouterPath.checkoutLandline_account,
+            router.getParameters(),
+            router.isTestEnvironment()
+        );
+    });
+
+    /**
+     * Send user's data to Active Campaign.
+     */
+    exportCheckoutFlowDataToActiveCampaign(
+        (response, error, success) => {
+            console.log("Active Campaign");
+        }
+    );
 } else {
     $(document).ready(() => {
 
