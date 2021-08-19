@@ -148,8 +148,7 @@ if (router.isTestEnvironment()) {
     };
 
     const updateStructure = () => {
-        //const productStore = formData.productStore;
-        const productStore = new ProductStore();
+        const productStore = formData.productStore;
         
         if (productStore) {
             const newNumberMonthlyPlan = productStore.getProductById(
