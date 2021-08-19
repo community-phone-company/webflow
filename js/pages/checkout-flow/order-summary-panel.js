@@ -1,16 +1,22 @@
 class OrderSummaryPanel {
 
     /**
-     * @param {string} selector 
+     * @param {string | HTMLDivElement} container Selector or `HTMLDivElement` instance.
      */
     constructor(selector) {
-        this.container = document.querySelectorAll(selector)[0];
-        this.allCards =
+        if (typeof container === "string") {
+            this.container = document.querySelectorAll(selector)[0];
+        } else if (container instanceof HTMLDivElement) {
+            this.container = this.container;
+        } else {
+            throw new Error("Container not found");
+        }
+
         this.cards = {
             dueToday: new OrderSummaryPanelCard(
                 "#due-today-card"
             ),
-            sercice: new OrderSummaryPanelCard(
+            service: new OrderSummaryPanelCard(
                 "#in-15-days-card"
             )
         };
@@ -21,6 +27,14 @@ class OrderSummaryPanel {
      * @param {ProductCart} productCart Product cart.
      */
     update = (productStore, productCart) => {
+        this.cards.dueToday.update(
+            productStore,
+            productCart.amounts.dueToday
+        );
+        this.cards.service.update(
+            productStore,
+            productCart.amounts.subscription
+        );
     }
 }
 
@@ -28,19 +42,28 @@ class OrderSummaryPanelCard {
 
     constructor(selector) {
         this.container = document.querySelectorAll(selector)[0];
-        this._products = [];
+        this._productIdentifiers = [];
     }
 
     /**
-     * @param {Product[]} products 
+     * @param {string[]} productIdentifiers 
      */
-    setProducts = (products) => {
-        this._products = Array.from(
-            products
+    setProductIdentifiers = (productIdentifiers) => {
+        this._productIdentifiers = Array.from(
+            productIdentifiers
         );
+    }
 
-        const html = products
-            .map(product => {
+    /**
+     * @param {ProductStore} productStore Product store.
+     * @param {ProductCartPrice} price Price.
+     */
+    update = (productStore, price) => {
+        const html = this._productIdentifiers
+            .map(productId => {
+                const product = productStore.getProductById(
+                    productId
+                );
                 return new OrderSummaryPanelCardProduct(
                     product
                 ).toHTML();
@@ -50,6 +73,9 @@ class OrderSummaryPanelCard {
                 ""
             );
         $(this.container).find(".list-item-landline-base").html(html);
+
+        $(this.container).find(".taxes-fordue-today-price").html(`$${price.taxes}`);
+        $(this.container).find(".total-due-today-price, .service-total-price").html(`$${price.total}`);
     }
 }
 

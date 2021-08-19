@@ -240,6 +240,13 @@ if (router.isTestEnvironment()) {
         return $(tab).hasClass("w--current");
     };
 
+    const orderSummaryPanel = new OrderSummaryPanel(
+        document.querySelectorAll(".right-panel")[0]
+    );
+
+    orderSummaryPanel.cards.dueToday.setProducts(
+    );
+
     $(tabs.newNumber.plan).on("click", () => {
         formData.getNewNumber = true;
         formData.monthly = isTabSelected(tabs.newNumber.periods.month);
