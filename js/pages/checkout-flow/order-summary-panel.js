@@ -5,7 +5,7 @@ class OrderSummaryPanel {
      */
     constructor(container) {
         if (typeof container === "string") {
-            this.container = document.querySelectorAll(selector)[0];
+            this.container = document.querySelectorAll(container)[0];
         } else if (container instanceof HTMLDivElement) {
             this.container = this.container;
         } else {
