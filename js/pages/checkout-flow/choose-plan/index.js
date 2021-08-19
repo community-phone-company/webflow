@@ -154,26 +154,26 @@ if (router.isTestEnvironment()) {
             const newNumberMonthlyPlan = productStore.getProductById(
                 productStore.getStructure().plans.newNumber.monthlyPlanId
             );
-            $("#new-number-monthly-price-text").html(`$${newNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month !!!!`);
+            $("#new-number-monthly-price-text").html(`$${newNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month`);
 
             const newNumberAnnualPlan = productStore.getProductById(
                 productStore.getStructure().plans.newNumber.yearlyPlanId
             );
             const newNumberAnnualPlanMonthPrice = newNumberAnnualPlan.pricing.subscriptionPrice.annually / 12;
-            $("#new-number-annual-price-text").html(`$${newNumberAnnualPlanMonthPrice} / month * !!!!`);
-            $("#new-number-annual-price-subtitle").html(`* Billed annually at $${newNumberAnnualPlan.pricing.subscriptionPrice.annually} !!!!`);
+            $("#new-number-annual-price-text").html(`$${newNumberAnnualPlanMonthPrice} / month *`);
+            $("#new-number-annual-price-subtitle").html(`* Billed annually at $${newNumberAnnualPlan.pricing.subscriptionPrice.annually}`);
 
             const keepNumberMonthlyPlan = productStore.getProductById(
                 productStore.getStructure().plans.keepNumber.monthlyPlanId
             );
-            $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month !!!!`);
+            $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month`);
 
             const keepNumberAnnualPlan = productStore.getProductById(
                 productStore.getStructure().plans.keepNumber.yearlyPlanId
             );
             const keepNumberAnnualPlanMonthPrice = keepNumberAnnualPlan.pricing.subscriptionPrice.annually / 12;
-            $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlanMonthPrice} / month * !!!!`);
-            $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan.pricing.subscriptionPrice.annually} !!!!`);
+            $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlanMonthPrice} / month *`);
+            $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan.pricing.subscriptionPrice.annually}`);
 
             const addons = productStore.getStructure().addons.map(productId => newValue.getProductById(productId));
             $("div.addons").html(
