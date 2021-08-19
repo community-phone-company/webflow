@@ -211,39 +211,46 @@ if (router.isTestEnvironment()) {
         }
     };
 
-    $("#tab-new-number").on("click", (event) => {
-        formData.getNewNumber = true;
-        updateStructure();
+    const tabs = Object.freeze({
+        newNumber: {
+            plan: document.getElementById("tab-new-number"),
+            periods: {
+                month: document.getElementById("tab-new-number-monthly-plan"),
+                year: document.getElementById("tab-new-number-annual-plan")
+            }
+        },
+        keepNumber: {
+            plan: document.getElementById("tab-keep-existing-number"),
+            periods: {
+                month: document.getElementById("tab-keep-existing-number-monthly-plan"),
+                year: document.getElementById("tab-keep-existing-number-annual-plan")
+            }
+        }
+    });
+    const allTabs = [
+        tabs.newNumber.plan,
+        tabs.newNumber.periods.month,
+        tabs.newNumber.periods.year,
+        tabs.keepNumber.plan,
+        tabs.keepNumber.periods.month,
+        tabs.keepNumber.periods.year
+    ];
+
+    const isTabSelected = (tab) => {
+        return $(tab).hasClass("w--current");
+    };
+
+    $(allTabs).on("click", (event) => {
+        if (isTabSelected(tabs.newNumber.plan)) {
+            formData.getNewNumber = true;
+            formData.monthly = isTabSelected(tabs.newNumber.periods.month);
+        } else {
+            formData.getNewNumber = false;
+            formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
+        }
     });
 
-    $("#tab-new-number-monthly-plan").on("click", (event) => {
-        formData.getNewNumber = true;
-        formData.monthly = true;
-        updateStructure();
-    });
-
-    $("#tab-new-number-annual-plan").on("click", (event) => {
-        formData.getNewNumber = true;
-        formData.monthly = false;
-        updateStructure();
-    });
-
-    $("#tab-keep-existing-number").on("click", (event) => {
-        formData.getNewNumber = true;
-        updateStructure();
-    });
-
-    $("#tab-keep-existing-number-monthly-plan").on("click", (event) => {
-        formData.getNewNumber = false;
-        formData.monthly = true;
-        updateStructure();
-    });
-
-    $("#tab-keep-existing-number-annual-plan").on("click", (event) => {
-        formData.getNewNumber = false;
-        formData.monthly = false;
-        updateStructure();
-    });
+    console.log("Tabs: ", allTabs);
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts(error => {
