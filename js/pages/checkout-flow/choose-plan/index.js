@@ -45,6 +45,7 @@
  * @returns {string}
  */
 const getAddonCardHtmlLayout = (product) => {
+    console.log(`Preparing card for addon: `, product);
     return `
         <a
             href="#"
