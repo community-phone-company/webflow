@@ -89,10 +89,10 @@ class ProductCart {
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 _this.amounts.dueToday = ProductCartPrice.fromJson(
-                    response.due_today
+                    response.price.due_today
                 );
                 _this.amounts.subscription = ProductCartPrice.fromJson(
-                    response.subscription
+                    response.price.subscription
                 );
                 callback(undefined);
             },
