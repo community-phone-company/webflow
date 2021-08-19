@@ -158,21 +158,24 @@ if (router.isTestEnvironment()) {
             return [];
         }
 
-        return productStore.getStructure().addons.filter(productId => {
-            const product = productStore.getProductById(
-                productId
-            );
-            const isNotSubscription = !product.pricing.isSubscription;
-            const isMonthlySubscriptionForMonthlyPlan = product.pricing.isSubscription
-                && product.pricing.subscriptionPrice.monthly
-                && formData.monthly;
-            const isAnnualSubscriptionForAnnualPlan = product.pricing.isSubscription
-                && product.pricing.subscriptionPrice.annually
-                && !formData.monthly;
-            return isNotSubscription
-                || isMonthlySubscriptionForMonthlyPlan
-                || isAnnualSubscriptionForAnnualPlan;
-        });
+        return productStore.getStructure().addons
+            .map(productId => {
+                return productStore.getProductById(
+                    productId
+                );
+            })
+            .filter(product => {
+                const isNotSubscription = !product.pricing.isSubscription;
+                const isMonthlySubscriptionForMonthlyPlan = product.pricing.isSubscription
+                    && product.pricing.subscriptionPrice.monthly
+                    && formData.monthly;
+                const isAnnualSubscriptionForAnnualPlan = product.pricing.isSubscription
+                    && product.pricing.subscriptionPrice.annually
+                    && !formData.monthly;
+                return isNotSubscription
+                    || isMonthlySubscriptionForMonthlyPlan
+                    || isAnnualSubscriptionForAnnualPlan;
+            });
     };
 
     const updateStructure = () => {
