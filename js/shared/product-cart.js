@@ -81,10 +81,12 @@ class ProductCart {
             })
         };
         return $.ajax({
-            method: "POST",
             url: `https://staging-landline.phone.community/api/v1/billing/products/tax-estimate`,
+            method: "POST",
+            crossDomain: true,
             dataType: "json",
-            data: data,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
             success: function (response) {
                 _this.amounts.dueToday = ProductCartPrice.fromJson(
                     response.due_today
