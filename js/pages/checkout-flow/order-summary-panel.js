@@ -14,10 +14,10 @@ class OrderSummaryPanel {
 
         this.cards = {
             dueToday: new OrderSummaryPanelCard(
-                "#due-today-card"
+                $(this.container).find("#due-today-card")
             ),
             service: new OrderSummaryPanelCard(
-                "#in-15-days-card"
+                $(this.container).find("#in-15-days-card")
             )
         };
     }
@@ -49,8 +49,12 @@ class OrderSummaryPanel {
 
 class OrderSummaryPanelCard {
 
-    constructor(selector) {
-        this.container = document.querySelectorAll(selector)[0];
+    /**
+     * @constructor
+     * @param {HTMLDivElement} container 
+     */
+    constructor(container) {
+        this.container = container;
     }
 
     /**
