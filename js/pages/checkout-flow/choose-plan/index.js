@@ -157,7 +157,10 @@ if (router.isTestEnvironment()) {
             return [];
         }
 
-        return productStore.getStructure().addons.filter(product => {
+        return productStore.getStructure().addons.filter(productId => {
+            const product = productStore.getProductById(
+                productId
+            );
             const isNotSubscription = !product.pricing.isSubscription;
             const isMonthlySubscriptionForMonthlyPlan = product.pricing.isSubscription
                 && product.pricing.subscriptionPrice.monthly
