@@ -27,12 +27,21 @@ class OrderSummaryPanel {
      * @param {ProductCart} productCart Product cart.
      */
     update = (productStore, productCart) => {
+        const allProducts = productCart.getProductIdentifiers().map(productId => {
+            return productStore.getProductById(
+                productId
+            );
+        });
+
+        const oneTimeChargeProducts = allProducts.filter(product => !product.pricing.isSubscription);
         this.cards.dueToday.update(
-            productStore,
+            oneTimeChargeProducts,
             productCart.amounts.dueToday
         );
+
+        const subscriptionProducts = allProducts.filter(product => product.pricing.isSubscription);
         this.cards.service.update(
-            productStore,
+            subscriptionProducts,
             productCart.amounts.subscription
         );
     }
@@ -42,28 +51,15 @@ class OrderSummaryPanelCard {
 
     constructor(selector) {
         this.container = document.querySelectorAll(selector)[0];
-        this._productIdentifiers = [];
     }
 
     /**
-     * @param {string[]} productIdentifiers 
-     */
-    setProductIdentifiers = (productIdentifiers) => {
-        this._productIdentifiers = Array.from(
-            productIdentifiers
-        );
-    }
-
-    /**
-     * @param {ProductStore} productStore Product store.
+     * @param {Product[]} products Products.
      * @param {ProductCartPrice} price Price.
      */
-    update = (productStore, price) => {
-        const html = this._productIdentifiers
-            .map(productId => {
-                const product = productStore.getProductById(
-                    productId
-                );
+    update = (products, price) => {
+        const html = products
+            .map(product => {
                 return new OrderSummaryPanelCardProduct(
                     product
                 ).toHTML();

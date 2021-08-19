@@ -244,9 +244,6 @@ if (router.isTestEnvironment()) {
         document.querySelectorAll(".right-panel")[0]
     );
 
-    orderSummaryPanel.cards.dueToday.setProducts(
-    );
-
     $(tabs.newNumber.plan).on("click", () => {
         formData.getNewNumber = true;
         formData.monthly = isTabSelected(tabs.newNumber.periods.month);
@@ -287,6 +284,10 @@ if (router.isTestEnvironment()) {
     productStore.loadProducts(error => {
         formData.productStore = productStore;
         updateStructure();
+        orderSummaryPanel.update(
+            productStore,
+            formData.productCart
+        );
     });
 
     /**
