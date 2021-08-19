@@ -45,7 +45,6 @@
  * @returns {string}
  */
 const getAddonCardHtmlLayout = (product) => {
-    console.log(`Preparing card for addon: `, product);
     return `
         <a
             href="#"
@@ -158,6 +157,10 @@ if (router.isTestEnvironment()) {
             return [];
         }
 
+        const requiredSubscriptionPeriod = formData.monthly
+            ? ProductSubscriptionPricePeriod.month
+            : ProductSubscriptionPricePeriod.year;
+
         return productStore.getStructure().addons
             .map(productId => {
                 return productStore.getProductById(
@@ -165,16 +168,9 @@ if (router.isTestEnvironment()) {
                 );
             })
             .filter(product => {
-                const isNotSubscription = !product.pricing.isSubscription;
-                const isMonthlySubscriptionForMonthlyPlan = product.pricing.isSubscription
-                    && product.pricing.subscriptionPrice.monthly
-                    && formData.monthly;
-                const isAnnualSubscriptionForAnnualPlan = product.pricing.isSubscription
-                    && product.pricing.subscriptionPrice.annually
-                    && !formData.monthly;
-                return isNotSubscription
-                    || isMonthlySubscriptionForMonthlyPlan
-                    || isAnnualSubscriptionForAnnualPlan;
+                return product.pricing.isSubscription
+                    ? product.pricing.subscriptionPrice.period === requiredSubscriptionPeriod
+                    : true;
             });
     };
 

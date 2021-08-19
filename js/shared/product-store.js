@@ -76,7 +76,8 @@ class ProductStore {
                                         if (product.pricing.subscription_price) {
                                             return new ProductSubscriptionPrice(
                                                 product.pricing.subscription_price.monthly,
-                                                product.pricing.subscription_price.annually
+                                                product.pricing.subscription_price.annually,
+                                                product.pricing.subscription_price.period
                                             );
                                         }
 

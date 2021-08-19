@@ -84,15 +84,23 @@ class ProductSubscriptionPrice {
      * @constructor
      * @param {number} monthly Monthly subscription price.
      * @param {number} annually Annually subscription price.
+     * @param {string} period Subscription period. You can use {@link ProductSubscriptionPricePeriod} values here.
      */
     constructor(
         monthly,
-        annually
+        annually,
+        period
     ) {
         this.monthly = monthly;
         this.annually = annually;
+        this.period = period;
     }
 }
+
+const ProductSubscriptionPricePeriod = Object.freeze({
+    month: "month",
+    year: "year"
+});
 
 class ProductStructure {
 

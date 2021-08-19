@@ -66,12 +66,25 @@ class ProductCart {
      */
     updatePrices = (callback) => {
         const _this = this;
+        const data = {
+            billing_address: {
+                city: _this._billingAddress && _this._billingAddress.city,
+                state_code: _this._billingAddress && _this._billingAddress.stateCode,
+                zip: _this._billingAddress && _this._billingAddress.zip,
+                country: "US"
+            },
+            products: _this._productIdentifiers.map(productId => {
+                return {
+                    id: productId,
+                    quantity: 1
+                };
+            })
+        };
         return $.ajax({
             method: "POST",
             url: `https://staging-landline.phone.community/api/v1/billing/products/tax-estimate`,
             dataType: "json",
-            data: {
-            },
+            data: data,
             success: function (response) {
                 _this.amounts.dueToday = ProductCartPrice.fromJson(
                     response.due_today
