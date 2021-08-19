@@ -92,7 +92,7 @@ class ProductCart {
                     response.due_today
                 );
                 _this.amounts.subscription = ProductCartPrice.fromJson(
-                    response.due_today
+                    response.subscription
                 );
                 callback(undefined);
             },
@@ -130,6 +130,7 @@ class ProductCartPrice {
      * @returns {ProductCartPrice}
      */
     static fromJson = (json) => {
+        console.log(`fromJSON: `, json);
         return new ProductCartPrice(
             json.subtotal ?? 0,
             json.taxes ?? 0,
