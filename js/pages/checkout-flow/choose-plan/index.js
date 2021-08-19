@@ -9,7 +9,7 @@
             </div>
             <div class="row-product">
                 <img
-                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60d0b05962306f63feda5374_img-device.jpg"
+                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60d0a444c31f1bc77f528588_img-placeholder.svg"
                     loading="lazy"
                     width="68"
                     alt=""
@@ -61,7 +61,7 @@ const getAddonCardHtmlLayout = (product) => {
                     </div>
                 </div>
                 <img
-                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b174b03cb6cee00203a_img-phone.svg"
+                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60d0a444c31f1bc77f528588_img-placeholder.svg"
                     loading="lazy"
                     alt=""
                     class="image-6"
@@ -99,69 +99,91 @@ const getAddonSectionInternalHtmlLayout = (products) => {
 };
 
 if (router.isTestEnvironment()) {
-    const choosePlanVM = new Vue({
-        el: "div.checkuot-section.wf-section",
-        data: {
-            monthly: $("#monthly-plan").hasClass("w--current"),
-            getNewNumber: $(".tabs_phonenumber_service .tab-new-number").hasClass("w--current"),
-            addHandset: false,
-            addInsurance: false,
-            productStore: undefined
-        },
-        methods: {
-            /**
-             * @returns {string[]}
-             */
-            getSelectedProductsId() {
-                //const store = this.productStore;
-                const store = new ProductStore();
+    const formData = {
+        monthly: true,
+        getNewNumber: true,
+        addHandset: false,
+        addInsurance: false,
+        productStore: undefined,
+        productCart: new ProductCart()
+    };
 
-                if (!store) {
-                    return [];
-                }
-                
-                var identifiers = [
-                    store.getStructure().landlineBaseProductId
-                ];
-        
-                if (this.getNewNumber) {
-                    identifiers.push(
-                        this.monthly ? store.getStructure().plans.newNumber.monthlyPlanId : store.getStructure().plans.newNumber.yearlyPlanId
-                    );
-                } else {
-                    identifiers.push(
-                        this.monthly ? store.getStructure().plans.keepNumber.monthlyPlanId : store.getStructure().plans.keepNumber.yearlyPlanId
-                    );
-                }
-        
-                /*if (this.addHandset) {
-                    identifiers.push(
-                        ProductIdentifier.handset
-                    );
-                }
-        
-                if (this.addInsurance) {
-                    identifiers.push(
-                        formData.monthly ? ProductIdentifier.insuranceMonthly : ProductIdentifier.insuranceYearly
-                    );
-                }*/
-        
-                return identifiers;
-            }
-        },
-        watch: {
-            productStore(newValue) {
-                console.log(`Updated product store: `, newValue);
+    /**
+     * @returns {string[]}
+     */
+    const getSelectedProductsId = () => {
+        const store = formData.productStore;
 
-                const addons = newValue.getStructure().addons.map(productId => newValue.getProductById(productId));
-                $("div.addons").html(
-                    getAddonSectionInternalHtmlLayout(
-                        addons
-                    )
-                );
-            }
+        if (!store) {
+            return [];
         }
-    });
+        
+        var identifiers = [
+            store.getStructure().landlineBaseProductId
+        ];
+
+        if (formData.getNewNumber) {
+            identifiers.push(
+                formData.monthly ? store.getStructure().plans.newNumber.monthlyPlanId : store.getStructure().plans.newNumber.yearlyPlanId
+            );
+        } else {
+            identifiers.push(
+                formData.monthly ? store.getStructure().plans.keepNumber.monthlyPlanId : store.getStructure().plans.keepNumber.yearlyPlanId
+            );
+        }
+
+        /*if (this.addHandset) {
+            identifiers.push(
+                ProductIdentifier.handset
+            );
+        }
+
+        if (this.addInsurance) {
+            identifiers.push(
+                formData.monthly ? ProductIdentifier.insuranceMonthly : ProductIdentifier.insuranceYearly
+            );
+        }*/
+
+        return identifiers;
+    };
+
+    const updateStructure = () => {
+        //const productStore = formData.productStore;
+        const productStore = new ProductStore();
+        
+        if (productStore) {
+            const newNumberMonthlyPlan = productStore.getProductById(
+                productStore.getStructure().plans.newNumber.monthlyPlanId
+            );
+            $("#new-number-monthly-price-text").html(`$${newNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month !!!!`);
+
+            const newNumberAnnualPlan = productStore.getProductById(
+                productStore.getStructure().plans.newNumber.yearlyPlanId
+            );
+            const newNumberAnnualPlanMonthPrice = newNumberAnnualPlan.pricing.subscriptionPrice.annually / 12;
+            $("#new-number-annual-price-text").html(`$${newNumberAnnualPlanMonthPrice} / month * !!!!`);
+            $("#new-number-annual-price-subtitle").html(`* Billed annually at $${newNumberAnnualPlan.pricing.subscriptionPrice.annually} !!!!`);
+
+            const keepNumberMonthlyPlan = productStore.getProductById(
+                productStore.getStructure().plans.keepNumber.monthlyPlanId
+            );
+            $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month !!!!`);
+
+            const keepNumberAnnualPlan = productStore.getProductById(
+                productStore.getStructure().plans.keepNumber.yearlyPlanId
+            );
+            const keepNumberAnnualPlanMonthPrice = keepNumberAnnualPlan.pricing.subscriptionPrice.annually / 12;
+            $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlanMonthPrice} / month * !!!!`);
+            $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan.pricing.subscriptionPrice.annually} !!!!`);
+
+            const addons = productStore.getStructure().addons.map(productId => newValue.getProductById(productId));
+            $("div.addons").html(
+                getAddonSectionInternalHtmlLayout(
+                    addons
+                )
+            );
+        }
+    };
 
     /**
      * tab-new-number
@@ -184,7 +206,8 @@ if (router.isTestEnvironment()) {
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts(error => {
-        choosePlanVM.productStore = productStore;
+        formData.productStore = productStore;
+        updateStructure();
     });
 } else {
     $(document).ready(() => {
