@@ -60,6 +60,15 @@ class ProductCart {
     }
 
     /**
+     * Quantity of product.
+     * @param {string} id Product identifier.
+     * @returns {number} Quantity of product.
+     */
+    getQuantity = (id) => {
+        return this._productIdentifiers.includes(id) ? 1 : 0;
+    }
+
+    /**
      * Updates prices.
      * @param {(error) => void} callback Function that is called when result comes from the server.
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
@@ -95,12 +104,32 @@ class ProductCart {
                     response.price.subscription
                 );
                 callback(undefined);
+
+                if (_this._onPricesUpdatedHandler) {
+                    _this._onPricesUpdatedHandler(
+                        undefined
+                    );
+                }
             },
             error: function (error) {
                 console.log(`Error: `, error);
                 callback(error);
+
+                if (_this._onPricesUpdatedHandler) {
+                    _this._onPricesUpdatedHandler(
+                        error
+                    );
+                }
             }
         });
+    }
+
+    /**
+     * 
+     * @param {(error: any | undefined) => void} handler Function that is called every time when the product cart prices list is updated.
+     */
+    onPricesUpdated = (handler) => {
+        this._onPricesUpdatedHandler = handler;
     }
 }
 

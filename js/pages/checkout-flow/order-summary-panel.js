@@ -14,10 +14,10 @@ class OrderSummaryPanel {
 
         this.cards = {
             dueToday: new OrderSummaryPanelCard(
-                $(this.container).find("#due-today-card")
+                this.container.querySelectorAll("due-today-card")[0]
             ),
             service: new OrderSummaryPanelCard(
-                $(this.container).find("#in-15-days-card")
+                this.container.querySelectorAll("in-15-days-card")[0]
             )
         };
     }

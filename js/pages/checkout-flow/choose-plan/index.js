@@ -211,6 +211,17 @@ if (router.isTestEnvironment()) {
         }
     };
 
+    /**
+     * @param {() => void} onFinished Function that is called when the product cart is updated.
+     */
+    updateProductCart = (onFinished) => {
+        formData.productCart.updatePrices((error) => {
+            if (onFinished) {
+                onFinished();
+            }
+        });
+    };
+
     const tabs = Object.freeze({
         newNumber: {
             plan: document.getElementById("tab-new-number"),
@@ -248,46 +259,62 @@ if (router.isTestEnvironment()) {
         formData.getNewNumber = true;
         formData.monthly = isTabSelected(tabs.newNumber.periods.month);
         updateStructure();
+        updateProductCart();
     });
 
     $(tabs.newNumber.periods.month).on("click", () => {
         formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
         formData.monthly = true;
         updateStructure();
+        updateProductCart();
     });
 
     $(tabs.newNumber.periods.year).on("click", () => {
         formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
         formData.monthly = false;
         updateStructure();
+        updateProductCart();
     });
 
     $(tabs.keepNumber.plan).on("click", () => {
         formData.getNewNumber = false;
         formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
         updateStructure();
+        updateProductCart();
     });
 
     $(tabs.keepNumber.periods.month).on("click", () => {
         formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
         formData.monthly = true;
         updateStructure();
+        updateProductCart();
     });
 
     $(tabs.keepNumber.periods.year).on("click", () => {
         formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
         formData.monthly = false;
         updateStructure();
+        updateProductCart();
     });
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts(error => {
         formData.productStore = productStore;
         updateStructure();
-        orderSummaryPanel.update(
-            productStore,
-            formData.productCart
+        
+        formData.productCart.addProductIdentifier(
+            productStore.getStructure().landlineBaseProductId
         );
+        formData.productCart.addProductIdentifier(
+            productStore.getStructure().plans.newNumber.monthlyPlanId
+        );
+        formData.productCart.onPricesUpdated((error) => {
+            orderSummaryPanel.update(
+                productStore,
+                formData.productCart
+            );
+        });
+        updateProductCart();
     });
 
     /**
