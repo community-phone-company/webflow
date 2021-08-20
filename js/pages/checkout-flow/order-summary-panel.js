@@ -74,8 +74,8 @@ class OrderSummaryPanelCard {
             );
         $(this.container).find(".list-item-landline-base").html(html);
 
-        $(this.container).find(".taxes-fordue-today-price").html(`$${price.taxes}`);
-        $(this.container).find(".total-due-today-price, .service-total-price").html(`$${price.total}`);
+        $(this.container).find(".tax-price").html(`$${price.taxes}`);
+        $(this.container).find(".total-price").html(`$${price.total}`);
     }
 }
 
