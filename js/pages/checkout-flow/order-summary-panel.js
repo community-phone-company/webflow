@@ -5,19 +5,19 @@ class OrderSummaryPanel {
      */
     constructor(container) {
         if (typeof container === "string") {
-            this.container = document.querySelectorAll(container)[0];
+            this.containerDiv = document.querySelectorAll(container)[0];
         } else if (container instanceof HTMLDivElement) {
-            this.container = this.container;
+            this.containerDiv = this.containerDiv;
         } else {
             throw new Error("Container not found");
         }
 
         this.cards = {
             dueToday: new OrderSummaryPanelCard(
-                this.container.querySelectorAll("#due-today-card")[0]
+                this.containerDiv.querySelectorAll("#due-today-card")[0]
             ),
             service: new OrderSummaryPanelCard(
-                this.container.querySelectorAll("#in-15-days-card")[0]
+                this.containerDiv.querySelectorAll("#in-15-days-card")[0]
             )
         };
     }
