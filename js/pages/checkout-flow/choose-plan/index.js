@@ -105,7 +105,21 @@ if (router.isTestEnvironment()) {
         addHandset: false,
         addInsurance: false,
         productStore: undefined,
-        productCart: new ProductCart()
+        productCart: (() => {
+            const cart = new ProductCart();
+            cart.setBillingAddress(new ProductCartBillingAddress(
+                Store.local.read(
+                    Store.keys.checkoutFlow.shippingAddress_city
+                ) ?? "",
+                Store.local.read(
+                    Store.keys.checkoutFlow.shippingAddress_state
+                ) ?? "",
+                Store.local.read(
+                    Store.keys.checkoutFlow.shippingAddress_zip
+                ) ?? ""
+            ));
+            return cart;
+        })()
     };
 
     /**
