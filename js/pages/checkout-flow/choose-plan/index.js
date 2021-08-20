@@ -230,7 +230,7 @@ if (router.isTestEnvironment()) {
      */
     updateProductCart = (onFinished) => {
         const productCart = formData.productCart;
-        const structure = productCart.getStructure();
+        const structure = formData.productStore.getStructure();
 
         const allPlans = [
             structure.plans.newNumber.monthlyPlanId,
