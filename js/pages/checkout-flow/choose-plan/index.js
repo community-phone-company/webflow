@@ -229,6 +229,10 @@ if (router.isTestEnvironment()) {
      * @param {() => void} onFinished Function that is called when the product cart is updated.
      */
     updateProductCart = (onFinished) => {
+        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+        formData.monthly = isTabSelected(tabs.newNumber.periods.month)
+            || isTabSelected(tabs.keepNumber.periods.month);
+
         formData.productCart.updatePrices((error) => {
             if (onFinished) {
                 onFinished();
