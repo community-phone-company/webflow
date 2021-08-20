@@ -229,11 +229,42 @@ if (router.isTestEnvironment()) {
      * @param {() => void} onFinished Function that is called when the product cart is updated.
      */
     updateProductCart = (onFinished) => {
-        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
-        formData.monthly = isTabSelected(tabs.newNumber.periods.month)
-            || isTabSelected(tabs.keepNumber.periods.month);
+        const productCart = formData.productCart;
+        const structure = productCart.getStructure();
 
-        formData.productCart.updatePrices((error) => {
+        const allPlans = [
+            structure.plans.newNumber.monthlyPlanId,
+            structure.plans.newNumber.yearlyPlanId,
+            structure.plans.keepNumber.monthlyPlanId,
+            structure.plans.keepNumber.yearlyPlanId
+        ];
+        allPlans.forEach(planIdentifier => {
+            productCart.removeProductIdentifier(
+                planIdentifier
+            );
+        });
+        
+        var newPlanIdentifiers = [
+            formData.monthly
+                ? structure.plans.newNumber.monthlyPlanId
+                : structure.plans.newNumber.yearlyPlanId
+        ];
+        
+        if (!formData.getNewNumber) {
+            newPlanIdentifiers.push(
+                formData.monthly
+                    ? structure.plans.keepNumber.monthlyPlanId
+                    : structure.plans.keepNumber.yearlyPlanId
+            );
+        }
+
+        newPlanIdentifiers.forEach(planIdentifier => {
+            productCart.addProductIdentifier(
+                planIdentifier
+            );
+        });
+
+        productCart.updatePrices((error) => {
             if (onFinished) {
                 onFinished();
             }
