@@ -32,21 +32,23 @@ class OrderSummaryPanel {
                 productId
             );
         });
+        const zip = (() => {
+            const billingAddress = productCart.getBillingAddress();
+            return billingAddress.zip;
+        })();
 
         const oneTimeChargeProducts = allProducts.filter(product => !product.pricing.isSubscription);
         this.cards.dueToday.update(
             oneTimeChargeProducts,
             productCart.amounts.dueToday,
-            (() => {
-                const billingAddress = productCart.getBillingAddress();
-                return billingAddress.zip;
-            })()
+            zip
         );
 
         const subscriptionProducts = allProducts.filter(product => product.pricing.isSubscription);
         this.cards.service.update(
             subscriptionProducts,
-            productCart.amounts.subscription
+            productCart.amounts.subscription,
+            zip
         );
     }
 }
