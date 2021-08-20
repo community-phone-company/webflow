@@ -36,7 +36,11 @@ class OrderSummaryPanel {
         const oneTimeChargeProducts = allProducts.filter(product => !product.pricing.isSubscription);
         this.cards.dueToday.update(
             oneTimeChargeProducts,
-            productCart.amounts.dueToday
+            productCart.amounts.dueToday,
+            (() => {
+                const billingAddress = productCart.getBillingAddress();
+                return billingAddress.zip;
+            })()
         );
 
         const subscriptionProducts = allProducts.filter(product => product.pricing.isSubscription);
@@ -60,8 +64,9 @@ class OrderSummaryPanelCard {
     /**
      * @param {Product[]} products Products.
      * @param {ProductCartPrice} price Price.
+     * @param {string | undefined} zip Zip code.
      */
-    update = (products, price) => {
+    update = (products, price, zip) => {
         const html = products
             .map(product => {
                 return new OrderSummaryPanelCardProduct(
@@ -74,6 +79,7 @@ class OrderSummaryPanelCard {
             );
         $(this.container).find(".list-item-landline-base").html(html);
 
+        $(this.container).find(".zip-link").html(zip ?? "00000");
         $(this.container).find(".taxes-and-fees-value").html(`$${price.taxes}`);
         $(this.container).find(".service-tax-value").html(`$${price.taxes}`);
         $(this.container).find(".total-price").html(`$${price.total}`);
