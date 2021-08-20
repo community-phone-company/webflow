@@ -102,8 +102,6 @@ if (router.isTestEnvironment()) {
     const formData = {
         monthly: true,
         getNewNumber: true,
-        addHandset: false,
-        addInsurance: false,
         productStore: undefined,
         productCart: (() => {
             const cart = new ProductCart();
@@ -120,45 +118,6 @@ if (router.isTestEnvironment()) {
             ));
             return cart;
         })()
-    };
-
-    /**
-     * @returns {string[]}
-     */
-    const getSelectedProductIdentifiers = () => {
-        const store = formData.productStore;
-
-        if (!store) {
-            return [];
-        }
-        
-        var identifiers = [
-            store.getStructure().landlineBaseProductId
-        ];
-
-        if (formData.getNewNumber) {
-            identifiers.push(
-                formData.monthly ? store.getStructure().plans.newNumber.monthlyPlanId : store.getStructure().plans.newNumber.yearlyPlanId
-            );
-        } else {
-            identifiers.push(
-                formData.monthly ? store.getStructure().plans.keepNumber.monthlyPlanId : store.getStructure().plans.keepNumber.yearlyPlanId
-            );
-        }
-
-        /*if (this.addHandset) {
-            identifiers.push(
-                ProductIdentifier.handset
-            );
-        }
-
-        if (this.addInsurance) {
-            identifiers.push(
-                formData.monthly ? ProductIdentifier.insuranceMonthly : ProductIdentifier.insuranceYearly
-            );
-        }*/
-
-        return identifiers;
     };
 
     /**
@@ -374,24 +333,14 @@ if (router.isTestEnvironment()) {
     $(submitButton).on("click", (event) => {
         event.preventDefault();
 
-        const period = (() => {
-            const monthly = $("#monthly-plan").hasClass("w--current");
-            const annual = $("#annual-plan").hasClass("w--current");
-
-            if (monthly) {
-                return "Monthly";
-            } else if (annual) {
-                return "Annual";
-            } else {
-                return "";
-            }
-        })();
-
-        Store.local.write(Store.keys.checkoutFlow.getNewNumber, formData.getNewNumber);
-        Store.local.write(Store.keys.checkoutFlow.period, period);
-        Store.local.write(Store.keys.checkoutFlow.addHandsetPhone, formData.addHandset);
-        Store.local.write(Store.keys.checkoutFlow.addInsurance, formData.addInsurance);
-        Store.local.write(Store.keys.checkoutFlow.selectedProductIdentifiers, getSelectedProductIdentifiers());
+        Store.local.write(
+            Store.keys.checkoutFlow.getNewNumber,
+            formData.getNewNumber
+        );
+        Store.local.write(
+            Store.keys.checkoutFlow.selectedProductIdentifiers,
+            formData.productCart.getProductIdentifiers()
+        );
 
         router.open(
             RouterPath.checkoutLandline_account,
