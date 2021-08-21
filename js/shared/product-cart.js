@@ -74,7 +74,6 @@ class ProductCart {
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
      */
     updatePrices = (callback) => {
-        const _this = this;
         const data = {
             /**
              * Billing address fields (city, state code, zip and country)
@@ -104,7 +103,14 @@ class ProductCart {
             })
         };
         console.log(`data: `, data);
-        return $.ajax({
+
+        if (this._lastUpdatePricesRequest) {
+            this._lastUpdatePricesRequest.abort();
+        }
+
+        const _this = this;
+        
+        const request = $.ajax({
             url: `https://staging-landline.phone.community/api/v1/billing/products/tax-estimate`,
             method: "POST",
             crossDomain: true,
@@ -145,6 +151,8 @@ class ProductCart {
                 }
             }
         });
+        this._lastUpdatePricesRequest = request;
+        return request;
     }
 
     /**
