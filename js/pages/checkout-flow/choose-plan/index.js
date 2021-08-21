@@ -99,13 +99,15 @@ const getAddonSectionInternalHtmlLayout = (products) => {
 };
 
 if (router.isTestEnvironment()) {
-    const formData = {
-        monthly: true,
-        getNewNumber: true,
-        productStore: undefined,
-        productCart: (() => {
-            const cart = new ProductCart();
-            cart.setBillingAddress(new ProductCartBillingAddress(
+    const billingAddress = (() => {
+        if (router.isTestEnvironment) {
+            return new ProductCartBillingAddress(
+                "New York",
+                "NY",
+                "10008"
+            );
+        } else {
+            return new ProductCartBillingAddress(
                 Store.local.read(
                     Store.keys.checkoutFlow.shippingAddress_city
                 ) ?? "",
@@ -115,7 +117,18 @@ if (router.isTestEnvironment()) {
                 Store.local.read(
                     Store.keys.checkoutFlow.shippingAddress_zip
                 ) ?? ""
-            ));
+            );
+        }
+    })();
+    const formData = {
+        monthly: true,
+        getNewNumber: true,
+        productStore: undefined,
+        productCart: (() => {
+            const cart = new ProductCart();
+            cart.setBillingAddress(
+                billingAddress
+            );
             return cart;
         })()
     };
