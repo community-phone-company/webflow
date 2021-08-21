@@ -76,6 +76,11 @@ class ProductCart {
     updatePrices = (callback) => {
         const _this = this;
         const data = {
+            /**
+             * Billing address fields (city, state code, zip and country)
+             * should be a non-empty string or `undefined`.
+             * Empty string is not acceptable.
+             */
             billing_address: {
                 city: (() => {
                     const city = _this._billingAddress && _this._billingAddress.city;
