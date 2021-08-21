@@ -77,9 +77,18 @@ class ProductCart {
         const _this = this;
         const data = {
             billing_address: {
-                city: _this._billingAddress && _this._billingAddress.city,
-                state_code: _this._billingAddress && _this._billingAddress.stateCode,
-                zip: _this._billingAddress && _this._billingAddress.zip,
+                city: (() => {
+                    const city = _this._billingAddress && _this._billingAddress.city;
+                    return (typeof city === "string" && city.length) ? city : undefined;
+                })(),
+                state_code: (() => {
+                    const stateCode = _this._billingAddress && _this._billingAddress.stateCode;
+                    return (typeof stateCode === "string" && stateCode.length) ? stateCode : undefined;
+                })(),
+                zip: (() => {
+                    const zip = _this._billingAddress && _this._billingAddress.zip;
+                    return (typeof zip === "string" && zip.length) ? zip : undefined;
+                })(),
                 country: "US"
             },
             products: _this._productIdentifiers.map(productId => {
