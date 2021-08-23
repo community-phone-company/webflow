@@ -172,21 +172,30 @@ if (router.isTestEnvironment()) {
             const newNumberAnnualPlan = productStore.getProductById(
                 productStore.getStructure().plans.newNumber.yearlyPlanId
             );
-            const newNumberAnnualPlanMonthPrice = newNumberAnnualPlan.pricing.subscriptionPrice.annually / 12;
-            $("#new-number-annual-price-text").html(`$${newNumberAnnualPlanMonthPrice} / month *`);
-            $("#new-number-annual-price-subtitle").html(`* Billed annually at $${newNumberAnnualPlan.pricing.subscriptionPrice.annually}`);
+            const newNumberAnnualPlan_priceForYear = newNumberAnnualPlan.pricing.subscriptionPrice.annually;
+            const newNumberAnnualPlan_priceForMonth = Math.roundUp(
+                newNumberAnnualPlan.pricing.subscriptionPrice.annually / 12,
+                2
+            );
+            $("#new-number-annual-price-text").html(`$${newNumberAnnualPlan_priceForMonth} / month *`);
+            $("#new-number-annual-price-subtitle").html(`* Billed annually at $${newNumberAnnualPlan_priceForYear}`);
 
             const keepNumberMonthlyPlan = productStore.getProductById(
                 productStore.getStructure().plans.keepNumber.monthlyPlanId
             );
-            const keepNumberMonthlyPlan_priceForMonth = keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly + newNumberMonthlyPlan.pricing.subscriptionPrice.monthly;
+            const keepNumberMonthlyPlan_priceForMonth = keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly
+                + newNumberMonthlyPlan.pricing.subscriptionPrice.monthly;
             $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan_priceForMonth} / month`);
 
             const keepNumberAnnualPlan = productStore.getProductById(
                 productStore.getStructure().plans.keepNumber.yearlyPlanId
             );
-            const keepNumberAnnualPlan_priceForYear = keepNumberAnnualPlan.pricing.subscriptionPrice.annually + newNumberAnnualPlan.pricing.subscriptionPrice.annually;
-            const keepNumberAnnualPlan_priceForMonth = (keepNumberAnnualPlan.pricing.subscriptionPrice.annually + newNumberAnnualPlan.pricing.subscriptionPrice.annually) / 12;
+            const keepNumberAnnualPlan_priceForYear = keepNumberAnnualPlan.pricing.subscriptionPrice.annually
+                + newNumberAnnualPlan.pricing.subscriptionPrice.annually;
+            const keepNumberAnnualPlan_priceForMonth = Math.roundUp(
+                (keepNumberAnnualPlan.pricing.subscriptionPrice.annually + newNumberAnnualPlan.pricing.subscriptionPrice.annually) / 12,
+                2
+            );
             $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlan_priceForMonth} / month *`);
             $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan_priceForYear}`);
 
