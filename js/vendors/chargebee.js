@@ -191,7 +191,7 @@ class Chargebee {
                     var result = error && error.responseJSON && error.responseJSON.message;
 
                     if (!result) {
-                        result = "Something went wrong.\nTry again later or call us at 844-685-3562";
+                        result = "Something went wrong.\nTry again later or call us at (855) 615-0667";
                     }
 
                     return result;
