@@ -11,8 +11,13 @@ if (IS_PRODUCTION) {
 
 /**
  * Send user ID and other information to Hotjar.
+ * Works on production domain for pages that are not included in the `test-environment` folder.
  */
 (() => {
+    if (!IS_PRODUCTION || router.isTestEnvironment()) {
+        return;
+    }
+
     HotjarIntegration.send({
         "Last Visit": new Date(Date.now()).toISOString()
     });
