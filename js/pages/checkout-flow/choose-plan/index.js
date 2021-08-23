@@ -2,7 +2,7 @@
  * @param {Product} product Product.
  * @returns {string}
  */
- const getProductCardHtmlLayout = (product) => {
+const getProductCardHtmlLayout = (product) => {
     return `
         <div class="div-product">
             <div class="devider-16px">
@@ -179,14 +179,16 @@ if (router.isTestEnvironment()) {
             const keepNumberMonthlyPlan = productStore.getProductById(
                 productStore.getStructure().plans.keepNumber.monthlyPlanId
             );
-            $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month`);
+            const keepNumberMonthlyPlan_priceForMonth = keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly + newNumberMonthlyPlan.pricing.subscriptionPrice.monthly;
+            $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan_priceForMonth} / month`);
 
             const keepNumberAnnualPlan = productStore.getProductById(
                 productStore.getStructure().plans.keepNumber.yearlyPlanId
             );
-            const keepNumberAnnualPlanMonthPrice = keepNumberAnnualPlan.pricing.subscriptionPrice.annually / 12;
-            $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlanMonthPrice} / month *`);
-            $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan.pricing.subscriptionPrice.annually}`);
+            const keepNumberAnnualPlan_priceForYear = keepNumberAnnualPlan.pricing.subscriptionPrice.annually + newNumberAnnualPlan.pricing.subscriptionPrice.annually;
+            const keepNumberAnnualPlan_priceForMonth = (keepNumberAnnualPlan.pricing.subscriptionPrice.annually + newNumberAnnualPlan.pricing.subscriptionPrice.annually) / 12;
+            $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlan_priceForMonth} / month *`);
+            $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan_priceForYear}`);
 
             const addons = getAddonsForCurrentPlan();
             $("div.addons").html(
