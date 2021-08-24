@@ -59,6 +59,10 @@ class ProductCart {
         }
     }
 
+    removeAllProductIdentifiers = () => {
+        this._productIdentifiers = [];
+    }
+
     /**
      * Quantity of product.
      * @param {string} id Product identifier.

@@ -308,6 +308,8 @@ if (router.isTestEnvironment()) {
         const productCart = formData.productCart;
         const structure = formData.productStore.getStructure();
 
+        productCart.removeAllProductIdentifiers();
+
         const allPlans = [
             structure.plans.newNumber.monthlyPlanId,
             structure.plans.newNumber.yearlyPlanId,
