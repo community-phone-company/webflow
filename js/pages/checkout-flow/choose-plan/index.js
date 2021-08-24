@@ -392,6 +392,7 @@ if (router.isTestEnvironment()) {
     const orderSummaryPanel = new OrderSummaryPanel(
         document.querySelectorAll(".right-panel")[0]
     );
+    orderSummaryPanel.hide();
 
     $(tabs.newNumber.plan).on("click", () => {
         formData.getNewNumber = true;
@@ -451,6 +452,7 @@ if (router.isTestEnvironment()) {
                 productStore,
                 formData.productCart
             );
+            orderSummaryPanel.show();
         });
         updateProductCart();
     });

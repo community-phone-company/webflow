@@ -53,7 +53,7 @@ class OrderSummaryPanel {
     }
 
     /**
-     * @param {() => void} callback 
+     * @param {(() => void) | undefined} callback 
      */
     show = (callback) => {
         $(this.container).show();
@@ -64,7 +64,7 @@ class OrderSummaryPanel {
     }
 
     /**
-     * @param {() => void} callback 
+     * @param {(() => void) | undefined} callback 
      */
     hide = (callback) => {
         $(this.container).hide();
