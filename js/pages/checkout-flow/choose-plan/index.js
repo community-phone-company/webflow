@@ -153,6 +153,7 @@ if (router.isTestEnvironment()) {
         monthly: true,
         getNewNumber: true,
         insuranceAdded: false,
+        productsToAdd: [],
         productStore: undefined,
         productCart: (() => {
             const cart = new ProductCart();
@@ -245,6 +246,10 @@ if (router.isTestEnvironment()) {
 
                 if (isInsurance) {
                     formData.insuranceAdded = isSelected;
+                } else {
+                    formData.productsToAdd.push(
+                        productIdentifier
+                    );
                 }
 
                 updateProductCart();
@@ -302,6 +307,15 @@ if (router.isTestEnvironment()) {
                 formData.monthly ? structure.insurance.monthlyId : structure.insurance.yearlyId
             );
         }
+
+        formData.productsToAdd.forEach(productId => {
+            if (productCart.getQuantity(productCart) == 0) {
+                productCart.addProductIdentifier(
+                    productId
+                );
+            }
+        });
+        formData.productsToAdd = [];
 
         productCart.updatePrices((error) => {
             if (onFinished) {
