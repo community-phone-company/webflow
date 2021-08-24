@@ -239,8 +239,8 @@ if (router.isTestEnvironment()) {
                 console.log(`Clicked on addon card: ${productIdentifier}, selected: ${isSelected}`);
 
                 const isInsurance = [
-                    formData.productCart.getStructure().insurance.monthlyId,
-                    formData.productCart.getStructure().insurance.yearlyId
+                    formData.productStore.getStructure().insurance.monthlyId,
+                    formData.productStore.getStructure().insurance.yearlyId
                 ].includes(productIdentifier);
 
                 if (isInsurance) {
