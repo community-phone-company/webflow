@@ -304,8 +304,6 @@ if (router.isTestEnvironment()) {
      * @param {() => void} onFinished Function that is called when the product cart is updated.
      */
     const updateProductCart = (onFinished) => {
-        console.log("updateProductCart VERSION 1");
-
         const productCart = formData.productCart;
         const structure = formData.productStore.getStructure();
 
