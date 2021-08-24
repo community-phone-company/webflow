@@ -34,16 +34,15 @@ const getAddonCardHtmlLayout = (product) => {
             </div>
         </a>
     `;*/
-
     return `
         <a
-            
             data-w-id="da018f8a-8d6d-a283-942a-ee673cd84d87"
             href="#"
             class="addons-card-bg w-inline-block"
-            community-phone-product-id="${product.id}"
+            addon-card-product-id="${product.id}"
+            addon-card-is-selected="false"
         >
-            <div  class="w-layout-grid card-addon-handset-phone card-handset">
+            <div class="w-layout-grid card-addon-handset-phone card-handset">
                 <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-5c39eb21" style="opacity: 1;" class="div-block-6">
                     <div class="text-block-9">
                         ${product.addonInformation.title}
@@ -76,7 +75,28 @@ const getAddonCardHtmlLayout = (product) => {
  * @returns {string}
  */
 const getAddonCardProductIdentifier = (card) => {
-    return $(card).attr("community-phone-product-id");
+    return $(card).attr("addon-card-product-id");
+};
+
+/**
+ * @param {HTMLElement} card 
+ * @returns {boolean}
+ */
+const isAddonCardSelected = (card) => {
+    return $(card).attr("addon-card-is-selected") === "true";
+};
+
+/**
+ * @param {HTMLElement} card 
+ * @param {boolean} selected 
+ */
+const setAddonCardSelected = (card, selected) => {
+    $(card).attr("addon-card-is-selected", `${selected}`);
+    $(card).find(".addon-card-opacity").css("opacity", selected ? 0.5 : 1);
+    $(card).find(".addon-card-add-button").css({
+        "transform": `translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(${selected ? "45deg" : "0deg"}) skew(0deg, 0deg)`,
+        "transform-style": "preserve-3d"
+    });
 };
 
 /**
@@ -111,7 +131,7 @@ const getAddonSectionInternalHtmlLayout = (products) => {
 };
 
 /**
- * @param {(productIdentifier: string) => void} handler 
+ * @param {(productIdentifier: string, isSelected: boolean) => void} handler 
  */
 const setupAddonCardClickHandlers = (handler) => {
     $(".addon-card").off().on("click", (event) => {
@@ -120,10 +140,19 @@ const setupAddonCardClickHandlers = (handler) => {
         const productIdentifier = getAddonCardProductIdentifier(
             card
         );
+        const isSelected = isAddonCardSelected(
+            card
+        );
+        const newSelectedState = !isSelected;
+        setAddonCardSelected(
+            card,
+            newSelectedState
+        );
 
         if (handler) {
             handler(
-                productIdentifier
+                productIdentifier,
+                newSelectedState
             );
         }
     });
@@ -236,8 +265,8 @@ if (router.isTestEnvironment()) {
                     addons
                 )
             );
-            setupAddonCardClickHandlers((productIdentifier) => {
-                console.log(`Clicked on addon card: ${productIdentifier}`);
+            setupAddonCardClickHandlers((productIdentifier, isSelected) => {
+                console.log(`Clicked on addon card: ${productIdentifier}, selected: ${isSelected}`);
             });
         }
     };
