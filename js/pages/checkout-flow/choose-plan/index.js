@@ -280,7 +280,6 @@ if (router.isTestEnvironment()) {
                 if (isInsurance) {
                     formData.insuranceAdded = isSelected;
                 } else {
-                    console.log("Updating one time purchase addon");
                     if (isSelected) {
                         formData.selectedOneTimePurchaseAddons.push(
                             productIdentifier
