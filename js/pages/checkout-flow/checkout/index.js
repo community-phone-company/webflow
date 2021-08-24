@@ -410,7 +410,11 @@ const onReady = () => {
                 console.log("Active Campaign");
                 buyProducts((message, success) => {
                     if (success) {
-                        window.location.href = "/checkout-landline/thank-you";
+                        router.open(
+                            RouterPath.checkoutLandline_thankYou,
+                            router.getParameters(),
+                            router.isTestEnvironment()
+                        );
                     } else {
                         alert(message);
                     }
