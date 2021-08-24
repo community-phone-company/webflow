@@ -120,6 +120,10 @@ class ProductStructure {
                 yearlyPlanId: json.plans.keep_my_number.yearly_plan_id
             }
         };
+        this.insurance = {
+            monthlyId: "insurance-",
+            yearlyId: "insurance-yearly"
+        };
         this.addons = json.addons;
     }
 }

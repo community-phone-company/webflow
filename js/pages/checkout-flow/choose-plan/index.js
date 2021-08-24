@@ -3,37 +3,6 @@
  * @returns {string}
  */
 const getAddonCardHtmlLayout = (product) => {
-    /*return `
-        <a
-            href="#"
-            class="addon-card addons-card-bg w-inline-block"
-            community-phone-product-id="${product.id}"
-        >
-            <div class="w-layout-grid card-addon-handset-phone card-handset">
-                <div style="opacity: 1;" class="div-block-6 addon-card-opacity">
-                    <div class="text-block-9">
-                        ${product.addonInformation.title}
-                    </div>
-                    <div class="text-block-10">
-                        ${product.addonInformation.subtitle}
-                    </div>
-                </div>
-                <img
-                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60d0a444c31f1bc77f528588_img-placeholder.svg"
-                    loading="lazy"
-                    alt=""
-                    class="image-6"
-                >
-                <img
-                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b6e068386753c1fe7da_ic-add.svg"
-                    loading="lazy"
-                    style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
-                    alt=""
-                    class="image-7 addon-card-add-button"
-                >
-            </div>
-        </a>
-    `;*/
     return `
         <a
             data-w-id="da018f8a-8d6d-a283-942a-ee673cd84d87"
@@ -183,6 +152,7 @@ if (router.isTestEnvironment()) {
     const formData = {
         monthly: true,
         getNewNumber: true,
+        insuranceAdded: false,
         productStore: undefined,
         productCart: (() => {
             const cart = new ProductCart();
@@ -267,6 +237,17 @@ if (router.isTestEnvironment()) {
             );
             setupAddonCardClickHandlers((productIdentifier, isSelected) => {
                 console.log(`Clicked on addon card: ${productIdentifier}, selected: ${isSelected}`);
+
+                const isInsurance = [
+                    formData.productCart.getStructure().insurance.monthlyId,
+                    formData.productCart.getStructure().insurance.yearlyId
+                ].includes(productIdentifier);
+
+                if (isInsurance) {
+                    formData.insuranceAdded = isSelected;
+                }
+
+                updateProductCart();
             });
         }
     };
@@ -309,6 +290,18 @@ if (router.isTestEnvironment()) {
                 planIdentifier
             );
         });
+        
+        const allInsuranceIdentifiers = [
+            structure.insurance.monthlyId,
+            structure.insurance.yearlyId
+        ];
+        allInsuranceIdentifiers.forEach(id => productCart.removeProductIdentifier(id));
+
+        if (formData.insuranceAdded) {
+            productCart.addProductIdentifier(
+                formData.monthly ? structure.insurance.monthlyId : structure.insurance.yearlyId
+            );
+        }
 
         productCart.updatePrices((error) => {
             if (onFinished) {
