@@ -280,9 +280,19 @@ if (router.isTestEnvironment()) {
                 if (isInsurance) {
                     formData.insuranceAdded = isSelected;
                 } else {
-                    formData.selectedOneTimePurchaseAddons.push(
-                        productIdentifier
-                    );
+                    if (isSelected) {
+                        formData.selectedOneTimePurchaseAddons.push(
+                            productIdentifier
+                        );
+                    } else {
+                        const index = formData.selectedOneTimePurchaseAddons.indexOf(
+                            productIdentifier
+                        );
+
+                        if (index >= 0) {
+                            formData.selectedOneTimePurchaseAddons.splice(index, 1);
+                        }
+                    }
                 }
 
                 updateProductCart();
