@@ -37,13 +37,13 @@ const getAddonCardHtmlLayout = (product) => {
 
     return `
         <a
-            id="handset-addon-card"
+            
             data-w-id="da018f8a-8d6d-a283-942a-ee673cd84d87"
             href="#"
             class="addons-card-bg w-inline-block"
             community-phone-product-id="${product.id}"
         >
-            <div id="handset_addon_div" class="w-layout-grid card-addon-handset-phone card-handset">
+            <div  class="w-layout-grid card-addon-handset-phone card-handset">
                 <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-5c39eb21" style="opacity: 1;" class="div-block-6">
                     <div class="text-block-9">
                         ${product.addonInformation.title}
