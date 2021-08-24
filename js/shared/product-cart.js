@@ -113,6 +113,10 @@ class ProductCart {
             this._lastUpdatePricesRequest.abort();
         }
 
+        if (this._onPricesStartedUpdating) {
+            this._onPricesStartedUpdating();
+        }
+
         const request = $.ajax({
             url: `https://staging-landline.phone.community/api/v1/billing/products/tax-estimate`,
             method: "POST",
@@ -159,7 +163,13 @@ class ProductCart {
     }
 
     /**
-     * 
+     * @param {() => void} handler Function that is called every time when the product cart prices list has started updating.
+     */
+    onPricesStartedUpdating = (handler) => {
+        this._onPricesStartedUpdating = handler;
+    }
+
+    /**
      * @param {(error: any | undefined) => void} handler Function that is called every time when the product cart prices list is updated.
      */
     onPricesUpdated = (handler) => {
