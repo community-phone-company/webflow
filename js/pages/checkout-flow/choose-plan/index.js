@@ -261,7 +261,7 @@ if (router.isTestEnvironment()) {
 
             formData.selectedOneTimePurchaseAddons.forEach(productId => {
                 const card = getProductAddonCard(
-                    productIdentifier
+                    productId
                 );
                 setAddonCardSelected(
                     card,
