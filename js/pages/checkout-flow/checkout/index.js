@@ -421,12 +421,16 @@ const onReady = () => {
 
     handleFormDataChanges();
 
-    const productIdentifiers = Store.local.read(
-        Store.keys.checkoutFlow.selectedProductIdentifiers
-    );
-    updateOrderSummaryColumn(
-        productIdentifiers
-    );
+    if (router.isTestEnvironment()) {
+        findAndUpdateOrderSummaryPanel();
+    } else {
+        const productIdentifiers = Store.local.read(
+            Store.keys.checkoutFlow.selectedProductIdentifiers
+        );
+        updateOrderSummaryColumn(
+            productIdentifiers
+        );
+    }
 };
 
 onReady();
