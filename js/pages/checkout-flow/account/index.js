@@ -1,4 +1,4 @@
-redirectToPreviousCheckoutFlowStepIfNeeded();
+// redirectToPreviousCheckoutFlowStepIfNeeded();
 
 var recaptchaCallback = () => {};
 

@@ -8,7 +8,7 @@ const makeAddressTextField = (textField) => {
     }
 };
 
-redirectToPreviousCheckoutFlowStepIfNeeded();
+// redirectToPreviousCheckoutFlowStepIfNeeded();
 
 var clipboard = new ClipboardJS('.btn');
 
