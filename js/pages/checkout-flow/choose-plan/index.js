@@ -3,7 +3,7 @@
  * @returns {string}
  */
 const getAddonCardHtmlLayout = (product) => {
-    return `
+    /*return `
         <a
             href="#"
             class="addon-card addons-card-bg w-inline-block"
@@ -30,6 +30,41 @@ const getAddonCardHtmlLayout = (product) => {
                     style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
                     alt=""
                     class="image-7 addon-card-add-button"
+                >
+            </div>
+        </a>
+    `;*/
+
+    return `
+        <a
+            id="handset-addon-card"
+            data-w-id="da018f8a-8d6d-a283-942a-ee673cd84d87"
+            href="#"
+            class="addons-card-bg w-inline-block"
+            community-phone-product-id="${product.id}"
+        >
+            <div id="handset_addon_div" class="w-layout-grid card-addon-handset-phone card-handset">
+                <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-5c39eb21" style="opacity: 1;" class="div-block-6">
+                    <div class="text-block-9">
+                        ${product.addonInformation.title}
+                    </div>
+                    <div class="text-block-10">
+                        ${product.addonInformation.subtitle}
+                    </div>
+                </div>
+                <img
+                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b174b03cb6cee00203a_img-phone.svg"
+                    loading="lazy"
+                    alt=""
+                    class="image-6"
+                >
+                <img
+                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b6e068386753c1fe7da_ic-add.svg"
+                    loading="lazy"
+                    style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
+                    id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d8f-5c39eb21"
+                    alt=""
+                    class="image-7"
                 >
             </div>
         </a>
