@@ -2,57 +2,15 @@
  * @param {Product} product Product.
  * @returns {string}
  */
-const getProductCardHtmlLayout = (product) => {
-    return `
-        <div class="div-product">
-            <div class="devider-16px">
-            </div>
-            <div class="row-product">
-                <img
-                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60d0a444c31f1bc77f528588_img-placeholder.svg"
-                    loading="lazy"
-                    width="68"
-                    alt=""
-                    class="product-image"
-                >
-                <div class="_w-20">
-                </div>
-                <div>
-                    <div data-w-id="81568857-5b33-574b-942a-b85d060aa2a9" class="product-title">
-                        ${product.name}
-                        <span class="tooltip-trigger">?</span>
-                    </div>
-                    <div class="product-description">
-                        ${product.descriptionShort}
-                    </div>
-                </div>
-                <div class="_w-24">
-                </div>
-                <div class="product-price">
-                    $${product.pricing.getPrice()}
-                </div>
-            </div>
-            <div class="devider-16px">
-            </div>
-            <div class="devider-grey-1px">
-            </div>
-        </div>
-    `;
-};
-
-/**
- * @param {Product} product Product.
- * @returns {string}
- */
 const getAddonCardHtmlLayout = (product) => {
     return `
         <a
             href="#"
-            class="addons-card-bg w-inline-block"
+            class="addon-card addons-card-bg w-inline-block"
             community-phone-product-id="${product.id}"
         >
-            <div id="handset_addon_div" class="w-layout-grid card-addon-handset-phone card-handset">
-                <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-81c6a2a0" style="opacity: 1;" class="div-block-6">
+            <div class="w-layout-grid card-addon-handset-phone card-handset">
+                <div style="opacity: 1;" class="div-block-6 addon-card-opacity">
                     <div class="text-block-9">
                         ${product.addonInformation.title}
                     </div>
@@ -71,7 +29,7 @@ const getAddonCardHtmlLayout = (product) => {
                     loading="lazy"
                     style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
                     alt=""
-                    class="image-7"
+                    class="image-7 addon-card-add-button"
                 >
             </div>
         </a>
