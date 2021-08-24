@@ -133,9 +133,58 @@ const onReady = () => {
     const productIdentifiers = Store.local.read(
         Store.keys.checkoutFlow.selectedProductIdentifiers
     );
-    updateOrderSummaryColumn(
-        productIdentifiers
-    );
+    
+    if (router.isTestEnvironment()) {
+        const orderSummaryPanel = new OrderSummaryPanel(
+            document.querySelectorAll(".right-panel")[0]
+        );
+
+        const billingAddress = (() => {
+            if (router.isTestEnvironment) {
+                return new ProductCartBillingAddress(
+                    "New York",
+                    "NY",
+                    "10008"
+                );
+            } else {
+                return new ProductCartBillingAddress(
+                    Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_city
+                    ) ?? "",
+                    Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_state
+                    ) ?? "",
+                    Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_zip
+                    ) ?? ""
+                );
+            }
+        })();
+
+        const productCart = new ProductCart();
+        productCart.setBillingAddress(
+            billingAddress
+        );
+        productIdentifiers.forEach(productId => {
+            productCart.addProductIdentifier(
+                productId
+            );
+        });
+
+        const productStore = ProductStore.getDefault();
+        productStore.loadProducts((error) => {
+            productCart.updatePrices((error) => {
+                orderSummaryPanel.update(
+                    productStore,
+                    productCart
+                );
+            });
+        });
+    } else {
+        updateOrderSummaryColumn(
+            productIdentifiers
+        );
+    }
 };
 
 onReady();
