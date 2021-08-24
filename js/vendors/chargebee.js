@@ -139,8 +139,8 @@ class Chargebee {
         callback
     ) => {
         const url = this.isProduction
-            ? "https://landline.phone.community/api/v1/chargebee/checkout"
-            : "https://staging-landline.phone.community/api/v1/chargebee/checkout";
+            ? "https://landline.phone.community/api/v1/chargebee/checkout/"
+            : "https://staging-landline.phone.community/api/v1/chargebee/checkout/";
         let data = {
             "first_name": customer.firstName,
             "last_name": customer.lastName,
