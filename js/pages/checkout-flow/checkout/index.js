@@ -156,7 +156,10 @@ const onReady = () => {
             }
         })();
         
-        Chargebee.checkout(
+        const chargebee = new Chargebee(
+            !router.isTestEnvironment()
+        );
+        chargebee.checkout(
             new ChargebeeCheckoutCustomer(
                 firstName,
                 lastName,

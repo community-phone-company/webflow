@@ -114,6 +114,13 @@ class Chargebee {
 
     /**
      * @constructor
+     * @param {boolean} isProduction
+     */
+    constructor(isProduction) {
+        this.isProduction = isProduction;
+    }
+
+    /**
      * @param {ChargebeeCheckoutCustomer} customer Customer.
      * @param {string} serviceType Service type.
      * @param {ChargebeeCheckoutAddress} shippingAddress Shipping address.
@@ -122,7 +129,7 @@ class Chargebee {
      * @param {ChargebeeCheckoutCardInformation} cardInformation Card information.
      * @param {(message: string, success: boolean) => void} callback Function that is called when result comes from the server.
      */
-    static checkout = (
+    checkout = (
         customer,
         serviceType,
         shippingAddress,
@@ -131,6 +138,9 @@ class Chargebee {
         cardInformation,
         callback
     ) => {
+        const url = this.isProduction
+            ? "https://landline.phone.community/api/v1/chargebee/checkout"
+            : "https://staging-landline.phone.community/api/v1/chargebee/checkout";
         let data = {
             "first_name": customer.firstName,
             "last_name": customer.lastName,
@@ -174,7 +184,7 @@ class Chargebee {
         };
         console.log(data);
         $.ajax({
-            url: "https://landline.phone.community/api/v1/chargebee/checkout/",
+            url: url,
             method: "POST",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",

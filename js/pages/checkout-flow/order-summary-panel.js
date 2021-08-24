@@ -56,22 +56,28 @@ class OrderSummaryPanel {
      * @param {(() => void) | undefined} callback 
      */
     show = (callback) => {
-        $(this.container).show();
-        
-        if (callback) {
-            callback();
-        }
+        $(this.container).stop().fadeIn(
+            1000,
+            () => {
+                if (callback) {
+                    callback();
+                }
+            }
+        );
     }
 
     /**
      * @param {(() => void) | undefined} callback 
      */
     hide = (callback) => {
-        $(this.container).hide();
-        
-        if (callback) {
-            callback();
-        }
+        $(this.container).stop().fadeOut(
+            1000,
+            () => {
+                if (callback) {
+                    callback();
+                }
+            }
+        );
     }
 }
 
