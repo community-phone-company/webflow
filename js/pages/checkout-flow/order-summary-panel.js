@@ -53,31 +53,53 @@ class OrderSummaryPanel {
     }
 
     /**
+     * @param {boolean} animated
      * @param {(() => void) | undefined} callback 
      */
-    show = (callback) => {
-        $(this.container).stop().fadeIn(
-            1000,
-            () => {
-                if (callback) {
-                    callback();
+    show = (animated, callback) => {
+        $(this.container).stop();
+
+        if (animated) {
+            $(this.container).fadeIn(
+                500,
+                () => {
+                    if (callback) {
+                        callback();
+                    }
                 }
+            );
+        } else {
+            $(this.container).hide();
+
+            if (callback) {
+                callback();
             }
-        );
+        }
     }
 
     /**
+     * @param {boolean} animated
      * @param {(() => void) | undefined} callback 
      */
-    hide = (callback) => {
-        $(this.container).stop().fadeOut(
-            1000,
-            () => {
-                if (callback) {
-                    callback();
+    hide = (animated, callback) => {
+        $(this.container).stop();
+
+        if (animated) {
+            $(this.container).fadeOut(
+                500,
+                () => {
+                    if (callback) {
+                        callback();
+                    }
                 }
+            );
+        } else {
+            $(this.container).hide();
+
+            if (callback) {
+                callback();
             }
-        );
+        }
     }
 }
 
@@ -212,7 +234,7 @@ const findAndUpdateOrderSummaryPanel = () => {
         );
     });
 
-    orderSummaryPanel.hide();
+    orderSummaryPanel.hide(true);
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts((error) => {
@@ -221,7 +243,7 @@ const findAndUpdateOrderSummaryPanel = () => {
                 productStore,
                 productCart
             );
-            orderSummaryPanel.show();
+            orderSummaryPanel.show(true);
         });
     });
 };
