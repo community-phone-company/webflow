@@ -51,6 +51,22 @@ class OrderSummaryPanel {
             zip
         );
     }
+
+    /**
+     * @param {() => void} callback 
+     */
+    show = (callback) => {
+        $(this.container).show();
+        callback();
+    }
+
+    /**
+     * @param {() => void} callback 
+     */
+    hide = (callback) => {
+        $(this.container).hide();
+        callback();
+    }
 }
 
 class OrderSummaryPanelCard {
@@ -136,13 +152,20 @@ class OrderSummaryPanelCardProduct {
     }
 }
 
+/**
+ * @returns {HTMLElement}
+ */
+const findOrderSummaryPanelContainer = () => {
+    return document.querySelectorAll(".right-panel")[0];
+};
+
 const findAndUpdateOrderSummaryPanel = () => {
     const productIdentifiers = Store.local.read(
         Store.keys.checkoutFlow.selectedProductIdentifiers
     );
     
     const orderSummaryPanel = new OrderSummaryPanel(
-        document.querySelectorAll(".right-panel")[0]
+        findOrderSummaryPanelContainer()
     );
 
     const billingAddress = (() => {
@@ -177,6 +200,8 @@ const findAndUpdateOrderSummaryPanel = () => {
         );
     });
 
+    orderSummaryPanel.hide();
+
     const productStore = ProductStore.getDefault();
     productStore.loadProducts((error) => {
         productCart.updatePrices((error) => {
@@ -184,6 +209,7 @@ const findAndUpdateOrderSummaryPanel = () => {
                 productStore,
                 productCart
             );
+            orderSummaryPanel.show();
         });
     });
 };
