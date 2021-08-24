@@ -101,7 +101,7 @@ $("#side-menu-link-account").on("click", (event) => {
     );
 });
 
-$("#side-menu-link-choose-plan").on("click", (event) => {
+$("#side-menu-link-checkout").on("click", (event) => {
     event.preventDefault();
     router.open(
         RouterPath.checkoutLandline_checkoutStep,
