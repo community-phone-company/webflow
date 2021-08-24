@@ -48,6 +48,16 @@ const getAddonCardProductIdentifier = (card) => {
 };
 
 /**
+ * @param {string} productIdentifier 
+ * @returns {HTMLElement | undefined}
+ */
+const getProductAddonCard = (productIdentifier) => {
+    return Array.from($("div.addons .addon-card")).find(card => {
+        return getAddonCardProductIdentifier(card) === productIdentifier;
+    });
+};
+
+/**
  * @param {HTMLElement} card 
  * @returns {boolean}
  */
@@ -153,7 +163,7 @@ if (router.isTestEnvironment()) {
         monthly: true,
         getNewNumber: true,
         insuranceAdded: false,
-        productsToAdd: [],
+        selectedOneTimePurchaseAddons: [],
         productStore: undefined,
         productCart: (() => {
             const cart = new ProductCart();
@@ -236,6 +246,29 @@ if (router.isTestEnvironment()) {
                     addons
                 )
             );
+
+            if (formData.insuranceAdded) {
+                const insuranceCard = getProductAddonCard(productStore.getStructure().insurance.monthlyId)
+                    || getProductAddonCard(productStore.getStructure().insurance.yearlyId);
+                
+                if (insuranceCard) {
+                    setAddonCardSelected(
+                        insuranceCard,
+                        true
+                    );
+                }
+            }
+
+            formData.selectedOneTimePurchaseAddons.forEach(productId => {
+                const card = getProductAddonCard(
+                    productIdentifier
+                );
+                setAddonCardSelected(
+                    card,
+                    true
+                );
+            });
+
             setupAddonCardClickHandlers((productIdentifier, isSelected) => {
                 console.log(`Clicked on addon card: ${productIdentifier}, selected: ${isSelected}`);
 
@@ -247,7 +280,7 @@ if (router.isTestEnvironment()) {
                 if (isInsurance) {
                     formData.insuranceAdded = isSelected;
                 } else {
-                    formData.productsToAdd.push(
+                    formData.selectedOneTimePurchaseAddons.push(
                         productIdentifier
                     );
                 }
@@ -260,7 +293,7 @@ if (router.isTestEnvironment()) {
     /**
      * @param {() => void} onFinished Function that is called when the product cart is updated.
      */
-    updateProductCart = (onFinished) => {
+    const updateProductCart = (onFinished) => {
         const productCart = formData.productCart;
         const structure = formData.productStore.getStructure();
 
@@ -308,14 +341,13 @@ if (router.isTestEnvironment()) {
             );
         }
 
-        formData.productsToAdd.forEach(productId => {
+        formData.selectedOneTimePurchaseAddons.forEach(productId => {
             if (productCart.getQuantity(productCart) == 0) {
                 productCart.addProductIdentifier(
                     productId
                 );
             }
         });
-        formData.productsToAdd = [];
 
         productCart.updatePrices((error) => {
             if (onFinished) {
