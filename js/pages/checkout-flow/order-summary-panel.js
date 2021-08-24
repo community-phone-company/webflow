@@ -53,15 +53,18 @@ class OrderSummaryPanel {
     }
 
     /**
+     * @param {boolean} active
      * @param {boolean} animated
      * @param {(() => void) | undefined} callback 
      */
-    show = (animated, callback) => {
+    setActive = (active, animated, callback) => {
+        const targetValue = active ? 1 : 0.5;
         $(this.container).stop();
 
         if (animated) {
-            $(this.container).fadeIn(
+            $(this.container).fadeTo(
                 500,
+                targetValue,
                 () => {
                     if (callback) {
                         callback();
@@ -69,32 +72,10 @@ class OrderSummaryPanel {
                 }
             );
         } else {
-            $(this.container).hide();
-
-            if (callback) {
-                callback();
-            }
-        }
-    }
-
-    /**
-     * @param {boolean} animated
-     * @param {(() => void) | undefined} callback 
-     */
-    hide = (animated, callback) => {
-        $(this.container).stop();
-
-        if (animated) {
-            $(this.container).fadeOut(
-                500,
-                () => {
-                    if (callback) {
-                        callback();
-                    }
-                }
+            $(this.container).css(
+                "opacity",
+                targetValue
             );
-        } else {
-            $(this.container).hide();
 
             if (callback) {
                 callback();
@@ -234,7 +215,7 @@ const findAndUpdateOrderSummaryPanel = () => {
         );
     });
 
-    orderSummaryPanel.hide(true);
+    orderSummaryPanel.setActive(false, true);
 
     const productStore = ProductStore.getDefault();
     productStore.loadProducts((error) => {
@@ -243,7 +224,7 @@ const findAndUpdateOrderSummaryPanel = () => {
                 productStore,
                 productCart
             );
-            orderSummaryPanel.show(true);
+            orderSummaryPanel.setActive(true, true);
         });
     });
 };

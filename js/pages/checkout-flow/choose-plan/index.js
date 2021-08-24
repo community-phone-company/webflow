@@ -392,7 +392,7 @@ if (router.isTestEnvironment()) {
     const orderSummaryPanel = new OrderSummaryPanel(
         document.querySelectorAll(".right-panel")[0]
     );
-    orderSummaryPanel.hide(false);
+    orderSummaryPanel.setActive(false, false);
 
     $(tabs.newNumber.plan).on("click", () => {
         formData.getNewNumber = true;
@@ -448,14 +448,14 @@ if (router.isTestEnvironment()) {
             productStore.getStructure().plans.newNumber.monthlyPlanId
         );
         formData.productCart.onPricesStartedUpdating(() => {
-            orderSummaryPanel.hide(true);
+            orderSummaryPanel.setActive(false, true);
         });
         formData.productCart.onPricesUpdated((error) => {
             orderSummaryPanel.update(
                 productStore,
                 formData.productCart
             );
-            orderSummaryPanel.show(true);
+            orderSummaryPanel.setActive(true, true);
         });
         updateProductCart();
     });
