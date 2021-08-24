@@ -57,7 +57,10 @@ class OrderSummaryPanel {
      */
     show = (callback) => {
         $(this.container).show();
-        callback();
+        
+        if (callback) {
+            callback();
+        }
     }
 
     /**
@@ -65,7 +68,10 @@ class OrderSummaryPanel {
      */
     hide = (callback) => {
         $(this.container).hide();
-        callback();
+        
+        if (callback) {
+            callback();
+        }
     }
 }
 
