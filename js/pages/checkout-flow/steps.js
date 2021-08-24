@@ -82,3 +82,30 @@ const redirectToPreviousCheckoutFlowStepIfNeeded = () => {
         }
     }
 };
+
+$("#side-menu-link-choose-plan").on("click", (event) => {
+    event.preventDefault();
+    router.open(
+        RouterPath.checkoutLandline_choosePlan,
+        router.getParameters(),
+        router.isTestEnvironment()
+    );
+});
+
+$("#side-menu-link-account").on("click", (event) => {
+    event.preventDefault();
+    router.open(
+        RouterPath.checkoutLandline_account,
+        router.getParameters(),
+        router.isTestEnvironment()
+    );
+});
+
+$("#side-menu-link-choose-plan").on("click", (event) => {
+    event.preventDefault();
+    router.open(
+        RouterPath.checkoutLandline_checkoutStep,
+        router.getParameters(),
+        router.isTestEnvironment()
+    );
+});
