@@ -308,6 +308,9 @@ if (router.isTestEnvironment()) {
         const structure = formData.productStore.getStructure();
 
         productCart.removeAllProductIdentifiers();
+        productCart.addProductIdentifier(
+            structure.landlineBaseProductId
+        );
 
         const allPlans = [
             structure.plans.newNumber.monthlyPlanId,
