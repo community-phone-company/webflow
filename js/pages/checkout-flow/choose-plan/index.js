@@ -304,6 +304,8 @@ if (router.isTestEnvironment()) {
      * @param {() => void} onFinished Function that is called when the product cart is updated.
      */
     const updateProductCart = (onFinished) => {
+        console.log("updateProductCart VERSION 1");
+
         const productCart = formData.productCart;
         const structure = formData.productStore.getStructure();
 
@@ -318,11 +320,6 @@ if (router.isTestEnvironment()) {
             structure.plans.keepNumber.monthlyPlanId,
             structure.plans.keepNumber.yearlyPlanId
         ];
-        allPlans.forEach(planIdentifier => {
-            productCart.removeProductIdentifier(
-                planIdentifier
-            );
-        });
         
         var newPlanIdentifiers = [
             formData.monthly
@@ -344,12 +341,6 @@ if (router.isTestEnvironment()) {
             );
         });
         
-        const allInsuranceIdentifiers = [
-            structure.insurance.monthlyId,
-            structure.insurance.yearlyId
-        ];
-        allInsuranceIdentifiers.forEach(id => productCart.removeProductIdentifier(id));
-
         if (formData.insuranceAdded) {
             productCart.addProductIdentifier(
                 formData.monthly ? structure.insurance.monthlyId : structure.insurance.yearlyId
