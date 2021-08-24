@@ -123,7 +123,11 @@ const onReady = () => {
         exportCheckoutFlowDataToActiveCampaign(
             (response, error, success) => {
                 console.log("Active Campaign");
-                window.location.href = "/checkout-landline/checkout-step";
+                router.open(
+                    RouterPath.checkoutLandline_checkoutStep,
+                    router.getParameters(),
+                    router.isTestEnvironment()
+                );
             }
         );
     });
