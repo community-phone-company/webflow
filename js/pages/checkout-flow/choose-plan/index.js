@@ -43,7 +43,7 @@ const getAddonCardHtmlLayout = (product) => {
             addon-card-is-selected="false"
         >
             <div class="w-layout-grid card-addon-handset-phone card-handset">
-                <div style="opacity: 1;" class="div-block-6 addon-card-opacity">
+                <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-5c39eb21" style="opacity: 1;" class="div-block-6 addon-card-opacity">
                     <div class="text-block-9">
                         ${product.addonInformation.title}
                     </div>
