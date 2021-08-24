@@ -342,7 +342,7 @@ if (router.isTestEnvironment()) {
         }
 
         formData.selectedOneTimePurchaseAddons.forEach(productId => {
-            if (productCart.getQuantity(productCart) == 0) {
+            if (productCart.getQuantity(productId) == 0) {
                 productCart.addProductIdentifier(
                     productId
                 );
