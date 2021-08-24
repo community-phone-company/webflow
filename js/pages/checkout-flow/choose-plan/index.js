@@ -37,6 +37,25 @@ const getAddonCardHtmlLayout = (product) => {
 };
 
 /**
+ * @param {HTMLElement} card 
+ * @returns {string}
+ */
+const getAddonCardProductIdentifier = (card) => {
+    return $(card).attr("community-phone-product-id");
+};
+
+/**
+ * 
+ * @param {HTMLElement} card 
+ * @param {(productIdentifier: string) => void} handler 
+ */
+const onAddonCardClicked = (card, handler) => {
+    $(card).off().on("click", (event) => {
+        event.preventDefault();
+    });
+};
+
+/**
  * @param {Product[]} products Products.
  * @returns {string}
  */
@@ -54,6 +73,25 @@ const getAddonSectionInternalHtmlLayout = (products) => {
     }
 
     return html;
+};
+
+/**
+ * @param {(productIdentifier: string) => void} handler 
+ */
+const setupAddonCardClickHandlers = (handler) => {
+    $(".addon-card").off().on("click", (event) => {
+        event.preventDefault();
+        const card = event.currentTarget;
+        const productIdentifier = getAddonCardProductIdentifier(
+            card
+        );
+
+        if (handler) {
+            handler(
+                productIdentifier
+            );
+        }
+    });
 };
 
 if (router.isTestEnvironment()) {
@@ -163,6 +201,9 @@ if (router.isTestEnvironment()) {
                     addons
                 )
             );
+            setupAddonCardClickHandlers((productIdentifier) => {
+                console.log(`Clicked on addon card: ${productIdentifier}`);
+            });
         }
     };
 
