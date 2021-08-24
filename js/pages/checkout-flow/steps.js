@@ -55,13 +55,13 @@ const storeHasDataFromCheckoutFlowStep = (step) => {
 const getUrlForCheckoutFlowStep = (step) => {
     switch (step) {
         case CheckoutFlowStep.choosePlan: {
-            return "/checkout-landline/choose-a-plan";
+            return "checkout-landline/choose-a-plan";
         }
         case CheckoutFlowStep.account: {
-            return "/checkout-landline/account";
+            return "checkout-landline/account";
         }
         case CheckoutFlowStep.checkout: {
-            return "/checkout-landline/checkout-step";
+            return "checkout-landline/checkout-step";
         }
     }
 };
@@ -77,7 +77,11 @@ const redirectToPreviousCheckoutFlowStepIfNeeded = () => {
         }
 
         if (!storeHasDataFromCheckoutFlowStep(step)) {
-            window.location.href = stepUrl;
+            router.open(
+                stepUrl,
+                router.getParameters(),
+                router.isTestEnvironment()
+            );
             return;
         }
     }
