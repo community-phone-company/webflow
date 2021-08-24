@@ -157,7 +157,7 @@ const onReady = () => {
         })();
         
         const chargebee = new Chargebee(
-            !router.isTestEnvironment()
+            true
         );
         chargebee.checkout(
             new ChargebeeCheckoutCustomer(
