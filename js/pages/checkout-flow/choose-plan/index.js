@@ -447,9 +447,9 @@ if (router.isTestEnvironment()) {
         formData.productCart.addProductIdentifier(
             productStore.getStructure().plans.newNumber.monthlyPlanId
         );
-        formData.productCart.onPricesStartedUpdating = () => {
+        formData.productCart.onPricesStartedUpdating(() => {
             orderSummaryPanel.hide();
-        };
+        });
         formData.productCart.onPricesUpdated((error) => {
             orderSummaryPanel.update(
                 productStore,
