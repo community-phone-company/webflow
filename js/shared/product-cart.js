@@ -238,6 +238,7 @@ class ProductCartPrice {
 class ProductCartPriceTaxBreakdownItem {
 
     static fromJson = (json) => {
+        console.log("JSON: ", json);
         return new ProductCartPriceTaxBreakdownItem(
             json.name,
             json.amount
