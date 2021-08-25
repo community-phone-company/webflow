@@ -32,8 +32,6 @@ class Product {
     }
 }
 
-new Product()
-
 class ProductAddonInformation {
 
     /**

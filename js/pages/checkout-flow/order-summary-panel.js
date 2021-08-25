@@ -100,7 +100,7 @@ class OrderSummaryPanelCard {
      * @param {string | undefined} zip Zip code.
      */
     update = (products, price, zip) => {
-        const html = products
+        const productsHTML = products
             .map(product => {
                 return new OrderSummaryPanelCardProduct(
                     product
@@ -110,7 +110,19 @@ class OrderSummaryPanelCard {
                 (previous, current) => `${previous}${current}`,
                 ""
             );
-        $(this.container).find(".list-item-landline-base").html(html);
+        $(this.container).find(".list-item-landline-base").html(productsHTML);
+
+        const taxBreakdownHTML = price.taxBreakdown
+            .map(taxBreakdownItem => {
+                return new OrderSummaryPanelCardTaxBreakdownItem(
+                    taxBreakdownItem
+                );
+            })
+            .reduce(
+                (previous, current) => `${previous}${current}`,
+                ""
+            );
+        $(this.container).find(".div-sub-tax").html(taxBreakdownHTML);
 
         $(this.container).find(".zip-link").html(zip ?? "00000");
         $(this.container).find(".taxes-and-fees-value").html(`$${price.taxes}`);
@@ -162,6 +174,37 @@ class OrderSummaryPanelCardProduct {
                 </div>
                 <div class="devider-grey-1px">
                 </div>
+            </div>
+        `;
+    }
+}
+
+class OrderSummaryPanelCardTaxBreakdownItem {
+
+    /**
+     * @constructor
+     * @param {ProductCartPriceTaxBreakdownItem} priceTaxBreakdownItem 
+     */
+    constructor(priceTaxBreakdownItem) {
+        this.priceTaxBreakdownItem = priceTaxBreakdownItem;
+    }
+
+    /**
+     * @returns {string}
+     */
+    toHTML = () => {
+        return `
+            <div class="sub-tax">
+                <div id="sub-tax" class="caption-1">
+                    ${this.priceTaxBreakdownItem.name}
+                </div>
+                <div class="_w-8">
+                </div>
+                <div class="caption-1 service-tax-value">
+                    $${this.priceTaxBreakdownItem.amount}
+                </div>
+            </div>
+            <div class="devider-8px">
             </div>
         `;
     }

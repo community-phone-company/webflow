@@ -206,6 +206,7 @@ class ProductCartPrice {
         return new ProductCartPrice(
             json.subtotal ?? 0,
             json.taxes ?? 0,
+            (json.tax_breakdown ?? []).map(element => new ProductCartPriceTaxBreakdownItem(element)),
             json.total ?? 0,
             json.amount_due ?? 0
         );
@@ -215,18 +216,41 @@ class ProductCartPrice {
      * @constructor
      * @param {number} subtotal 
      * @param {number} taxes 
+     * @param {ProductCartPriceTaxBreakdownItem[]} taxBreakdown
      * @param {number} total 
      * @param {number} amountDue 
      */
     constructor(
         subtotal,
         taxes,
+        taxBreakdown,
         total,
         amountDue
     ) {
         this.subtotal = subtotal;
         this.taxes = taxes;
+        this.taxBreakdown = taxBreakdown;
         this.total = total;
         this.amountDue = amountDue;
+    }
+}
+
+class ProductCartPriceTaxBreakdownItem {
+
+    static fromJson = (json) => {
+        return new ProductCartPriceTaxBreakdownItem(
+            json.name,
+            json.amount
+        );
+    }
+
+    /**
+     * @constructor
+     * @param {string} name 
+     * @param {number} amount 
+     */
+    constructor(name, amount) {
+        this.name = name;
+        this.amount = amount;
     }
 }
