@@ -236,6 +236,8 @@ $(document).ready(() => {
                 if (isCorrect) {
                     checkCoverageVM.onCorrectAddress();
                 } else {
+                    $("#service-address .success-message-2").hide();
+                    $("#service-address #wf-form-service-address").show();
                     alert(`Zip code ${zip} is not correct.\nTry another zip code.`);
                 }
             });
