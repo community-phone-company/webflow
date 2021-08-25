@@ -208,5 +208,13 @@ $(document).ready(() => {
             $(button).off().on("click", checkCoverageButtonClickHandler);
         });
     });
+    $("#popup-start-your-service-button").on("click", (event) => {
+        event.preventDefault();
+        router.open(
+            RouterPath.checkoutLandline_choosePlan,
+            router.getParameters(),
+            router.isTestEnvironment()
+        );
+    });
     checkCoverageVM.handleDataChange();
 });
