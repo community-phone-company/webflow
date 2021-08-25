@@ -206,7 +206,7 @@ class ProductCartPrice {
         return new ProductCartPrice(
             json.subtotal ?? 0,
             json.taxes ?? 0,
-            (json.tax_breakdown ?? []).map(element => new ProductCartPriceTaxBreakdownItem(element)),
+            (json.tax_breakdown ?? []).map(element => ProductCartPriceTaxBreakdownItem.fromJson(element)),
             json.total ?? 0,
             json.amount_due ?? 0
         );
