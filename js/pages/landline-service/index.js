@@ -24,6 +24,29 @@ const checkCoverageVM = new Vue({
                 this.getSubmitButton(),
                 isFormValid
             );
+        },
+        /**
+         * @param {(isCorrect: boolean) => void} callback 
+         */
+        isAddressCorrect(callback) {
+            const _this = this;
+            
+            const billingAddress = new ProductCartBillingAddress(
+                _this.city,
+                _this.state,
+                _this.zip
+            );
+
+            const productCart = new ProductCart();
+            productCart.setBillingAddress(
+                billingAddress    
+            );
+            productCart.updatePrices((error) => {
+                const isCorrect = error == undefined;
+                callback(
+                    isCorrect
+                );
+            });
         }
     },
     watch: {
@@ -193,20 +216,43 @@ $(document).ready(() => {
             isBusiness
         );
 
-        const checkCoverageButtonTitle = "Start your service";
-        const checkCoverageButtonClickHandler = (event) => {
-            event.preventDefault();
-            $(".popup-service-address").remove();
-            router.open(
-                RouterPath.checkoutLandline_choosePlan,
-                router.getParameters(),
-                router.isTestEnvironment()
-            );
-        };
-        checkCoverageButtons.forEach(button => {
-            $(button).find("div,strong").html(checkCoverageButtonTitle);
-            $(button).off().on("click", checkCoverageButtonClickHandler);
-        });
+        if (router.isTestEnvironment()) {
+            checkCoverageVM.isAddressCorrect((isCorrect) => {
+                if (isCorrect) {
+                    const checkCoverageButtonTitle = "Start your service";
+                    const checkCoverageButtonClickHandler = (event) => {
+                        event.preventDefault();
+                        $(".popup-service-address").remove();
+                        router.open(
+                            RouterPath.checkoutLandline_choosePlan,
+                            router.getParameters(),
+                            router.isTestEnvironment()
+                        );
+                    };
+                    checkCoverageButtons.forEach(button => {
+                        $(button).find("div,strong").html(checkCoverageButtonTitle);
+                        $(button).off().on("click", checkCoverageButtonClickHandler);
+                    });
+                } else {
+                    alert(`Zip code ${zip} is not correct.\nTry another zip code.`);
+                }
+            });
+        } else {
+            const checkCoverageButtonTitle = "Start your service";
+            const checkCoverageButtonClickHandler = (event) => {
+                event.preventDefault();
+                $(".popup-service-address").remove();
+                router.open(
+                    RouterPath.checkoutLandline_choosePlan,
+                    router.getParameters(),
+                    router.isTestEnvironment()
+                );
+            };
+            checkCoverageButtons.forEach(button => {
+                $(button).find("div,strong").html(checkCoverageButtonTitle);
+                $(button).off().on("click", checkCoverageButtonClickHandler);
+            });
+        }
     });
     $("#popup-start-your-service-button").on("click", (event) => {
         event.preventDefault();
