@@ -111,7 +111,7 @@ class OrderSummaryPanelCard {
                 ""
             );
         $(this.container).find(".list-item-landline-base").html(productsHTML);
-
+        console.log(price.taxBreakdown);
         const taxBreakdownHTML = price.taxBreakdown
             .map(taxBreakdownItem => {
                 return new OrderSummaryPanelCardTaxBreakdownItem(
@@ -226,27 +226,17 @@ const findAndUpdateOrderSummaryPanel = () => {
         findOrderSummaryPanelContainer()
     );
 
-    const billingAddress = (() => {
-        if (router.isTestEnvironment) {
-            return new ProductCartBillingAddress(
-                "New York",
-                "NY",
-                "10008"
-            );
-        } else {
-            return new ProductCartBillingAddress(
-                Store.local.read(
-                    Store.keys.checkoutFlow.shippingAddress_city
-                ) ?? "",
-                Store.local.read(
-                    Store.keys.checkoutFlow.shippingAddress_state
-                ) ?? "",
-                Store.local.read(
-                    Store.keys.checkoutFlow.shippingAddress_zip
-                ) ?? ""
-            );
-        }
-    })();
+    const billingAddress = new ProductCartBillingAddress(
+        Store.local.read(
+            Store.keys.checkoutFlow.shippingAddress_city
+        ) ?? "",
+        Store.local.read(
+            Store.keys.checkoutFlow.shippingAddress_state
+        ) ?? "",
+        Store.local.read(
+            Store.keys.checkoutFlow.shippingAddress_zip
+        ) ?? ""
+    );
 
     const productCart = new ProductCart();
     productCart.setBillingAddress(
