@@ -126,7 +126,6 @@ class OrderSummaryPanelCard {
 
         $(this.container).find(".zip-link").html(zip ?? "00000");
         $(this.container).find(".taxes-and-fees-value").html(`$${price.taxes}`);
-        $(this.container).find(".service-tax-value").html(`$${price.taxes}`);
         $(this.container).find(".total-price").html(`$${price.total}`);
     }
 }
@@ -195,7 +194,7 @@ class OrderSummaryPanelCardTaxBreakdownItem {
     toHTML = () => {
         return `
             <div class="sub-tax">
-                <div id="sub-tax" class="caption-1">
+                <div class="caption-1">
                     ${this.priceTaxBreakdownItem.name}
                 </div>
                 <div class="_w-8">
