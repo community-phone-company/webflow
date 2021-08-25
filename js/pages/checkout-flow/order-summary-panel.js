@@ -116,7 +116,7 @@ class OrderSummaryPanelCard {
             .map(taxBreakdownItem => {
                 return new OrderSummaryPanelCardTaxBreakdownItem(
                     taxBreakdownItem
-                );
+                ).toHTML();
             })
             .reduce(
                 (previous, current) => `${previous}${current}`,
