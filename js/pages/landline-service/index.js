@@ -134,7 +134,11 @@ $(document).ready(() => {
                 Store.keys.checkoutFlow.shippingAddress_zip,
                 zipCode
             );
-            window.location.href = "/checkout-landline/choose-a-plan";
+            router.open(
+                RouterPath.checkoutLandline_choosePlan,
+                router.getParameters(),
+                router.isTestEnvironment()
+            );
         });
     });
 
@@ -194,7 +198,9 @@ $(document).ready(() => {
             event.preventDefault();
             $(".popup-service-address").remove();
             router.open(
-                RouterPath.checkoutLandline_choosePlan
+                RouterPath.checkoutLandline_choosePlan,
+                router.getParameters(),
+                router.isTestEnvironment()
             );
         };
         checkCoverageButtons.forEach(button => {
