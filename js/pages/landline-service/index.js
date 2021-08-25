@@ -41,6 +41,8 @@ const checkCoverageVM = new Vue({
             productCart.setBillingAddress(
                 billingAddress    
             );
+            productCart.addProductIdentifier("landline-phone-service-monthly");
+            productCart.addProductIdentifier("shipmonk-box-without-handset");
             productCart.updatePrices((error) => {
                 const isCorrect = error == undefined;
                 callback(
