@@ -138,27 +138,17 @@ const setupAddonCardClickHandlers = (handler) => {
 };
 
 if (router.isTestEnvironment()) {
-    const billingAddress = (() => {
-        if (router.isTestEnvironment) {
-            return new ProductCartBillingAddress(
-                "New York",
-                "NY",
-                "10008"
-            );
-        } else {
-            return new ProductCartBillingAddress(
-                Store.local.read(
-                    Store.keys.checkoutFlow.shippingAddress_city
-                ) ?? "",
-                Store.local.read(
-                    Store.keys.checkoutFlow.shippingAddress_state
-                ) ?? "",
-                Store.local.read(
-                    Store.keys.checkoutFlow.shippingAddress_zip
-                ) ?? ""
-            );
-        }
-    })();
+    const billingAddress = new ProductCartBillingAddress(
+        Store.local.read(
+            Store.keys.checkoutFlow.shippingAddress_city
+        ) ?? "",
+        Store.local.read(
+            Store.keys.checkoutFlow.shippingAddress_state
+        ) ?? "",
+        Store.local.read(
+            Store.keys.checkoutFlow.shippingAddress_zip
+        ) ?? ""
+    );
     const formData = {
         monthly: true,
         getNewNumber: true,
