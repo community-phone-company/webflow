@@ -3,8 +3,8 @@ class ProductCart {
     constructor() {
         this._productIdentifiers = [];
         this.amounts = {
-            dueToday: new ProductCartPrice(0, 0, 0, 0),
-            subscription: new ProductCartPrice(0, 0, 0, 0)
+            dueToday: new ProductCartPrice(0, 0, [], 0, 0),
+            subscription: new ProductCartPrice(0, 0, [], 0, 0)
         };
         this._billingAddress = undefined;
     }
