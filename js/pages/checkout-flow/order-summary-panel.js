@@ -125,8 +125,8 @@ class OrderSummaryPanelCard {
         $(this.container).find(".div-sub-tax").html(taxBreakdownHTML);
 
         $(this.container).find(".zip-link").html(zip ?? "00000");
-        $(this.container).find(".taxes-and-fees-value").html(`$${price.taxes}`);
-        $(this.container).find(".total-price").html(`$${price.total}`);
+        $(this.container).find(".taxes-and-fees-value").html(`$${Math.formatPrice(price.taxes, true)}`);
+        $(this.container).find(".total-price").html(`$${Math.formatPrice(price.total, true)}`);
     }
 }
 
@@ -166,7 +166,7 @@ class OrderSummaryPanelCardProduct {
                     <div class="_w-24">
                     </div>
                     <div class="product-price">
-                        $${this.product.pricing.getPrice()}
+                        $${Math.formatPrice(this.product.pricing.getPrice(), true)}
                     </div>
                 </div>
                 <div class="devider-16px">
@@ -200,7 +200,7 @@ class OrderSummaryPanelCardTaxBreakdownItem {
                 <div class="_w-8">
                 </div>
                 <div class="caption-1 service-tax-value">
-                    $${this.priceTaxBreakdownItem.amount}
+                    $${Math.formatPrice(this.priceTaxBreakdownItem.amount, true)}
                 </div>
             </div>
             <div class="devider-8px">
