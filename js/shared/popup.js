@@ -24,6 +24,7 @@ class Popup {
         }
 
         this._userInterface = Object.freeze({
+            background: this._container.querySelectorAll(".popup-bg-w680")[0],
             closeButton: this._container.querySelectorAll("div.title-popup .ic-close")[0],
             title: this._container.querySelectorAll(".popup-title")[0],
             body: this._container.querySelectorAll(".popup-body")[0],
@@ -133,10 +134,12 @@ class Popup {
      */
     hide = (callback) => {
         const container = this._container;
+        const background = this._userInterface.background;
         $(container)
             .stop()
             .fadeTo(300, 0, () => {
                 $(container).css("display", "none");
+                $(background).css("opacity", 1);
                 
                 if (callback) {
                     callback();
