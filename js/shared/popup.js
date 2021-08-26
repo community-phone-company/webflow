@@ -59,9 +59,11 @@ class Popup {
 
     /**
      * @param {string} title 
+     * @returns {Popup} Current {@link Popup} instance.
      */
     setTitle = (title) => {
         $(this._userInterface.title).html(title);
+        return this;
     }
 
     /**
@@ -73,40 +75,69 @@ class Popup {
 
     /**
      * @param {string} html 
+     * @returns {Popup} Current {@link Popup} instance.
      */
     setBody = (html) => {
         $(this._userInterface.body).html(html);
+        return this;
     }
 
-    show = () => {
-        $(this._container)
-            .stop()
-            .css("display", "block")
-            .fadeTo(
-                300,
-                1,
-                () => {
-                }
-            );
+    /**
+     * @returns {string}
+     */
+    getCTAButtonTitle = () => {
+        return $(this._userInterface.ctaButton).html();
     }
 
-    hide = () => {
-        const container = this._container;
-        $(container)
-            .stop()
-            .fadeTo(
-                300,
-                0,
-                () => {
-                    $(container).css("display", "none");
-                }
-            );
+    /**
+     * @param {string} title 
+     * @returns {Popup} Current {@link Popup} instance.
+     */
+    setCTAButtonTitle = (title) => {
+        $(this._userInterface.ctaButton).html(title);
+        return this;
     }
 
     /**
      * @param {() => void} handler 
+     * @returns {Popup} Current {@link Popup} instance.
      */
     onCTAButtonClicked = (handler) => {
         this._onCTAButtonClicked = handler;
+        return this;
+    }
+
+    /**
+     * @param {(() => void) | undefined} callback Function that is called when animation has finished.
+     * @returns {Popup} Current {@link Popup} instance.
+     */
+    show = (callback) => {
+        $(this._container)
+            .stop()
+            .css("display", "block")
+            .fadeTo(300, 1, () => {
+                if (callback) {
+                    callback();
+                }
+            });
+        return this;
+    }
+
+    /**
+     * @param {(() => void) | undefined} callback Function that is called when animation has finished.
+     * @returns {Popup} Current {@link Popup} instance.
+     */
+    hide = (callback) => {
+        const container = this._container;
+        $(container)
+            .stop()
+            .fadeTo(300, 0, () => {
+                $(container).css("display", "none");
+                
+                if (callback) {
+                    callback();
+                }
+            });
+        return this;
     }
 }
