@@ -52,7 +52,7 @@ class ProductStore {
         const _this = this;
         return $.ajax({
             method: "GET",
-            url: `https://staging-landline.phone.community/api/v1/billing/products`,
+            url: `https://staging-landline.phone.community/api/v1/billing/products/`,
             dataType: "json",
             data: {
             },

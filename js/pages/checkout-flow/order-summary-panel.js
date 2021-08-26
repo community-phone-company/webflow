@@ -111,7 +111,6 @@ class OrderSummaryPanelCard {
                 ""
             );
         $(this.container).find(".list-item-landline-base").html(productsHTML);
-        console.log(price.taxBreakdown);
         const taxBreakdownHTML = price.taxBreakdown
             .map(taxBreakdownItem => {
                 return new OrderSummaryPanelCardTaxBreakdownItem(

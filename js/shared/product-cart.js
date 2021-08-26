@@ -118,7 +118,7 @@ class ProductCart {
         }
 
         const request = $.ajax({
-            url: `https://staging-landline.phone.community/api/v1/billing/products/tax-estimate`,
+            url: `https://staging-landline.phone.community/api/v1/billing/products/tax-estimate/`,
             method: "POST",
             crossDomain: true,
             dataType: "json",
