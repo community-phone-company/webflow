@@ -117,6 +117,7 @@ class Popup {
      * @returns {Popup} Current {@link Popup} instance.
      */
     show = (callback) => {
+        $(this._userInterface.background).css("opacity", 1);
         $(this._container)
             .stop()
             .css("display", "block")
@@ -134,12 +135,10 @@ class Popup {
      */
     hide = (callback) => {
         const container = this._container;
-        const background = this._userInterface.background;
         $(container)
             .stop()
             .fadeTo(300, 0, () => {
                 $(container).css("display", "none");
-                $(background).css("opacity", 1);
                 
                 if (callback) {
                     callback();
