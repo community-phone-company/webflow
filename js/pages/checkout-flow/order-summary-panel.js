@@ -219,8 +219,8 @@ var _findAndUpdateOrderSummaryPanel_requests = {
     loadProducts: undefined,
     updatePrices: undefined,
     stopAllRequests() {
-        this.loadProducts.abort();
-        this.updatePrices.abort();
+        this.loadProducts && this.loadProducts.abort();
+        this.updatePrices && this.updatePrices.abort();
     }
 };
 
