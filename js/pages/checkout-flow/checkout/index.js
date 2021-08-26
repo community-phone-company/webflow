@@ -408,25 +408,22 @@ const onReady = () => {
             useShippingAddressForBilling ? form.data.shippingAddress.state : form.data.billingAddress.state
         );
 
-        exportCheckoutFlowDataToActiveCampaign(
-            (response, error, success) => {
-                console.log("Active Campaign");
-                buyProducts((message, success) => {
-                    if (success) {
-                        router.open(
-                            RouterPath.checkoutLandline_thankYou,
-                            router.getParameters(),
-                            router.isTestEnvironment()
-                        );
-                    } else {
-                        alert(message);
-                        new Popup("#popup-error-message")
-                            .setBody(message)
-                            .show();
-                    }
-                });
-            }
-        );
+        exportCheckoutFlowDataToActiveCampaign((response, error, success) => {
+            console.log("Active Campaign");
+            buyProducts((message, success) => {
+                if (success) {
+                    router.open(
+                        RouterPath.checkoutLandline_thankYou,
+                        router.getParameters(),
+                        router.isTestEnvironment()
+                    );
+                } else {
+                    new Popup("#popup-error-message")
+                        .setBody(message)
+                        .show();
+                }
+            });
+        });
     });
 
     handleFormDataChanges();
