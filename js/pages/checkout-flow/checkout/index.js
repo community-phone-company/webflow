@@ -116,7 +116,8 @@ const onReady = () => {
             isEverythingCorrect
         );
 
-        if (router.isTestEnvironment()) {
+        // TODO: Implement order summary panel update.
+        /*if (router.isTestEnvironment()) {
             billingAddressForOrderSummaryPanel = (() => {
                 if (form.data.useShippingAddressForBilling) {
                     return new ProductCartBillingAddress(
@@ -136,7 +137,7 @@ const onReady = () => {
             findAndUpdateOrderSummaryPanel(
                 billingAddressForOrderSummaryPanel
             );
-        }
+        }*/
     };
 
     /**
@@ -453,7 +454,7 @@ const onReady = () => {
     handleFormDataChanges();
 
     if (router.isTestEnvironment()) {
-        // findAndUpdateOrderSummaryPanel();
+        findAndUpdateOrderSummaryPanel();
     } else {
         const productIdentifiers = Store.local.read(
             Store.keys.checkoutFlow.selectedProductIdentifiers
