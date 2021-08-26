@@ -420,6 +420,9 @@ const onReady = () => {
                         );
                     } else {
                         alert(message);
+                        new Popup("#popup-error-message")
+                            .setBody(message)
+                            .show();
                     }
                 });
             }

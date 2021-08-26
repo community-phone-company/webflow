@@ -44,8 +44,12 @@ class Popup {
         $(this._userInterface.ctaButton).on("click", (event) => {
             event.preventDefault();
 
-            if (this._onCTAButtonClicked) {
-                this._onCTAButtonClicked();
+            if (_this._onCTAButtonClicked) {
+                _this._onCTAButtonClicked(
+                    _this
+                );
+            } else {
+                this.hide();
             }
         });
     }
@@ -99,7 +103,7 @@ class Popup {
     }
 
     /**
-     * @param {() => void} handler 
+     * @param {(popup: Popup) => void} handler 
      * @returns {Popup} Current {@link Popup} instance.
      */
     onCTAButtonClicked = (handler) => {
