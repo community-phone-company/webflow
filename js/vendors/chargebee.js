@@ -198,14 +198,8 @@ class Chargebee {
             error: function (error) {
                 console.log(`Error: ${error}`);
                 const message = (() => {
-                    var result = error && error.responseJSON && error.responseJSON.message;
-                    console.log(`response: ${error.responseJSON}`);
-
-                    if (!result) {
-                        result = "Something went wrong.\nTry again later or call us at (855) 615-0667";
-                    }
-
-                    return result;
+                    const defaultMessage = "Something went wrong.\nTry again later or call us at (855) 615-0667";
+                    return error && error.responseJSON && error.responseJSON.message_html || error.responseJSON.message || defaultMessage;
                 })();
                 callback(
                     message,
