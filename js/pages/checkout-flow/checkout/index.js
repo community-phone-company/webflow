@@ -80,6 +80,8 @@ const onReady = () => {
         }
     };
 
+    var billingAddressForOrderSummaryPanel = undefined;
+
     const handleFormDataChanges = () => {
         const isShippingAddressValid = form.data.shippingAddress.firstName.length > 0
             && form.data.shippingAddress.lastName.length > 0
@@ -113,6 +115,32 @@ const onReady = () => {
             form.elements.submitButton,
             isEverythingCorrect
         );
+
+        if (router.isTestEnvironment()) {
+            if (isBillingAddressValid) {
+                billingAddressForOrderSummaryPanel = (() => {
+                    if (form.data.useShippingAddressForBilling) {
+                        return new ProductCartBillingAddress(
+                            form.data.shippingAddress.city,
+                            form.data.shippingAddress.state,
+                            form.data.shippingAddress.zip
+                        );
+                    } else {
+                        return new ProductCartBillingAddress(
+                            form.data.billingAddress.city,
+                            form.data.billingAddress.state,
+                            form.data.billingAddress.zip
+                        );
+                    }
+                })();
+            } else {
+                billingAddressForOrderSummaryPanel = undefined;
+            }
+    
+            findAndUpdateOrderSummaryPanel(
+                billingAddressForOrderSummaryPanel
+            );
+        }
     };
 
     /**
@@ -429,7 +457,7 @@ const onReady = () => {
     handleFormDataChanges();
 
     if (router.isTestEnvironment()) {
-        findAndUpdateOrderSummaryPanel();
+        // findAndUpdateOrderSummaryPanel();
     } else {
         const productIdentifiers = Store.local.read(
             Store.keys.checkoutFlow.selectedProductIdentifiers

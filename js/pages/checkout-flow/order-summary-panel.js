@@ -215,7 +215,10 @@ const findOrderSummaryPanelContainer = () => {
     return document.querySelectorAll(".right-panel")[0];
 };
 
-const findAndUpdateOrderSummaryPanel = () => {
+/**
+ * @param {ProductCartBillingAddress | undefined} billingAddress An instance of {@link ProductCartBillingAddress} type or `undefined`.
+ */
+const findAndUpdateOrderSummaryPanel = (billingAddress) => {
     const productIdentifiers = Store.local.read(
         Store.keys.checkoutFlow.selectedProductIdentifiers
     );
@@ -224,7 +227,7 @@ const findAndUpdateOrderSummaryPanel = () => {
         findOrderSummaryPanelContainer()
     );
 
-    const billingAddress = new ProductCartBillingAddress(
+    const billingAddressToUse = billingAddress ?? new ProductCartBillingAddress(
         Store.local.read(
             Store.keys.checkoutFlow.shippingAddress_city
         ) ?? "",
@@ -238,7 +241,7 @@ const findAndUpdateOrderSummaryPanel = () => {
 
     const productCart = new ProductCart();
     productCart.setBillingAddress(
-        billingAddress
+        billingAddressToUse
     );
     productIdentifiers.forEach(productId => {
         productCart.addProductIdentifier(
