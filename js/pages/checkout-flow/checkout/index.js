@@ -117,25 +117,21 @@ const onReady = () => {
         );
 
         if (router.isTestEnvironment()) {
-            if (isBillingAddressValid) {
-                billingAddressForOrderSummaryPanel = (() => {
-                    if (form.data.useShippingAddressForBilling) {
-                        return new ProductCartBillingAddress(
-                            form.data.shippingAddress.city,
-                            form.data.shippingAddress.state,
-                            form.data.shippingAddress.zip
-                        );
-                    } else {
-                        return new ProductCartBillingAddress(
-                            form.data.billingAddress.city,
-                            form.data.billingAddress.state,
-                            form.data.billingAddress.zip
-                        );
-                    }
-                })();
-            } else {
-                billingAddressForOrderSummaryPanel = undefined;
-            }
+            billingAddressForOrderSummaryPanel = (() => {
+                if (form.data.useShippingAddressForBilling) {
+                    return new ProductCartBillingAddress(
+                        form.data.shippingAddress.city,
+                        form.data.shippingAddress.state,
+                        form.data.shippingAddress.zip
+                    );
+                } else {
+                    return new ProductCartBillingAddress(
+                        form.data.billingAddress.city,
+                        form.data.billingAddress.state,
+                        form.data.billingAddress.zip
+                    );
+                }
+            })();
     
             findAndUpdateOrderSummaryPanel(
                 billingAddressForOrderSummaryPanel

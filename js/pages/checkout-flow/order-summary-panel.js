@@ -215,6 +215,15 @@ const findOrderSummaryPanelContainer = () => {
     return document.querySelectorAll(".right-panel")[0];
 };
 
+var _findAndUpdateOrderSummaryPanel_requests = {
+    loadProducts: undefined,
+    updatePrices: undefined,
+    stopAllRequests() {
+        this.loadProducts.abort();
+        this.updatePrices.abort();
+    }
+};
+
 /**
  * @param {ProductCartBillingAddress | undefined} billingAddress An instance of {@link ProductCartBillingAddress} type or `undefined`.
  */
@@ -251,9 +260,11 @@ const findAndUpdateOrderSummaryPanel = (billingAddress) => {
 
     orderSummaryPanel.setActive(false, true);
 
+    _findAndUpdateOrderSummaryPanel_requests.stopAllRequests();
+
     const productStore = ProductStore.getDefault();
-    productStore.loadProducts((error) => {
-        productCart.updatePrices((error) => {
+    _findAndUpdateOrderSummaryPanel_requests.loadProducts = productStore.loadProducts((error) => {
+        _findAndUpdateOrderSummaryPanel_requests.updatePrices = productCart.updatePrices((error) => {
             orderSummaryPanel.update(
                 productStore,
                 productCart
