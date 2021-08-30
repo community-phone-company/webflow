@@ -114,18 +114,22 @@ const onReady = () => {
             && form.data.paymentDetails.cardExpiry.length > 0
             && form.data.paymentDetails.cardVerificationValue.length >= 3;
         
-        const isPricingValid = form.pricing.productCart
-            && form.pricing.productCart.amounts.dueToday != undefined
-            && form.pricing.productCart.amounts.subscription != undefined;
+        const isPricingValid = () => {
+            return form.pricing.productCart
+                && form.pricing.productCart.amounts.dueToday != undefined
+                && form.pricing.productCart.amounts.subscription != undefined;
+        };
         
-        const isEverythingCorrect = isShippingAddressValid
-            && isBillingAddressValid
-            && isPaymentDetailsValid
-            && isPricingValid;
+        const isEverythingCorrect = () => {
+            return isShippingAddressValid
+                && isBillingAddressValid
+                && isPaymentDetailsValid
+                && isPricingValid();
+        };
         
         UserInterface.setElementEnabled(
             form.elements.submitButton,
-            isEverythingCorrect
+            isEverythingCorrect()
         );
 
         if (router.isTestEnvironment()) {
@@ -154,6 +158,11 @@ const onReady = () => {
                     (orderSummaryPanel, productStore, productCart) => {
                         form.pricing.productStore = productStore;
                         form.pricing.productCart = productCart;
+                        
+                        UserInterface.setElementEnabled(
+                            form.elements.submitButton,
+                            isEverythingCorrect()
+                        );
                     }
                 );
                 billingAddressForOrderSummaryPanel = newBillingAddressForOrderSummaryPanel;
