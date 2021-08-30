@@ -235,8 +235,9 @@ var _findAndUpdateOrderSummaryPanel_requests = {
 
 /**
  * @param {ProductCartBillingAddress | undefined} billingAddress An instance of {@link ProductCartBillingAddress} type or `undefined`.
+ * @param {((orderSummaryPanel: OrderSummaryPanel, productStore: ProductStore, productCart: ProductCart) => void) | undefined} onFinished
  */
-const findAndUpdateOrderSummaryPanel = (billingAddress) => {
+const findAndUpdateOrderSummaryPanel = (billingAddress, onFinished) => {
     const productIdentifiers = Store.local.read(
         Store.keys.checkoutFlow.selectedProductIdentifiers
     );
@@ -279,6 +280,14 @@ const findAndUpdateOrderSummaryPanel = (billingAddress) => {
                 productCart
             );
             orderSummaryPanel.setActive(true, true);
+
+            if (onFinished) {
+                onFinished(
+                    orderSummaryPanel,
+                    productStore,
+                    productCart
+                );
+            }
         });
     });
 };
