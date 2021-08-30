@@ -114,17 +114,22 @@ const onReady = () => {
             && form.data.paymentDetails.cardExpiry.length > 0
             && form.data.paymentDetails.cardVerificationValue.length >= 3;
         
-        const isPricingValid = () => {
-            return form.pricing.productCart
-                && form.pricing.productCart.amounts.dueToday != undefined
-                && form.pricing.productCart.amounts.subscription != undefined;
-        };
-        
         const isEverythingCorrect = () => {
-            return isShippingAddressValid
-                && isBillingAddressValid
-                && isPaymentDetailsValid
-                && isPricingValid();
+            if (router.isTestEnvironment()) {
+                const isPricingValid = () => {
+                    return form.pricing.productCart
+                        && form.pricing.productCart.amounts.dueToday != undefined
+                        && form.pricing.productCart.amounts.subscription != undefined;
+                };
+                return isShippingAddressValid
+                    && isBillingAddressValid
+                    && isPaymentDetailsValid
+                    && isPricingValid();
+            } else {
+                return isShippingAddressValid
+                    && isBillingAddressValid
+                    && isPaymentDetailsValid;
+            }
         };
         
         UserInterface.setElementEnabled(
