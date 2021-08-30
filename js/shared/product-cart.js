@@ -147,6 +147,9 @@ class ProductCart {
             error: function (error) {
                 console.log(`Error: `, error);
 
+                _this.amounts.dueToday = undefined;
+                _this.amounts.subscription = undefined;
+
                 if (callback) {
                     callback(error);
                 }

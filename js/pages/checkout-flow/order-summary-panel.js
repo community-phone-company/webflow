@@ -96,10 +96,12 @@ class OrderSummaryPanelCard {
 
     /**
      * @param {Product[]} products Products.
-     * @param {ProductCartPrice} price Price.
+     * @param {ProductCartPrice | undefined} price Price.
      * @param {string | undefined} zip Zip code.
      */
     update = (products, price, zip) => {
+        const noPricePlaceholder = "---";
+
         const productsHTML = products
             .map(product => {
                 return new OrderSummaryPanelCardProduct(
@@ -111,21 +113,28 @@ class OrderSummaryPanelCard {
                 ""
             );
         $(this.container).find(".list-item-landline-base").html(productsHTML);
-        const taxBreakdownHTML = price.taxBreakdown
-            .map(taxBreakdownItem => {
-                return new OrderSummaryPanelCardTaxBreakdownItem(
-                    taxBreakdownItem
-                ).toHTML();
-            })
-            .reduce(
-                (previous, current) => `${previous}${current}`,
-                ""
-            );
-        $(this.container).find(".div-sub-tax").html(taxBreakdownHTML);
 
-        $(this.container).find(".zip-link").html(zip ?? "00000");
-        $(this.container).find(".taxes-and-fees-value").html(`$${Math.formatPrice(price.taxes, true)}`);
-        $(this.container).find(".total-price").html(`$${Math.formatPrice(price.total, true)}`);
+        $(this.container).find(".zip-link").html(zip ?? noPricePlaceholder);
+        
+        if (price) {
+            const taxBreakdownHTML = price.taxBreakdown
+                .map(taxBreakdownItem => {
+                    return new OrderSummaryPanelCardTaxBreakdownItem(
+                        taxBreakdownItem
+                    ).toHTML();
+                })
+                .reduce(
+                    (previous, current) => `${previous}${current}`,
+                    ""
+                );
+            $(this.container).find(".div-sub-tax").html(taxBreakdownHTML);
+            $(this.container).find(".taxes-and-fees-value").html(`$${Math.formatPrice(price.taxes, true)}`);
+            $(this.container).find(".total-price").html(`$${Math.formatPrice(price.total, true)}`);
+        } else {
+            $(this.container).find(".div-sub-tax").html(``);
+            $(this.container).find(".taxes-and-fees-value").html(noPricePlaceholder);
+            $(this.container).find(".total-price").html(noPricePlaceholder);
+        }
     }
 }
 
