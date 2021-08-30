@@ -146,7 +146,7 @@ class ProductCart {
             },
             error: function (error) {
                 console.log(`Error: `, error);
-                
+
                 if (callback) {
                     callback(error);
                 }
@@ -193,6 +193,16 @@ class ProductCartBillingAddress {
         this.city = city;
         this.stateCode = stateCode;
         this.zip = zip;
+    }
+
+    /**
+     * @param {ProductCartBillingAddress} address 
+     * @returns {boolean}
+     */
+    equalsTo = (address) => {
+        return this.city === address.city
+            && this.stateCode === address.stateCode
+            && this.zip === address.zip;
     }
 }
 

@@ -82,7 +82,10 @@ const onReady = () => {
 
     var billingAddressForOrderSummaryPanel = undefined;
 
-    const handleFormDataChanges = () => {
+    /**
+     * @param {boolean} updateOrderSummaryPanel 
+     */
+    const handleFormDataChanges = (updateOrderSummaryPanel) => {
         const isShippingAddressValid = form.data.shippingAddress.firstName.length > 0
             && form.data.shippingAddress.lastName.length > 0
             && form.data.shippingAddress.addressLineOne.length > 0
@@ -116,9 +119,8 @@ const onReady = () => {
             isEverythingCorrect
         );
 
-        // TODO: Implement order summary panel update.
-        /*if (router.isTestEnvironment()) {
-            billingAddressForOrderSummaryPanel = (() => {
+        if (router.isTestEnvironment()) {
+            const newBillingAddressForOrderSummaryPanel = (() => {
                 if (form.data.useShippingAddressForBilling) {
                     return new ProductCartBillingAddress(
                         form.data.shippingAddress.city,
@@ -133,11 +135,17 @@ const onReady = () => {
                     );
                 }
             })();
+            const shouldUpdateOrderSummaryPanel = billingAddressForOrderSummaryPanel
+                ? !billingAddressForOrderSummaryPanel.equalsTo(newBillingAddressForOrderSummaryPanel)
+                : true;
     
-            findAndUpdateOrderSummaryPanel(
-                billingAddressForOrderSummaryPanel
-            );
-        }*/
+            if (shouldUpdateOrderSummaryPanel) {
+                findAndUpdateOrderSummaryPanel(
+                    newBillingAddressForOrderSummaryPanel
+                );
+                billingAddressForOrderSummaryPanel = newBillingAddressForOrderSummaryPanel;
+            }
+        }
     };
 
     /**
@@ -454,7 +462,7 @@ const onReady = () => {
     handleFormDataChanges();
 
     if (router.isTestEnvironment()) {
-        findAndUpdateOrderSummaryPanel();
+        // findAndUpdateOrderSummaryPanel();
     } else {
         const productIdentifiers = Store.local.read(
             Store.keys.checkoutFlow.selectedProductIdentifiers
