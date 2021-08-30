@@ -212,7 +212,7 @@ const onReady = () => {
         })();
         
         const chargebee = new Chargebee(
-            true
+            !router.isTestEnvironment()
         );
         chargebee.checkout(
             new ChargebeeCheckoutCustomer(
