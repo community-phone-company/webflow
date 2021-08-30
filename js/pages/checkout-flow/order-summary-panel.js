@@ -114,7 +114,7 @@ class OrderSummaryPanelCard {
             );
         $(this.container).find(".list-item-landline-base").html(productsHTML);
 
-        $(this.container).find(".zip-link").html(zip ?? noPricePlaceholder);
+        $(this.container).find(".div-based-on-zipcode .zip-code-div").html(zip ?? noPricePlaceholder);
         
         if (price) {
             const taxBreakdownHTML = price.taxBreakdown
