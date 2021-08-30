@@ -150,7 +150,11 @@ const onReady = () => {
     
             if (shouldUpdateOrderSummaryPanel) {
                 findAndUpdateOrderSummaryPanel(
-                    newBillingAddressForOrderSummaryPanel
+                    newBillingAddressForOrderSummaryPanel,
+                    (orderSummaryPanel, productStore, productCart) => {
+                        form.pricing.productStore = productStore;
+                        form.pricing.productCart = productCart;
+                    }
                 );
                 billingAddressForOrderSummaryPanel = newBillingAddressForOrderSummaryPanel;
             }
