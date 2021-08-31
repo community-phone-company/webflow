@@ -117,14 +117,14 @@ class CommunityPhoneAPI {
             data: data,
             contentType: "application/json; charset=utf-8",
             success: function (response) {
-                console(`Response from URL ${url}: `, response);
+                console.log(`Response from URL ${url}: `, response);
                 callback(
                     response,
                     undefined
                 );
             },
             error: function (error) {
-                console(`Error from URL ${url}: `, error);
+                console.log(`Error from URL ${url}: `, error);
                 callback(
                     undefined,
                     error
