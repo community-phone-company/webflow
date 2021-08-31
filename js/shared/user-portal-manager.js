@@ -42,10 +42,32 @@ class UserPortalManager {
      * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
      */
     requestAuthorizationCode = (email, callback) => {
-        const api = IS_PRODUCTION
-            ? CommunityPhoneAPI.productionWithLatestVersion()
-            : CommunityPhoneAPI.stagingWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
         const data = {
+            email: email
+        };
+        api.jsonRequest(
+            CommunityPhoneAPI.endpoints.auth_email,
+            "POST",
+            data,
+            (response, error) => {
+                callback(
+                    error,
+                    api
+                );
+            }
+        );
+    }
+
+    /**
+     * @param {string} code 
+     * @param {string} email 
+     * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
+     */
+    sendAuthorizationCode = (code, email, callback) => {
+        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const data = {
+            token: code,
             email: email
         };
         api.jsonRequest(

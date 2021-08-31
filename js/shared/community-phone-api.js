@@ -16,6 +16,10 @@ class CommunityPhoneAPI {
 
     static latestVersion = "1";
 
+    /**
+     * Creates new {@link CommunityPhoneAPI} instance with production mode and latest API version.
+     * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
+     */
     static productionWithLatestVersion = () => {
         return new CommunityPhoneAPI(
             "production",
@@ -23,11 +27,29 @@ class CommunityPhoneAPI {
         );
     }
 
+    /**
+     * Creates new {@link CommunityPhoneAPI} instance with staging mode and latest API version.
+     * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
+     */
     static stagingWithLatestVersion = () => {
         return new CommunityPhoneAPI(
             "staging",
             this.latestVersion
         );
+    }
+
+    /**
+     * Checks {@link IS_PRODUCTION} value and creates new {@link CommunityPhoneAPI} instance
+     * with appropriate mode and latest API version.
+     * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
+     */
+    static currentEnvironmentWithLatestVersion = () => {
+        if (IS_PRODUCTION) {
+            return new CommunityPhoneAPI(
+                "production",
+                this.latestVersion
+            );
+        }
     }
 
     /**
@@ -109,5 +131,7 @@ class CommunityPhoneAPI {
 }
 
 CommunityPhoneAPI.endpoints = Object.freeze({
-    auth_email: "auth/email"
+    auth_email: "auth/email",
+    auth_token: "auth/token",
+    portal_billing: "portal/billing"
 });
