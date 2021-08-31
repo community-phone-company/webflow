@@ -49,5 +49,5 @@ if (IS_PRODUCTION) {
  * Remove Chargebee link on production.
  */
 UserPortalManager.getDefault().setLinkVisible(
-    !router.isTestEnvironment()
+    !IS_PRODUCTION
 );
