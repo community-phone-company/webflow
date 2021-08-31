@@ -106,10 +106,10 @@ class CommunityPhoneAPI {
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
     jsonRequest = (endpoint, method, headers, data, callback) => {
-        console.log(`Sending request\nURL: ${url}\nmethod: ${method}\nheaders: ${headers}\ndata: ${data}`);
         const url = this.getAbsoluteUrl(
             endpoint
         );
+        console.log(`Sending request\nURL: ${url}\nmethod: ${method}\nheaders: ${headers}\ndata: ${data}`);
         return $.ajax({
             url: url,
             method: method,
