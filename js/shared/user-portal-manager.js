@@ -20,21 +20,17 @@ class UserPortalManager {
     }
 
     /**
-     * @param {boolean} visible 
+     * @returns {HTMLElement | undefined}
      */
-    setLinkVisible = (visible) => {
-        const link = document.querySelectorAll(".user-portal-v1")[0];
-
-        if (link) {
-            visible ? $(link).show() : $(link).hide();
-        }
+    getUserPortalLink = () => {
+        return document.querySelectorAll(".user-portal-v1")[0];
     }
 
     /**
      * @returns {Popup}
      */
     getCreateAccountPopup = () => {
-        return new Popup(".login-user-portal");
+        return new Popup("#user-portal-login-popup");
     }
 
     /**

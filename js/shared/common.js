@@ -48,6 +48,10 @@ if (IS_PRODUCTION) {
 /**
  * Remove Chargebee link on production.
  */
-UserPortalManager.getDefault().setLinkVisible(
-    !IS_PRODUCTION
-);
+if (IS_PRODUCTION) {
+    const userPortalLink = UserPortalManager.getDefault().getUserPortalLink();
+
+    if (userPortalLink) {
+        $(userPortalLink).remove();
+    }
+}
