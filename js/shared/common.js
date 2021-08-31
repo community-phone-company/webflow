@@ -48,6 +48,6 @@ if (IS_PRODUCTION) {
 /**
  * Remove Chargebee link on production.
  */
-if (IS_PRODUCTION) {
-    $(".user-portal-v1").remove();
-}
+UserPortalManager.getDefault().setLinkVisible(
+    !router.isTestEnvironment()
+);
