@@ -114,7 +114,7 @@ class CommunityPhoneAPI {
             url: url,
             method: method,
             headers: headers,
-            data: data,
+            data: data ? JSON.stringify(data) : undefined,
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 console.log(`Response from URL ${url}: `, response);
