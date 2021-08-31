@@ -39,7 +39,7 @@ class UserPortalManager {
 
     /**
      * @param {string} email 
-     * @param {(error: any) => void} callback 
+     * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
      */
     requestAuthorizationCode = (email, callback) => {
         const api = IS_PRODUCTION
@@ -53,11 +53,10 @@ class UserPortalManager {
             "POST",
             data,
             (response, error) => {
-                if (error) {
-                    const errorMessage = api.getErrorMessage(error, true) ?? api.getErrorMessage(error, false);
-                    alert(errorMessage);
-                } else {
-                }
+                callback(
+                    error,
+                    api
+                );
             }
         );
     }
