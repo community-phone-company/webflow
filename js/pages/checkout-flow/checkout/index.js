@@ -36,6 +36,9 @@ const onReady = () => {
                 document.getElementById("different-billing-address-switcher"),
                 true
             ),
+            differentBillingAddressLabel: document.getElementById(
+                "different-billing-address-label"
+            ),
             billingAddress: {
                 firstNameInput: document.getElementById("billing-address-first-name-input"),
                 lastNameInput: document.getElementById("billing-address-last-name-input"),
@@ -90,6 +93,12 @@ const onReady = () => {
      * @param {boolean} updateOrderSummaryPanel 
      */
     const handleFormDataChanges = (updateOrderSummaryPanel) => {
+        $(form.elements.differentBillingAddressLabel).html(
+            form.data.useShippingAddressForBilling
+                ? "Click here if billing address different from shipping"
+                : "Click here if billing address is the same as shipping address"
+        );
+
         const isShippingAddressValid = form.data.shippingAddress.firstName.length > 0
             && form.data.shippingAddress.lastName.length > 0
             && form.data.shippingAddress.addressLineOne.length > 0
