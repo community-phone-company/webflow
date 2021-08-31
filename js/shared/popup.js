@@ -56,6 +56,14 @@ class Popup {
     }
 
     /**
+     * Container.
+     * @returns `HTMLElement` instance.
+     */
+    getContainer = () => {
+        return this._container;
+    }
+
+    /**
      * @returns {string}
      */
     getTitle = () => {
