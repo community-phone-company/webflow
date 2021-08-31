@@ -126,4 +126,13 @@ class UserPortalManager {
             }
         );
     }
+
+    setup = () => {
+        const popup = this.getCreateAccountPopup();
+        $(this.getUserPortalLink()).on("click", (event) => {
+            event.preventDefault();
+            popup.show();
+            console.log("Open user portal popup");
+        });
+    }
 }

@@ -54,4 +54,6 @@ if (IS_PRODUCTION) {
     if (userPortalLink) {
         $(userPortalLink).remove();
     }
+} else {
+    UserPortalManager.getDefault().setup();
 }
