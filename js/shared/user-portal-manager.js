@@ -40,15 +40,17 @@ class UserPortalManager {
     /**
      * @param {string} email 
      * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
+     * @returns {XMLHttpRequest | undefined} Request instance.
      */
     requestAuthorizationCode = (email, callback) => {
         const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
         const data = {
             email: email
         };
-        api.jsonRequest(
+        return api.jsonRequest(
             CommunityPhoneAPI.endpoints.auth_email,
             "POST",
+            undefined,
             data,
             (response, error) => {
                 callback(
@@ -62,7 +64,8 @@ class UserPortalManager {
     /**
      * @param {string} code 
      * @param {string} email 
-     * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
+     * @param {(authorizationToken: string | undefined, error: any, api: CommunityPhoneAPI) => void} callback 
+     * @returns {XMLHttpRequest | undefined} Request instance.
      */
     sendAuthorizationCode = (code, email, callback) => {
         const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
@@ -70,15 +73,60 @@ class UserPortalManager {
             token: code,
             email: email
         };
-        api.jsonRequest(
-            CommunityPhoneAPI.endpoints.auth_email,
+        return api.jsonRequest(
+            CommunityPhoneAPI.endpoints.auth_token,
             "POST",
+            undefined,
             data,
             (response, error) => {
-                callback(
-                    error,
-                    api
-                );
+                if (error) {
+                    callback(
+                        undefined,
+                        error,
+                        api
+                    );
+                } else {
+                    const authorizationToken = response && response.token;
+                    callback(
+                        authorizationToken,
+                        undefined,
+                        api
+                    );
+                }
+            }
+        );
+    }
+
+    /**
+     * @param {string} authorizationToken 
+     * @param {(accessUrl: string | undefined, error: any, api: CommunityPhoneAPI) => void} callback 
+     * @returns {XMLHttpRequest | undefined} Request instance.
+     */
+    getAccessUrl = (authorizationToken, callback) => {
+        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const headers = {
+            "Authorization": authorizationToken
+        };
+        return api.jsonRequest(
+            CommunityPhoneAPI.endpoints.auth_token,
+            "POST",
+            headers,
+            undefined,
+            (response, error) => {
+                if (error) {
+                    callback(
+                        undefined,
+                        error,
+                        api
+                    );
+                } else {
+                    const accessUrl = response && response.access_url;
+                    callback(
+                        accessUrl,
+                        undefined,
+                        api
+                    );
+                }
             }
         );
     }

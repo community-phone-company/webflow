@@ -100,16 +100,18 @@ class CommunityPhoneAPI {
     }
 
     /**
-     * @param {string} relativePath 
+     * @param {string} endpoint 
      * @param {"GET" | "POST" | "PUT" | "UPDATE" | "OPTIONS" | "DELETE"} method
+     * @param {any} headers
      * @param {any} data 
      * @param {(response: any, error: any) => void} callback 
+     * @returns {XMLHttpRequest | undefined} Request instance.
      */
-    jsonRequest = (relativePath, method, data, callback) => {
+    jsonRequest = (endpoint, method, headers, data, callback) => {
         const url = this.getAbsoluteUrl(
-            relativePath
+            endpoint
         );
-        $.ajax({
+        return $.ajax({
             url: url,
             method: method,
             data: data,
@@ -127,6 +129,16 @@ class CommunityPhoneAPI {
                 );
             }
         });
+    }
+}
+
+CommunityPhoneAPI.Request = class {
+
+    constructor() {
+        this.endpoint = "";
+        this.method = "GET"
+        this.headers = undefined;
+        this.data = undefined;
     }
 }
 
