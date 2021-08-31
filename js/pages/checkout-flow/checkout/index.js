@@ -478,7 +478,7 @@ const onReady = () => {
                         router.isTestEnvironment()
                     );
                 } else {
-                    new Popup("#popup-error-message")
+                    new Popup("#popup-basic")
                         .setBody(message)
                         .show();
                 }

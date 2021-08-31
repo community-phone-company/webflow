@@ -24,8 +24,8 @@ class Popup {
         }
 
         this._userInterface = Object.freeze({
-            background: this._container.querySelectorAll(".fade div")[0],
-            closeButton: this._container.querySelectorAll("div.title-popup .ic-close")[0],
+            background: this._container.querySelectorAll(".fade div.popup-bg")[0],
+            closeButton: this._container.querySelectorAll(".ic-close")[0],
             title: this._container.querySelectorAll(".popup-title")[0],
             body: this._container.querySelectorAll(".popup-body")[0],
             ctaButton: this._container.querySelectorAll(".popup-cta-button")[0]
