@@ -128,6 +128,8 @@ class UserPortalManager {
     }
 
     setup = () => {
+        const _this = this;
+
         const popup = this.getCreateAccountPopup();
         $(this.getUserPortalLink()).on("click", (event) => {
             event.preventDefault();
@@ -171,6 +173,13 @@ class UserPortalManager {
 
         $(elements.steps.one.ctaButton).on("click", (event) => {
             event.preventDefault();
+            
+            const email = $(elements.steps.one.emailInput).val();
+            _this.requestAuthorizationCode(
+                email,
+                (error, api) => {
+                }
+            );
         });
 
         $(elements.steps.two.ctaButton).on("click", (event) => {
