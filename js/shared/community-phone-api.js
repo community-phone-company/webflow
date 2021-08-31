@@ -44,12 +44,10 @@ class CommunityPhoneAPI {
      * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
      */
     static currentEnvironmentWithLatestVersion = () => {
-        if (IS_PRODUCTION) {
-            return new CommunityPhoneAPI(
-                "production",
-                this.latestVersion
-            );
-        }
+        return new CommunityPhoneAPI(
+            IS_PRODUCTION ? "production" : "staging",
+            this.latestVersion
+        );
     }
 
     /**
