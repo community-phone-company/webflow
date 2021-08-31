@@ -100,7 +100,7 @@ class OrderSummaryPanelCard {
      * @param {string | undefined} zip Zip code.
      */
     update = (products, price, zip) => {
-        const noPricePlaceholder = "---";
+        const noDataPlaceholder = "---";
 
         const productsHTML = products
             .map(product => {
@@ -114,7 +114,9 @@ class OrderSummaryPanelCard {
             );
         $(this.container).find(".list-item-landline-base").html(productsHTML);
 
-        $(this.container).find(".div-based-on-zipcode .zip-code-div").html(zip ?? noPricePlaceholder);
+        $(this.container).find(".div-based-on-zipcode .zip-code-div").html(
+            (zip ?? "").length ? zip : noDataPlaceholder
+        );
         
         if (price) {
             const taxBreakdownHTML = price.taxBreakdown
@@ -132,8 +134,8 @@ class OrderSummaryPanelCard {
             $(this.container).find(".total-price").html(`$${Math.formatPrice(price.total, true)}`);
         } else {
             $(this.container).find(".div-sub-tax").html(``);
-            $(this.container).find(".taxes-and-fees-value").html(noPricePlaceholder);
-            $(this.container).find(".total-price").html(noPricePlaceholder);
+            $(this.container).find(".taxes-and-fees-value").html(noDataPlaceholder);
+            $(this.container).find(".total-price").html(noDataPlaceholder);
         }
     }
 }
