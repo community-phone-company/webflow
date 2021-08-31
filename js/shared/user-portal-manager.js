@@ -36,4 +36,29 @@ class UserPortalManager {
     getCreateAccountPopup = () => {
         return new Popup(".login-user-portal");
     }
+
+    /**
+     * @param {string} email 
+     * @param {(error: any) => void} callback 
+     */
+    requestAuthorizationCode = (email, callback) => {
+        const api = IS_PRODUCTION
+            ? CommunityPhoneAPI.productionWithLatestVersion()
+            : CommunityPhoneAPI.stagingWithLatestVersion();
+        const data = {
+            email: email
+        };
+        api.jsonRequest(
+            CommunityPhoneAPI.endpoints.auth_email,
+            "POST",
+            data,
+            (response, error) => {
+                if (error) {
+                    const errorMessage = api.getErrorMessage(error, true) ?? api.getErrorMessage(error, false);
+                    alert(errorMessage);
+                } else {
+                }
+            }
+        );
+    }
 }
