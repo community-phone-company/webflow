@@ -477,6 +477,11 @@ const onReady = () => {
             useShippingAddressForBilling ? form.data.shippingAddress.state : form.data.billingAddress.state
         );
 
+        UserInterface.setElementEnabled(
+            form.elements.submitButton,
+            false
+        );
+
         exportCheckoutFlowDataToActiveCampaign((response, error, success) => {
             console.log("Active Campaign");
             buyProducts((message, success) => {
@@ -490,6 +495,10 @@ const onReady = () => {
                     new Popup("#popup-basic")
                         .setBody(message)
                         .show();
+                    UserInterface.setElementEnabled(
+                        form.elements.submitButton,
+                        true
+                    );
                 }
             });
         });
