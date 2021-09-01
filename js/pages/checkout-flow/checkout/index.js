@@ -12,10 +12,6 @@ const makeAddressTextField = (textField) => {
 
 var clipboard = new ClipboardJS('.btn');
 
-const PageSettings = Object.freeze({
-    minimumTimeIntervalBetweenSubmits: 2000
-});
-
 const onReady = () => {
 
     console.log(`On ready`);
@@ -402,20 +398,8 @@ const onReady = () => {
         event.preventDefault();
     });
 
-    var lastSubmitTimestamp = undefined;
-
     $(form.elements.submitButton).on("click", (event) => {
         event.preventDefault();
-
-        const currentTimestamp = Date.now();
-
-        if (lastSubmitTimestamp) {
-            const timeIntervalSinceLastSubmit = currentTimestamp - lastSubmitTimestamp;
-
-            if (timeIntervalSinceLastSubmit < PageSettings.minimumTimeIntervalBetweenSubmits) {
-                return;
-            }
-        }
 
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_firstName,
