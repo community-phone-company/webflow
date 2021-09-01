@@ -181,6 +181,16 @@ const onReady = () => {
     };
 
     /**
+     * @param {boolean} available 
+     */
+    const setCheckoutFormAvailable = (available) => {
+        $("#Checkout-form").css(
+            "pointer-events",
+            available ? "" : "none"
+        );
+    };
+
+    /**
      * @param {(message: string, success: boolean) => void} callback 
      */
     const buyProducts = (callback) => {
@@ -465,6 +475,9 @@ const onReady = () => {
             form.elements.submitButton,
             false
         );
+        setCheckoutFormAvailable(
+            false
+        );
 
         exportCheckoutFlowDataToActiveCampaign((response, error, success) => {
             console.log("Active Campaign");
@@ -482,6 +495,9 @@ const onReady = () => {
                         .show();
                     UserInterface.setElementEnabled(
                         form.elements.submitButton,
+                        true
+                    );
+                    setCheckoutFormAvailable(
                         true
                     );
                 }
