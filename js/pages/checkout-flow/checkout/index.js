@@ -470,6 +470,7 @@ const onReady = () => {
             console.log("Active Campaign");
             buyProducts((message, success) => {
                 if (success) {
+                    removeCheckoutFlowDataFromStorage();
                     router.open(
                         RouterPath.checkoutLandline_thankYou,
                         router.getParameters(),
@@ -500,6 +501,16 @@ const onReady = () => {
             productIdentifiers
         );
     }
+};
+
+const removeCheckoutFlowDataFromStorage = () => {
+    const storeKeys = Object.keys(CheckoutFlowStoreKey).map(key => CheckoutFlowStoreKey[key]);
+    storeKeys.forEach(key => {
+        Store.local.write(
+            key,
+            undefined
+        );
+    });
 };
 
 onReady();
