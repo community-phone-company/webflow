@@ -10,6 +10,38 @@ if (IS_PRODUCTION) {
 }
 
 /**
+ * Write current URL to the storage and check previous URL.
+ */
+(() => {
+    const lastUrlStoreKey = "last-url";
+    const previousPage = Store.local.read(
+        lastUrlStoreKey
+    );
+    Store.local.write(
+        lastUrlStoreKey,
+        window.location.href
+    );
+
+    if (previousPage) {
+        /**
+         * If the previous page was the last page of checkout flow,
+         * redirect to landline page.
+         */
+        const finishedCheckoutFlow = previousPage.endsWith(
+            RouterPath.checkoutLandline_thankYou
+        );
+
+        if (finishedCheckoutFlow) {
+            router.open(
+                RouterPath.landlineService,
+                router.getParameters(),
+                router.isTestEnvironment()
+            );
+        }
+    }
+})();
+
+/**
  * Send user ID and other information to Hotjar.
  * Works on production domain for pages that are not included in the `test-environment` folder.
  */
@@ -48,12 +80,16 @@ if (IS_PRODUCTION) {
 /**
  * Remove Chargebee link on production.
  */
-if (IS_PRODUCTION) {
-    const userPortalLink = UserPortalManager.getDefault().getUserPortalLink();
-
-    if (userPortalLink) {
-        $(userPortalLink).remove();
+(() => {
+    if (IS_PRODUCTION) {
+        const userPortalLink = UserPortalManager.getDefault().getUserPortalLink();
+    
+        if (userPortalLink) {
+            $(userPortalLink).remove();
+        }
+    } else {
+        if (UserPortalManager.isSupported()) {
+            UserPortalManager.getDefault().setup();
+        }
     }
-} else {
-    UserPortalManager.getDefault().setup();
-}
+})();

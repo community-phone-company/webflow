@@ -14,6 +14,15 @@ class UserPortalManager {
     }
 
     /**
+     * @returns {boolean}
+     */
+    static isSupported = () => {
+        const hasLink = document.querySelectorAll(".user-portal-v1").length > 0;
+        const hasPopup = document.querySelectorAll("#user-portal-login-popup").length > 0;
+        return hasLink && hasPopup;
+    }
+
+    /**
      * @constructor
      */
     constructor() {

@@ -134,16 +134,6 @@ class CommunityPhoneAPI {
     }
 }
 
-CommunityPhoneAPI.Request = class {
-
-    constructor() {
-        this.endpoint = "";
-        this.method = "GET"
-        this.headers = undefined;
-        this.data = undefined;
-    }
-}
-
 CommunityPhoneAPI.endpoints = Object.freeze({
     auth_email: "auth/email",
     auth_token: "auth/token",
