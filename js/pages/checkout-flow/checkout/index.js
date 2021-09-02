@@ -49,7 +49,8 @@ const onReady = () => {
                 cardExpiryInput: document.getElementById("card_expiry"),
                 cardVerificationValueInput: document.getElementById("card_cvv")
             },
-            submitButton: document.getElementById("submit-button")
+            submitButton: document.getElementById("submit-button"),
+            submitButtonAnimation: document.getElementById("submit-button-animation")
         },
         data: {
             shippingAddress: {
@@ -471,10 +472,8 @@ const onReady = () => {
             useShippingAddressForBilling ? form.data.shippingAddress.state : form.data.billingAddress.state
         );
 
-        UserInterface.setElementEnabled(
-            form.elements.submitButton,
-            false
-        );
+        $(form.elements.submitButton).hide();
+        $(form.elements.submitButtonAnimation).show();
         setCheckoutFormAvailable(
             false
         );
@@ -493,10 +492,8 @@ const onReady = () => {
                     new Popup("#popup-basic")
                         .setBody(message)
                         .show();
-                    UserInterface.setElementEnabled(
-                        form.elements.submitButton,
-                        true
-                    );
+                    $(form.elements.submitButton).show();
+                    $(form.elements.submitButtonAnimation).hide();
                     setCheckoutFormAvailable(
                         true
                     );
