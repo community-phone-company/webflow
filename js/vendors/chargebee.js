@@ -198,7 +198,7 @@ class Chargebee {
             error: function (error) {
                 const message = (() => {
                     const defaultMessage = "Something went wrong.\nTry again later or call us at (855) 615-0667";
-                    return error && error.responseJSON && error.responseJSON.message_html || error.responseJSON.message || defaultMessage;
+                    return error && error.responseJSON && (error.responseJSON.message_html || error.responseJSON.message || defaultMessage);
                 })();
                 callback(
                     message,
