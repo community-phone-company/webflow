@@ -204,7 +204,10 @@ class UserPortalManager {
                 }
             }
         };
-        const defaultErrorMessage = `There has been a problem. Contact our customer support at <a href="tel:8885824177">888-582-4177</a>`;
+        const defaultErrorMessage = Object.freeze({
+            simple: `There has been a problem. Contact our customer support at 888-582-4177`,
+            html: `There has been a problem. Contact our customer support at <a href="tel:8885824177">888-582-4177</a>`
+        });
 
         $(elements.steps.one.ctaButton).off().on("click", (event) => {
             event.preventDefault();
@@ -220,7 +223,7 @@ class UserPortalManager {
                 (error, api) => {
                     if (error) {
                         showErrorMessage(
-                            api.getErrorMessage(error, true) ?? defaultErrorMessage,
+                            api.getErrorMessage(error, true) ?? defaultErrorMessage.html,
                             PopupState.inputEmail
                         );
                     } else {
@@ -251,7 +254,7 @@ class UserPortalManager {
                 (authorizationToken, error, api) => {
                     if (error) {
                         showErrorMessage(
-                            api.getErrorMessage(error, true) ?? defaultErrorMessage,
+                            api.getErrorMessage(error, true) ?? defaultErrorMessage.simple,
                             PopupState.inputCode
                         );
                     } else {
@@ -260,7 +263,7 @@ class UserPortalManager {
                             (accessUrl, error, api) => {
                                 if (error) {
                                     showErrorMessage(
-                                        api.getErrorMessage(error, true) ?? defaultErrorMessage,
+                                        api.getErrorMessage(error, true) ?? defaultErrorMessage.simple,
                                         PopupState.inputCode
                                     );
                                 } else {
