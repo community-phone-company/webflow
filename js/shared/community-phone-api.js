@@ -109,7 +109,15 @@ class CommunityPhoneAPI {
         const url = this.getAbsoluteUrl(
             endpoint
         );
-        console.log(`Sending request\nURL: ${url}\nmethod: ${method}\nheaders: ${headers}\ndata: ${data}`);
+        
+        [
+            `Sending request`,
+            `URL: ${url}`,
+            `method: ${method}`,
+            `headers: ${JSON.stringify(headers)}`,
+            `data: ${JSON.stringify(data)}`
+        ].forEach(value => console.log(value));
+
         return $.ajax({
             url: url,
             method: method,
