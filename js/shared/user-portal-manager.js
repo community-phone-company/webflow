@@ -143,7 +143,6 @@ class UserPortalManager {
         $(this.getUserPortalLink()).on("click", (event) => {
             event.preventDefault();
             popup.show();
-            console.log("Open user portal popup");
         });
 
         const elements = {
@@ -180,7 +179,7 @@ class UserPortalManager {
             $(containerToDisplay).show();
         };
 
-        $(elements.steps.one.ctaButton).on("click", (event) => {
+        $(elements.steps.one.ctaButton).off().on("click", (event) => {
             event.preventDefault();
             
             const email = $(elements.steps.one.emailInput).val();
@@ -191,7 +190,7 @@ class UserPortalManager {
             );
         });
 
-        $(elements.steps.two.ctaButton).on("click", (event) => {
+        $(elements.steps.two.ctaButton).off().on("click", (event) => {
             event.preventDefault();
         });
     }
