@@ -1,17 +1,22 @@
 const isTestEnvironment = router.isTestEnvironment() || router.getParameterValue("test") != undefined;
 
 const elements = {
-    checkCoveragePopup: {
-        container: document.querySelectorAll("#popup-service-address")[0],
-        closeButton: document.querySelectorAll("#popup-service-address #close-button")[0],
-        form: {
-            container: document.querySelectorAll("#popup-service-address #form-normal")[0],
-            submitButton: () => {
-                return document.querySelectorAll("#popup-service-address #form-normal input[type='submit']")[0];
+    checkCoveragePopup: (() => {
+        const container = document.querySelectorAll("popup-service-address")[0];
+        return {
+            container: container.querySelectorAll("#popup-service-address")[0],
+            closeButton: container.querySelectorAll("#close-button")[0],
+            form: {
+                container: container.querySelectorAll("#form-normal")[0],
+                submitButton: () => {
+                    return container.querySelectorAll("#form-normal input[type='submit']")[0];
+                },
             },
-        },
-        popup: new Popup("#popup-service-address")
-    },
+            startServiceButton: container.querySelectorAll("#popup-start-your-service-button")[0],
+            learnMoreButton: container.querySelectorAll("#popup-learn-more-button")[0],
+            popup: new Popup("#popup-service-address")
+        };
+    })(),
     checkCoverageButtons: [
         document.getElementById("check-coverage"),
         document.getElementById("check-coverage-2"),
@@ -262,13 +267,17 @@ $(document).ready(() => {
             checkCoverageVM.onCorrectAddress();
         }
     });
-    $("#popup-start-your-service-button").on("click", (event) => {
+    $(elements.checkCoveragePopup.startServiceButton).on("click", (event) => {
         event.preventDefault();
         router.open(
             RouterPath.checkoutLandline_choosePlan,
             router.getParameters(),
             isTestEnvironment
         );
+    });
+    $(elements.checkCoveragePopup.learnMoreButton).on("click", (event) => {
+        event.preventDefault();
+        elements.checkCoveragePopup.popup.hide();
     });
     checkCoverageVM.handleDataChange();
 });
