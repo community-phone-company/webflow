@@ -151,7 +151,11 @@ class UserPortalManager {
                 one: {
                     container: popup.getContainer().querySelectorAll(".sign-up-step-1")[0],
                     emailInput: popup.getContainer().querySelectorAll(".sign-up-step-1 input.email-input")[0],
-                    ctaButton: popup.getContainer().querySelectorAll(".sign-up-step-1 .popup-cta-button")[0]
+                    ctaButton: popup.getContainer().querySelectorAll(".sign-up-step-1 .popup-cta-button")[0],
+                    errorMessage: {
+                        container: popup.getContainer().querySelectorAll(".sign-up-step-1 .div-error-message-signup")[0],
+                        text: popup.getContainer().querySelectorAll(".sign-up-step-1 .error-message-text")[0]
+                    }
                 },
                 two: {
                     container: popup.getContainer().querySelectorAll(".sign-up-step-2")[0],
@@ -183,16 +187,42 @@ class UserPortalManager {
             })();
             $(containerToDisplay).show();
         };
+        const showErrorMessage = (message, state) => {
+            switch (state) {
+                case PopupState.inputEmail: {
+                    if (message) {
+                        $(elements.steps.one.errorMessage.container).show();
+                        $(elements.steps.one.errorMessage.text).html(message);
+                    } else {
+                        $(elements.steps.one.errorMessage.container).hide();
+                    }
+                    break;
+                }
+                case PopupState.inputCode: {
+                    alert(message);
+                    break;
+                }
+            }
+        };
+        const defaultErrorMessage = `There has been a problem. Contact our customer support at <a href="tel:8885824177">888-582-4177</a>`;
 
         $(elements.steps.one.ctaButton).off().on("click", (event) => {
             event.preventDefault();
+
+            showErrorMessage(
+                undefined,
+                PopupState.inputEmail
+            );
             
             email = $(elements.steps.one.emailInput).val();
             _this.requestAuthorizationCode(
                 email,
                 (error, api) => {
                     if (error) {
-                        // TODO: Handle error
+                        showErrorMessage(
+                            api.getErrorMessage(error, true) ?? defaultErrorMessage,
+                            PopupState.inputEmail
+                        );
                     } else {
                         $(elements.steps.two.codeInput).val("");
                         $(elements.steps.two.userEmail).html(email);
@@ -220,13 +250,19 @@ class UserPortalManager {
                 email,
                 (authorizationToken, error, api) => {
                     if (error) {
-                        // TODO: Handle error
+                        showErrorMessage(
+                            api.getErrorMessage(error, true) ?? defaultErrorMessage,
+                            PopupState.inputCode
+                        );
                     } else {
                         _this.getAccessUrl(
                             authorizationToken,
                             (accessUrl, error, api) => {
                                 if (error) {
-                                    // TODO: Handle error
+                                    showErrorMessage(
+                                        api.getErrorMessage(error, true) ?? defaultErrorMessage,
+                                        PopupState.inputCode
+                                    );
                                 } else {
                                     window.location.href = accessUrl;
                                 }
