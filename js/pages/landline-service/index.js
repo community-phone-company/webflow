@@ -1,10 +1,10 @@
 const elements = {
     checkCoveragePopup: {
         container: document.querySelectorAll("#popup-service-address")[0],
-        closeButton: container.querySelectorAll("#popup-service-address #close-button")[0],
+        closeButton: document.querySelectorAll("#popup-service-address #close-button")[0],
         form: {
-            container: container.querySelectorAll("#popup-service-address #form-normal")[0],
-            submitButton: container.querySelectorAll("#popup-service-address #form-normal input[type='submit']")[0],
+            container: document.querySelectorAll("#popup-service-address #form-normal")[0],
+            submitButton: document.querySelectorAll("#popup-service-address #form-normal input[type='submit']")[0],
         },
         popup: new Popup("#popup-service-address")
     },
