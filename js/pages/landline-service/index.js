@@ -1,3 +1,5 @@
+const isTestEnvironment = router.isTestEnvironment() || router.getParameterValue("test") != undefined;
+
 const elements = {
     checkCoveragePopup: {
         container: document.querySelectorAll("#popup-service-address")[0],
@@ -31,7 +33,7 @@ const checkCoverageVM = new Vue({
         handleDataChange() {
             const isFormValid = this.addressLineOne.length > 0
                 && this.city.length > 0
-                && this.zip.length > 0
+                && this.zip.length == 5
                 && this.state.length > 0;
             console.log(`is form valid: ${isFormValid}`);
             UserInterface.setElementEnabled(
@@ -72,7 +74,7 @@ const checkCoverageVM = new Vue({
                 router.open(
                     RouterPath.checkoutLandline_choosePlan,
                     router.getParameters(),
-                    router.isTestEnvironment()
+                    isTestEnvironment
                 );
             };
             elements.checkCoverageButtons.forEach(button => {
@@ -192,7 +194,7 @@ $(document).ready(() => {
             router.open(
                 RouterPath.checkoutLandline_choosePlan,
                 router.getParameters(),
-                router.isTestEnvironment()
+                isTestEnvironment
             );
         });
     });
@@ -246,7 +248,7 @@ $(document).ready(() => {
             isBusiness
         );
 
-        if (router.isTestEnvironment()) {
+        if (isTestEnvironment) {
             checkCoverageVM.isAddressCorrect((isCorrect) => {
                 if (isCorrect) {
                     checkCoverageVM.onCorrectAddress();
@@ -265,7 +267,7 @@ $(document).ready(() => {
         router.open(
             RouterPath.checkoutLandline_choosePlan,
             router.getParameters(),
-            router.isTestEnvironment()
+            isTestEnvironment
         );
     });
     checkCoverageVM.handleDataChange();
