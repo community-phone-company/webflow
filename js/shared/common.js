@@ -81,15 +81,15 @@ if (IS_PRODUCTION) {
  * Remove Chargebee link on production.
  */
 (() => {
-    if (IS_PRODUCTION) {
+    const removeUserPortalLink = () => {
         const userPortalLink = UserPortalManager.getDefault().getUserPortalLink();
     
         if (userPortalLink) {
             $(userPortalLink).remove();
         }
-    } else {
-        if (UserPortalManager.isSupported()) {
-            UserPortalManager.getDefault().setup();
-        }
+    };
+    
+    if (UserPortalManager.isSupported()) {
+        UserPortalManager.getDefault().setup();
     }
 })();
