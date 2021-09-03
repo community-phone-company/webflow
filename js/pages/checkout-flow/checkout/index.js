@@ -489,7 +489,7 @@ const onReady = () => {
                         router.isTestEnvironment()
                     );
                 } else {
-                    new Popup("#popup-basic")
+                    new Popup.getBasic()
                         .setBody(message)
                         .show();
                     $(form.elements.submitButton).show();
