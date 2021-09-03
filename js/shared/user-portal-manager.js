@@ -113,7 +113,7 @@ class UserPortalManager {
             "Authorization": authorizationToken
         };
         return api.jsonRequest(
-            CommunityPhoneAPI.endpoints.auth_token,
+            CommunityPhoneAPI.endpoints.portal_billing,
             "POST",
             headers,
             undefined,
@@ -193,6 +193,7 @@ class UserPortalManager {
                     if (error) {
                         // TODO: Handle error
                     } else {
+                        $(elements.steps.two.userEmail).html(email);
                         setState(
                             PopupState.inputCode
                         );
