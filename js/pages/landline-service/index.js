@@ -2,7 +2,7 @@ const isTestEnvironment = router.isTestEnvironment() || router.getParameterValue
 
 const elements = {
     checkCoveragePopup: (() => {
-        const container = document.querySelectorAll("popup-service-address")[0];
+        const container = document.querySelectorAll("#popup-service-address")[0];
         return {
             container: container.querySelectorAll("#popup-service-address")[0],
             closeButton: container.querySelectorAll("#close-button")[0],
