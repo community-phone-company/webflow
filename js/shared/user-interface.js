@@ -15,4 +15,16 @@ class UserInterface {
             $(element).attr("disabled", "disabled");
         }
     }
+
+    /**
+     * 
+     * @param {HTMLElement} element `HTMLElement` instance.
+     * @param {boolean} clickable Defines whether the element should be clickable or not.
+     */
+    static makeElementClickable = (element, clickable) => {
+        $(element).css(
+            "pointer-events",
+            clickable ? "" : "none"
+        );
+    }
 }

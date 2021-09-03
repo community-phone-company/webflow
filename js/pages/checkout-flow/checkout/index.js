@@ -185,10 +185,14 @@ const onReady = () => {
      * @param {boolean} available 
      */
     const setCheckoutFormAvailable = (available) => {
-        $("#Checkout-form").css(
-            "pointer-events",
-            available ? "" : "none"
-        );
+        const checkoutForm = document.querySelectorAll("#Checkout-form")[0];
+
+        if (checkoutForm) {
+            UserInterface.makeElementClickable(
+                checkoutForm,
+                available
+            );
+        }
     };
 
     /**
