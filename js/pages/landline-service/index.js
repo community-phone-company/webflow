@@ -1,6 +1,6 @@
 const elements = {
     checkCoveragePopup: (() => {
-        const container = document.getElementById("wf-form-service-address");
+        const container = document.getElementById("#popup-service-address");
         return {
             container: container,
             closeButton: container.querySelectorAll("#close-button")[0],
