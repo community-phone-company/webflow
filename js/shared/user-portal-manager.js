@@ -155,10 +155,14 @@ class UserPortalManager {
                 },
                 two: {
                     container: popup.getContainer().querySelectorAll(".sign-up-step-2")[0],
+                    codeInput: popup.getContainer().querySelectorAll(".sign-up-step-1 input.code-input")[0],
+                    userEmail: popup.getContainer().querySelectorAll(".sign-up-step-1 .user-email-span")[0],
                     ctaButton: popup.getContainer().querySelectorAll(".sign-up-step-2 .popup-cta-button")[0]
                 }
             }
         };
+
+        var email = "";
 
         const PopupState = Object.freeze({
             inputEmail: "input-email",
@@ -182,16 +186,45 @@ class UserPortalManager {
         $(elements.steps.one.ctaButton).off().on("click", (event) => {
             event.preventDefault();
             
-            const email = $(elements.steps.one.emailInput).val();
+            email = $(elements.steps.one.emailInput).val();
             _this.requestAuthorizationCode(
                 email,
                 (error, api) => {
+                    if (error) {
+                        // TODO: Handle error
+                    } else {
+                        setState(
+                            PopupState.inputCode
+                        );
+                    }
                 }
             );
         });
 
         $(elements.steps.two.ctaButton).off().on("click", (event) => {
             event.preventDefault();
+
+            const code = $(elements.steps.two.codeInput).val();
+            _this.sendAuthorizationCode(
+                code,
+                email,
+                (authorizationToken, error, api) => {
+                    if (error) {
+                        // TODO: Handle error
+                    } else {
+                        _this.getAccessUrl(
+                            authorizationToken,
+                            (accessUrl, error, api) => {
+                                if (error) {
+                                    // TODO: Handle error
+                                } else {
+                                    console.log(`Access URL: ${accessUrl}`);
+                                }
+                            }
+                        )
+                    }
+                }
+            );
         });
     }
 }
