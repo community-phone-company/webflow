@@ -76,13 +76,7 @@ const checkCoverageVM = new Vue({
                     router.isTestEnvironment()
                 );
             };
-            const checkCoverageButtons = [
-                document.getElementById("check-coverage"),
-                document.getElementById("check-coverage-2"),
-                document.getElementById("check-coverage-middle"),
-                document.getElementById("check-coverage-middle-2")
-            ];
-            checkCoverageButtons.forEach(button => {
+            elements.checkCoverageButtons.forEach(button => {
                 $(button).find("div,strong").html(checkCoverageButtonTitle);
                 $(button).off().on("click", checkCoverageButtonClickHandler);
             });
@@ -202,6 +196,11 @@ $(document).ready(() => {
                 router.isTestEnvironment()
             );
         });
+    });
+
+    $(elements.checkCoverageButtons).off().on("click", (event) => {
+        event.preventDefault();
+        elements.checkCoveragePopup.popup.show();
     });
 
     /**
