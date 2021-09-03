@@ -253,19 +253,20 @@ $(document).ready(() => {
             isBusiness
         );
 
-        if (isTestEnvironment) {
-            checkCoverageVM.isAddressCorrect((isCorrect) => {
-                if (isCorrect) {
-                    checkCoverageVM.onCorrectAddress();
-                } else {
-                    $("#service-address .success-message-2").hide();
-                    $("#service-address #wf-form-service-address").show();
-                    alert(`Zip code ${zip} is not correct.\nTry another zip code.`);
-                }
-            });
-        } else {
-            checkCoverageVM.onCorrectAddress();
-        }
+        /**
+         * Uncomment the block below to check address.
+         */
+        /*checkCoverageVM.isAddressCorrect((isCorrect) => {
+            if (isCorrect) {
+                checkCoverageVM.onCorrectAddress();
+            } else {
+                $("#service-address .success-message-2").hide();
+                $("#service-address #wf-form-service-address").show();
+                alert(`Zip code ${zip} is not correct.\nTry another zip code.`);
+            }
+        });*/
+
+        checkCoverageVM.onCorrectAddress();
     });
     $(elements.checkCoveragePopup.startServiceButton).on("click", (event) => {
         event.preventDefault();
