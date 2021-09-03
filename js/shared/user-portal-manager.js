@@ -194,6 +194,7 @@ class UserPortalManager {
                     if (error) {
                         // TODO: Handle error
                     } else {
+                        $(elements.steps.two.codeInput).val("");
                         $(elements.steps.two.userEmail).html(email);
                         setState(
                             PopupState.inputCode
