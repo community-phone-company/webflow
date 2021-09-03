@@ -110,7 +110,7 @@ class UserPortalManager {
     getAccessUrl = (authorizationToken, callback) => {
         const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
         const headers = {
-            "Authorization": authorizationToken
+            "Authorization": `Token ${authorizationToken}`
         };
         return api.jsonRequest(
             CommunityPhoneAPI.endpoints.portal_billing,
