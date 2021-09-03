@@ -1,8 +1,26 @@
-const checkCoveragePopup = document.getElementById("wf-form-service-address");
-const checkCoveragePopupSubmitButton = checkCoveragePopup.querySelectorAll("input[type='submit']")[0];
+const elements = {
+    checkCoveragePopup: (() => {
+        const container = document.getElementById("wf-form-service-address");
+        return {
+            container: container,
+            closeButton: container.querySelectorAll("#close-button")[0],
+            form: {
+                container: container.querySelectorAll("#form-normal")[0],
+                submitButton: container.querySelectorAll("input[type='submit']")[0],
+            },
+            popup: new Popup(container)
+        };
+    })(),
+    checkCoverageButtons: [
+        document.getElementById("check-coverage"),
+        document.getElementById("check-coverage-2"),
+        document.getElementById("check-coverage-middle"),
+        document.getElementById("check-coverage-middle-2")
+    ]
+};
 
 const checkCoverageVM = new Vue({
-    el: "#form-normal",
+    el: elements.checkCoveragePopup.form.container,
     data: {
         addressLineOne: "",
         city: "",
@@ -11,9 +29,6 @@ const checkCoverageVM = new Vue({
         isBusiness: false
     },
     methods: {
-        getSubmitButton() {
-            return $("#form-normal input[type='submit']")[0];
-        },
         handleDataChange() {
             const isFormValid = this.addressLineOne.length > 0
                 && this.city.length > 0
@@ -21,7 +36,7 @@ const checkCoverageVM = new Vue({
                 && this.state.length > 0;
             console.log(`is form valid: ${isFormValid}`);
             UserInterface.setElementEnabled(
-                this.getSubmitButton(),
+                elements.checkCoveragePopup.form.submitButton,
                 isFormValid
             );
         },
@@ -174,7 +189,7 @@ $(document).ready(() => {
             event.preventDefault();
         });
 
-        $(form.getSubmitButton()).on("click", (event) => {
+        $(elements.checkCoveragePopup.form.submitButton).on("click", (event) => {
             event.preventDefault();
             const zipCode = form.getZipInput().value;
             Store.local.write(
@@ -198,7 +213,7 @@ $(document).ready(() => {
     $("#Business").off().on("click", (event) => {
         checkCoverageVM.isBusiness = true;
     });
-    $(checkCoverageVM.getSubmitButton()).off().on("click", (event) => {
+    $(elements.checkCoveragePopup.form.submitButton).off().on("click", (event) => {
         const address = checkCoverageVM.addressLineOne;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine1,
