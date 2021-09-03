@@ -114,7 +114,7 @@ class UserPortalManager {
         };
         return api.jsonRequest(
             CommunityPhoneAPI.endpoints.portal_billing,
-            "POST",
+            "GET",
             headers,
             undefined,
             (response, error) => {
