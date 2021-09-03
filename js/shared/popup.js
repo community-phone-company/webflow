@@ -5,6 +5,18 @@
 class Popup {
 
     /**
+     * Basic popup.
+     * @returns {Popup} Instance of {@link Popup} type.
+     */
+    static getBasic = () => {
+        if (!this._popupBasic) {
+            this._popupBasic = new Popup("#popup-basic");
+        }
+
+        return this._popupBasic;
+    }
+
+    /**
      * 
      * @param {HTMLElement | string} container Popup container. Should be an `HTMLElement` instance or a string containing selector.
      */
