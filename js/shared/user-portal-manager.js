@@ -157,6 +157,7 @@ class UserPortalManager {
                     container: popup.getContainer().querySelectorAll(".sign-up-step-2")[0],
                     codeInput: popup.getContainer().querySelectorAll(".sign-up-step-2 input.code-input")[0],
                     userEmail: popup.getContainer().querySelectorAll(".sign-up-step-2 .user-email-span")[0],
+                    changeEmailButton: popup.getContainer().querySelectorAll(".sign-up-step-2 .change-email-link"),
                     ctaButton: popup.getContainer().querySelectorAll(".sign-up-step-2 .popup-cta-button")[0]
                 }
             }
@@ -199,6 +200,13 @@ class UserPortalManager {
                         );
                     }
                 }
+            );
+        });
+
+        $(elements.steps.two.changeEmailButton).off().on("click", (event) => {
+            event.preventDefault();
+            setState(
+                PopupState.inputEmail
             );
         });
 
