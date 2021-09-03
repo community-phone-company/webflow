@@ -89,7 +89,11 @@ if (IS_PRODUCTION) {
         }
     };
     
-    if (UserPortalManager.isSupported()) {
-        UserPortalManager.getDefault().setup();
+    if (IS_PRODUCTION) {
+        removeUserPortalLink();
+    } else {
+        if (UserPortalManager.isSupported()) {
+            UserPortalManager.getDefault().setup();
+        }
     }
 })();
