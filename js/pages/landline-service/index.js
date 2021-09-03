@@ -4,7 +4,9 @@ const elements = {
         closeButton: document.querySelectorAll("#popup-service-address #close-button")[0],
         form: {
             container: document.querySelectorAll("#popup-service-address #form-normal")[0],
-            submitButton: document.querySelectorAll("#popup-service-address #form-normal input[type='submit']")[0],
+            submitButton: () => {
+                return document.querySelectorAll("#popup-service-address #form-normal input[type='submit']")[0];
+            },
         },
         popup: new Popup("#popup-service-address")
     },
@@ -33,7 +35,7 @@ const checkCoverageVM = new Vue({
                 && this.state.length > 0;
             console.log(`is form valid: ${isFormValid}`);
             UserInterface.setElementEnabled(
-                elements.checkCoveragePopup.form.submitButton,
+                elements.checkCoveragePopup.form.submitButton(),
                 isFormValid
             );
         },
@@ -180,7 +182,7 @@ $(document).ready(() => {
             event.preventDefault();
         });
 
-        $(elements.checkCoveragePopup.form.submitButton).on("click", (event) => {
+        $(elements.checkCoveragePopup.form.submitButton()).on("click", (event) => {
             event.preventDefault();
             const zipCode = form.getZipInput().value;
             Store.local.write(
@@ -209,7 +211,7 @@ $(document).ready(() => {
     $("#Business").off().on("click", (event) => {
         checkCoverageVM.isBusiness = true;
     });
-    $(elements.checkCoveragePopup.form.submitButton).off().on("click", (event) => {
+    $(elements.checkCoveragePopup.form.submitButton()).off().on("click", (event) => {
         const address = checkCoverageVM.addressLineOne;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine1,
