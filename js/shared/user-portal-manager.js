@@ -156,7 +156,7 @@ class UserPortalManager {
                 two: {
                     container: popup.getContainer().querySelectorAll(".sign-up-step-2")[0],
                     codeInput: popup.getContainer().querySelectorAll(".sign-up-step-2 input.code-input")[0],
-                    userEmail: popup.getContainer().querySelectorAll(".sign-up-step-1 .user-email-span")[0],
+                    userEmail: popup.getContainer().querySelectorAll(".sign-up-step-2 .user-email-span")[0],
                     ctaButton: popup.getContainer().querySelectorAll(".sign-up-step-2 .popup-cta-button")[0]
                 }
             }
