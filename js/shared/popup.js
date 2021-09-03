@@ -17,7 +17,7 @@ class Popup {
     }
 
     /**
-     * 
+     * @constructor
      * @param {HTMLElement | string} container Popup container. Should be an `HTMLElement` instance or a string containing selector.
      */
     constructor(container) {

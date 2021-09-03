@@ -228,7 +228,7 @@ class UserPortalManager {
                                 if (error) {
                                     // TODO: Handle error
                                 } else {
-                                    console.log(`Access URL: ${accessUrl}`);
+                                    window.href = accessUrl;
                                 }
                             }
                         )
