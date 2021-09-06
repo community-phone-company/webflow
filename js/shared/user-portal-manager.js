@@ -288,6 +288,10 @@ class UserPortalManager {
                             PopupState.inputCode
                         );
                     } else {
+                        Store.local.write(
+                            Store.keys.userPortal.authorizationToken,
+                            authorizationToken
+                        );
                         _this.getAccessUrl(
                             authorizationToken,
                             (accessUrl, error, api) => {
