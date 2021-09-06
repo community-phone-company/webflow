@@ -57,6 +57,20 @@ class UserPortalManager {
     }
 
     /**
+     * @returns {string | undefined}
+     */
+    getAccessUrl = () => {
+        return this._accessUrl;
+    }
+
+    /**
+     * @param {string | undefined} accessUrl 
+     */
+    setAccessUrl = (accessUrl) => {
+        this._accessUrl = accessUrl;
+    }
+
+    /**
      * @param {string} email 
      * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
      * @returns {XMLHttpRequest | undefined} Request instance.
@@ -156,9 +170,13 @@ class UserPortalManager {
         const popup = this.getCreateAccountPopup();
         $(this.getUserPortalLink()).on("click", (event) => {
             event.preventDefault();
-            
-            if (_this._authorizationToken) {
-                this.getAccessUrl(
+
+            if (_this._accessUrl) {
+                _this.openAccessUrl(
+                    _this._accessUrl
+                );
+            } else if (_this._authorizationToken) {
+                _this.getAccessUrl(
                     _this._authorizationToken,
                     (accessUrl, error, api) => {
                         if (accessUrl && !error) {
