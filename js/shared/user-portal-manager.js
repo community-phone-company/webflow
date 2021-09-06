@@ -57,20 +57,6 @@ class UserPortalManager {
     }
 
     /**
-     * @returns {string | undefined}
-     */
-    getAccessUrl = () => {
-        return this._accessUrl;
-    }
-
-    /**
-     * @param {string | undefined} accessUrl 
-     */
-    setAccessUrl = (accessUrl) => {
-        this._accessUrl = accessUrl;
-    }
-
-    /**
      * @param {string} email 
      * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
      * @returns {XMLHttpRequest | undefined} Request instance.

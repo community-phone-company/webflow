@@ -104,34 +104,5 @@ if (IS_PRODUCTION) {
                 Store.keys.userPortal.authorizationToken
             )
         );
-
-        const authorizationToken = Store.local.read(
-            Store.keys.userPortal.authorizationToken
-        );
-    
-        if (authorizationToken) {
-            const updateAccessUrl = () => {
-                userPortalManager.setAccessUrl(
-                    undefined
-                );
-                userPortalManager.getAccessUrl(
-                    authorizationToken,
-                    (accessUrl, error, api) => {
-                        if (accessUrl && !error) {
-                            userPortalManager.setAccessUrl(
-                                accessUrl
-                            );
-                        }
-                    }
-                )
-            };
-            updateAccessUrl();
-            setInterval(
-                () => {
-                    updateAccessUrl();
-                },
-                10 * 60 * 1000 // 10 minutes
-            );
-        }
     }
 })();
