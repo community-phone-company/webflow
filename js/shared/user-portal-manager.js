@@ -171,11 +171,7 @@ class UserPortalManager {
         $(this.getUserPortalLink()).on("click", (event) => {
             event.preventDefault();
 
-            if (_this._accessUrl) {
-                _this.openAccessUrl(
-                    _this._accessUrl
-                );
-            } else if (_this._authorizationToken) {
+            if (_this._authorizationToken) {
                 _this.getAccessUrl(
                     _this._authorizationToken,
                     (accessUrl, error, api) => {
