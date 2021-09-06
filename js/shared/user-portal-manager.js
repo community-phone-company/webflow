@@ -43,6 +43,20 @@ class UserPortalManager {
     }
 
     /**
+     * @returns {string | undefined}
+     */
+    getAuthorizationToken = () => {
+        return this._authorizationToken;
+    }
+
+    /**
+     * @param {string | undefined} authorizationToken 
+     */
+    setAuthorizationToken = (authorizationToken) => {
+        this._authorizationToken = authorizationToken;
+    }
+
+    /**
      * @param {string} email 
      * @param {(error: any, api: CommunityPhoneAPI) => void} callback 
      * @returns {XMLHttpRequest | undefined} Request instance.
@@ -136,13 +150,29 @@ class UserPortalManager {
         );
     }
 
-    setup = () => {
+    setupUI = () => {
         const _this = this;
 
         const popup = this.getCreateAccountPopup();
         $(this.getUserPortalLink()).on("click", (event) => {
             event.preventDefault();
-            popup.show();
+            
+            if (_this._authorizationToken) {
+                this.getAccessUrl(
+                    _this._authorizationToken,
+                    (accessUrl, error, api) => {
+                        if (accessUrl && !error) {
+                            _this.openAccessUrl(
+                                accessUrl
+                            );
+                        } else {
+                            popup.show();
+                        }
+                    }
+                );
+            } else {
+                popup.show();
+            }
         });
 
         const elements = {
@@ -267,7 +297,9 @@ class UserPortalManager {
                                         PopupState.inputCode
                                     );
                                 } else {
-                                    window.location.href = accessUrl;
+                                    this.openAccessUrl(
+                                        accessUrl
+                                    );
                                 }
                             }
                         )
@@ -275,5 +307,12 @@ class UserPortalManager {
                 }
             );
         });
+    }
+
+    /**
+     * @param {string} accessUrl 
+     */
+    openAccessUrl = (accessUrl) => {
+        window.location.href = accessUrl;
     }
 }

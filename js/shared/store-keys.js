@@ -43,8 +43,18 @@ const OnboardingFlowStoreKey = Object.freeze({
     furthestStep: "onboarding-flow-furthest-step"
 });
 
+const UserPortalStoreKey = Object.freeze({
+    authorizationToken: "user-portal-authorization-token"
+});
+
+const GeneralSettingsStoreKey = Object.freeze({
+    lastUrl: "general-settings-last-url"
+});
+
 Store.keys = Object.freeze({
     businessFlow: BusinessFlowStoreKey,
     checkoutFlow: CheckoutFlowStoreKey,
-    onboardingFlow: OnboardingFlowStoreKey
+    onboardingFlow: OnboardingFlowStoreKey,
+    userPortal: UserPortalStoreKey,
+    generalSettings: GeneralSettingsStoreKey
 });

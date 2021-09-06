@@ -13,12 +13,11 @@ if (IS_PRODUCTION) {
  * Write current URL to the storage and check previous URL.
  */
 (() => {
-    const lastUrlStoreKey = "last-url";
     const previousPage = Store.local.read(
-        lastUrlStoreKey
+        Store.keys.generalSettings.lastUrl
     );
     Store.local.write(
-        lastUrlStoreKey,
+        Store.keys.generalSettings.lastUrl,
         window.location.href
     );
 
@@ -78,7 +77,7 @@ if (IS_PRODUCTION) {
 })();
 
 /**
- * Remove Chargebee link on production.
+ * Chargebee user portal.
  */
 (() => {
     const removeUserPortalLink = () => {
@@ -98,6 +97,12 @@ if (IS_PRODUCTION) {
     }*/
 
     if (UserPortalManager.isSupported()) {
-        UserPortalManager.getDefault().setup();
+        const userPortalManager = UserPortalManager.getDefault();
+        userPortalManager.setupUI();
+        userPortalManager.setAuthorizationToken(
+            Store.local.read(
+                Store.keys.userPortal.authorizationToken
+            )
+        );
     }
 })();
