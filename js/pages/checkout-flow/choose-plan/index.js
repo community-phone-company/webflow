@@ -137,33 +137,56 @@ const setupAddonCardClickHandlers = (handler) => {
     });
 };
 
-if (router.isTestEnvironment()) {
-    const billingAddress = new ProductCartBillingAddress(
-        Store.local.read(
-            Store.keys.checkoutFlow.shippingAddress_city
-        ) ?? "",
-        Store.local.read(
-            Store.keys.checkoutFlow.shippingAddress_state
-        ) ?? "",
-        Store.local.read(
-            Store.keys.checkoutFlow.shippingAddress_zip
-        ) ?? ""
-    );
-    const formData = {
-        monthly: true,
-        getNewNumber: true,
-        insuranceAdded: false,
-        selectedOneTimePurchaseAddons: [],
-        productStore: undefined,
-        productCart: (() => {
-            const cart = new ProductCart();
-            cart.setBillingAddress(
-                billingAddress
-            );
-            return cart;
-        })()
-    };
+const choosePhoneNumberPopup = router.isTestEnvironment()
+    ? new Popup("#modal-choose-phone-number")
+    : undefined;
 
+const setupChoosePhoneNumberPopup = () => {
+    const container = choosePhoneNumberPopup.getContainer();
+};
+
+/**
+ * @param {(() => void) | undefined} onClick 
+ */
+const setupChoosePhoneNumberLinks = (onClick) => {
+    $("#selected-phone-number, #choose-different-number-button").on("click", (event) => {
+        event.preventDefault();
+        choosePhoneNumberPopup.show();
+        
+        if (onClick) {
+            onClick();
+        }
+    });
+};
+
+const billingAddress = new ProductCartBillingAddress(
+    Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_city
+    ) ?? "",
+    Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_state
+    ) ?? "",
+    Store.local.read(
+        Store.keys.checkoutFlow.shippingAddress_zip
+    ) ?? ""
+);
+const formData = {
+    monthly: true,
+    getNewNumber: true,
+    insuranceAdded: false,
+    selectedOneTimePurchaseAddons: [],
+    productStore: undefined,
+    productCart: (() => {
+        const cart = new ProductCart();
+        cart.setBillingAddress(
+            billingAddress
+        );
+        return cart;
+    })(),
+    selectedPhoneNumber: undefined,
+};
+
+if (router.isTestEnvironment()) {
     /**
      * @returns {Product[]}
      */
@@ -451,6 +474,14 @@ if (router.isTestEnvironment()) {
     });
 
     /**
+     * Choose phone number functionality.
+     */
+    setupChoosePhoneNumberPopup();
+    setupChoosePhoneNumberLinks(() => {
+        console.log("Choose phone number");
+    });
+
+    /**
      * Here we handle submit button click.
      */
     const submitButton = document.querySelectorAll(".continue_choose_plan")[0];
@@ -483,6 +514,19 @@ if (router.isTestEnvironment()) {
         }
     );
 } else {
+    /**
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     * OLD CHECKOUT FLOW!!!!
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     * ****************************************************************************************************
+     */
     $(document).ready(() => {
 
         $(".order-summary-card .tabs").remove();
