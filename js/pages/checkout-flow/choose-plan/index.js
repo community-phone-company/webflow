@@ -137,9 +137,7 @@ const setupAddonCardClickHandlers = (handler) => {
     });
 };
 
-const choosePhoneNumberPopup = router.isTestEnvironment()
-    ? new Popup("#modal-choose-phone-number")
-    : undefined;
+
 
 /**
  * @param {((phoneNumber: string) => void) | undefined} onSelectedPhoneNumber 
