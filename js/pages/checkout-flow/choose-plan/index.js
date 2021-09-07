@@ -145,6 +145,7 @@ const choosePhoneNumberPopup = router.isTestEnvironment()
  * @param {((phoneNumber: string) => void) | undefined} onSelectedPhoneNumber 
  */
 const setupChoosePhoneNumberPopup = (onSelectedPhoneNumber) => {
+    return;
     const container = choosePhoneNumberPopup.getContainer();
 };
 
@@ -152,6 +153,7 @@ const setupChoosePhoneNumberPopup = (onSelectedPhoneNumber) => {
  * @param {(() => void) | undefined} onClick 
  */
 const setupChoosePhoneNumberLinks = (onClick) => {
+    return;
     $("#selected-phone-number, #choose-different-number-button").on("click", (event) => {
         event.preventDefault();
         choosePhoneNumberPopup.show();
@@ -187,6 +189,8 @@ const formData = {
         return cart;
     })(),
     selectedPhoneNumber: undefined,
+    numberSearch: {
+    }
 };
 
 if (router.isTestEnvironment()) {
