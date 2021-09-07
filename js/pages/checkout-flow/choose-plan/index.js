@@ -141,7 +141,10 @@ const choosePhoneNumberPopup = router.isTestEnvironment()
     ? new Popup("#modal-choose-phone-number")
     : undefined;
 
-const setupChoosePhoneNumberPopup = () => {
+/**
+ * @param {((phoneNumber: string) => void) | undefined} onSelectedPhoneNumber 
+ */
+const setupChoosePhoneNumberPopup = (onSelectedPhoneNumber) => {
     const container = choosePhoneNumberPopup.getContainer();
 };
 
@@ -476,7 +479,10 @@ if (router.isTestEnvironment()) {
     /**
      * Choose phone number functionality.
      */
-    setupChoosePhoneNumberPopup();
+    setupChoosePhoneNumberPopup((phoneNumber) => {
+        choosePhoneNumberPopup.hide();
+        formData.selectedPhoneNumber = phoneNumber;
+    });
     setupChoosePhoneNumberLinks(() => {
         console.log("Choose phone number");
     });
