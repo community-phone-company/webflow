@@ -153,9 +153,25 @@ class City {
 class PhoneNumber {
 
     /**
+     * @param {string} serialized 
+     * @returns {PhoneNumber}
+     */
+    static deserialize = (serialized) => {
+        const {areaCode, number, city, stateCode} = JSON.parse(
+            serialized
+        );
+        return new PhoneNumber(
+            areaCode,
+            number,
+            city,
+            stateCode
+        );
+    }
+
+    /**
      * @constructor
      * @param {string} areaCode Area code.
-     * @param {string} string Number.
+     * @param {string} number Number.
      * @param {string | undefined} city City.
      * @param {string | undefined} stateCode State code.
      */
@@ -171,7 +187,17 @@ class PhoneNumber {
         this.stateCode = stateCode;
     }
 
+    /**
+     * @returns {string}
+     */
     formatted = () => {
         return `(${this.areaCode}) ${this.number}`;
+    }
+
+    /**
+     * @returns {string}
+     */
+    serialize = () => {
+        return JSON.stringify(this);
     }
 }

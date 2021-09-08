@@ -141,14 +141,27 @@ const setupAddonCardClickHandlers = (handler) => {
 };
 
 const choosePhoneNumberPopup = isTestingChooseNumberModal
-    ? new Popup("#modal-choose-phone-number")
+    ? new ChoosePhoneNumberPopup("#modal-choose-phone-number")
     : undefined;
+
+/**
+ * @returns {HTMLElement}
+ */
+const getPhoneNumbersContainer = () => {
+    return isTestingChooseNumberModal
+        ? choosePhoneNumberPopup.getContainer().querySelectorAll(".list-of-numbers")[0]
+        : undefined;
+};
+
+const getPhoneNumberCard = () => {
+};
 
 /**
  * @param {((phoneNumber: string) => void) | undefined} onSelectedPhoneNumber 
  */
 const setupChoosePhoneNumberPopup = (onSelectedPhoneNumber) => {
-    const container = choosePhoneNumberPopup.getContainer();
+    const popupContainer = choosePhoneNumberPopup.getContainer();
+    $(getPhoneNumbersContainer()).html(``);
 };
 
 /**
@@ -157,7 +170,7 @@ const setupChoosePhoneNumberPopup = (onSelectedPhoneNumber) => {
 const setupChoosePhoneNumberLinks = (onClick) => {
     $("#selected-phone-number, #choose-different-number-button").on("click", (event) => {
         event.preventDefault();
-        choosePhoneNumberPopup.show();
+        choosePhoneNumberPopup.getPopup().show();
         
         if (onClick) {
             onClick();
@@ -544,7 +557,7 @@ if (isTestEnvironment) {
      */
     if (isTestingChooseNumberModal) {
         setupChoosePhoneNumberPopup((phoneNumber) => {
-            choosePhoneNumberPopup.hide();
+            choosePhoneNumberPopup.getPopup().hide();
             formData.selectedPhoneNumber = phoneNumber;
         });
         setupChoosePhoneNumberLinks(() => {
