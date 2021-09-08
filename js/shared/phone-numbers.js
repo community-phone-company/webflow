@@ -155,7 +155,7 @@ class PhoneNumber {
     /**
      * @constructor
      * @param {string} areaCode Area code.
-     * @param {string} number Number.
+     * @param {string} string Number.
      * @param {string | undefined} city City.
      * @param {string | undefined} stateCode State code.
      */
@@ -169,5 +169,9 @@ class PhoneNumber {
         this.number = number;
         this.city = city;
         this.stateCode = stateCode;
+    }
+
+    formatted = () => {
+        return `(${this.areaCode}) ${this.number}`;
     }
 }
