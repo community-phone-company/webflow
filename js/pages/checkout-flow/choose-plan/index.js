@@ -538,6 +538,7 @@ if (isTestEnvironment) {
         setupChoosePhoneNumberLinks(() => {
             console.log("Choose phone number");
         });
+        updateChoosePhoneNumberSection();
     }
 
     /**
