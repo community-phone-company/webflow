@@ -435,7 +435,7 @@ if (isTestEnvironment) {
 
     const updateChoosePhoneNumberSection = () => {
         $("#selected-phone-number").html(
-            formData.selectedPhoneNumber ?? ""
+            formData.selectedPhoneNumber ? formData.selectedPhoneNumber.formatted() : ""
         );
     };
 
