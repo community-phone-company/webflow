@@ -176,6 +176,7 @@ const billingAddress = new ProductCartBillingAddress(
         Store.keys.checkoutFlow.shippingAddress_zip
     ) ?? ""
 );
+
 const formData = {
     monthly: true,
     getNewNumber: true,
@@ -190,8 +191,47 @@ const formData = {
         return cart;
     })(),
     selectedPhoneNumber: undefined,
-    numberSearch: {
+    availablePhoneNumbers: [],
+    numberSearchFilters: {
+        areaCode: {
+            enabled: true,
+            value: ""
+        },
+        tollFree: {
+            enabled: false,
+            value: ""
+        },
+        city: {
+            enabled: false,
+            value: ""
+        }
     }
+};
+
+/**
+ * @param {boolean} addToPreviousCollection 
+ */
+const loadPhoneNumbers = (addToPreviousCollection) => {
+    PhoneNumberManager.getNumbers(
+        formData.numberSearchFilters.city.enabled ? formData.numberSearchFilters.city.value : "",
+        "",
+        (() => {
+            if (formData.numberSearchFilters.areaCode.enabled) {
+                return formData.numberSearchFilters.areaCode.value;
+            } else if (formData.numberSearchFilters.tollFree.enabled) {
+                return formData.numberSearchFilters.tollFree.value;
+            }
+        })(),
+        "",
+        formData.numberSearchFilters.tollFree.enabled,
+        (numbers, error) => {
+            if (addToPreviousCollection) {
+                numbers.forEach(number => formData.availablePhoneNumbers.push(number));
+            } else {
+                formData.availablePhoneNumbers = numbers;
+            }
+        }
+    );
 };
 
 if (isTestEnvironment) {
@@ -379,6 +419,12 @@ if (isTestEnvironment) {
                 onFinished();
             }
         });
+    };
+
+    const updateChoosePhoneNumberSection = () => {
+        $("#selected-phone-number").html(
+            formData.selectedPhoneNumber ?? ""
+        );
     };
 
     const tabs = Object.freeze({
