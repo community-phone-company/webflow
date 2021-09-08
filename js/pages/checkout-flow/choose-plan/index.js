@@ -210,8 +210,9 @@ const formData = {
 
 /**
  * @param {boolean} addToPreviousCollection 
+ * @param {((numbers, error) => void) | undefined} onFinished 
  */
-const loadPhoneNumbers = (addToPreviousCollection) => {
+const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
     PhoneNumberManager.getNumbers(
         formData.numberSearchFilters.city.enabled ? formData.numberSearchFilters.city.value : "",
         "",
@@ -229,6 +230,10 @@ const loadPhoneNumbers = (addToPreviousCollection) => {
                 numbers.forEach(number => formData.availablePhoneNumbers.push(number));
             } else {
                 formData.availablePhoneNumbers = numbers;
+            }
+
+            if (onFinished) {
+                onFinished(numbers, error);
             }
         }
     );
@@ -421,6 +426,13 @@ if (isTestEnvironment) {
         });
     };
 
+    /**
+     * @returns {HTMLElement}
+     */
+    const getChooseNumberSectionContainer = () => {
+        return document.getElementById("choose-new-number-section");
+    };
+
     const updateChoosePhoneNumberSection = () => {
         $("#selected-phone-number").html(
             formData.selectedPhoneNumber ?? ""
@@ -538,7 +550,15 @@ if (isTestEnvironment) {
         setupChoosePhoneNumberLinks(() => {
             console.log("Choose phone number");
         });
-        updateChoosePhoneNumberSection();
+        $(getChooseNumberSectionContainer()).hide();
+        loadPhoneNumbers(
+            true,
+            (numbers, error) => {
+                formData.selectedPhoneNumber = numbers[0];
+                updateChoosePhoneNumberSection();
+                $(getChooseNumberSectionContainer()).fadeTo(300, 1);
+            }
+        );
     }
 
     /**
