@@ -38,12 +38,13 @@ class ChoosePhoneNumberPopup {
 
         this._setupUserInterface();
         this._filter = new ChoosePhoneNumberPopupFilter(
-            ChoosePhoneNumberPopupFilterState.areaCode,
+            ChoosePhoneNumberPopupFilterMode.areaCode,
             ""
         );
     }
 
     _setupUserInterface = () => {
+        this.setPhoneNumbers([]);
     }
 
     getContainer = () => {
@@ -58,6 +59,25 @@ class ChoosePhoneNumberPopup {
     }
 
     /**
+     * @param {PhoneNumber[]} phoneNumbers 
+     */
+    setPhoneNumbers = (phoneNumbers) => {
+        const html = phoneNumbers
+            .map(phoneNumber => {
+                return new ChoosePhoneNumberPopupItemCard(
+                    phoneNumber
+                ).toHTML();
+            })
+            .reduce(
+                (previous, current) => {
+                    return `${previous}${current}`;
+                },
+                ""
+            );
+        $(this._userInterface.availableNumbers.listContainer).html(html);
+    }
+
+    /**
      * @returns {ChoosePhoneNumberPopupFilter}
      */
     getFilter = () => {
@@ -69,16 +89,16 @@ class ChoosePhoneNumberPopupFilter {
 
     /**
      * @constructor
-     * @param {string} state 
+     * @param {string} mode 
      * @param {string} value 
      */
-    constructor(state, value) {
-        this.state = state;
+    constructor(mode, value) {
+        this.mode = mode;
         this.value = value;
     }
 }
 
-const ChoosePhoneNumberPopupFilterState = Object.freeze({
+const ChoosePhoneNumberPopupFilterMode = Object.freeze({
     areaCode: "area-code",
     tollFree: "toll-free",
     city: "city"
@@ -86,6 +106,61 @@ const ChoosePhoneNumberPopupFilterState = Object.freeze({
 
 class ChoosePhoneNumberPopupItemCard {
 
-    constructor() {
+    /**
+     * @returns {string}
+     */
+    static getSerializedPhoneNumberKey = () => {
+        return "serialized-phone-number";
+    }
+
+    /**
+     * @param {HTMLElement} card 
+     * @returns {PhoneNumber | undefined}
+     */
+    static getPhoneNumber = (card) => {
+    }
+
+    /**
+     * @constructor
+     * @param {PhoneNumber} phoneNumber 
+     */
+    constructor(phoneNumber) {
+        this._phoneNumber = phoneNumber;
+    }
+
+    /**
+     * @returns {string}
+     */
+    toHTML = () => {
+        return `
+            <div
+                class="div-phone-number"
+                ${ChoosePhoneNumberPopupItemCard.getSerializedPhoneNumberKey()}=${this._phoneNumber.serialize()}
+            >
+                <div class="div-block-21">
+                    <div class="div-radio-button-2">
+                    </div>
+                    <div class="_w-8">
+                    </div>
+                    <div class="txt-phone-number-2">
+                        ${this._phoneNumber.formatted()}
+                    </div>
+                </div>
+                <div class="txt-lacation-2">
+                    ${(() => {
+                        const hasCity = this._phoneNumber.city.length > 0;
+                        const hasStateCode = this._phoneNumber.stateCode.length > 0;
+
+                        if (hasCity && hasStateCode) {
+                            return `${this._phoneNumber.city}, ${this._phoneNumber.stateCode}`;
+                        } else {
+                            return ``;
+                        }
+                    })()}
+                </div>
+            </div>
+            <div class="devider-8px">
+            </div>
+        `;
     }
 }

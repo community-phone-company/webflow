@@ -205,20 +205,7 @@ const formData = {
     })(),
     selectedPhoneNumber: undefined,
     availablePhoneNumbers: [],
-    numberSearchFilters: {
-        areaCode: {
-            enabled: true,
-            value: ""
-        },
-        tollFree: {
-            enabled: false,
-            value: ""
-        },
-        city: {
-            enabled: false,
-            value: ""
-        }
-    }
+    numberSearchFilter: choosePhoneNumberPopup && choosePhoneNumberPopup.getFilter()
 };
 
 /**
@@ -227,17 +214,19 @@ const formData = {
  */
 const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
     PhoneNumberManager.getNumbers(
-        formData.numberSearchFilters.city.enabled ? formData.numberSearchFilters.city.value : "",
+        formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.city ? formData.numberSearchFilter.value : "",
         "",
         (() => {
-            if (formData.numberSearchFilters.areaCode.enabled) {
-                return formData.numberSearchFilters.areaCode.value;
-            } else if (formData.numberSearchFilters.tollFree.enabled) {
-                return formData.numberSearchFilters.tollFree.value;
-            }
+            const areaCodeFilters = [
+                ChoosePhoneNumberPopupFilterMode.areaCode,
+                ChoosePhoneNumberPopupFilterMode.tollFree
+            ];
+            return areaCodeFilters.includes(formData.numberSearchFilter.mode)
+                ? formData.numberSearchFilter.value
+                : "";
         })(),
         "",
-        formData.numberSearchFilters.tollFree.enabled,
+        formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.tollFree,
         (numbers, error) => {
             if (addToPreviousCollection) {
                 numbers.forEach(number => formData.availablePhoneNumbers.push(number));
@@ -570,6 +559,9 @@ if (isTestEnvironment) {
                 formData.selectedPhoneNumber = numbers[0];
                 updateChoosePhoneNumberSection();
                 $(getChooseNumberSectionContainer()).fadeTo(300, 1);
+                choosePhoneNumberPopup.setPhoneNumbers(
+                    formData.availablePhoneNumbers
+                );
             }
         );
     }

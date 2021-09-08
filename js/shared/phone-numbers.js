@@ -157,8 +157,9 @@ class PhoneNumber {
      * @returns {PhoneNumber}
      */
     static deserialize = (serialized) => {
+        const jsonString = serialized.replaceAll("'", "\"");
         const {areaCode, number, city, stateCode} = JSON.parse(
-            serialized
+            jsonString
         );
         return new PhoneNumber(
             areaCode,
@@ -198,6 +199,6 @@ class PhoneNumber {
      * @returns {string}
      */
     serialize = () => {
-        return JSON.stringify(this);
+        return JSON.stringify(this).replaceAll("\"", "'");
     }
 }
