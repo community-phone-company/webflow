@@ -211,7 +211,7 @@ const onReady = () => {
         const phone = Store.local.read(Store.keys.checkoutFlow.phone);
         const getNewNumber = Store.local.read(Store.keys.checkoutFlow.getNewNumber);
         const productIdentifiers = Store.local.read(Store.keys.checkoutFlow.selectedProductIdentifiers);
-        const selectedPhoneNumber = form.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular);
+        const selectedPhoneNumber = form.data.selectedPhoneNumber && form.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular);
 
         const shippingAddress = new ChargebeeCheckoutAddress(
             form.data.shippingAddress.firstName,
