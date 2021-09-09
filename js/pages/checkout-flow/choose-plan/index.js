@@ -158,17 +158,6 @@ const getPhoneNumbersContainer = () => {
         : undefined;
 };
 
-const getPhoneNumberCard = () => {
-};
-
-/**
- * @param {((phoneNumber: string) => void) | undefined} onSelectedPhoneNumber 
- */
-const setupChoosePhoneNumberPopup = (onSelectedPhoneNumber) => {
-    const popupContainer = choosePhoneNumberPopup.getContainer();
-    $(getPhoneNumbersContainer()).html(``);
-};
-
 /**
  * @returns {HTMLElement}
  */
@@ -180,6 +169,7 @@ const updateChoosePhoneNumberSection = () => {
     $("#selected-phone-number").html(
         formData.selectedPhoneNumber ? formData.selectedPhoneNumber.formatted() : ""
     );
+    console.log("Updated Choose Number section");
 };
 
 /**
@@ -550,10 +540,6 @@ if (isTestEnvironment) {
      * Choose phone number functionality.
      */
     if (isTestingChooseNumberModal) {
-        setupChoosePhoneNumberPopup((phoneNumber) => {
-            choosePhoneNumberPopup.getPopup().hide();
-            formData.selectedPhoneNumber = phoneNumber;
-        });
         setupChoosePhoneNumberLinks(() => {
             console.log("Choose phone number");
         });
