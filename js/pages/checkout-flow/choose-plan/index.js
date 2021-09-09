@@ -143,14 +143,23 @@ const setupAddonCardClickHandlers = (handler) => {
 const choosePhoneNumberPopup = isTestingChooseNumberModal
     ? new ChoosePhoneNumberPopup("#modal-choose-phone-number")
     : undefined;
-choosePhoneNumberPopup.onFilterChanged(() => {
-    console.log("Filter updated!");
-});
-choosePhoneNumberPopup.onSelectedPhoneNumber((phoneNumber) => {
-    choosePhoneNumberPopup.getPopup().hide();
-    formData.selectedPhoneNumber = phoneNumber;
-    updateChoosePhoneNumberSection();
-});
+
+if (isTestingChooseNumberModal) {
+    choosePhoneNumberPopup.onFilterChanged(() => {
+        console.log("Filter updated!");
+        formData.numberSearchFilter = choosePhoneNumberPopup.getFilter();
+        loadPhoneNumbers(
+            false,
+            (numbers, error) => {
+            }
+        )
+    });
+    choosePhoneNumberPopup.onSelectedPhoneNumber((phoneNumber) => {
+        choosePhoneNumberPopup.getPopup().hide();
+        formData.selectedPhoneNumber = phoneNumber;
+        updateChoosePhoneNumberSection();
+    });
+}
 
 /**
  * @returns {HTMLElement}
