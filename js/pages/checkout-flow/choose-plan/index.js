@@ -151,6 +151,10 @@ if (isTestingChooseNumberModal) {
         loadPhoneNumbers(
             false,
             (numbers, error) => {
+                formData.availablePhoneNumbers = numbers;
+                choosePhoneNumberPopup.setPhoneNumbers(
+                    numbers
+                );
             }
         )
     });
@@ -230,7 +234,7 @@ const formData = {
 
 /**
  * @param {boolean} addToPreviousCollection 
- * @param {((numbers, error) => void) | undefined} onFinished 
+ * @param {((numbers: PhoneNumber[], error: any) => void) | undefined} onFinished 
  */
 const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
     PhoneNumberManager.getNumbers(

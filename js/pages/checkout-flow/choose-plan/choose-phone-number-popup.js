@@ -49,13 +49,11 @@ class ChoosePhoneNumberPopup {
                 return;
             }
 
-            const value = "";
-            $(this._userInterface.filter.valueInput).val(
-                value
-            );
+            const newValue = "";
+            this._userInterface.filter.valueInput.value = newValue;
             this._filter = new ChoosePhoneNumberPopupFilter(
                 mode,
-                value
+                newValue
             );
 
             if (this._onFilterChangedHandler) {
@@ -92,6 +90,18 @@ class ChoosePhoneNumberPopup {
                 );
             });
         });
+
+        this._userInterface.filter.valueInput.oninput = () => {
+            const newValue = this._userInterface.filter.valueInput.value;
+            this._filter = new ChoosePhoneNumberPopupFilter(
+                this._filter.mode,
+                newValue
+            );
+
+            if (this._onFilterChangedHandler) {
+                this._onFilterChangedHandler();
+            }
+        };
 
         this.setPhoneNumbers([]);
     }
