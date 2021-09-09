@@ -44,6 +44,52 @@ class ChoosePhoneNumberPopup {
     }
 
     _setupUserInterface = () => {
+        const switchFilterToMode = (mode) => {
+            if (this._filter.mode === mode) {
+                return;
+            }
+
+            const value = "";
+            $(this._userInterface.filter.valueInput).val(
+                value
+            );
+            this._filter = new ChoosePhoneNumberPopupFilter(
+                requiredMode,
+                value
+            );
+
+            if (this._onFilterChangedHandler) {
+                this._onFilterChangedHandler();
+            }
+        };
+
+        const getModeForSwitcherItem = (item) => {
+            if (item == this._userInterface.filter.switcher.areaCode) {
+                return ChoosePhoneNumberPopupFilterMode.areaCode;
+            } else if (item == this._userInterface.filter.switcher.tollFree) {
+                return ChoosePhoneNumberPopupFilterMode.tollFree;
+            } else if (item == this._userInterface.filter.switcher.city) {
+                return ChoosePhoneNumberPopupFilterMode.city;
+            } else {
+                return ChoosePhoneNumberPopupFilterMode.areaCode;
+            }
+        };
+
+        [
+            this._userInterface.filter.switcher.areaCode,
+            this._userInterface.filter.switcher.tollFree,
+            this._userInterface.filter.switcher.city
+        ].forEach(item => {
+            $(item).on("click", (event) => {
+                event.preventDefault();
+                switchFilterToMode(
+                    getModeForSwitcherItem(
+                        item
+                    )
+                );
+            });
+        });
+
         this.setPhoneNumbers([]);
     }
 
@@ -99,6 +145,13 @@ class ChoosePhoneNumberPopup {
      */
     getFilter = () => {
         return this._filter;
+    }
+
+    /**
+     * @param {() => void} handler 
+     */
+    onFilterChanged = (handler) => {
+        this._onFilterChangedHandler = handler;
     }
 
     /**

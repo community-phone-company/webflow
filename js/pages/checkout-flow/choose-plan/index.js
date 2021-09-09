@@ -143,6 +143,9 @@ const setupAddonCardClickHandlers = (handler) => {
 const choosePhoneNumberPopup = isTestingChooseNumberModal
     ? new ChoosePhoneNumberPopup("#modal-choose-phone-number")
     : undefined;
+choosePhoneNumberPopup.onFilterChanged(() => {
+    console.log("Filter updated!");
+});
 choosePhoneNumberPopup.onSelectedPhoneNumber((phoneNumber) => {
     choosePhoneNumberPopup.getPopup().hide();
     formData.selectedPhoneNumber = phoneNumber;
