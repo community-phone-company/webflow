@@ -591,7 +591,7 @@ if (isTestEnvironment) {
         );
         Store.local.write(
             Store.keys.checkoutFlow.selectedPhoneNumber,
-            formData.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular)
+            formData.selectedPhoneNumber ? formData.selectedPhoneNumber.serialize() : undefined
         );
 
         router.open(

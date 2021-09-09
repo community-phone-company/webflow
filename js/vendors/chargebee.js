@@ -126,6 +126,7 @@ class Chargebee {
      * @param {ChargebeeCheckoutAddress} shippingAddress Shipping address.
      * @param {ChargebeeCheckoutAddress} billingAddress Billing address.
      * @param {string[]} productIdentifiers Product identifiers.
+     * @param {string | undefined} selectedPhoneNumber Selected phone number.
      * @param {ChargebeeCheckoutCardInformation} cardInformation Card information.
      * @param {(message: string, success: boolean) => void} callback Function that is called when result comes from the server.
      */
@@ -135,6 +136,7 @@ class Chargebee {
         shippingAddress,
         billingAddress,
         productIdentifiers,
+        selectedPhoneNumber,
         cardInformation,
         callback
     ) => {
@@ -175,6 +177,7 @@ class Chargebee {
                     "item_price_id": id
                 };
             }),
+            "selected_phone_number": selectedPhoneNumber,
             "card": {
                 "card_number": cardInformation.number,
                 "card_expiry_month": cardInformation.expiry.month,

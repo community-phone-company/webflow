@@ -72,6 +72,12 @@ const onReady = () => {
                 zip: "",
                 state: ""
             },
+            selectedPhoneNumber: (() => {
+                const serializedPhoneNumber = Store.local.read(
+                    Store.keys.checkoutFlow.selectedPhoneNumber
+                );
+                return serializedPhoneNumber && PhoneNumber.deserialize(serializedPhoneNumber);
+            })(),
             paymentDetails: {
                 cardNumber: "",
                 cardExpiry: "",
@@ -205,6 +211,7 @@ const onReady = () => {
         const phone = Store.local.read(Store.keys.checkoutFlow.phone);
         const getNewNumber = Store.local.read(Store.keys.checkoutFlow.getNewNumber);
         const productIdentifiers = Store.local.read(Store.keys.checkoutFlow.selectedProductIdentifiers);
+        const selectedPhoneNumber = form.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular);
 
         const shippingAddress = new ChargebeeCheckoutAddress(
             form.data.shippingAddress.firstName,
@@ -251,6 +258,7 @@ const onReady = () => {
             shippingAddress,
             billingAddress,
             productIdentifiers,
+            selectedPhoneNumber,
             new ChargebeeCheckoutCardInformation(
                 form.data.paymentDetails.cardNumber,
                 ChargebeeCheckoutCardInformationExpiryDate.parse(
