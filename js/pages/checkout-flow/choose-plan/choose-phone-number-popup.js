@@ -84,7 +84,7 @@ class ChoosePhoneNumberPopup {
             $(item).on("click", (event) => {
                 event.preventDefault();
                 $(allSwitcherItems).removeClass("current-tab");
-                $(item).addClass("current-tab");
+                $(item).addClass("by-area-code current-tab");
                 switchFilterToMode(
                     getModeForSwitcherItem(
                         item
