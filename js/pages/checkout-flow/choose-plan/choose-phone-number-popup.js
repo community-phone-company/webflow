@@ -54,7 +54,7 @@ class ChoosePhoneNumberPopup {
                 value
             );
             this._filter = new ChoosePhoneNumberPopupFilter(
-                requiredMode,
+                mode,
                 value
             );
 
