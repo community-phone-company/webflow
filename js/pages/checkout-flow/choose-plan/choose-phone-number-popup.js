@@ -75,6 +75,23 @@ class ChoosePhoneNumberPopup {
                 ""
             );
         $(this._userInterface.availableNumbers.listContainer).html(html);
+
+        $(".div-phone-number").off().on("click", (event) => {
+            event.preventDefault();
+            const selectedCard = event.currentTarget;
+            $(".div-phone-number .div-radio-button-2").removeClass("radio-selected");
+            $(selectedCard).addClass("radio-selected");
+            
+            const selectedPhoneNumber = ChoosePhoneNumberPopupItemCard.getPhoneNumber(
+                selectedCard
+            );
+
+            if (selectedPhoneNumber && this._onSelectedPhoneNumberHandler) {
+                this._onSelectedPhoneNumberHandler(
+                    selectedPhoneNumber
+                );
+            }
+        });
     }
 
     /**
@@ -82,6 +99,13 @@ class ChoosePhoneNumberPopup {
      */
     getFilter = () => {
         return this._filter;
+    }
+
+    /**
+     * @param {(phoneNumber: PhoneNumber) => void} handler 
+     */
+    onSelectedPhoneNumber = (handler) => {
+        this._onSelectedPhoneNumberHandler = handler;
     }
 }
 
@@ -118,6 +142,11 @@ class ChoosePhoneNumberPopupItemCard {
      * @returns {PhoneNumber | undefined}
      */
     static getPhoneNumber = (card) => {
+        const serializedPhoneNumber = $(card).attr(this.getSerializedPhoneNumberKey());
+        const phoneNumber = PhoneNumber.deserialize(
+            serializedPhoneNumber
+        );
+        return phoneNumber;
     }
 
     /**
