@@ -74,14 +74,17 @@ class ChoosePhoneNumberPopup {
                 return ChoosePhoneNumberPopupFilterMode.areaCode;
             }
         };
-
-        [
+        
+        const allSwitcherItems = [
             this._userInterface.filter.switcher.areaCode,
             this._userInterface.filter.switcher.tollFree,
             this._userInterface.filter.switcher.city
-        ].forEach(item => {
+        ];
+        allSwitcherItems.forEach(item => {
             $(item).on("click", (event) => {
                 event.preventDefault();
+                $(allSwitcherItems).removeClass("current-tab");
+                $(item).addClass("current-tab");
                 switchFilterToMode(
                     getModeForSwitcherItem(
                         item
