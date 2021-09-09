@@ -80,7 +80,7 @@ class ChoosePhoneNumberPopup {
             event.preventDefault();
             const selectedCard = event.currentTarget;
             $(".div-phone-number .div-radio-button-2").removeClass("radio-selected");
-            $(selectedCard).addClass("radio-selected");
+            $(selectedCard).find(".div-radio-button-2").addClass("radio-selected");
             
             const selectedPhoneNumber = ChoosePhoneNumberPopupItemCard.getPhoneNumber(
                 selectedCard
