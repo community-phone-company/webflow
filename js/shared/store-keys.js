@@ -31,7 +31,8 @@ const CheckoutFlowStoreKey = Object.freeze({
     billingAddress_zip: "checkout-flow-billing-address-zip",
     billingAddress_state: "checkout-flow-billing-address-state",
     productPurchased: "checkout-flow-product-purchased",
-    selectedProductIdentifiers: "checkout-flow-selected-product-identifiers"
+    selectedProductIdentifiers: "checkout-flow-selected-product-identifiers",
+    selectedPhoneNumber: "checkout-flow-selected-phone-number",
 });
 
 const OnboardingFlowStoreKey = Object.freeze({

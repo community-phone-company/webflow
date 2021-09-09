@@ -189,10 +189,20 @@ class PhoneNumber {
     }
 
     /**
+     * @param {PhoneNumberFormatStyle | undefined} style
      * @returns {string}
      */
-    formatted = () => {
-        return `(${this.areaCode}) ${this.number}`;
+    formatted = (style) => {
+        const styleOrDefault = style ?? PhoneNumberFormatStyle.regular;
+
+        switch (styleOrDefault) {
+            case PhoneNumberFormatStyle.regular:
+                return `${this.areaCode}${this.number}`;
+            case PhoneNumberFormatStyle.brackets:
+                return `(${this.areaCode}) ${this.number}`;
+            default:
+                return this.formatted(undefined);
+        }
     }
 
     /**
@@ -202,3 +212,8 @@ class PhoneNumber {
         return JSON.stringify(this).replaceAll("\"", "'");
     }
 }
+
+const PhoneNumberFormatStyle = Object.freeze({
+    regular: "regular",
+    brackets: "brackets"
+});

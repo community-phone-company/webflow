@@ -183,7 +183,7 @@ const getChooseNumberSectionContainer = () => {
 
 const updateChoosePhoneNumberSection = () => {
     $("#selected-phone-number").html(
-        formData.selectedPhoneNumber ? formData.selectedPhoneNumber.formatted() : ""
+        formData.selectedPhoneNumber ? formData.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.brackets) : ""
     );
     console.log("Updated Choose Number section");
 };
@@ -588,6 +588,10 @@ if (isTestEnvironment) {
         Store.local.write(
             Store.keys.checkoutFlow.selectedProductIdentifiers,
             formData.productCart.getProductIdentifiers()
+        );
+        Store.local.write(
+            Store.keys.checkoutFlow.selectedPhoneNumber,
+            formData.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular)
         );
 
         router.open(
