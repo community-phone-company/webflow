@@ -204,6 +204,20 @@ const setupChoosePhoneNumberLinks = (onClick) => {
     });
 };
 
+/**
+ * @param {(() => void) | undefined} onClick 
+ */
+const setupPortPhoneNumberLinks = (onClick) => {
+    $("#fill-out-porting-form-button").on("click", (event) => {
+        event.preventDefault();
+        portPhoneNumberPopup.getPopup().show();
+        
+        if (onClick) {
+            onClick();
+        }
+    });
+};
+
 const billingAddress = new ProductCartBillingAddress(
     Store.local.read(
         Store.keys.checkoutFlow.shippingAddress_city
@@ -573,6 +587,15 @@ if (isTestEnvironment) {
                 );
             }
         );
+    }
+
+    /**
+     * Port phone number functionality.
+     */
+    if (isTestingPortNumberModal) {
+        setupPortPhoneNumberLinks(() => {
+            console.log("Port phone number");
+        });
     }
 
     /**
