@@ -213,6 +213,24 @@ const onReady = () => {
         const productIdentifiers = Store.local.read(Store.keys.checkoutFlow.selectedProductIdentifiers);
         const selectedPhoneNumber = form.data.selectedPhoneNumber && form.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular);
 
+        const portPhoneNumberData = {
+            technicalData: {
+                accountNumber: Store.local.read(Store.keys.portPhoneNumber.accountNumber),
+                pin: Store.local.read(Store.keys.portPhoneNumber.pin),
+                accountName: Store.local.read(Store.keys.portPhoneNumber.accountName),
+                numberToPort: Store.local.read(Store.keys.portPhoneNumber.numberToPort)
+            },
+            serviceAddress: {
+                firstName: Store.local.read(Store.keys.portPhoneNumber.firstName),
+                lastName: Store.local.read(Store.keys.portPhoneNumber.lastName),
+                addressLineOne: Store.local.read(Store.keys.portPhoneNumber.addressLineOne),
+                addressLineTwo: Store.local.read(Store.keys.portPhoneNumber.addressLineTwo),
+                city: Store.local.read(Store.keys.portPhoneNumber.city),
+                zip: Store.local.read(Store.keys.portPhoneNumber.zip),
+                state: Store.local.read(Store.keys.portPhoneNumber.state)
+            }
+        };
+
         const shippingAddress = new ChargebeeCheckoutAddress(
             form.data.shippingAddress.firstName,
             form.data.shippingAddress.lastName,
