@@ -166,16 +166,6 @@ if (isTestingChooseNumberModal) {
     });
 }
 
-const portPhoneNumberPopup = isTestingPortNumberModal
-    ? new PortPhoneNumberPopup("#modal-port-phone-number")
-    : undefined;
-
-if (isTestingPortNumberModal) {
-    portPhoneNumberPopup.getPopup().onCTAButtonClicked((popup) => {
-        console.log("CTA button clicked");
-    });
-}
-
 /**
  * @returns {HTMLElement}
  */
@@ -203,6 +193,16 @@ const setupChoosePhoneNumberLinks = (onClick) => {
         }
     });
 };
+
+const portPhoneNumberPopup = isTestingPortNumberModal
+    ? new PortPhoneNumberPopup("#modal-port-phone-number")
+    : undefined;
+
+if (isTestingPortNumberModal) {
+    portPhoneNumberPopup.onSubmit(() => {
+        portPhoneNumberPopup.getPopup().hide();
+    });
+}
 
 /**
  * @param {(() => void) | undefined} onClick 

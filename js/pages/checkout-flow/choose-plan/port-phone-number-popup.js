@@ -45,6 +45,11 @@ class PortPhoneNumberPopup {
     }
 
     _setupUserInterface = () => {
+        this._userInterface.popup.onCTAButtonClicked((popup) => {
+            if (this._onSubmitHandler) {
+                this._onSubmitHandler();
+            }
+        });
     }
 
     getContainer = () => {
