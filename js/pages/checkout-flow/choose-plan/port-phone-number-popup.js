@@ -151,6 +151,10 @@ class PortPhoneNumberPopup {
         return this._form.userInterface.popup;
     }
 
+    getFormData = () => {
+        return this._form.data;
+    }
+
     /**
      * @param {(() => void) | undefined} handler 
      */

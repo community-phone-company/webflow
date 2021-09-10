@@ -35,6 +35,20 @@ const CheckoutFlowStoreKey = Object.freeze({
     selectedPhoneNumber: "checkout-flow-selected-phone-number",
 });
 
+const PortPhoneNumberKey = Object.freeze({
+    accountNumber: "port-phone-number-account-number",
+    pin: "port-phone-number-pin",
+    accountName: "port-phone-number-account-name",
+    numberToPort: "port-phone-number-phone-number",
+    firstName: "port-phone-number-first-name",
+    lastName: "port-phone-number-last-name",
+    addressLineOne: "port-phone-number-address-line-one",
+    addressLineTwo: "port-phone-number-address-line-two",
+    city: "port-phone-number-city",
+    zip: "port-phone-number-zip",
+    state: "port-phone-number-state"
+});
+
 const OnboardingFlowStoreKey = Object.freeze({
     email: "onboarding-flow-email",
     callerId: "onboarding-flow-caller-id",
@@ -57,5 +71,6 @@ Store.keys = Object.freeze({
     checkoutFlow: CheckoutFlowStoreKey,
     onboardingFlow: OnboardingFlowStoreKey,
     userPortal: UserPortalStoreKey,
+    portPhoneNumber: PortPhoneNumberKey,
     generalSettings: GeneralSettingsStoreKey
 });
