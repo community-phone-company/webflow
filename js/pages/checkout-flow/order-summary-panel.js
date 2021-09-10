@@ -34,7 +34,7 @@ class OrderSummaryPanel {
                 );
             })
             .filter(product => {
-                return product.pricing != undefined
+                return product && product.pricing;
             });
         const zip = (() => {
             const billingAddress = productCart.getBillingAddress();
