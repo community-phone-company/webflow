@@ -27,11 +27,15 @@ class OrderSummaryPanel {
      * @param {ProductCart} productCart Product cart.
      */
     update = (productStore, productCart) => {
-        const allProducts = productCart.getProductIdentifiers().map(productId => {
-            return productStore.getProductById(
-                productId
-            );
-        });
+        const allProducts = productCart.getProductIdentifiers()
+            .map(productId => {
+                return productStore.getProductById(
+                    productId
+                );
+            })
+            .filter(product => {
+                return product.pricing != undefined
+            });
         const zip = (() => {
             const billingAddress = productCart.getBillingAddress();
             return billingAddress.zip;
