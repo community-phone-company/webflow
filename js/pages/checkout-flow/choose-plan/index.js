@@ -1,5 +1,6 @@
-const isTestingChooseNumberModal = router.getParameterValue("choose-number") != undefined;
 const isTestEnvironment = router.isTestEnvironment();
+const isTestingChooseNumberModal = router.getParameterValue("choose-number") != undefined;
+const isTestingPortNumberModal = router.getParameterValue("port-number") != undefined;
 
 /**
  * @param {Product} product Product.
@@ -165,14 +166,15 @@ if (isTestingChooseNumberModal) {
     });
 }
 
-/**
- * @returns {HTMLElement}
- */
-const getPhoneNumbersContainer = () => {
-    return isTestingChooseNumberModal
-        ? choosePhoneNumberPopup.getContainer().querySelectorAll(".list-of-numbers")[0]
-        : undefined;
-};
+const portPhoneNumberPopup = isTestingPortNumberModal
+    ? new PortPhoneNumberPopup("#modal-port-phone-number")
+    : undefined;
+
+if (isTestingPortNumberModal) {
+    portPhoneNumberPopup.getPopup().onCTAButtonClicked((popup) => {
+        console.log("CTA button clicked");
+    });
+}
 
 /**
  * @returns {HTMLElement}
