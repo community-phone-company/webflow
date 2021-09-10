@@ -142,10 +142,23 @@ class Popup {
             .stop()
             .css("display", "block")
             .fadeTo(300, 1, () => {
+                if (this._onShowHandler) {
+                    this._onShowHandler();
+                }
+
                 if (callback) {
                     callback();
                 }
             });
+        return this;
+    }
+
+    /**
+     * @param {(() => void) | undefined} handler Event handler.
+     * @returns {Popup} Current {@link Popup} instance.
+     */
+    onShow = (handler) => {
+        this._onShowHandler = handler;
         return this;
     }
 
@@ -159,11 +172,24 @@ class Popup {
             .stop()
             .fadeTo(300, 0, () => {
                 $(container).css("display", "none");
+
+                if (this._onHideHandler) {
+                    this._onHideHandler();
+                }
                 
                 if (callback) {
                     callback();
                 }
             });
+        return this;
+    }
+
+    /**
+     * @param {(() => void) | undefined} handler Event handler.
+     * @returns {Popup} Current {@link Popup} instance.
+     */
+    onHide = (handler) => {
+        this._onHideHandler = handler;
         return this;
     }
 }

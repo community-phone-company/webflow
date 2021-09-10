@@ -109,11 +109,15 @@ class PortPhoneNumberPopup {
             this._handleFormChange();
         };
 
-        this._form.userInterface.popup.onCTAButtonClicked((popup) => {
-            if (this._onSubmitHandler) {
-                this._onSubmitHandler();
-            }
-        });
+        this._form.userInterface.popup
+            .onShow(() => {
+                this._handleFormChange();
+            })
+            .onCTAButtonClicked((popup) => {
+                if (this._onSubmitHandler) {
+                    this._onSubmitHandler();
+                }
+            });
 
         this._handleFormChange();
     }
