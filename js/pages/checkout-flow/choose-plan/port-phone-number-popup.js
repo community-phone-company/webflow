@@ -56,7 +56,7 @@ class PortPhoneNumberPopup {
                         stateSelect: this._container.querySelectorAll("#porting-info-popup_state-select")[0]
                     }
                 },
-                submitButton: this._container.querySelectorAll("popup-cta-button")[0]
+                submitButton: this._container.querySelectorAll(".popup-cta-button")[0]
             }
         };
 
