@@ -50,9 +50,10 @@ class ProductStore {
      */
     loadProducts = (callback) => {
         const _this = this;
+        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
         return $.ajax({
             method: "GET",
-            url: `https://staging-landline.phone.community/api/v1/billing/products/`,
+            url: api.getAbsoluteUrl("billing/products"),
             dataType: "json",
             data: {
             },

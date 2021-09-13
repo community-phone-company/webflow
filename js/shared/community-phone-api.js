@@ -122,6 +122,7 @@ class CommunityPhoneAPI {
             url: url,
             method: method,
             headers: headers,
+            dataType: "json",
             data: data ? JSON.stringify(data) : undefined,
             contentType: "application/json; charset=utf-8",
             success: function (response) {

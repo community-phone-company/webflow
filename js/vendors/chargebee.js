@@ -114,10 +114,8 @@ class Chargebee {
 
     /**
      * @constructor
-     * @param {boolean} isProduction
      */
-    constructor(isProduction) {
-        this.isProduction = isProduction;
+    constructor() {
     }
 
     /**
@@ -140,9 +138,6 @@ class Chargebee {
         cardInformation,
         callback
     ) => {
-        const url = this.isProduction
-            ? "https://landline.phone.community/api/v1/chargebee/checkout/"
-            : "https://staging-landline.phone.community/api/v1/chargebee/checkout/";
         let data = {
             "first_name": customer.firstName,
             "last_name": customer.lastName,
@@ -186,8 +181,9 @@ class Chargebee {
             }
         };
         console.log(data);
+        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
         $.ajax({
-            url: url,
+            url: api.getAbsoluteUrl("chargebee/checkout"),
             method: "POST",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",

@@ -117,8 +117,9 @@ class ProductCart {
             this._onPricesStartedUpdating();
         }
 
+        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
         const request = $.ajax({
-            url: `https://staging-landline.phone.community/api/v1/billing/products/tax-estimate/`,
+            url: api.getAbsoluteUrl("billing/products/tax-estimate"),
             method: "POST",
             crossDomain: true,
             dataType: "json",
