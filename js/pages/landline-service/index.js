@@ -1,4 +1,5 @@
-const isTestEnvironment = router.isTestEnvironment() || router.getParameterValue("test") != undefined;
+const isVersionOne = router.getParameterValue("v1") != undefined;
+const isTestEnvironment = router.isTestEnvironment() || !isVersionOne;
 
 const elements = {
     checkCoveragePopup: (() => {
