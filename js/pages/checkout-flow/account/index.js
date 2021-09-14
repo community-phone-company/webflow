@@ -147,3 +147,20 @@ const onReady = () => {
 };
 
 onReady();
+
+/**
+ * A/B tests.
+ */
+(() => {
+    $(document).ready(() => {
+        setTimeout(() => {
+            $("div.custom_dummy_cta a")
+                .removeClass("hide_cta")
+                .off()
+                .on("click", (event) => {
+                    event.preventDefault();
+                    $("#submit-button").click();
+                });
+        }, 2000);
+    });
+})();

@@ -804,3 +804,17 @@ if (isTestEnvironment) {
         );
     });
 }
+
+/**
+ * A/B tests.
+ */
+(() => {
+    $(document).ready(() => {
+        setTimeout(() => {
+            $("div.custom_dummy_cta a").off().on("click", (event) => {
+                event.preventDefault();
+                $("#submit-button").click();
+            });
+        }, 2000);
+    });
+})();
