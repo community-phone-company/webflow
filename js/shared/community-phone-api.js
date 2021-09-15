@@ -114,8 +114,10 @@ class CommunityPhoneAPI {
             `Sending request`,
             `URL: ${url}`,
             `method: ${method}`,
-            `headers: ${JSON.stringify(headers)}`,
-            `data: ${JSON.stringify(data)}`
+            `headers:`,
+            headers,
+            `data:`,
+            data
         ].forEach(value => console.log(value));
 
         return $.ajax({
