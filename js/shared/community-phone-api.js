@@ -146,5 +146,6 @@ class CommunityPhoneAPI {
 CommunityPhoneAPI.endpoints = Object.freeze({
     auth_email: "auth/email",
     auth_token: "auth/token",
-    portal_billing: "portal/billing"
+    portal_billing: "portal/billing",
+    chargebee_checkout = "chargebee/checkout"
 });

@@ -183,7 +183,31 @@ class Chargebee {
         };
         console.log(data);
         const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
-        $.ajax({
+        return api.jsonRequest(
+            "chargebee/checkout",
+            "POST",
+            undefined,
+            data,
+            (response, error) => {
+                if (error) {
+                    const message = (() => {
+                        const defaultMessage = "Something went wrong.\nTry again later or call us at (855) 615-0667";
+                        return api.getErrorMessage(error, true) ?? api.getErrorMessage(error, false) ?? defaultMessage;
+                    })();
+                    callback(
+                        message,
+                        false
+                    );
+                } else {
+                    const message = response && response.message;
+                    callback(
+                        message,
+                        true
+                    );
+                }
+            }
+        );
+        /*$.ajax({
             url: api.getAbsoluteUrl("chargebee/checkout"),
             method: "POST",
             data: JSON.stringify(data),
@@ -205,6 +229,6 @@ class Chargebee {
                     false
                 );
             }
-        });
+        });*/
     }
 }
