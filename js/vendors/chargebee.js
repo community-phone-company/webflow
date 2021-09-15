@@ -184,7 +184,7 @@ class Chargebee {
         console.log(data);
         const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
         return api.jsonRequest(
-            "chargebee/checkout",
+            CommunityPhoneAPI.endpoints.chargebee_checkout,
             "POST",
             undefined,
             data,
