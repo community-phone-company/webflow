@@ -154,13 +154,11 @@ onReady();
 (() => {
     $(document).ready(() => {
         setTimeout(() => {
-            $("div.custom_dummy_cta a")
-                .removeClass("hide_cta")
-                .off()
-                .on("click", (event) => {
-                    event.preventDefault();
-                    $("#submit-button").click();
-                });
+            $("div.custom_dummy_cta.hide_cta").removeClass("hide_cta");
+            $("div.custom_dummy_cta a").off().on("click", (event) => {
+                event.preventDefault();
+                $("#submit-button").click();
+            });
         }, 2000);
     });
 })();
