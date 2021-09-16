@@ -172,7 +172,7 @@ class Chargebee {
                     "item_price_id": id
                 };
             }),
-            "phonenumber_service": selectedPhoneNumber ? "Selected Number" : undefined,
+            "phonenumber_service": selectedPhoneNumber ? "selected-number" : undefined,
             "selected_phonenumber": selectedPhoneNumber,
             "card": {
                 "card_number": cardInformation.number,
@@ -207,28 +207,5 @@ class Chargebee {
                 }
             }
         );
-        /*$.ajax({
-            url: api.getAbsoluteUrl("chargebee/checkout"),
-            method: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                const message = response && response.message;
-                callback(
-                    message,
-                    true
-                );
-            },
-            error: function (error) {
-                const message = (() => {
-                    const defaultMessage = "Something went wrong.\nTry again later or call us at (855) 615-0667";
-                    return (error && error.responseJSON && (error.responseJSON.message_html || error.responseJSON.message)) || defaultMessage;
-                })();
-                callback(
-                    message,
-                    false
-                );
-            }
-        });*/
     }
 }
