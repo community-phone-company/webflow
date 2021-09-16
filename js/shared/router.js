@@ -82,8 +82,15 @@ class Router {
 const RouterPathTestEnvironmentPrefix = "test-environment";
 
 const RouterPath = Object.freeze({
+    /**
+     * General
+     */
     home: "",
     landlineService: "landline",
+
+    /**
+     * Onboarding
+     */
     onboarding_general_account: "onboarding/general/account",
     onboarding_general_numberType: "onboarding/general/number-type",
     onboarding_onboarding_step_1: "onboarding/onboarding/step-1",
@@ -99,10 +106,22 @@ const RouterPath = Object.freeze({
     onboarding_porting_previousCarrier: "onboarding/porting/previous-carrier",
     onboarding_porting_numberTransfer: "onboarding/porting/number-transfer",
     onboarding_porting_thankYou: "onboarding/porting/thank-you-for-porting",
+    
+    /**
+     * Checkout v1
+     */
     checkoutLandline_choosePlan: "checkout-landline/choose-a-plan",
     checkoutLandline_account: "checkout-landline/account",
     checkoutLandline_checkoutStep: "checkout-landline/checkout-step",
-    checkoutLandline_thankYou: "checkout-landline/thank-you"
+    checkoutLandline_thankYou: "checkout-landline/thank-you",
+    
+    /**
+     * Checkout v2
+     */
+    checkout_v2_choosePlan: "checkout-v2/choose-a-plan",
+    checkout_v2_account: "checkout-v2/account",
+    checkout_v2_checkoutStep: "checkout-v2/checkout-step",
+    checkout_v2_thankYou: "checkout-v2/thank-you"
 });
 
 const RouterPathParameter = Object.freeze({

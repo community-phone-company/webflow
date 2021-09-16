@@ -1,6 +1,7 @@
-const isTestEnvironment = router.isTestEnvironment();
-const isTestingChooseNumberModal = router.getParameterValue("choose-number") != undefined;
-const isTestingPortNumberModal = router.getParameterValue("port-number") != undefined;
+const isTestEnvironment = router.isTestEnvironment() || window.location.href.includes("checkout-v2");
+const is_v2 = router.isTestEnvironment() || window.location.href.includes("checkout-v2");
+const isChooseNumberModalAvailable = router.getParameterValue("choose-number") != undefined;
+const isPortNumberModalAvailable = router.getParameterValue("port-number") != undefined;
 
 /**
  * @param {Product} product Product.
@@ -141,11 +142,11 @@ const setupAddonCardClickHandlers = (handler) => {
     });
 };
 
-const choosePhoneNumberPopup = isTestingChooseNumberModal
+const choosePhoneNumberPopup = isChooseNumberModalAvailable
     ? new ChoosePhoneNumberPopup("#modal-choose-phone-number")
     : undefined;
 
-if (isTestingChooseNumberModal) {
+if (isChooseNumberModalAvailable) {
     choosePhoneNumberPopup.onFilterChanged(() => {
         console.log("Filter updated!");
         formData.numberSearchFilter = choosePhoneNumberPopup.getFilter();
@@ -194,11 +195,11 @@ const setupChoosePhoneNumberLinks = (onClick) => {
     });
 };
 
-const portPhoneNumberPopup = isTestingPortNumberModal
+const portPhoneNumberPopup = isPortNumberModalAvailable
     ? new PortPhoneNumberPopup("#modal-port-phone-number")
     : undefined;
 
-if (isTestingPortNumberModal) {
+if (isPortNumberModalAvailable) {
     portPhoneNumberPopup.onSubmit(() => {
         portPhoneNumberPopup.getPopup().hide();
         
@@ -327,7 +328,7 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
     );
 };
 
-if (isTestEnvironment) {
+if (is_v2) {
     /**
      * @returns {Product[]}
      */
@@ -617,7 +618,7 @@ if (isTestEnvironment) {
     /**
      * Choose phone number functionality.
      */
-    if (isTestingChooseNumberModal) {
+    if (isChooseNumberModalAvailable) {
         setupChoosePhoneNumberLinks(() => {
             console.log("Choose phone number");
         });
@@ -638,7 +639,7 @@ if (isTestEnvironment) {
     /**
      * Port phone number functionality.
      */
-    if (isTestingPortNumberModal) {
+    if (isPortNumberModalAvailable) {
         setupPortPhoneNumberLinks(() => {
             console.log("Port phone number");
         });
@@ -668,7 +669,7 @@ if (isTestEnvironment) {
         router.open(
             RouterPath.checkoutLandline_account,
             router.getParameters(),
-            isTestEnvironment
+            router.isTestEnvironment()
         );
     });
 
