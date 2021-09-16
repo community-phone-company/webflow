@@ -76,11 +76,7 @@ const checkCoverageVM = new Vue({
             const checkCoverageButtonClickHandler = (event) => {
                 event.preventDefault();
                 $(".popup-service-address").remove();
-                router.open(
-                    isVersionOne ? RouterPath.checkoutLandline_choosePlan : RouterPath.checkout_v2_choosePlan,
-                    router.getParameters(),
-                    false
-                );
+                openCheckout();
             };
             elements.checkCoverageButtons.forEach(button => {
                 $(button).find("div,strong").html(checkCoverageButtonTitle);
@@ -106,6 +102,21 @@ const checkCoverageVM = new Vue({
         }
     }
 });
+
+const openCheckout = () => {
+    const path = (() => {
+        if (isVersionOne) {
+            return RouterPath.checkoutLandline_choosePlan;
+        } else {
+            return IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
+        }
+    })();
+    router.open(
+        path,
+        router.getParameters(),
+        false
+    );
+};
 
 const useLegacyApiForZipRequest = false;
 
@@ -196,11 +207,7 @@ $(document).ready(() => {
                 Store.keys.checkoutFlow.shippingAddress_zip,
                 zipCode
             );
-            router.open(
-                isVersionOne ? RouterPath.checkoutLandline_choosePlan : RouterPath.checkout_v2_choosePlan,
-                router.getParameters(),
-                router.isTestEnvironment()
-            );
+            openCheckout();
         });
     });
 
@@ -270,11 +277,7 @@ $(document).ready(() => {
     });
     $(elements.checkCoveragePopup.startServiceButton).on("click", (event) => {
         event.preventDefault();
-        router.open(
-            isVersionOne ? RouterPath.checkoutLandline_choosePlan : RouterPath.checkout_v2_choosePlan,
-            router.getParameters(),
-            router.isTestEnvironment()
-        );
+        openCheckout();
     });
     $(elements.checkCoveragePopup.learnMoreButton).on("click", (event) => {
         event.preventDefault();
