@@ -238,7 +238,7 @@ class ChoosePhoneNumberPopupItemCard {
                     <div class="_w-8">
                     </div>
                     <div class="txt-phone-number-2">
-                        ${this._phoneNumber.formatted()}
+                        ${this._phoneNumber.formatted(PhoneNumberFormatStyle.brackets)}
                     </div>
                 </div>
                 <div class="txt-lacation-2">
