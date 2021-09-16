@@ -199,7 +199,14 @@ class PhoneNumber {
             case PhoneNumberFormatStyle.regular:
                 return `${this.areaCode}${this.number}`;
             case PhoneNumberFormatStyle.brackets:
-                return `(${this.areaCode}) ${this.number}`;
+                const formattedDigits = (() => {
+                    if (this.number.length == 7) {
+                        return `${this.number.toString().substring(0, 3)}-${this.number.toString().substring(3, 7)}`;
+                    } else {
+                        return this.number;
+                    }
+                })();
+                return `(${this.areaCode}) ${formattedDigits}`;
             default:
                 return this.formatted(undefined);
         }
