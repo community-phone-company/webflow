@@ -271,7 +271,13 @@ const onReady = () => {
                 phone,
                 ChargebeeCheckoutCustomerType.business
             ),
-            getNewNumber ? ChargebeeCheckoutPhoneNumberServiceType.getNewNumber : ChargebeeCheckoutPhoneNumberServiceType.portExistingNumber,
+            (() => {
+                if (getNewNumber) {
+                    return selectedPhoneNumber ? ChargebeeCheckoutPhoneNumberServiceType.selectedNumber : ChargebeeCheckoutPhoneNumberServiceType.getNewNumber;
+                } else {
+                    return ChargebeeCheckoutPhoneNumberServiceType.portExistingNumber;
+                }
+            })(),
             shippingAddress,
             billingAddress,
             productIdentifiers,

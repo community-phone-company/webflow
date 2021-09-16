@@ -173,7 +173,6 @@ class Chargebee {
                     "item_price_id": id
                 };
             }),
-            "phonenumber_service": selectedPhoneNumber ? "selected-number" : undefined,
             "selected_phonenumber": selectedPhoneNumber,
             "card": {
                 "card_number": cardInformation.number,
