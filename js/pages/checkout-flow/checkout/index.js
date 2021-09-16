@@ -1,3 +1,5 @@
+const is_v2 = router.isTestEnvironment() || window.location.href.includes("checkout-v2");
+
 /**
  * Adds Google Maps functionality to the text field.
  * @param {HTMLInputElement} textField `HTMLInputElement` instance.
@@ -127,7 +129,7 @@ const onReady = () => {
             && form.data.paymentDetails.cardVerificationValue.length >= 3;
         
         const isEverythingCorrect = () => {
-            if (router.isTestEnvironment()) {
+            if (is_v2) {
                 const isPricingValid = () => {
                     return form.pricing.productCart
                         && form.pricing.productCart.amounts.dueToday != undefined
@@ -149,7 +151,7 @@ const onReady = () => {
             isEverythingCorrect()
         );
 
-        if (router.isTestEnvironment()) {
+        if (is_v2) {
             const newBillingAddressForOrderSummaryPanel = (() => {
                 if (form.data.useShippingAddressForBilling) {
                     return new ProductCartBillingAddress(
@@ -511,7 +513,7 @@ const onReady = () => {
                 if (success) {
                     removeCheckoutFlowDataFromStorage();
                     router.open(
-                        RouterPath.checkoutLandline_thankYou,
+                        is_v2 ? RouterPath.checkout_v2_thankYou : RouterPath.checkoutLandline_thankYou,
                         router.getParameters(),
                         router.isTestEnvironment()
                     );
@@ -531,7 +533,7 @@ const onReady = () => {
 
     handleFormDataChanges();
 
-    if (router.isTestEnvironment()) {
+    if (is_v2) {
         // findAndUpdateOrderSummaryPanel();
     } else {
         const productIdentifiers = Store.local.read(

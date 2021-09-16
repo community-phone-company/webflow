@@ -1,3 +1,5 @@
+const is_v2 = router.isTestEnvironment() || window.location.href.includes("checkout-v2");
+
 // redirectToPreviousCheckoutFlowStepIfNeeded();
 
 var recaptchaCallback = () => {};
@@ -124,7 +126,7 @@ const onReady = () => {
             (response, error, success) => {
                 console.log("Active Campaign");
                 router.open(
-                    RouterPath.checkoutLandline_checkoutStep,
+                    is_v2 ? RouterPath.checkout_v2_checkoutStep : RouterPath.checkoutLandline_checkoutStep,
                     router.getParameters(),
                     router.isTestEnvironment()
                 );
@@ -134,7 +136,7 @@ const onReady = () => {
 
     handleFormDataChange();
 
-    if (router.isTestEnvironment()) {
+    if (is_v2) {
         findAndUpdateOrderSummaryPanel();
     } else {
         const productIdentifiers = Store.local.read(

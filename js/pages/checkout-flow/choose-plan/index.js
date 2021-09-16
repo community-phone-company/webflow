@@ -667,7 +667,7 @@ if (is_v2) {
         );
 
         router.open(
-            RouterPath.checkoutLandline_account,
+            is_v2 ? RouterPath.checkout_v2_account : RouterPath.checkoutLandline_account,
             router.getParameters(),
             router.isTestEnvironment()
         );
