@@ -119,6 +119,7 @@ const RouterPath = Object.freeze({
      * Checkout v2
      */
     checkout_v2_choosePlan: "checkout-v2/choose-a-plan",
+    checkout_v2_choosePlanAndNumber: "checkout-v2/choose-plan-and-number",
     checkout_v2_account: "checkout-v2/account",
     checkout_v2_checkoutStep: "checkout-v2/checkout-step",
     checkout_v2_thankYou: "checkout-v2/thank-you"
