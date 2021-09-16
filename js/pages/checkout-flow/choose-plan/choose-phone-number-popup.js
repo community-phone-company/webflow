@@ -27,6 +27,7 @@ class ChoosePhoneNumberPopup {
                     tollFree: this._container.querySelectorAll("#filter-by-toll-free")[0],
                     city: this._container.querySelectorAll("#filter-by-city")[0]
                 },
+                form: this._container.querySelectorAll("form")[0],
                 valueInput: this._container.querySelectorAll("#filter-text-input")[0]
             },
             availableNumbers: {
@@ -89,6 +90,11 @@ class ChoosePhoneNumberPopup {
                     )
                 );
             });
+        });
+
+        $(this._userInterface.filter.form).submit((event) => {
+            event.preventDefault();
+            return false;
         });
 
         this._userInterface.filter.valueInput.oninput = () => {
