@@ -1,5 +1,4 @@
 const isVersionOne = router.getParameterValue("v1") != undefined;
-const isTestEnvironment = router.isTestEnvironment() || !isVersionOne;
 
 const elements = {
     checkCoveragePopup: (() => {
@@ -78,9 +77,9 @@ const checkCoverageVM = new Vue({
                 event.preventDefault();
                 $(".popup-service-address").remove();
                 router.open(
-                    RouterPath.checkoutLandline_choosePlan,
+                    isVersionOne ? RouterPath.checkoutLandline_choosePlan : RouterPath.checkout_v2_choosePlan,
                     router.getParameters(),
-                    isTestEnvironment
+                    false
                 );
             };
             elements.checkCoverageButtons.forEach(button => {
@@ -198,9 +197,9 @@ $(document).ready(() => {
                 zipCode
             );
             router.open(
-                RouterPath.checkoutLandline_choosePlan,
+                isVersionOne ? RouterPath.checkoutLandline_choosePlan : RouterPath.checkout_v2_choosePlan,
                 router.getParameters(),
-                isTestEnvironment
+                router.isTestEnvironment()
             );
         });
     });
@@ -272,9 +271,9 @@ $(document).ready(() => {
     $(elements.checkCoveragePopup.startServiceButton).on("click", (event) => {
         event.preventDefault();
         router.open(
-            RouterPath.checkoutLandline_choosePlan,
+            isVersionOne ? RouterPath.checkoutLandline_choosePlan : RouterPath.checkout_v2_choosePlan,
             router.getParameters(),
-            isTestEnvironment
+            router.isTestEnvironment()
         );
     });
     $(elements.checkCoveragePopup.learnMoreButton).on("click", (event) => {
