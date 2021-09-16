@@ -1,4 +1,5 @@
-const is_v2 = window.location.href.includes("checkout-v2");
+const is_v2 = window.location.href.includes(RouterPath.checkout_v2_choosePlan)
+    || window.location.href.includes(RouterPath.checkout_v2_choosePlanAndNumber);
 const isChooseNumberModalAvailable = window.location.href.includes(RouterPath.checkout_v2_choosePlanAndNumber);
 const isPortNumberModalAvailable = router.getParameterValue("port-number") != undefined;
 

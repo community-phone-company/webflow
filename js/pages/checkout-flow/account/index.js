@@ -1,4 +1,4 @@
-const is_v2 = router.isTestEnvironment() || window.location.href.includes("checkout-v2");
+const is_v2 = window.location.href.includes(RouterPath.checkout_v2_account);
 
 // redirectToPreviousCheckoutFlowStepIfNeeded();
 
