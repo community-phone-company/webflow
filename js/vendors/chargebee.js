@@ -22,8 +22,9 @@ const ChargebeeCheckoutCustomerType = Object.freeze({
 });
 
 const ChargebeeCheckoutPhoneNumberServiceType = Object.freeze({
-    portExistingNumber: "Port Existing Number",
-    getNewNumber: "New Number"
+    portExistingNumber: "port=existing-number",
+    getNewNumber: "new-number",
+    selectedNumber: "selected-number"
 });
 
 class ChargebeeCheckoutAddress {
