@@ -1,4 +1,6 @@
-const is_v2 = window.location.href.includes("checkout-v2");
+const StepsJsData = {
+    is_v2: window.location.href.includes("checkout-v2")
+};
 
 const CheckoutFlowStep = Object.freeze({
     choosePlan: "choose-plan",
@@ -92,7 +94,7 @@ const redirectToPreviousCheckoutFlowStepIfNeeded = () => {
 $("#side-menu-link-choose-plan").on("click", (event) => {
     event.preventDefault();
     router.open(
-        is_v2 ? RouterPath.checkout_v2_choosePlanAndNumber : RouterPath.checkoutLandline_choosePlan,
+        StepsJsData.is_v2 ? RouterPath.checkout_v2_choosePlanAndNumber : RouterPath.checkoutLandline_choosePlan,
         router.getParameters(),
         router.isTestEnvironment()
     );
@@ -101,7 +103,7 @@ $("#side-menu-link-choose-plan").on("click", (event) => {
 $("#side-menu-link-account").on("click", (event) => {
     event.preventDefault();
     router.open(
-        is_v2 ? RouterPath.checkout_v2_account : RouterPath.checkoutLandline_account,
+        StepsJsData.is_v2 ? RouterPath.checkout_v2_account : RouterPath.checkoutLandline_account,
         router.getParameters(),
         router.isTestEnvironment()
     );
@@ -110,7 +112,7 @@ $("#side-menu-link-account").on("click", (event) => {
 $("#side-menu-link-checkout").on("click", (event) => {
     event.preventDefault();
     router.open(
-        is_v2 ? RouterPath.checkout_v2_checkoutStep : RouterPath.checkoutLandline_checkoutStep,
+        StepsJsData.is_v2 ? RouterPath.checkout_v2_checkoutStep : RouterPath.checkoutLandline_checkoutStep,
         router.getParameters(),
         router.isTestEnvironment()
     );
