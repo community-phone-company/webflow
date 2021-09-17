@@ -175,8 +175,9 @@ class ChoosePhoneNumberPopup {
 
     /**
      * @param {string} newState 
+     * @param {(() => void) | undefined} onFinished 
      */
-    setState = (newState) => {
+    setState = (newState, onFinished) => {
         this._state = newState;
 
         const getElementsForState = (state) => {
@@ -197,8 +198,14 @@ class ChoosePhoneNumberPopup {
         };
 
         const allStates = Object.keys(ChoosePhoneNumberPopupState).map(state => ChoosePhoneNumberPopupState[state]);
-        allStates.forEach(state => $(getElementsForState(state)).hide());
-        $(getElementsForState(newState)).show();
+        allStates.forEach(state => {
+            $(getElementsForState(state)).stop().fadeTo(300, 0);
+        });
+        $(getElementsForState(newState)).fadeTo(300, 1, () => {
+            if (onFinished) {
+                onFinished();
+            }
+        });
     }
 
     /**

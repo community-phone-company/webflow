@@ -150,12 +150,18 @@ if (isChooseNumberModalAvailable) {
     choosePhoneNumberPopup.onFilterChanged(() => {
         console.log("Filter updated!");
         formData.numberSearchFilter = choosePhoneNumberPopup.getFilter();
+        choosePhoneNumberPopup.setState(
+            ChoosePhoneNumberPopupState.loading
+        );
         loadPhoneNumbers(
             false,
             (numbers, error) => {
                 formData.availablePhoneNumbers = numbers;
                 choosePhoneNumberPopup.setPhoneNumbers(
                     numbers
+                );
+                choosePhoneNumberPopup.setState(
+                    numbers.length ? ChoosePhoneNumberPopupState.normal : ChoosePhoneNumberPopupState.empty
                 );
             }
         )
@@ -631,6 +637,9 @@ if (is_v2) {
                 $(getChooseNumberSectionContainer()).fadeTo(300, 1);
                 choosePhoneNumberPopup.setPhoneNumbers(
                     formData.availablePhoneNumbers
+                );
+                choosePhoneNumberPopup.setState(
+                    numbers.length ? ChoosePhoneNumberPopupState.normal : ChoosePhoneNumberPopupState.empty
                 );
             }
         );
