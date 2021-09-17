@@ -298,8 +298,13 @@ const formData = {
     })(),
     selectedPhoneNumber: undefined,
     availablePhoneNumbers: [],
-    numberSearchFilter: choosePhoneNumberPopup && choosePhoneNumberPopup.getFilter()
+    numberSearchFilter: choosePhoneNumberPopup && choosePhoneNumberPopup.getFilter(),
+    userLocation: undefined
 };
+
+PhoneNumberManager.getUserLocation((city, error) => {
+    formData.userLocation = city;
+});
 
 var lastPhoneNumbersRequest = undefined;
 
