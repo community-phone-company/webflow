@@ -184,7 +184,7 @@ class ChoosePhoneNumberPopup {
                 case ChoosePhoneNumberPopupState.normal:
                     return [
                         this._userInterface.availableNumbers.title,
-                        this._userInterface.availableNumbers.subtitle,
+                        //this._userInterface.availableNumbers.subtitle,
                         this._userInterface.availableNumbers.listContainer
                     ];
                 case ChoosePhoneNumberPopupState.loading:
