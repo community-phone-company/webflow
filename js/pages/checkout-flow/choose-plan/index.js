@@ -301,12 +301,18 @@ const formData = {
     numberSearchFilter: choosePhoneNumberPopup && choosePhoneNumberPopup.getFilter()
 };
 
+var lastPhoneNumbersRequest = undefined;
+
 /**
  * @param {boolean} addToPreviousCollection 
  * @param {((numbers: PhoneNumber[], error: any) => void) | undefined} onFinished 
  */
 const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
-    PhoneNumberManager.getNumbers(
+    if (lastPhoneNumbersRequest) {
+        lastPhoneNumbersRequest.abort();
+    }
+
+    lastPhoneNumbersRequest = PhoneNumberManager.getNumbers(
         formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.city ? formData.numberSearchFilter.value : "",
         "",
         (() => {
