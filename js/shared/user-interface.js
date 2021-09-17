@@ -27,4 +27,14 @@ class UserInterface {
             clickable ? "" : "none"
         );
     }
+
+    /**
+     * @param {HTMLFormElement} form 
+     */
+    static makeFormUnsubmittable = (form) => {
+        $(form).submit((event) => {
+            event.preventDefault();
+            return false;
+        });
+    }
 }

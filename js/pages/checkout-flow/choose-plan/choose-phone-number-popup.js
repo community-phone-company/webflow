@@ -34,6 +34,9 @@ class ChoosePhoneNumberPopup {
                 title: this._container.querySelectorAll("#available-numbers-title")[0],
                 subtitle: this._container.querySelectorAll("#available-numbers-subtitle")[0],
                 listContainer: this._container.querySelectorAll(".list-of-numbers")[0]
+            },
+            emptyState: {
+                container: this._container.querySelectorAll("#phone-numbers-empty-state")[0]
             }
         });
 
@@ -92,10 +95,9 @@ class ChoosePhoneNumberPopup {
             });
         });
 
-        $(this._userInterface.filter.form).submit((event) => {
-            event.preventDefault();
-            return false;
-        });
+        UserInterface.makeFormUnsubmittable(
+            this._userInterface.filter.form
+        );
 
         this._userInterface.filter.valueInput.oninput = () => {
             const newValue = this._userInterface.filter.valueInput.value;
@@ -110,6 +112,7 @@ class ChoosePhoneNumberPopup {
         };
 
         this.setPhoneNumbers([]);
+        this.setState(ChoosePhoneNumberPopupState.normal);
     }
 
     getContainer = () => {
@@ -166,6 +169,38 @@ class ChoosePhoneNumberPopup {
         return this._filter;
     }
 
+    getState = () => {
+        return this._state;
+    }
+
+    /**
+     * @param {string} newState 
+     */
+    setState = (newState) => {
+        this._state = newState;
+
+        const getElementsForState = (state) => {
+            switch (state) {
+                case ChoosePhoneNumberPopupState.normal:
+                    return [
+                        this._userInterface.availableNumbers.title,
+                        this._userInterface.availableNumbers.subtitle,
+                        this._userInterface.availableNumbers.listContainer
+                    ];
+                case ChoosePhoneNumberPopupState.loading:
+                    return [];
+                case ChoosePhoneNumberPopupState.empty:
+                    return [
+                        this._userInterface.emptyState.container
+                    ];
+            }
+        };
+
+        const allStates = Object.keys(ChoosePhoneNumberPopupState).map(state => ChoosePhoneNumberPopupState[state]);
+        allStates.forEach(state => $(getElementsForState(state)).hide());
+        $(getElementsForState(newState)).show();
+    }
+
     /**
      * @param {() => void} handler 
      */
@@ -198,6 +233,12 @@ const ChoosePhoneNumberPopupFilterMode = Object.freeze({
     areaCode: "area-code",
     tollFree: "toll-free",
     city: "city"
+});
+
+const ChoosePhoneNumberPopupState = Object.freeze({
+    normal: "normal",
+    loading: "loading",
+    empty: "empty"
 });
 
 class ChoosePhoneNumberPopupItemCard {
