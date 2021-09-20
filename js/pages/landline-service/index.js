@@ -2,10 +2,10 @@ const isVersionOne = router.getParameterValue(RouterPathParameter.checkoutVersio
 
 const externalServices = {
     msp: {
-        enabled: router.getParameterValue("msp")
+        enabled: router.getParameterValue("msp") != undefined
     },
     wirefly: {
-        enabled: router.getParameterValue("wirefly")
+        enabled: router.getParameterValue("wirefly") != undefined
     }
 };
 
