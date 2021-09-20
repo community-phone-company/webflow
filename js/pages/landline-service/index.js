@@ -1,6 +1,23 @@
-const isVersionOne = router.getParameterValue("v1") != undefined;
+const isVersionOne = router.getParameterValue(RouterPathParameter.checkoutVersion_1) != undefined;
+
+const externalServices = {
+    msp: {
+        enabled: router.getParameterValue("msp")
+    },
+    wirefly: {
+        enabled: router.getParameterValue("wirefly")
+    }
+};
 
 const elements = {
+    externalServices: {
+        msp: {
+            logo: document.querySelectorAll("#logo-msp")[0]
+        },
+        wirefly: {
+            logo: document.querySelectorAll("#logo-wirefly")[0]
+        }
+    },
     checkCoveragePopup: (() => {
         const container = document.querySelectorAll("#popup-service-address")[0];
         return {
@@ -121,6 +138,14 @@ const openCheckout = () => {
 const useLegacyApiForZipRequest = false;
 
 $(document).ready(() => {
+
+    if (externalServices.msp.enabled) {
+        $(elements.externalServices.msp.logo).show();
+    }
+
+    if (externalServices.wirefly.enabled) {
+        $(elements.externalServices.wirefly.logo).show();
+    }
     
     const zipForms = Object.freeze({
         top: new ZipForm(
