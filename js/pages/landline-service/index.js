@@ -252,29 +252,34 @@ $(document).ready(() => {
         checkCoverageVM.isBusiness = true;
     });
     $(elements.checkCoveragePopup.form.submitButton()).off().on("click", (event) => {
+        const addressLineOne = checkCoverageVM.addressLineOne;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine1,
-            checkCoverageVM.addressLineOne
+            addressLineOne
         );
 
+        const city = checkCoverageVM.city;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_city,
-            checkCoverageVM.city
+            city
         );
 
+        const state = checkCoverageVM.state;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_state,
-            checkCoverageVM.state
+            state
         );
 
+        const zip = checkCoverageVM.zip;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_zip,
-            checkCoverageVM.zip
+            zip
         );
 
+        const isBusiness = checkCoverageVM.isBusiness;
         Store.local.write(
             Store.keys.checkoutFlow.isBusinessCustomer,
-            checkCoverageVM.isBusiness
+            isBusiness
         );
 
         Store.local.write(
@@ -283,7 +288,7 @@ $(document).ready(() => {
         );
         
         GoogleDocIntegration.addLineToServiceAddressCheck(
-            address,
+            addressLineOne,
             city,
             state,
             zip,
