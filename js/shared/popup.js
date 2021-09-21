@@ -162,6 +162,11 @@ class Popup {
         const whatToUpdate = {
             opacity: 1
         };
+        const animationParameters = {
+            duration: 300,
+            queue: true,
+            complete: whenFinished
+        };
         const whenFinished = () => {
             if (this._onShowHandler) {
                 this._onShowHandler();
@@ -178,11 +183,7 @@ class Popup {
                 .stop()
                 .animate(
                     whatToUpdate,
-                    {
-                        duration: 300,
-                        queue: true,
-                        complete: whenFinished
-                    }
+                    animationParameters
                 );
         } else if (animationEngine === "velocity") {
             $(this._container)
@@ -190,11 +191,7 @@ class Popup {
                 .velocity("stop")
                 .velocity(
                     whatToUpdate,
-                    {
-                        duration: 300,
-                        queue: true,
-                        complete: whenFinished
-                    }
+                    animationParameters
                 );
         } else {
             throw new Error(`Unknown animation engine: ${animationEngine}`);
@@ -236,6 +233,11 @@ class Popup {
         const whatToUpdate = {
             opacity: 0
         };
+        const animationParameters = {
+            duration: 300,
+            queue: true,
+            complete: whenFinished
+        };
         const whenFinished = () => {
             $(container).css("display", "none");
 
@@ -253,22 +255,14 @@ class Popup {
                 .stop()
                 .animate(
                     whatToUpdate,
-                    {
-                        duration: 300,
-                        queue: true,
-                        complete: whenFinished
-                    }
+                    animationParameters
                 );
         } else if (animationEngine === "velocity") {
             $(container)
                 .velocity("stop")
                 .velocity(
                     whatToUpdate,
-                    {
-                        duration: 300,
-                        queue: true,
-                        complete: whenFinished
-                    }
+                    animationParameters
                 );
         } else {
             throw new Error(`Unknown animation engine: ${animationEngine}`);

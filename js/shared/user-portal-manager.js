@@ -239,6 +239,17 @@ class UserPortalManager {
             html: `There has been a problem. Contact our customer support at <a href="tel:8885824177">888-582-4177</a>`
         });
 
+        /**
+         * Make all forms unsubmittable.
+         */
+        Array.from(
+            elements.container.querySelectorAll("form")
+        ).forEach(form => {
+            UserInterface.makeFormUnsubmittable(
+                form
+            );
+        });
+
         $(elements.steps.one.ctaButton).off().on("click", (event) => {
             event.preventDefault();
 
