@@ -272,7 +272,7 @@ const onReady = () => {
                 lastName,
                 email,
                 phone,
-                isBusinessCustomer ? ChargebeeCheckoutCustomerType.business : ChargebeeCheckoutCustomerType.home,
+                isBusinessCustomer ? ChargebeeCheckoutSubscriberType.business : ChargebeeCheckoutSubscriberType.home,
                 !orderedBySalesperson,
                 howDidTheyHearAboutUs
             ),
