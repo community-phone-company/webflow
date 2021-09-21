@@ -37,7 +37,9 @@ class Popup {
 
         this._userInterface = Object.freeze({
             background: this._container.querySelectorAll(".fade div.popup-bg")[0],
-            closeButton: this._container.querySelectorAll(".ic-close")[0],
+            closeButtons: Array.from(
+                this._container.querySelectorAll(".ic-close")
+            ),
             title: this._container.querySelectorAll(".popup-title")[0],
             body: this._container.querySelectorAll(".popup-body")[0],
             ctaButton: this._container.querySelectorAll(".popup-cta-button")[0]
@@ -49,7 +51,7 @@ class Popup {
     _setupUserInterface = () => {
         const _this = this;
         
-        $(this._userInterface.closeButton).on("click", (event) => {
+        $(this._userInterface.closeButtons).on("click", (event) => {
             event.preventDefault();
             _this.hide();
         });
