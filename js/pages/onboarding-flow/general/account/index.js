@@ -85,7 +85,7 @@ $(document).ready(() => {
         handleFormChange();
     });
 
-    const form = document.getElementById("wf-form-onboarding-flow");
+    const form = document.getElementById("form-onboarding-flow");
     $(form).submit((event) => {
         event.preventDefault();
         submitFormData();
