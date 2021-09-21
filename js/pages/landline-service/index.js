@@ -287,9 +287,7 @@ $(document).ready(() => {
             orderBySalesperson
         );
         
-        const sendToServiceAddressCheck = !addressLineOne.toLowerCase().startsWith("test");
-        
-        if (sendToServiceAddressCheck) {
+        if (IS_PRODUCTION) {
             GoogleDocIntegration.addLineToServiceAddressCheck(
                 addressLineOne,
                 city,
