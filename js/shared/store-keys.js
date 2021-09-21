@@ -33,6 +33,8 @@ const CheckoutFlowStoreKey = Object.freeze({
     productPurchased: "checkout-flow-product-purchased",
     selectedProductIdentifiers: "checkout-flow-selected-product-identifiers",
     selectedPhoneNumber: "checkout-flow-selected-phone-number",
+    orderedBySalesperson: "checkout-flow-ordered-by-salesperon",
+    isBusinessCustomer: "checkout-flow-is-business-customer"
 });
 
 const PortPhoneNumberKey = Object.freeze({

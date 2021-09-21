@@ -129,6 +129,7 @@ const RouterPathParameter = Object.freeze({
     portingActivated: "p",
     newNumberActivated: "n",
     checkoutVersion_1: "v1",
+    sales: "sales"
 });
 
 const router = new Router();

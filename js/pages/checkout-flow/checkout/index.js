@@ -214,6 +214,9 @@ const onReady = () => {
         const getNewNumber = Store.local.read(Store.keys.checkoutFlow.getNewNumber);
         const productIdentifiers = Store.local.read(Store.keys.checkoutFlow.selectedProductIdentifiers);
         const selectedPhoneNumber = form.data.selectedPhoneNumber && form.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular);
+        const howDidTheyHearAboutUs = Store.local.read(Store.keys.checkoutFlow.howDidYouHearAboutUs);
+        const orderedBySalesperson = Store.local.read(Store.keys.checkoutFlow.orderedBySalesperson) ?? false;
+        const isBusinessCustomer = Store.local.read(Store.keys.checkoutFlow.isBusinessCustomer);
 
         const portPhoneNumberData = {
             technicalData: {
@@ -269,7 +272,9 @@ const onReady = () => {
                 lastName,
                 email,
                 phone,
-                ChargebeeCheckoutCustomerType.business
+                isBusinessCustomer ? ChargebeeCheckoutCustomerType.business : ChargebeeCheckoutCustomerType.home,
+                !orderedBySalesperson,
+                howDidTheyHearAboutUs
             ),
             (() => {
                 if (getNewNumber) {

@@ -1,4 +1,5 @@
 const isVersionOne = router.getParameterValue(RouterPathParameter.checkoutVersion_1) != undefined;
+const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
 
 const externalServices = {
     msp: {
@@ -251,31 +252,35 @@ $(document).ready(() => {
         checkCoverageVM.isBusiness = true;
     });
     $(elements.checkCoveragePopup.form.submitButton()).off().on("click", (event) => {
-        const address = checkCoverageVM.addressLineOne;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine1,
-            address
+            checkCoverageVM.addressLineOne
         );
 
-        const city = checkCoverageVM.city;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_city,
-            city
+            checkCoverageVM.city
         );
 
-        const state = checkCoverageVM.state;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_state,
-            state
+            checkCoverageVM.state
         );
 
-        const zip = checkCoverageVM.zip;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_zip,
-            zip
+            checkCoverageVM.zip
         );
 
-        const isBusiness = checkCoverageVM.isBusiness;
+        Store.local.write(
+            Store.keys.checkoutFlow.isBusinessCustomer,
+            checkCoverageVM.isBusiness
+        );
+
+        Store.local.write(
+            Store.keys.checkoutFlow.orderedBySalesperson,
+            orderBySalesperson
+        );
         
         GoogleDocIntegration.addLineToServiceAddressCheck(
             address,

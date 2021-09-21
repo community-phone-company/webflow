@@ -7,17 +7,22 @@ class ChargebeeCheckoutCustomer {
      * @param {string} email Email.
      * @param {string} phone Phone.
      * @param {string} customerType Customer type. Use values from {@link ChargebeeCheckoutCustomerType}.
+     * @param {boolean} selfCheckout If `true`, user is going to create new order via website. Otherwise, salesperson is going to create the order.
+     * @param {string | undefined} howDidTheyHearAboutUs How did they hear about us.
      */
-    constructor(firstName, lastName, email, phone, customerType) {
+    constructor(firstName, lastName, email, phone, customerType, selfCheckout, howDidTheyHearAboutUs) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.customerType = customerType;
+        this.selfCheckout = selfCheckout;
+        this.howDidTheyHearAboutUs = howDidTheyHearAboutUs;
     }
 }
 
 const ChargebeeCheckoutCustomerType = Object.freeze({
+    home: "residential",
     business: "business"
 });
 
@@ -145,6 +150,9 @@ class Chargebee {
             "email": customer.email,
             "phonenumber": customer.phone,
             "customer_type": customer.customerType,
+            "subscriber_type": customer.customerType,
+            "self_checkout": customer.selfCheckout,
+            "how_did_they_hear_about_us": customer.howDidTheyHearAboutUs,
             "phonenumber_service": serviceType,
             "billing_address": {
                 "first_name": billingAddress.firstName,
