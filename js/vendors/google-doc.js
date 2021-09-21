@@ -7,6 +7,7 @@ class GoogleDocIntegration {
      * @param {string} state State.
      * @param {string} zip Zip code.
      * @param {boolean} isBusiness Defines, whether the client is a company.
+     * @param {boolean} sendToLobCom Defines, whether to send the information to Lob.com service.
      * @param {((response: any, error: any, success: boolean) => void) | undefined} callback Function that is called when response comes from the server.
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
@@ -16,6 +17,7 @@ class GoogleDocIntegration {
         state,
         zip,
         isBusiness,
+        sendToLobCom,
         callback
     ) => {
         const data = {
@@ -26,8 +28,12 @@ class GoogleDocIntegration {
             "Is business": isBusiness ? "yes" : "no"
         };
         console.log(`Data: `, data);
+        const urls = {
+            simpleZap: "https://hooks.zapier.com/hooks/catch/10558854/b208t38/",
+            lobComIntegration: "https://hooks.zapier.com/hooks/catch/10558854/b6htb82/"
+        };
         return ZapierIntegration.sendToWebhook(
-            "https://hooks.zapier.com/hooks/catch/10558854/b208t38/",
+            sendToLobCom ? urls.lobComIntegration : urls.simpleZap,
             data,
             callback
         );
