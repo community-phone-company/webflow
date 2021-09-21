@@ -138,7 +138,7 @@ class Popup {
      */
     show = (callback) => {
         $(this._userInterface.background).css("opacity", 1);
-        $(this._container)
+        /*$(this._container)
             .stop()
             .css("display", "block")
             .fadeTo(300, 1, () => {
@@ -149,7 +149,28 @@ class Popup {
                 if (callback) {
                     callback();
                 }
-            });
+            });*/
+        $(this._container)
+            .css("display", "block")
+            .velocity("stop")
+            .velocity(
+                {
+                    opacity: 1
+                },
+                {
+                    duration: 300,
+                    queue: true,
+                    complete: function () {
+                        if (this._onShowHandler) {
+                            this._onShowHandler();
+                        }
+
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                }
+            );
         return this;
     }
 
@@ -168,7 +189,7 @@ class Popup {
      */
     hide = (callback) => {
         const container = this._container;
-        $(container)
+        /*$(container)
             .stop()
             .fadeTo(300, 0, () => {
                 $(container).css("display", "none");
@@ -180,7 +201,29 @@ class Popup {
                 if (callback) {
                     callback();
                 }
-            });
+            });*/
+        $(container)
+            .velocity("stop")
+            .velocity(
+                {
+                    opacity: 1
+                },
+                {
+                    duration: 300,
+                    queue: true,
+                    complete: function () {
+                        $(container).css("display", "none");
+
+                        if (this._onHideHandler) {
+                            this._onHideHandler();
+                        }
+
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                }
+            );
         return this;
     }
 
