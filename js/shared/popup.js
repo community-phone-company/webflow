@@ -133,6 +133,13 @@ class Popup {
     }
 
     /**
+     * @param {"jquery" | "velocity"} engine 
+     */
+    setAnimationEngine = (engine) => {
+        this._animationEngine = engine;
+    }
+
+    /**
      * @param {(() => void) | undefined} callback Function that is called when animation has finished.
      * @returns {Popup} Current {@link Popup} instance.
      */
@@ -150,27 +157,49 @@ class Popup {
                     callback();
                 }
             });*/
-        $(this._container)
-            .css("display", "block")
-            .velocity("stop")
-            .velocity(
-                {
-                    opacity: 1
-                },
-                {
-                    duration: 300,
-                    queue: true,
-                    complete: function () {
-                        if (this._onShowHandler) {
-                            this._onShowHandler();
-                        }
+        
+        const animationEngine = this._animationEngine ?? "jquery";
+        const whatToUpdate = {
+            opacity: 1
+        };
+        const whenFinished = () => {
+            if (this._onShowHandler) {
+                this._onShowHandler();
+            }
 
-                        if (callback) {
-                            callback();
-                        }
+            if (callback) {
+                callback();
+            }
+        };
+
+        if (animationEngine === "jquery") {
+            $(this._container)
+                .css("display", "block")
+                .stop()
+                .animate(
+                    whatToUpdate,
+                    {
+                        duration: 300,
+                        queue: true,
+                        complete: whenFinished
                     }
-                }
-            );
+                );
+        } else if (animationEngine === "velocity") {
+            $(this._container)
+                .css("display", "block")
+                .velocity("stop")
+                .velocity(
+                    whatToUpdate,
+                    {
+                        duration: 300,
+                        queue: true,
+                        complete: whenFinished
+                    }
+                );
+        } else {
+            throw new Error(`Unknown animation engine: ${animationEngine}`);
+        }
+
         return this;
     }
 
@@ -202,28 +231,49 @@ class Popup {
                     callback();
                 }
             });*/
-        $(container)
-            .velocity("stop")
-            .velocity(
-                {
-                    opacity: 1
-                },
-                {
-                    duration: 300,
-                    queue: true,
-                    complete: function () {
-                        $(container).css("display", "none");
+        
+        const animationEngine = this._animationEngine ?? "jquery";
+        const whatToUpdate = {
+            opacity: 0
+        };
+        const whenFinished = () => {
+            $(container).css("display", "none");
 
-                        if (this._onHideHandler) {
-                            this._onHideHandler();
-                        }
+            if (this._onHideHandler) {
+                this._onHideHandler();
+            }
 
-                        if (callback) {
-                            callback();
-                        }
+            if (callback) {
+                callback();
+            }
+        };
+
+        if (animationEngine === "jquery") {
+            $(container)
+                .stop()
+                .animate(
+                    whatToUpdate,
+                    {
+                        duration: 300,
+                        queue: true,
+                        complete: whenFinished
                     }
-                }
-            );
+                );
+        } else if (animationEngine === "velocity") {
+            $(container)
+                .velocity("stop")
+                .velocity(
+                    whatToUpdate,
+                    {
+                        duration: 300,
+                        queue: true,
+                        complete: whenFinished
+                    }
+                );
+        } else {
+            throw new Error(`Unknown animation engine: ${animationEngine}`);
+        }
+
         return this;
     }
 
