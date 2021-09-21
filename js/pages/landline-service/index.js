@@ -287,14 +287,18 @@ $(document).ready(() => {
             orderBySalesperson
         );
         
-        GoogleDocIntegration.addLineToServiceAddressCheck(
-            addressLineOne,
-            city,
-            state,
-            zip,
-            isBusiness,
-            true
-        );
+        const sendToServiceAddressCheck = !addressLineOne.toLowerCase().startsWith("test");
+        
+        if (sendToServiceAddressCheck) {
+            GoogleDocIntegration.addLineToServiceAddressCheck(
+                addressLineOne,
+                city,
+                state,
+                zip,
+                isBusiness,
+                true
+            );
+        }
 
         /**
          * Uncomment the block below to check address.
