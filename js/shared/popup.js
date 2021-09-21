@@ -162,11 +162,6 @@ class Popup {
         const whatToUpdate = {
             opacity: 1
         };
-        const animationParameters = {
-            duration: 300,
-            queue: true,
-            complete: whenFinished
-        };
         const whenFinished = () => {
             if (this._onShowHandler) {
                 this._onShowHandler();
@@ -175,6 +170,11 @@ class Popup {
             if (callback) {
                 callback();
             }
+        };
+        const animationParameters = {
+            duration: 300,
+            queue: true,
+            complete: whenFinished
         };
 
         if (animationEngine === "jquery") {
@@ -233,11 +233,6 @@ class Popup {
         const whatToUpdate = {
             opacity: 0
         };
-        const animationParameters = {
-            duration: 300,
-            queue: true,
-            complete: whenFinished
-        };
         const whenFinished = () => {
             $(container).css("display", "none");
 
@@ -248,6 +243,11 @@ class Popup {
             if (callback) {
                 callback();
             }
+        };
+        const animationParameters = {
+            duration: 300,
+            queue: true,
+            complete: whenFinished
         };
 
         if (animationEngine === "jquery") {
