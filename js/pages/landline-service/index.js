@@ -286,8 +286,10 @@ $(document).ready(() => {
             Store.keys.checkoutFlow.orderedBySalesperson,
             orderBySalesperson
         );
+
+        const sendToServiceAddressCheck = IS_PRODUCTION && !addressLineOne.toLowerCase().startsWith("CommunityPhone");
         
-        if (IS_PRODUCTION) {
+        if (sendToServiceAddressCheck) {
             GoogleDocIntegration.addLineToServiceAddressCheck(
                 addressLineOne,
                 city,
