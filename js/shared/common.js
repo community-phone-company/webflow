@@ -69,10 +69,13 @@ if (IS_PRODUCTION) {
         ?? emails.checkoutFlow;
     
     if (emailToSend) {
-        HotjarIntegration.send({
-            "Email": emailToSend
-        });
-        console.log(`Hotjar: ${emailToSend}`);
+        const data = {
+            "Email": emailToSend,
+            "Onboarding email": emails.onboardingFlow,
+            "Checkout email": emails.checkoutFlow
+        };
+        HotjarIntegration.send(data);
+        console.log(`Hotjar:`, data);
     }
 })();
 
