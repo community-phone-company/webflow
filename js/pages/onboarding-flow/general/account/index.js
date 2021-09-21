@@ -86,10 +86,9 @@ $(document).ready(() => {
     });
 
     const form = document.getElementById("form-onboarding-flow");
-    $(form).submit((event) => {
-        event.preventDefault();
-        submitFormData();
-    });
+    UserInterface.makeFormUnsubmittable(
+        form
+    );
     
     $(submitButton).on("click", (event) => {
         event.preventDefault();
