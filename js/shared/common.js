@@ -49,10 +49,6 @@ if (IS_PRODUCTION) {
         return;
     }
 
-    HotjarIntegration.send({
-        "Last Visit": new Date(Date.now()).toISOString()
-    });
-    
     const emails = {
         businessFlow: Store.local.read(
             Store.keys.businessFlow.email
@@ -68,15 +64,14 @@ if (IS_PRODUCTION) {
         ?? emails.onboardingFlow
         ?? emails.checkoutFlow;
     
-    if (emailToSend) {
-        const data = {
-            "Email": emailToSend,
-            "Onboarding email": emails.onboardingFlow,
-            "Checkout email": emails.checkoutFlow
-        };
-        HotjarIntegration.send(data);
-        console.log(`Hotjar:`, data);
-    }
+    const data = {
+        "Last Visit": new Date(Date.now()).toISOString(),
+        "Email": emailToSend,
+        "Onboarding email": emails.onboardingFlow,
+        "Checkout email": emails.checkoutFlow
+    };
+    HotjarIntegration.send(data);
+    console.log(`Hotjar:`, data);
 })();
 
 /**
@@ -90,14 +85,6 @@ if (IS_PRODUCTION) {
             $(userPortalLink).remove();
         }
     };
-    
-    /*if (IS_PRODUCTION) {
-        removeUserPortalLink();
-    } else {
-        if (UserPortalManager.isSupported()) {
-            UserPortalManager.getDefault().setup();
-        }
-    }*/
 
     if (UserPortalManager.isSupported()) {
         const userPortalManager = UserPortalManager.getDefault();
