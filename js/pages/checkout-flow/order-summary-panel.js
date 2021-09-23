@@ -246,7 +246,7 @@ var _findAndUpdateOrderSummaryPanel_requests = {
 const findAndUpdateOrderSummaryPanel = (billingAddress, onFinished) => {
     const productIdentifiers = Store.local.read(
         Store.keys.checkoutFlow.selectedProductIdentifiers
-    );
+    ) ?? [];
     
     const orderSummaryPanel = new OrderSummaryPanel(
         findOrderSummaryPanelContainer()
