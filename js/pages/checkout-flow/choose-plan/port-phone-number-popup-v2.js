@@ -48,7 +48,8 @@ class PortPhoneNumberPopup {
                             list: container.querySelectorAll("div.w-dyn-items"),
                             cards: Array.from(
                                 container.querySelectorAll("div.w-dyn-item")
-                            )
+                            ),
+                            footer: container.querySelectorAll("#modal-collect-porting-info_step-one-footer")[0]
                         };
                     })(),
                     portingInformation: (() => {
@@ -100,6 +101,7 @@ class PortPhoneNumberPopup {
             );
 
             this._form.userInterface.steps.carrierInformation.cards.forEach(card => makeCarrierCardSelected(card, card === selectedCard));
+            $(this._form.userInterface.steps.carrierInformation.footer).css({transform: ""});
         });
 
         this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.oninput = () => {
