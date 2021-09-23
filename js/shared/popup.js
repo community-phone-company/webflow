@@ -135,7 +135,7 @@ class Popup {
     }
 
     /**
-     * @param {"jquery" | "velocity"} engine 
+     * @param {"jquery" | "velocity" | "no-animation"} engine 
      */
     setAnimationEngine = (engine) => {
         this._animationEngine = engine;
@@ -147,19 +147,6 @@ class Popup {
      */
     show = (callback) => {
         $(this._userInterface.background).css("opacity", 1);
-        /*$(this._container)
-            .stop()
-            .css("display", "block")
-            .fadeTo(300, 1, () => {
-                if (this._onShowHandler) {
-                    this._onShowHandler();
-                }
-
-                if (callback) {
-                    callback();
-                }
-            });*/
-        
         const animationEngine = this._animationEngine ?? "jquery";
         const whatToUpdate = {
             opacity: 1
@@ -179,9 +166,10 @@ class Popup {
             complete: whenFinished
         };
 
+        $(this._container).css("display", "block");
+
         if (animationEngine === "jquery") {
             $(this._container)
-                .css("display", "block")
                 .stop()
                 .animate(
                     whatToUpdate,
@@ -189,12 +177,16 @@ class Popup {
                 );
         } else if (animationEngine === "velocity") {
             $(this._container)
-                .css("display", "block")
                 .velocity("stop")
                 .velocity(
                     whatToUpdate,
                     animationParameters
                 );
+        } else if (animationEngine === "no-animation") {
+            $(this._container).css(
+                whatToUpdate
+            );
+            whenFinished();
         } else {
             throw new Error(`Unknown animation engine: ${animationEngine}`);
         }
@@ -217,20 +209,6 @@ class Popup {
      */
     hide = (callback) => {
         const container = this._container;
-        /*$(container)
-            .stop()
-            .fadeTo(300, 0, () => {
-                $(container).css("display", "none");
-
-                if (this._onHideHandler) {
-                    this._onHideHandler();
-                }
-                
-                if (callback) {
-                    callback();
-                }
-            });*/
-        
         const animationEngine = this._animationEngine ?? "jquery";
         const whatToUpdate = {
             opacity: 0
@@ -266,6 +244,11 @@ class Popup {
                     whatToUpdate,
                     animationParameters
                 );
+        } else if (animationEngine === "no-animation") {
+            $(this._container).css(
+                whatToUpdate
+            );
+            whenFinished();
         } else {
             throw new Error(`Unknown animation engine: ${animationEngine}`);
         }
