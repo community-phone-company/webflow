@@ -88,8 +88,7 @@ class PortPhoneNumberPopup {
         };
         
         const makeCarrierCardSelected = (card, selected) => {
-            $(card).css({
-                width: "auto",
+            $(card).find("div.carrier-card").css({
                 height: selected ? "auto" : "56px"
             });
         };
