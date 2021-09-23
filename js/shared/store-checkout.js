@@ -1,9 +1,9 @@
 Store.removeCheckoutData = function () {
-    const storeKeys = Object.keys(CheckoutFlowStoreKey).concat(
-        Object.keys(PortPhoneNumberStoreKey)
-    );
+    const checkoutStoreKeys = Object.keys(CheckoutFlowStoreKey).map(key => CheckoutFlowStoreKey[key]);
+    const portPhoneNumberStoreKeys = Object.keys(PortPhoneNumberStoreKey).map(key => CheckoutFlowStoreKey[key]);
+    const allStoreKeys = checkoutStoreKeys.concat(portPhoneNumberStoreKeys);
     const store = Store.local;
-    storeKeys.forEach(key => {
+    allStoreKeys.forEach(key => {
         store.write(
             key,
             undefined
