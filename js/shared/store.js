@@ -53,22 +53,21 @@ class Store {
     /**
      * Reads data from the storage.
      * @param {string} key String containing key that is used for storing value in the storage.
+     * @param {any} defaultValue Default value that will be returned if no value found in the storage.
      * @returns {any | undefined}
      */
-    read = (key) => {
+    read = (key, defaultValue) => {
         const jsonString = this.internalStorage.getItem(key);
 
-        if (!jsonString) {
-            return undefined;
+        if (jsonString) {
+            const json = JSON.parse(jsonString);
+
+            if (json && json.value) {
+                return json.value;
+            }
         }
 
-        const json = JSON.parse(jsonString);
-
-        if (!json) {
-            return undefined;
-        }
-
-        return json.value;
+        return defaultValue;
     }
 
     /**
