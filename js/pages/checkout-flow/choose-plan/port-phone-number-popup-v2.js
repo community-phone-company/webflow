@@ -84,7 +84,7 @@ class PortPhoneNumberPopup {
 
     _setupUserInterface = () => {
         const getCarrierNameFromCard = (card) => {
-            return $(selectedCard).find(".body-2-carrier:eq(0)").text();
+            return $(card).find(".body-2-carrier:eq(0)").text();
         };
         
         const makeCarrierCardSelected = (card, selected) => {
