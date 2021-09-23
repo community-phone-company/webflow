@@ -218,23 +218,20 @@ const onReady = () => {
         const orderedBySalesperson = Store.local.read(Store.keys.checkoutFlow.orderedBySalesperson) ?? false;
         const isBusinessCustomer = Store.local.read(Store.keys.checkoutFlow.isBusinessCustomer);
 
-        const portPhoneNumberData = {
-            technicalData: {
-                accountNumber: Store.local.read(Store.keys.portPhoneNumber.accountNumber),
-                pin: Store.local.read(Store.keys.portPhoneNumber.pin),
-                accountName: Store.local.read(Store.keys.portPhoneNumber.accountName),
-                numberToPort: Store.local.read(Store.keys.portPhoneNumber.numberToPort)
-            },
-            serviceAddress: {
-                firstName: Store.local.read(Store.keys.portPhoneNumber.firstName),
-                lastName: Store.local.read(Store.keys.portPhoneNumber.lastName),
-                addressLineOne: Store.local.read(Store.keys.portPhoneNumber.addressLineOne),
-                addressLineTwo: Store.local.read(Store.keys.portPhoneNumber.addressLineTwo),
-                city: Store.local.read(Store.keys.portPhoneNumber.city),
-                zip: Store.local.read(Store.keys.portPhoneNumber.zip),
-                state: Store.local.read(Store.keys.portPhoneNumber.state)
-            }
-        };
+        const portingData = new ChargebeeCheckoutPortingData(
+            Store.local.read(Store.keys.portPhoneNumber.carrierName),
+            Store.local.read(Store.keys.portPhoneNumber.accountName),
+            Store.local.read(Store.keys.portPhoneNumber.numberToPort),
+            Store.local.read(Store.keys.portPhoneNumber.accountNumber),
+            Store.local.read(Store.keys.portPhoneNumber.pin),
+            Store.local.read(Store.keys.portPhoneNumber.firstName),
+            Store.local.read(Store.keys.portPhoneNumber.lastName),
+            Store.local.read(Store.keys.portPhoneNumber.addressLineOne),
+            Store.local.read(Store.keys.portPhoneNumber.addressLineTwo),
+            Store.local.read(Store.keys.portPhoneNumber.city),
+            Store.local.read(Store.keys.portPhoneNumber.state),
+            Store.local.read(Store.keys.portPhoneNumber.zip)
+        );
 
         const shippingAddress = new ChargebeeCheckoutAddress(
             form.data.shippingAddress.firstName,
@@ -283,6 +280,7 @@ const onReady = () => {
                     return ChargebeeCheckoutPhoneNumberServiceType.portExistingNumber;
                 }
             })(),
+            portingData.isComplete() ? portingData : undefined,
             shippingAddress,
             billingAddress,
             productIdentifiers,
