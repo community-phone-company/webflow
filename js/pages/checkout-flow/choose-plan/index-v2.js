@@ -265,7 +265,7 @@ const setupPortPhoneNumberLinks = (onClick) => {
          * Currently, popup appearance is controlled by Webflow.
          */
         //portPhoneNumberPopup.getPopup().show();
-        //portPhoneNumberPopup.makeAllCarrierCardsCollapsed();
+        portPhoneNumberPopup.makeAllCarrierCardsCollapsed();
         
         if (onClick) {
             onClick();
