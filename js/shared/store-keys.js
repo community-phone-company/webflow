@@ -37,7 +37,7 @@ const CheckoutFlowStoreKey = Object.freeze({
     isBusinessCustomer: "checkout-flow-is-business-customer"
 });
 
-const PortPhoneNumberKey = Object.freeze({
+const PortPhoneNumberStoreKey = Object.freeze({
     carrierName: "port-phone-number-carrier-name",
     accountNumber: "port-phone-number-account-number",
     pin: "port-phone-number-pin",
@@ -74,6 +74,6 @@ Store.keys = Object.freeze({
     checkoutFlow: CheckoutFlowStoreKey,
     onboardingFlow: OnboardingFlowStoreKey,
     userPortal: UserPortalStoreKey,
-    portPhoneNumber: PortPhoneNumberKey,
+    portPhoneNumber: PortPhoneNumberStoreKey,
     generalSettings: GeneralSettingsStoreKey
 });
