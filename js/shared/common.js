@@ -111,7 +111,7 @@ if (IS_PRODUCTION) {
             }
         })(),
         "Billing address": address.billing,
-        "Phone number": Store.local.read(Store.keys.checkoutFlow.phone)
+        "Contact number": Store.local.read(Store.keys.checkoutFlow.phone)
     };
     HotjarIntegration.send(data);
     console.log(`Hotjar:`, data);
