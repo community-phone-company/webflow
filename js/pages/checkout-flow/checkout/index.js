@@ -280,7 +280,7 @@ const onReady = () => {
                     return ChargebeeCheckoutPhoneNumberServiceType.portExistingNumber;
                 }
             })(),
-            portingData.isComplete() ? portingData : undefined,
+            portingData.numberToPort != undefined ? portingData : undefined,
             shippingAddress,
             billingAddress,
             productIdentifiers,
