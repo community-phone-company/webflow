@@ -83,15 +83,23 @@ class PortPhoneNumberPopup {
     }
 
     _setupUserInterface = () => {
+        const getCarrierNameFromCard = (card) => {
+            return $(selectedCard).find(".body-2-carrier:eq(0)").text();
+        };
+        
+        const makeCarrierCardSelected = (card, selected) => {
+            $(card).css({
+                height: selected ? "auto" : "56px"
+            });
+        };
+
         $(this._form.userInterface.steps.carrierInformation.cards).on("click", (event) => {
             const selectedCard = event.currentTarget;
-            this._form.data.technicalData.carrierName = selectedCard.querySelectorAll(".body-2-carrier")[0].innerText;
+            this._form.data.technicalData.carrierName = getCarrierNameFromCard(
+                selectedCard
+            );
 
-            this._form.userInterface.steps.carrierInformation.cards.forEach(card => {
-                if (card != selectedCard) {
-                    $(card).click();
-                }
-            });
+            this._form.userInterface.steps.carrierInformation.cards.forEach(card => makeCarrierCardSelected(card, card === selectedCard));
         });
 
         this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.oninput = () => {
