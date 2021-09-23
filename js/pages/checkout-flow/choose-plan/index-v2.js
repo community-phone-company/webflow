@@ -1,6 +1,5 @@
 const is_v2 = window.location.href.includes(RouterPath.checkout_v2_choosePlan)
     || window.location.href.includes(RouterPath.checkout_v2_choosePlanAndNumber);
-const isChooseNumberModalAvailable = window.location.href.includes(RouterPath.checkout_v2_choosePlanAndNumber);
 const isPortNumberModalAvailable = router.getParameterValue("port-number") != undefined;
 
 /**
@@ -142,36 +141,31 @@ const setupAddonCardClickHandlers = (handler) => {
     });
 };
 
-const choosePhoneNumberPopup = isChooseNumberModalAvailable
-    ? new ChoosePhoneNumberPopup("#modal-choose-phone-number")
-    : undefined;
-
-if (isChooseNumberModalAvailable) {
-    choosePhoneNumberPopup.onFilterChanged(() => {
-        console.log("Filter updated!");
-        formData.numberSearchFilter = choosePhoneNumberPopup.getFilter();
-        choosePhoneNumberPopup.setState(
-            ChoosePhoneNumberPopupState.loading
-        );
-        loadPhoneNumbers(
-            false,
-            (numbers, error) => {
-                formData.availablePhoneNumbers = numbers;
-                choosePhoneNumberPopup.setPhoneNumbers(
-                    numbers
-                );
-                choosePhoneNumberPopup.setState(
-                    numbers.length ? ChoosePhoneNumberPopupState.normal : ChoosePhoneNumberPopupState.empty
-                );
-            }
-        )
-    });
-    choosePhoneNumberPopup.onSelectedPhoneNumber((phoneNumber) => {
-        choosePhoneNumberPopup.getPopup().hide();
-        formData.selectedPhoneNumber = phoneNumber;
-        updateChoosePhoneNumberSection();
-    });
-}
+const choosePhoneNumberPopup = new ChoosePhoneNumberPopup("#modal-choose-phone-number");
+choosePhoneNumberPopup.onFilterChanged(() => {
+    console.log("Filter updated!");
+    formData.numberSearchFilter = choosePhoneNumberPopup.getFilter();
+    choosePhoneNumberPopup.setState(
+        ChoosePhoneNumberPopupState.loading
+    );
+    loadPhoneNumbers(
+        false,
+        (numbers, error) => {
+            formData.availablePhoneNumbers = numbers;
+            choosePhoneNumberPopup.setPhoneNumbers(
+                numbers
+            );
+            choosePhoneNumberPopup.setState(
+                numbers.length ? ChoosePhoneNumberPopupState.normal : ChoosePhoneNumberPopupState.empty
+            );
+        }
+    )
+});
+choosePhoneNumberPopup.onSelectedPhoneNumber((phoneNumber) => {
+    choosePhoneNumberPopup.getPopup().hide();
+    formData.selectedPhoneNumber = phoneNumber;
+    updateChoosePhoneNumberSection();
+});
 
 /**
  * @returns {HTMLElement}
@@ -349,486 +343,359 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
     );
 };
 
-if (is_v2) {
-    /**
-     * @returns {Product[]}
-     */
-    getAddonsForCurrentPlan = () => {
-        const productStore = formData.productStore;
+/**
+ * @returns {Product[]}
+ */
+getAddonsForCurrentPlan = () => {
+    const productStore = formData.productStore;
 
-        if (!productStore) {
-            return [];
-        }
+    if (!productStore) {
+        return [];
+    }
 
-        const requiredSubscriptionPeriod = formData.monthly
-            ? ProductSubscriptionPricePeriod.month
-            : ProductSubscriptionPricePeriod.year;
+    const requiredSubscriptionPeriod = formData.monthly
+        ? ProductSubscriptionPricePeriod.month
+        : ProductSubscriptionPricePeriod.year;
 
-        return productStore.getStructure().addons
-            .map(productId => {
-                return productStore.getProductById(
-                    productId
-                );
-            })
-            .filter(product => {
-                return product.pricing.isSubscription
-                    ? product.pricing.subscriptionPrice.period === requiredSubscriptionPeriod
-                    : true;
-            });
-    };
-
-    const updateStructure = () => {
-        const productStore = formData.productStore;
-        
-        if (productStore) {
-            const newNumberMonthlyPlan = productStore.getProductById(
-                productStore.getStructure().plans.newNumber.monthlyPlanId
+    return productStore.getStructure().addons
+        .map(productId => {
+            return productStore.getProductById(
+                productId
             );
-            $("#new-number-monthly-price-text").html(`$${newNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month`);
+        })
+        .filter(product => {
+            return product.pricing.isSubscription
+                ? product.pricing.subscriptionPrice.period === requiredSubscriptionPeriod
+                : true;
+        });
+};
 
-            const newNumberAnnualPlan = productStore.getProductById(
-                productStore.getStructure().plans.newNumber.yearlyPlanId
-            );
-            const newNumberAnnualPlan_priceForYear = newNumberAnnualPlan.pricing.subscriptionPrice.annually;
-            const newNumberAnnualPlan_priceForMonth = Math.roundUp(
-                newNumberAnnualPlan.pricing.subscriptionPrice.annually / 12,
-                2
-            );
-            $("#new-number-annual-price-text").html(`$${newNumberAnnualPlan_priceForMonth} / month *`);
-            $("#new-number-annual-price-subtitle").html(`* Billed annually at $${newNumberAnnualPlan_priceForYear}`);
+const updateStructure = () => {
+    const productStore = formData.productStore;
 
-            const keepNumberMonthlyPlan = productStore.getProductById(
-                productStore.getStructure().plans.keepNumber.monthlyPlanId
-            );
-            const keepNumberMonthlyPlan_priceForMonth = keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly
-                + newNumberMonthlyPlan.pricing.subscriptionPrice.monthly;
-            $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan_priceForMonth} / month`);
+    if (productStore) {
+        const newNumberMonthlyPlan = productStore.getProductById(
+            productStore.getStructure().plans.newNumber.monthlyPlanId
+        );
+        $("#new-number-monthly-price-text").html(`$${newNumberMonthlyPlan.pricing.subscriptionPrice.monthly} / month`);
 
-            const keepNumberAnnualPlan = productStore.getProductById(
-                productStore.getStructure().plans.keepNumber.yearlyPlanId
-            );
-            const keepNumberAnnualPlan_priceForYear = keepNumberAnnualPlan.pricing.subscriptionPrice.annually
-                + newNumberAnnualPlan.pricing.subscriptionPrice.annually;
-            const keepNumberAnnualPlan_priceForMonth = Math.roundUp(
-                (keepNumberAnnualPlan.pricing.subscriptionPrice.annually + newNumberAnnualPlan.pricing.subscriptionPrice.annually) / 12,
-                2
-            );
-            $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlan_priceForMonth} / month *`);
-            $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan_priceForYear}`);
+        const newNumberAnnualPlan = productStore.getProductById(
+            productStore.getStructure().plans.newNumber.yearlyPlanId
+        );
+        const newNumberAnnualPlan_priceForYear = newNumberAnnualPlan.pricing.subscriptionPrice.annually;
+        const newNumberAnnualPlan_priceForMonth = Math.roundUp(
+            newNumberAnnualPlan.pricing.subscriptionPrice.annually / 12,
+            2
+        );
+        $("#new-number-annual-price-text").html(`$${newNumberAnnualPlan_priceForMonth} / month *`);
+        $("#new-number-annual-price-subtitle").html(`* Billed annually at $${newNumberAnnualPlan_priceForYear}`);
 
-            const addons = getAddonsForCurrentPlan();
-            $("div.addons").html(
-                getAddonSectionInternalHtmlLayout(
-                    addons
-                )
-            );
+        const keepNumberMonthlyPlan = productStore.getProductById(
+            productStore.getStructure().plans.keepNumber.monthlyPlanId
+        );
+        const keepNumberMonthlyPlan_priceForMonth = keepNumberMonthlyPlan.pricing.subscriptionPrice.monthly
+            + newNumberMonthlyPlan.pricing.subscriptionPrice.monthly;
+        $("#keep-existing-number-monthly-price-text").html(`$${keepNumberMonthlyPlan_priceForMonth} / month`);
 
-            if (formData.insuranceAdded) {
-                const insuranceCard = getProductAddonCard(productStore.getStructure().insurance.monthlyId)
-                    || getProductAddonCard(productStore.getStructure().insurance.yearlyId);
-                
-                if (insuranceCard) {
-                    setAddonCardSelected(
-                        insuranceCard,
-                        true
-                    );
-                }
-            }
+        const keepNumberAnnualPlan = productStore.getProductById(
+            productStore.getStructure().plans.keepNumber.yearlyPlanId
+        );
+        const keepNumberAnnualPlan_priceForYear = keepNumberAnnualPlan.pricing.subscriptionPrice.annually
+            + newNumberAnnualPlan.pricing.subscriptionPrice.annually;
+        const keepNumberAnnualPlan_priceForMonth = Math.roundUp(
+            (keepNumberAnnualPlan.pricing.subscriptionPrice.annually + newNumberAnnualPlan.pricing.subscriptionPrice.annually) / 12,
+            2
+        );
+        $("#keep-existing-number-annual-price-text").html(`$${keepNumberAnnualPlan_priceForMonth} / month *`);
+        $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan_priceForYear}`);
 
-            formData.selectedOneTimePurchaseAddons.forEach(productId => {
-                const card = getProductAddonCard(
-                    productId
-                );
-                setAddonCardSelected(
-                    card,
-                    true
-                );
-            });
-
-            setupAddonCardClickHandlers((productIdentifier, isSelected) => {
-                console.log(`Clicked on addon card: ${productIdentifier}, selected: ${isSelected}`);
-
-                const isInsurance = [
-                    formData.productStore.getStructure().insurance.monthlyId,
-                    formData.productStore.getStructure().insurance.yearlyId
-                ].includes(productIdentifier);
-
-                if (isInsurance) {
-                    formData.insuranceAdded = isSelected;
-                } else {
-                    if (isSelected) {
-                        formData.selectedOneTimePurchaseAddons.push(
-                            productIdentifier
-                        );
-                    } else {
-                        const index = formData.selectedOneTimePurchaseAddons.indexOf(
-                            productIdentifier
-                        );
-
-                        if (index >= 0) {
-                            formData.selectedOneTimePurchaseAddons.splice(index, 1);
-                        }
-                    }
-                }
-
-                updateProductCart();
-            });
-        }
-    };
-
-    /**
-     * @param {() => void} onFinished Function that is called when the product cart is updated.
-     */
-    const updateProductCart = (onFinished) => {
-        const productCart = formData.productCart;
-        const structure = formData.productStore.getStructure();
-
-        productCart.removeAllProductIdentifiers();
-        productCart.addProductIdentifier(
-            structure.landlineBaseProductId
+        const addons = getAddonsForCurrentPlan();
+        $("div.addons").html(
+            getAddonSectionInternalHtmlLayout(
+                addons
+            )
         );
 
-        const allPlans = [
-            structure.plans.newNumber.monthlyPlanId,
-            structure.plans.newNumber.yearlyPlanId,
-            structure.plans.keepNumber.monthlyPlanId,
-            structure.plans.keepNumber.yearlyPlanId
-        ];
-        
-        var newPlanIdentifiers = [
-            formData.monthly
-                ? structure.plans.newNumber.monthlyPlanId
-                : structure.plans.newNumber.yearlyPlanId
-        ];
-        
-        if (!formData.getNewNumber) {
-            newPlanIdentifiers.push(
-                formData.monthly
-                    ? structure.plans.keepNumber.monthlyPlanId
-                    : structure.plans.keepNumber.yearlyPlanId
-            );
-        }
-
-        newPlanIdentifiers.forEach(planIdentifier => {
-            productCart.addProductIdentifier(
-                planIdentifier
-            );
-        });
-        
         if (formData.insuranceAdded) {
-            productCart.addProductIdentifier(
-                formData.monthly ? structure.insurance.monthlyId : structure.insurance.yearlyId
-            );
+            const insuranceCard = getProductAddonCard(productStore.getStructure().insurance.monthlyId)
+                || getProductAddonCard(productStore.getStructure().insurance.yearlyId);
+
+            if (insuranceCard) {
+                setAddonCardSelected(
+                    insuranceCard,
+                    true
+                );
+            }
         }
 
         formData.selectedOneTimePurchaseAddons.forEach(productId => {
-            if (productCart.getQuantity(productId) == 0) {
-                productCart.addProductIdentifier(
-                    productId
-                );
-            }
+            const card = getProductAddonCard(
+                productId
+            );
+            setAddonCardSelected(
+                card,
+                true
+            );
         });
 
-        productCart.updatePrices((error) => {
-            if (onFinished) {
-                onFinished();
-            }
-        });
-    };
+        setupAddonCardClickHandlers((productIdentifier, isSelected) => {
+            console.log(`Clicked on addon card: ${productIdentifier}, selected: ${isSelected}`);
 
-    const tabs = Object.freeze({
-        newNumber: {
-            plan: document.getElementById("tab-new-number"),
-            periods: {
-                month: document.getElementById("tab-new-number-monthly-plan"),
-                year: document.getElementById("tab-new-number-annual-plan")
+            const isInsurance = [
+                formData.productStore.getStructure().insurance.monthlyId,
+                formData.productStore.getStructure().insurance.yearlyId
+            ].includes(productIdentifier);
+
+            if (isInsurance) {
+                formData.insuranceAdded = isSelected;
+            } else {
+                if (isSelected) {
+                    formData.selectedOneTimePurchaseAddons.push(
+                        productIdentifier
+                    );
+                } else {
+                    const index = formData.selectedOneTimePurchaseAddons.indexOf(
+                        productIdentifier
+                    );
+
+                    if (index >= 0) {
+                        formData.selectedOneTimePurchaseAddons.splice(index, 1);
+                    }
+                }
             }
-        },
-        keepNumber: {
-            plan: document.getElementById("tab-keep-existing-number"),
-            periods: {
-                month: document.getElementById("tab-keep-existing-number-monthly-plan"),
-                year: document.getElementById("tab-keep-existing-number-annual-plan")
-            }
-        }
-    });
-    const allTabs = [
-        tabs.newNumber.plan,
-        tabs.newNumber.periods.month,
-        tabs.newNumber.periods.year,
-        tabs.keepNumber.plan,
-        tabs.keepNumber.periods.month,
-        tabs.keepNumber.periods.year
+
+            updateProductCart();
+        });
+    }
+};
+
+/**
+ * @param {() => void} onFinished Function that is called when the product cart is updated.
+ */
+const updateProductCart = (onFinished) => {
+    const productCart = formData.productCart;
+    const structure = formData.productStore.getStructure();
+
+    productCart.removeAllProductIdentifiers();
+    productCart.addProductIdentifier(
+        structure.landlineBaseProductId
+    );
+
+    const allPlans = [
+        structure.plans.newNumber.monthlyPlanId,
+        structure.plans.newNumber.yearlyPlanId,
+        structure.plans.keepNumber.monthlyPlanId,
+        structure.plans.keepNumber.yearlyPlanId
     ];
 
-    const isTabSelected = (tab) => {
-        return $(tab).hasClass("w--current");
-    };
+    var newPlanIdentifiers = [
+        formData.monthly
+            ? structure.plans.newNumber.monthlyPlanId
+            : structure.plans.newNumber.yearlyPlanId
+    ];
 
-    const orderSummaryPanel = new OrderSummaryPanel(
-        document.querySelectorAll(".right-panel")[0]
-    );
-    orderSummaryPanel.setActive(false, false);
-
-    $(tabs.newNumber.plan).on("click", () => {
-        formData.getNewNumber = true;
-        formData.monthly = isTabSelected(tabs.newNumber.periods.month);
-        updateStructure();
-        updateProductCart();
-    });
-
-    $(tabs.newNumber.periods.month).on("click", () => {
-        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
-        formData.monthly = true;
-        updateStructure();
-        updateProductCart();
-    });
-
-    $(tabs.newNumber.periods.year).on("click", () => {
-        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
-        formData.monthly = false;
-        updateStructure();
-        updateProductCart();
-    });
-
-    $(tabs.keepNumber.plan).on("click", () => {
-        formData.getNewNumber = false;
-        formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
-        updateStructure();
-        updateProductCart();
-    });
-
-    $(tabs.keepNumber.periods.month).on("click", () => {
-        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
-        formData.monthly = true;
-        updateStructure();
-        updateProductCart();
-    });
-
-    $(tabs.keepNumber.periods.year).on("click", () => {
-        formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
-        formData.monthly = false;
-        updateStructure();
-        updateProductCart();
-    });
-
-    const productStore = ProductStore.getDefault();
-    productStore.loadProducts(error => {
-        formData.productStore = productStore;
-        updateStructure();
-        
-        formData.productCart.addProductIdentifier(
-            productStore.getStructure().landlineBaseProductId
+    if (!formData.getNewNumber) {
+        newPlanIdentifiers.push(
+            formData.monthly
+                ? structure.plans.keepNumber.monthlyPlanId
+                : structure.plans.keepNumber.yearlyPlanId
         );
-        formData.productCart.addProductIdentifier(
-            productStore.getStructure().plans.newNumber.monthlyPlanId
+    }
+
+    newPlanIdentifiers.forEach(planIdentifier => {
+        productCart.addProductIdentifier(
+            planIdentifier
         );
-        formData.productCart.onPricesStartedUpdating(() => {
-            orderSummaryPanel.setActive(false, true);
-        });
-        formData.productCart.onPricesUpdated((error) => {
-            orderSummaryPanel.update(
-                productStore,
-                formData.productCart
+    });
+
+    if (formData.insuranceAdded) {
+        productCart.addProductIdentifier(
+            formData.monthly ? structure.insurance.monthlyId : structure.insurance.yearlyId
+        );
+    }
+
+    formData.selectedOneTimePurchaseAddons.forEach(productId => {
+        if (productCart.getQuantity(productId) == 0) {
+            productCart.addProductIdentifier(
+                productId
             );
-            orderSummaryPanel.setActive(true, true);
-        });
-        updateProductCart();
-    });
-
-    /**
-     * Choose phone number functionality.
-     */
-    if (isChooseNumberModalAvailable) {
-        setupChoosePhoneNumberLinks(() => {
-            console.log("Choose phone number");
-        });
-        $(getChooseNumberSectionContainer()).hide();
-        loadPhoneNumbers(
-            true,
-            (numbers, error) => {
-                formData.selectedPhoneNumber = numbers[0];
-                updateChoosePhoneNumberSection();
-                $(getChooseNumberSectionContainer()).fadeTo(300, 1);
-                choosePhoneNumberPopup.setPhoneNumbers(
-                    formData.availablePhoneNumbers
-                );
-                choosePhoneNumberPopup.setState(
-                    numbers.length ? ChoosePhoneNumberPopupState.normal : ChoosePhoneNumberPopupState.empty
-                );
-            }
-        );
-    }
-
-    /**
-     * Port phone number functionality.
-     */
-    if (isPortNumberModalAvailable) {
-        setupPortPhoneNumberLinks(() => {
-            console.log("Port phone number");
-        });
-    }
-
-    /**
-     * Here we handle submit button click.
-     */
-    const submitButton = document.querySelectorAll(".continue_choose_plan")[0];
-
-    $(submitButton).on("click", (event) => {
-        event.preventDefault();
-
-        Store.local.write(
-            Store.keys.checkoutFlow.getNewNumber,
-            formData.getNewNumber
-        );
-        Store.local.write(
-            Store.keys.checkoutFlow.selectedProductIdentifiers,
-            formData.productCart.getProductIdentifiers()
-        );
-        Store.local.write(
-            Store.keys.checkoutFlow.selectedPhoneNumber,
-            formData.selectedPhoneNumber ? formData.selectedPhoneNumber.serialize() : undefined
-        );
-
-        router.open(
-            is_v2 ? RouterPath.checkout_v2_account : RouterPath.checkoutLandline_account,
-            router.getParameters(),
-            router.isTestEnvironment()
-        );
-    });
-
-    /**
-     * Send user's data to Active Campaign.
-     */
-    exportCheckoutFlowDataToActiveCampaign(
-        (response, error, success) => {
-            console.log("Active Campaign");
         }
+    });
+
+    productCart.updatePrices((error) => {
+        if (onFinished) {
+            onFinished();
+        }
+    });
+};
+
+const tabs = Object.freeze({
+    newNumber: {
+        plan: document.getElementById("tab-new-number"),
+        periods: {
+            month: document.getElementById("tab-new-number-monthly-plan"),
+            year: document.getElementById("tab-new-number-annual-plan")
+        }
+    },
+    keepNumber: {
+        plan: document.getElementById("tab-keep-existing-number"),
+        periods: {
+            month: document.getElementById("tab-keep-existing-number-monthly-plan"),
+            year: document.getElementById("tab-keep-existing-number-annual-plan")
+        }
+    }
+});
+const allTabs = [
+    tabs.newNumber.plan,
+    tabs.newNumber.periods.month,
+    tabs.newNumber.periods.year,
+    tabs.keepNumber.plan,
+    tabs.keepNumber.periods.month,
+    tabs.keepNumber.periods.year
+];
+
+const isTabSelected = (tab) => {
+    return $(tab).hasClass("w--current");
+};
+
+const orderSummaryPanel = new OrderSummaryPanel(
+    document.querySelectorAll(".right-panel")[0]
+);
+orderSummaryPanel.setActive(false, false);
+
+$(tabs.newNumber.plan).on("click", () => {
+    formData.getNewNumber = true;
+    formData.monthly = isTabSelected(tabs.newNumber.periods.month);
+    updateStructure();
+    updateProductCart();
+});
+
+$(tabs.newNumber.periods.month).on("click", () => {
+    formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+    formData.monthly = true;
+    updateStructure();
+    updateProductCart();
+});
+
+$(tabs.newNumber.periods.year).on("click", () => {
+    formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+    formData.monthly = false;
+    updateStructure();
+    updateProductCart();
+});
+
+$(tabs.keepNumber.plan).on("click", () => {
+    formData.getNewNumber = false;
+    formData.monthly = isTabSelected(tabs.keepNumber.periods.month);
+    updateStructure();
+    updateProductCart();
+});
+
+$(tabs.keepNumber.periods.month).on("click", () => {
+    formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+    formData.monthly = true;
+    updateStructure();
+    updateProductCart();
+});
+
+$(tabs.keepNumber.periods.year).on("click", () => {
+    formData.getNewNumber = isTabSelected(tabs.newNumber.plan);
+    formData.monthly = false;
+    updateStructure();
+    updateProductCart();
+});
+
+const productStore = ProductStore.getDefault();
+productStore.loadProducts(error => {
+    formData.productStore = productStore;
+    updateStructure();
+
+    formData.productCart.addProductIdentifier(
+        productStore.getStructure().landlineBaseProductId
     );
-} else {
-    /**
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     * OLD CHECKOUT FLOW!!!!
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     * ****************************************************************************************************
-     */
-    $(document).ready(() => {
-
-        $(".order-summary-card .tabs").remove();
-        $(".insurance-item").remove();
-
-        const formData = {
-            monthly: $("#monthly-plan").hasClass("w--current"),
-            getNewNumber: $(".tabs_phonenumber_service .tab-new-number").hasClass("w--current"),
-            addHandset: false,
-            addInsurance: false,
-        };
-    
-        const getProductIdentifiers = () => {
-            var identifiers = [
-                ProductIdentifier.landlineBase,
-            ];
-    
-            if (formData.getNewNumber) {
-                identifiers.push(
-                    formData.monthly ? ProductIdentifier.landlinePhoneServiceMonthly : ProductIdentifier.landlinePhoneServiceYearly,
-                );
-            } else {
-                identifiers.push(
-                    formData.monthly ? ProductIdentifier.portingLandlineNumberMonthly : ProductIdentifier.portingLandlineNumberYearly
-                );
-            }
-    
-            if (formData.addHandset) {
-                identifiers.push(
-                    ProductIdentifier.handset
-                );
-            }
-    
-            if (formData.addInsurance) {
-                identifiers.push(
-                    formData.monthly ? ProductIdentifier.insuranceMonthly : ProductIdentifier.insuranceYearly
-                );
-            }
-    
-            return identifiers;
-        };
-    
-        $("#tab-new-number").on("click", (event) => {
-            formData.getNewNumber = true;
-        });
-    
-        $("#tab-keep-existing-number").on("click", (event) => {
-            formData.getNewNumber = false;
-        });
-    
-        $("#monthly-plan").on("click", (event) => {
-            formData.monthly = true;
-        });
-    
-        $("#annual-plan").on("click", (event) => {
-            formData.monthly = false;
-        });
-    
-        $("#monthly-plan-p").on("click", (event) => {
-            formData.monthly = true;
-        });
-    
-        $("#annual-plan-p").on("click", (event) => {
-            formData.monthly = false;
-        });
-    
-        $("#handset-addon-card").on("click", (event) => {
-            formData.addHandset = !formData.addHandset;
-        });
-    
-        $("#insurance-addon-card").on("click", (event) => {
-            formData.addInsurance = !formData.addInsurance;
-        });
-    
-        /**
-         * Here we handle submit button click.
-         */
-        const submitButton = document.querySelectorAll(".continue_choose_plan")[0];
-    
-        $(submitButton).on("click", (event) => {
-            const period = (() => {
-                const monthly = $("#monthly-plan").hasClass("w--current");
-                const annual = $("#annual-plan").hasClass("w--current");
-    
-                if (monthly) {
-                    return "Monthly";
-                } else if (annual) {
-                    return "Annual";
-                } else {
-                    return "";
-                }
-            })();
-    
-            Store.local.write(Store.keys.checkoutFlow.getNewNumber, formData.getNewNumber);
-            Store.local.write(Store.keys.checkoutFlow.period, period);
-            Store.local.write(Store.keys.checkoutFlow.addHandsetPhone, formData.addHandset);
-            Store.local.write(Store.keys.checkoutFlow.addInsurance, formData.addInsurance);
-            Store.local.write(Store.keys.checkoutFlow.selectedProductIdentifiers, getProductIdentifiers());
-        });
-    
-        /**
-         * Send user's data to Active Campaign.
-         */
-        exportCheckoutFlowDataToActiveCampaign(
-            (response, error, success) => {
-                console.log("Active Campaign");
-            }
+    formData.productCart.addProductIdentifier(
+        productStore.getStructure().plans.newNumber.monthlyPlanId
+    );
+    formData.productCart.onPricesStartedUpdating(() => {
+        orderSummaryPanel.setActive(false, true);
+    });
+    formData.productCart.onPricesUpdated((error) => {
+        orderSummaryPanel.update(
+            productStore,
+            formData.productCart
         );
+        orderSummaryPanel.setActive(true, true);
+    });
+    updateProductCart();
+});
+
+/**
+ * Choose phone number functionality.
+ */
+setupChoosePhoneNumberLinks(() => {
+    console.log("Choose phone number");
+});
+$(getChooseNumberSectionContainer()).hide();
+loadPhoneNumbers(
+    true,
+    (numbers, error) => {
+        formData.selectedPhoneNumber = numbers[0];
+        updateChoosePhoneNumberSection();
+        $(getChooseNumberSectionContainer()).fadeTo(300, 1);
+        choosePhoneNumberPopup.setPhoneNumbers(
+            formData.availablePhoneNumbers
+        );
+        choosePhoneNumberPopup.setState(
+            numbers.length ? ChoosePhoneNumberPopupState.normal : ChoosePhoneNumberPopupState.empty
+        );
+    }
+);
+
+/**
+ * Port phone number functionality.
+ */
+if (isPortNumberModalAvailable) {
+    setupPortPhoneNumberLinks(() => {
+        console.log("Port phone number");
     });
 }
+
+/**
+ * Here we handle submit button click.
+ */
+const submitButton = document.querySelectorAll(".continue_choose_plan")[0];
+
+$(submitButton).on("click", (event) => {
+    event.preventDefault();
+
+    Store.local.write(
+        Store.keys.checkoutFlow.getNewNumber,
+        formData.getNewNumber
+    );
+    Store.local.write(
+        Store.keys.checkoutFlow.selectedProductIdentifiers,
+        formData.productCart.getProductIdentifiers()
+    );
+    Store.local.write(
+        Store.keys.checkoutFlow.selectedPhoneNumber,
+        formData.selectedPhoneNumber ? formData.selectedPhoneNumber.serialize() : undefined
+    );
+
+    router.open(
+        RouterPath.checkout_v2_account,
+        router.getParameters(),
+        router.isTestEnvironment()
+    );
+});
+
+/**
+ * Send user's data to Active Campaign.
+ */
+exportCheckoutFlowDataToActiveCampaign(
+    (response, error, success) => {
+        console.log("Active Campaign");
+    }
+);
 
 /**
  * A/B tests.
