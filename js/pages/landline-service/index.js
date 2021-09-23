@@ -1,6 +1,8 @@
 const isVersionOne = router.getParameterValue(RouterPathParameter.checkoutVersion_1) != undefined;
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
 
+Store.removeCheckoutData();
+
 const externalServices = {
     msp: {
         enabled: router.getParameterValue("msp") != undefined
