@@ -211,6 +211,10 @@ if (isPortNumberModalAvailable) {
         
         const data = portPhoneNumberPopup.getFormData();
         Store.local.write(
+            Store.keys.portPhoneNumber.carrier,
+            data.carrierName
+        );
+        Store.local.write(
             Store.keys.portPhoneNumber.accountNumber,
             data.technicalData.accountNumber
         );

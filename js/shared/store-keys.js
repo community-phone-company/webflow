@@ -38,6 +38,7 @@ const CheckoutFlowStoreKey = Object.freeze({
 });
 
 const PortPhoneNumberKey = Object.freeze({
+    carrier: "port-phone-number-carrier",
     accountNumber: "port-phone-number-account-number",
     pin: "port-phone-number-pin",
     accountName: "port-phone-number-account-name",
