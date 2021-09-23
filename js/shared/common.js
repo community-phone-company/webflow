@@ -71,7 +71,7 @@ if (IS_PRODUCTION) {
             const city = Store.local.read(Store.keys.checkoutFlow.shippingAddress_city) ?? "";
             const zip = Store.local.read(Store.keys.checkoutFlow.shippingAddress_zip) ?? "";
             const state = Store.local.read(Store.keys.checkoutFlow.shippingAddress_state) ?? "";
-            return `${line1}, ${line2}, ${city}, ${state} ${zip}`;
+            return `${line1}${line2.length ? ` ${line2}` : ""}, ${city}, ${state} ${zip}`;
         })(),
         billing: (() => {
             const line1 = Store.local.read(Store.keys.checkoutFlow.billingAddress_addressLine1) ?? "";
@@ -79,7 +79,7 @@ if (IS_PRODUCTION) {
             const city = Store.local.read(Store.keys.checkoutFlow.billingAddress_city) ?? "";
             const zip = Store.local.read(Store.keys.checkoutFlow.billingAddress_zip) ?? "";
             const state = Store.local.read(Store.keys.checkoutFlow.billingAddress_state) ?? "";
-            return `${line1}, ${line2}, ${city}, ${state} ${zip}`;
+            return `${line1}${line2.length ? ` ${line2}` : ""}, ${city}, ${state} ${zip}`;
         })()
     };
     
