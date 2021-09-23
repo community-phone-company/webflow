@@ -60,15 +60,58 @@ if (IS_PRODUCTION) {
             Store.keys.checkoutFlow.email
         )
     };
-    const emailToSend = emails.businessFlow
+    const firstNonNullEmail = emails.businessFlow
         ?? emails.onboardingFlow
         ?? emails.checkoutFlow;
     
+    const address = {
+        shipping: (() => {
+            const line1 = Store.local.read(Store.keys.checkoutFlow.shippingAddress_addressLine1) ?? "";
+            const line2 = Store.local.read(Store.keys.checkoutFlow.shippingAddress_addressLine2) ?? "";
+            const city = Store.local.read(Store.keys.checkoutFlow.shippingAddress_city) ?? "";
+            const zip = Store.local.read(Store.keys.checkoutFlow.shippingAddress_zip) ?? "";
+            const state = Store.local.read(Store.keys.checkoutFlow.shippingAddress_state) ?? "";
+            return `${line1}, ${line2}, ${city}, ${state} ${zip}`;
+        })(),
+        billing: (() => {
+            const line1 = Store.local.read(Store.keys.checkoutFlow.billingAddress_addressLine1) ?? "";
+            const line2 = Store.local.read(Store.keys.checkoutFlow.billingAddress_addressLine2) ?? "";
+            const city = Store.local.read(Store.keys.checkoutFlow.billingAddress_city) ?? "";
+            const zip = Store.local.read(Store.keys.checkoutFlow.billingAddress_zip) ?? "";
+            const state = Store.local.read(Store.keys.checkoutFlow.billingAddress_state) ?? "";
+            return `${line1}, ${line2}, ${city}, ${state} ${zip}`;
+        })()
+    };
+    
     const data = {
         "Last Visit": new Date(Date.now()).toISOString(),
-        "Email": emailToSend,
+        "Email": firstNonNullEmail,
         "Onboarding email": emails.onboardingFlow,
-        "Checkout email": emails.checkoutFlow
+        "Checkout email": emails.checkoutFlow,
+        "Account name": `${Store.local.read(Store.keys.checkoutFlow.firstName) ?? ""} ${Store.local.read(Store.keys.checkoutFlow.lastName) ?? ""}`,
+        "Shipping name": (() => {
+            const firstName = Store.local.read(Store.keys.checkoutFlow.shippingAddress_firstName) ?? "";
+            const lastName = Store.local.read(Store.keys.checkoutFlow.shippingAddress_lastName) ?? "";
+
+            if (firstName.length > 0 && lastName.length > 0) {
+                return `${firstName} ${lastName}`;
+            } else {
+                return undefined;
+            }
+        })(),
+        "Shipping address": address.shipping,
+        "Billing name": (() => {
+            const firstName = Store.local.read(Store.keys.checkoutFlow.billingAddress_firstName) ?? "";
+            const lastName = Store.local.read(Store.keys.checkoutFlow.billingAddress_lastName) ?? "";
+
+            if (firstName.length > 0 && lastName.length > 0) {
+                return `${firstName} ${lastName}`;
+            } else {
+                return undefined;
+            }
+        })(),
+        "Billing address": address.billing,
+        "Phone number": Store.local.read(Store.keys.checkoutFlow.phone)
     };
     HotjarIntegration.send(data);
     console.log(`Hotjar:`, data);
