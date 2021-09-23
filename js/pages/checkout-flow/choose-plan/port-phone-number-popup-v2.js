@@ -104,6 +104,8 @@ class PortPhoneNumberPopup {
             $(this._form.userInterface.steps.carrierInformation.footer).css({transform: ""});
         });
 
+        this._form.userInterface.steps.carrierInformation.cards.forEach(card => makeCarrierCardSelected(card, false));
+
         this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.oninput = () => {
             this._form.data.technicalData.accountNumber = this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.value;
             this._handleFormChange();
