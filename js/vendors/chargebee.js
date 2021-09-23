@@ -63,10 +63,6 @@ class ChargebeeCheckoutPortingData {
         this.state = state;
         this.zip = zip;
     }
-
-    isComplete = () => {
-        return Object.keys(this).find(key => this[key] == undefined) == undefined;
-    }
 }
 
 class ChargebeeCheckoutAddress {
