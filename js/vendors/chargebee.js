@@ -32,6 +32,43 @@ const ChargebeeCheckoutPhoneNumberServiceType = Object.freeze({
     selectedNumber: "selected-number"
 });
 
+class ChargebeeCheckoutPortingData {
+
+    /**
+     * @constructor
+     * @param {string} carrierName 
+     * @param {string} accountName 
+     * @param {string} numberToPort 
+     * @param {string} accountNumber 
+     * @param {string} pin 
+     * @param {string} firstName 
+     * @param {string} lastName 
+     * @param {string} addressLineOne 
+     * @param {string} addressLineTwo 
+     * @param {string} city 
+     * @param {string} state 
+     * @param {string} zip 
+     */
+    constructor(carrierName, accountName, numberToPort, accountNumber, pin, firstName, lastName, addressLineOne, addressLineTwo, city, state, zip) {
+        this.carrierName = carrierName;
+        this.accountName = accountName;
+        this.numberToPort = numberToPort;
+        this.accountNumber = accountNumber;
+        this.pin = pin;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.addressLineOne = addressLineOne;
+        this.addressLineTwo = addressLineTwo;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+    }
+
+    isComplete = () => {
+        return Object.keys(this).find(key => this[key] == undefined) == undefined;
+    }
+}
+
 class ChargebeeCheckoutAddress {
 
     /**
@@ -127,6 +164,7 @@ class Chargebee {
     /**
      * @param {ChargebeeCheckoutCustomer} customer Customer.
      * @param {string} serviceType Service type.
+     * @param {ChargebeeCheckoutPortingData | undefined} portingData Porting data.
      * @param {ChargebeeCheckoutAddress} shippingAddress Shipping address.
      * @param {ChargebeeCheckoutAddress} billingAddress Billing address.
      * @param {string[]} productIdentifiers Product identifiers.
@@ -137,6 +175,7 @@ class Chargebee {
     checkout = (
         customer,
         serviceType,
+        portingData,
         shippingAddress,
         billingAddress,
         productIdentifiers,
@@ -153,6 +192,30 @@ class Chargebee {
             "self_checkout": customer.selfCheckout,
             "how_did_they_hear_about_us": customer.howDidTheyHearAboutUs,
             "phonenumber_service": serviceType,
+            "porting_data": (() => {
+                if (portingData) {
+                    return {
+                        "technical_data": {
+                            "carrier_name": portingData.carrierName,
+                            "account_name": portingData.accountName,
+                            "number_to_port": portingData.numberToPort,
+                            "account_number": portingData.accountNumber,
+                            "pin": portingData.pin
+                        },
+                        "service_address": {
+                            "first_name": portingData.firstName,
+                            "last_name": portingData.lastName,
+                            "address_line_one": portingData.addressLineOne,
+                            "address_line_two": portingData.addressLineTwo,
+                            "city": portingData.city,
+                            "state": portingData.state,
+                            "zip": portingData.zip
+                        }
+                    };
+                } else {
+                    return undefined;
+                }
+            })(),
             "billing_address": {
                 "first_name": billingAddress.firstName,
                 "last_name": billingAddress.lastName,

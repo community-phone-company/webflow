@@ -21,8 +21,8 @@ class PortPhoneNumberPopup {
 
         this._form = {
             data: {
-                carrierName: "",
                 technicalData: {
+                    carrierName: "",
                     accountNumber: "",
                     pin: "",
                     accountName: "",
@@ -85,7 +85,7 @@ class PortPhoneNumberPopup {
     _setupUserInterface = () => {
         $(this._form.userInterface.steps.carrierInformation.cards).on("click", (event) => {
             const selectedCard = event.currentTarget;
-            this._form.data.carrierName = selectedCard.querySelectorAll(".body-2-carrier")[0].innerText;
+            this._form.data.technicalData.carrierName = selectedCard.querySelectorAll(".body-2-carrier")[0].innerText;
 
             this._form.userInterface.steps.carrierInformation.cards.forEach(card => {
                 if (card != selectedCard) {

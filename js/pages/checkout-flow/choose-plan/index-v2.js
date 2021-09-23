@@ -205,8 +205,8 @@ if (isPortNumberModalAvailable) {
         
         const data = portPhoneNumberPopup.getFormData();
         Store.local.write(
-            Store.keys.portPhoneNumber.carrier,
-            data.carrierName
+            Store.keys.portPhoneNumber.carrierName,
+            data.technicalData.carrierName
         );
         Store.local.write(
             Store.keys.portPhoneNumber.accountNumber,
