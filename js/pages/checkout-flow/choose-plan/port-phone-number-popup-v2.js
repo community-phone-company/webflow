@@ -84,27 +84,17 @@ class PortPhoneNumberPopup {
     }
 
     _setupUserInterface = () => {
-        const getCarrierNameFromCard = (card) => {
-            return $(card).find(".body-2-carrier:eq(0)").text();
-        };
-        
-        const makeCarrierCardSelected = (card, selected) => {
-            $(card).find("div.carrier-card").css({
-                height: selected ? "auto" : "56px"
-            });
-        };
-
         $(this._form.userInterface.steps.carrierInformation.cards).on("click", (event) => {
             const selectedCard = event.currentTarget;
-            this._form.data.technicalData.carrierName = getCarrierNameFromCard(
+            this._form.data.technicalData.carrierName = this.getCarrierNameFromCard(
                 selectedCard
             );
 
-            this._form.userInterface.steps.carrierInformation.cards.forEach(card => makeCarrierCardSelected(card, card === selectedCard));
+            this._form.userInterface.steps.carrierInformation.cards.forEach(card => this.makeCarrierCardSelected(card, card === selectedCard));
             $(this._form.userInterface.steps.carrierInformation.footer).css({transform: ""});
         });
 
-        this._form.userInterface.steps.carrierInformation.cards.forEach(card => makeCarrierCardSelected(card, false));
+        this.makeAllCarrierCardsCollapsed();
 
         this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.oninput = () => {
             this._form.data.technicalData.accountNumber = this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.value;
@@ -202,5 +192,27 @@ class PortPhoneNumberPopup {
      */
     onSubmit = (handler) => {
         this._onSubmitHandler = handler;
+    }
+
+    /**
+     * @param {HTMLElement} card 
+     * @returns {string}
+     */
+    getCarrierNameFromCard = (card) => {
+        return $(card).find(".body-2-carrier:eq(0)").text();
+    }
+    
+    /**
+     * @param {HTMLElement} card 
+     * @param {boolean} selected 
+     */
+    makeCarrierCardSelected = (card, selected) => {
+        $(card).find("div.carrier-card").css({
+            height: selected ? "auto" : "56px"
+        });
+    }
+
+    makeAllCarrierCardsCollapsed = () => {
+        this._form.userInterface.steps.carrierInformation.cards.forEach(card => this.makeCarrierCardSelected(card, false));
     }
 }

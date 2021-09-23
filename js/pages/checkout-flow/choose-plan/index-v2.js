@@ -261,7 +261,11 @@ if (isPortNumberModalAvailable) {
 const setupPortPhoneNumberLinks = (onClick) => {
     $("#fill-out-porting-form-button").on("click", (event) => {
         event.preventDefault();
-        portPhoneNumberPopup.getPopup().show();
+        /**
+         * Currently, popup appearance is controlled by Webflow.
+         */
+        //portPhoneNumberPopup.getPopup().show();
+        portPhoneNumberPopup.makeAllCarrierCardsCollapsed();
         
         if (onClick) {
             onClick();
