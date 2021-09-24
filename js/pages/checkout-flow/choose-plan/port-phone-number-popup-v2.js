@@ -40,6 +40,7 @@ class PortPhoneNumberPopup {
             },
             userInterface: {
                 popup: new Popup(this._container),
+                backButton: this._container.querySelectorAll("#modal-collect-porting-info_back-button")[0],
                 steps: {
                     carrierInformation: (() => {
                         const container = this._container.querySelectorAll("div.step-1-carrier-info")[0];
@@ -49,7 +50,8 @@ class PortPhoneNumberPopup {
                             cards: Array.from(
                                 container.querySelectorAll("div.w-dyn-item")
                             ),
-                            footer: container.querySelectorAll("#modal-collect-porting-info_step-one-footer")[0]
+                            footer: container.querySelectorAll("#modal-collect-porting-info_step-one-footer")[0],
+                            submitButton: container.querySelectorAll("#modal-collect-porting-info_step-one-submit-button")[0]
                         };
                     })(),
                     portingInformation: (() => {
@@ -84,6 +86,10 @@ class PortPhoneNumberPopup {
     }
 
     _setupUserInterface = () => {
+        $(this._form.userInterface.backButton).on("click", (event) => {
+            $(this._form.userInterface.backButton).hide();
+        });
+        
         $(this._form.userInterface.steps.carrierInformation.cards).on("click", (event) => {
             const selectedCard = event.currentTarget;
             this._form.data.technicalData.carrierName = this.getCarrierNameFromCard(
@@ -92,6 +98,10 @@ class PortPhoneNumberPopup {
 
             this._form.userInterface.steps.carrierInformation.cards.forEach(card => this.makeCarrierCardSelected(card, card === selectedCard));
             $(this._form.userInterface.steps.carrierInformation.footer).css({transform: ""});
+        });
+
+        $(this._form.userInterface.steps.carrierInformation.submitButton).on("click", (event) => {
+            $(this._form.userInterface.backButton).show();
         });
 
         this.makeAllCarrierCardsCollapsed();

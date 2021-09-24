@@ -201,6 +201,7 @@ const portPhoneNumberPopup = isPortNumberModalAvailable
     : undefined;
 
 if (isPortNumberModalAvailable) {
+    $(portPhoneNumberPopup._form.userInterface.backButton).hide();
     portPhoneNumberPopup.onSubmit(() => {
         portPhoneNumberPopup.getPopup().hide();
         
