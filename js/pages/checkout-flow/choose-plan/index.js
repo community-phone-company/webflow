@@ -8,6 +8,7 @@ const isPortNumberModalAvailable = router.getParameterValue("port-number") != un
  * @returns {string}
  */
 const getAddonCardHtmlLayout = (product) => {
+    const thumbnailUrl = product.thumbnailUrl ?? "https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b174b03cb6cee00203a_img-phone.svg";
     return `
         <a
             data-w-id="da018f8a-8d6d-a283-942a-ee673cd84d87"
@@ -26,7 +27,7 @@ const getAddonCardHtmlLayout = (product) => {
                     </div>
                 </div>
                 <img
-                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b174b03cb6cee00203a_img-phone.svg"
+                    src="${thumbnailUrl}"
                     loading="lazy"
                     alt=""
                     class="image-6"
