@@ -1,6 +1,6 @@
 const isVersionOne = router.getParameterValue(RouterPathParameter.checkoutVersion_1) != undefined;
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
-const isTestingPortPhoneNumberFunctionality = router.getParameterValue("port-number") != undefined;
+const isTestingPortPhoneNumberFunctionality = router.getParameterValue("test-port-number") != undefined;
 
 Store.removeCheckoutData();
 

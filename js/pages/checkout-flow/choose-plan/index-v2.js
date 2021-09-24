@@ -196,66 +196,62 @@ const setupChoosePhoneNumberLinks = (onClick) => {
     });
 };
 
-const portPhoneNumberPopup = isPortNumberModalAvailable
-    ? new PortPhoneNumberPopup("#modal-port-phone-number")
-    : undefined;
+const portPhoneNumberPopup = new PortPhoneNumberPopup("#modal-port-phone-number");
+$(portPhoneNumberPopup._form.userInterface.backButton).hide();
 
-if (isPortNumberModalAvailable) {
-    $(portPhoneNumberPopup._form.userInterface.backButton).hide();
-    portPhoneNumberPopup.onSubmit(() => {
-        portPhoneNumberPopup.getPopup().hide();
-        
-        const data = portPhoneNumberPopup.getFormData();
-        Store.local.write(
-            Store.keys.portPhoneNumber.carrierName,
-            data.technicalData.carrierName
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.accountNumber,
-            data.technicalData.accountNumber
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.pin,
-            data.technicalData.pin
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.accountName,
-            data.technicalData.accountName
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.numberToPort,
-            data.technicalData.numberToPort
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.firstName,
-            data.serviceAddress.firstName
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.lastName,
-            data.serviceAddress.lastName
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.addressLineOne,
-            data.serviceAddress.addressLineOne
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.addressLineTwo,
-            data.serviceAddress.addressLineTwo
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.city,
-            data.serviceAddress.city
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.zip,
-            data.serviceAddress.zip
-        );
-        Store.local.write(
-            Store.keys.portPhoneNumber.state,
-            data.serviceAddress.state
-        );
-    });
-}
+portPhoneNumberPopup.onSubmit(() => {
+    portPhoneNumberPopup.getPopup().hide();
+
+    const data = portPhoneNumberPopup.getFormData();
+    Store.local.write(
+        Store.keys.portPhoneNumber.carrierName,
+        data.technicalData.carrierName
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.accountNumber,
+        data.technicalData.accountNumber
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.pin,
+        data.technicalData.pin
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.accountName,
+        data.technicalData.accountName
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.numberToPort,
+        data.technicalData.numberToPort
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.firstName,
+        data.serviceAddress.firstName
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.lastName,
+        data.serviceAddress.lastName
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.addressLineOne,
+        data.serviceAddress.addressLineOne
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.addressLineTwo,
+        data.serviceAddress.addressLineTwo
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.city,
+        data.serviceAddress.city
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.zip,
+        data.serviceAddress.zip
+    );
+    Store.local.write(
+        Store.keys.portPhoneNumber.state,
+        data.serviceAddress.state
+    );
+});
 
 /**
  * @param {(() => void) | undefined} onClick 
@@ -660,11 +656,9 @@ loadPhoneNumbers(
 /**
  * Port phone number functionality.
  */
-if (isPortNumberModalAvailable) {
-    setupPortPhoneNumberLinks(() => {
-        console.log("Port phone number");
-    });
-}
+setupPortPhoneNumberLinks(() => {
+    console.log("Port phone number");
+});
 
 /**
  * Here we handle submit button click.
