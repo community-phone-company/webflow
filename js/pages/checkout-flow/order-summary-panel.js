@@ -155,13 +155,14 @@ class OrderSummaryPanelCardProduct {
     }
 
     toHTML = () => {
+        const thumbnailUrl = this.product.thumbnailUrl ?? "https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60d0b05962306f63feda5374_img-device.jpg";
         return `
             <div class="div-product">
                 <div class="devider-16px">
                 </div>
                 <div class="row-product">
                     <img
-                        src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60d0b05962306f63feda5374_img-device.jpg"
+                        src="${thumbnailUrl}"
                         loading="lazy"
                         width="68"
                         alt=""
