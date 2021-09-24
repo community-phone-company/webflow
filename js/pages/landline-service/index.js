@@ -1,5 +1,6 @@
 const isVersionOne = router.getParameterValue(RouterPathParameter.checkoutVersion_1) != undefined;
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
+const isTestingPortPhoneNumberFunctionality = router.getParameterValue("port-number") != undefined;
 
 Store.removeCheckoutData();
 
@@ -125,6 +126,10 @@ const checkCoverageVM = new Vue({
 
 const openCheckout = () => {
     const path = (() => {
+        if (isTestingPortPhoneNumberFunctionality) {
+            return "checkout-v2/choose-plan-and-number-2";
+        }
+
         if (isVersionOne) {
             return RouterPath.checkoutLandline_choosePlan;
         } else {
