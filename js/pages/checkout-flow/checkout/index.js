@@ -204,7 +204,7 @@ const onReady = () => {
     };
 
     /**
-     * @param {(message: string, success: boolean) => void} callback 
+     * @param {(message: string, subscriptionIdentifier: string | undefined, success: boolean) => void} callback 
      */
     const buyProducts = (callback) => {
         const firstName = Store.local.read(Store.keys.checkoutFlow.firstName);
@@ -292,8 +292,8 @@ const onReady = () => {
                 ),
                 form.data.paymentDetails.cardVerificationValue
             ),
-            (message, success) => {
-                callback(message, success);
+            (message, subscriptionIdentifier, success) => {
+                callback(message, subscriptionIdentifier, success);
             }
         );
     };
@@ -518,7 +518,7 @@ const onReady = () => {
 
         exportCheckoutFlowDataToActiveCampaign((response, error, success) => {
             console.log("Active Campaign");
-            buyProducts((message, success) => {
+            buyProducts((message, subscriptionIdentifier, success) => {
                 if (success) {
                     Store.removeCheckoutData();
                     router.open(

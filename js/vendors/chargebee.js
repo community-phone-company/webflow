@@ -149,6 +149,12 @@ class ChargebeeCheckoutCardInformationExpiryDate {
     }
 }
 
+const ChargebeePaymentStatus = Object.freeze({
+    notPaid: "not-paid",
+    paid: "paid",
+    pending: "pending"
+});
+
 class Chargebee {
 
     /**
@@ -166,7 +172,7 @@ class Chargebee {
      * @param {string[]} productIdentifiers Product identifiers.
      * @param {string | undefined} selectedPhoneNumber Selected phone number.
      * @param {ChargebeeCheckoutCardInformation} cardInformation Card information.
-     * @param {(message: string, success: boolean) => void} callback Function that is called when result comes from the server.
+     * @param {(message: string, subscriptionIdentifier: string | undefined, success: boolean) => void} callback Function that is called when result comes from the server.
      */
     checkout = (
         customer,
@@ -262,13 +268,54 @@ class Chargebee {
                     })();
                     callback(
                         message,
+                        undefined,
                         false
                     );
                 } else {
                     const message = response && response.message;
+                    const subscriptionIdentifier = response && response.subscription_id;
                     callback(
                         message,
+                        subscriptionIdentifier,
                         true
+                    );
+                }
+            }
+        );
+    }
+
+    /**
+     * @param {string} subscriptionIdentifier 
+     * @param {(status: string | undefined, message: string | undefined) => void} callback 
+     */
+    checkPaymentStatus = (
+        subscriptionIdentifier,
+        callback
+    ) => {
+        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        return api.jsonRequest(
+            CommunityPhoneAPI.endpoints.chargebee_checkPaymentStatus(
+                subscriptionIdentifier
+            ),
+            "GET",
+            undefined,
+            undefined,
+            (response, error) => {
+                if (error) {
+                    const message = (() => {
+                        const defaultMessage = "Something went wrong.\nTry again later or call us at (855) 615-0667";
+                        return api.getErrorMessage(error, true) ?? api.getErrorMessage(error, false) ?? defaultMessage;
+                    })();
+                    callback(
+                        undefined,
+                        message
+                    );
+                } else {
+                    const status = response && response.status;
+                    const message = response && response.message;
+                    callback(
+                        status,
+                        message
                     );
                 }
             }
