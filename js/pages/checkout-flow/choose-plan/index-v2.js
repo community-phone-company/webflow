@@ -656,9 +656,10 @@ loadPhoneNumbers(
 /**
  * Port phone number functionality.
  */
-/*setupPortPhoneNumberLinks(() => {
+setupPortPhoneNumberLinks(() => {
     console.log("Port phone number");
-});*/
+    portPhoneNumberPopup._handleFormChange();
+});
 
 /**
  * Here we handle submit button click.
