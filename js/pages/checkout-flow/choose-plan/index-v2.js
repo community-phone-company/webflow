@@ -264,6 +264,7 @@ const setupPortPhoneNumberLinks = (onClick) => {
          */
         //portPhoneNumberPopup.getPopup().show();
         portPhoneNumberPopup.makeAllCarrierCardsCollapsed();
+        $(portPhoneNumberPopup.getContainer()).css({opacity: 1});
         
         if (onClick) {
             onClick();
