@@ -106,50 +106,50 @@ class PortPhoneNumberPopup {
 
         this.makeAllCarrierCardsCollapsed();
 
-        this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.oninput = () => {
-            this._form.data.technicalData.accountNumber = this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput.value;
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.technicalData.accountNumberInput).startObserving((newValue) => {
+            this._form.data.technicalData.accountNumber = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.technicalData.pinInput.oninput = () => {
-            this._form.data.technicalData.pin = this._form.userInterface.steps.portingInformation.sections.technicalData.pinInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.technicalData.pinInput).startObserving((newValue) => {
+            this._form.data.technicalData.pin = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.technicalData.accountNameInput.oninput = () => {
-            this._form.data.technicalData.accountName = this._form.userInterface.steps.portingInformation.sections.technicalData.accountNameInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.technicalData.accountNameInput).startObserving((newValue) => {
+            this._form.data.technicalData.accountName = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.technicalData.numberToPortInput.oninput = () => {
-            this._form.data.technicalData.numberToPort = this._form.userInterface.steps.portingInformation.sections.technicalData.numberToPortInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.technicalData.numberToPortInput).startObserving((newValue) => {
+            this._form.data.technicalData.numberToPort = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.serviceAddress.firstNameInput.oninput = () => {
-            this._form.data.serviceAddress.firstName = this._form.userInterface.steps.portingInformation.sections.serviceAddress.firstNameInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.serviceAddress.firstNameInput).startObserving((newValue) => {
+            this._form.data.serviceAddress.firstName = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.serviceAddress.lastNameInput.oninput = () => {
-            this._form.data.serviceAddress.lastName = this._form.userInterface.steps.portingInformation.sections.serviceAddress.lastNameInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.serviceAddress.lastNameInput).startObserving((newValue) => {
+            this._form.data.serviceAddress.lastName = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.serviceAddress.addressLineOneInput.oninput = () => {
-            this._form.data.serviceAddress.addressLineOne = this._form.userInterface.steps.portingInformation.sections.serviceAddress.addressLineOneInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.serviceAddress.addressLineOneInput).startObserving((newValue) => {
+            this._form.data.serviceAddress.addressLineOne = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.serviceAddress.addressLineTwoInput.oninput = () => {
-            this._form.data.serviceAddress.addressLineTwo = this._form.userInterface.steps.portingInformation.sections.serviceAddress.addressLineTwoInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.serviceAddress.addressLineTwoInput).startObserving((newValue) => {
+            this._form.data.serviceAddress.addressLineTwo = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.serviceAddress.cityInput.oninput = () => {
-            this._form.data.serviceAddress.city = this._form.userInterface.steps.portingInformation.sections.serviceAddress.cityInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.serviceAddress.cityInput).startObserving((newValue) => {
+            this._form.data.serviceAddress.city = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.serviceAddress.zipInput.oninput = () => {
-            this._form.data.serviceAddress.zip = this._form.userInterface.steps.portingInformation.sections.serviceAddress.zipInput.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.serviceAddress.zipInput).startObserving((newValue) => {
+            this._form.data.serviceAddress.zip = newValue;
             this._handleFormChange();
-        };
-        this._form.userInterface.steps.portingInformation.sections.serviceAddress.stateSelect.oninput = () => {
-            this._form.data.serviceAddress.state = this._form.userInterface.steps.portingInformation.sections.serviceAddress.stateSelect.value;
+        });
+        new InputValueObserver(this._form.userInterface.steps.portingInformation.sections.serviceAddress.stateSelect).startObserving((newValue) => {
+            this._form.data.serviceAddress.state = newValue;
             this._handleFormChange();
-        };
+        });
 
         this._form.userInterface.popup
             .onShow(() => {
