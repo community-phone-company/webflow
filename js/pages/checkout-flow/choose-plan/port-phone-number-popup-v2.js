@@ -172,12 +172,11 @@ class PortPhoneNumberPopup {
             && this._form.data.serviceAddress.firstName.length > 0
             && this._form.data.serviceAddress.lastName.length > 0
             && this._form.data.serviceAddress.addressLineOne.length > 0
-            && this._form.data.serviceAddress.addressLineTwo.length > 0
             && this._form.data.serviceAddress.city.length > 0
             && this._form.data.serviceAddress.zip.length > 0
             && this._form.data.serviceAddress.state.length > 0;
         UserInterface.setElementEnabled(
-            this._form.userInterface.submitButton,
+            this._form.userInterface.steps.portingInformation.submitButton,
             isFormValid
         );
     }
