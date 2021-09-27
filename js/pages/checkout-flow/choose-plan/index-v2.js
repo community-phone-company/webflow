@@ -656,9 +656,9 @@ loadPhoneNumbers(
 /**
  * Port phone number functionality.
  */
-setupPortPhoneNumberLinks(() => {
+/*setupPortPhoneNumberLinks(() => {
     console.log("Port phone number");
-});
+});*/
 
 /**
  * Here we handle submit button click.
