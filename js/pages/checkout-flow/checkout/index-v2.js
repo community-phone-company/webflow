@@ -4,15 +4,15 @@ const is_v2 = window.location.href.includes(RouterPath.checkout_v2_checkoutStep)
  * Adds Google Maps functionality to the text field.
  * @param {HTMLInputElement} textField `HTMLInputElement` instance.
  */
-const makeAddressTextField = (textField) => {
+/*const makeAddressTextField = (textField) => {
     if ($(textField).hasClass("gpa-input")) {
         var autocomplete = new google.maps.places.Autocomplete(textField);
     }
 };
 
-// redirectToPreviousCheckoutFlowStepIfNeeded();
+var clipboard = new ClipboardJS('.btn');*/
 
-var clipboard = new ClipboardJS('.btn');
+// redirectToPreviousCheckoutFlowStepIfNeeded();
 
 /**
  * 
@@ -483,8 +483,6 @@ const onReady = () => {
         form.data.paymentDetails.cardVerificationValue = newValue.replaceAll("_", "");
         handleFormDataChanges();
     });
-
-    //makeAddressTextField(form.elements.shippingAddress.addressLineOneInput);
 
     $(form.elements.form).submit((event) => {
         event.preventDefault();
