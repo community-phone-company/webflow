@@ -46,8 +46,8 @@ class Popup {
         });
 
         this._setupUserInterface();
-
-        this.setAnimationEngine("velocity");
+        //this.setAnimationEngine("velocity");
+        this.setAnimationEngine("no-animation");
     }
 
     _setupUserInterface = () => {
