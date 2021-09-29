@@ -572,29 +572,36 @@ const onReady = () => {
         exportCheckoutFlowDataToActiveCampaign((response, error, success) => {
             console.log("Active Campaign");
             buyProducts((message, subscriptionIdentifier, success) => {
-                paymentProcessingPopup.show(() => {
-                    setInterval(() => {
-                        checkPaymentStatusTillResult(
-                            subscriptionIdentifier,
-                            1000,
-                            (success, message) => {
-                                if (success) {
-                                    Store.removeCheckoutData();
-                                    router.open(
-                                        RouterPath.checkout_v2_thankYou,
-                                        router.getParameters(),
-                                        router.isTestEnvironment()
-                                    );
-                                } else {
-                                    Popup.getBasic()
-                                        .setBody(message)
-                                        .show();
-                                    unblockUserInterface();
+                if (success) {
+                    paymentProcessingPopup.show(() => {
+                        setInterval(() => {
+                            checkPaymentStatusTillResult(
+                                subscriptionIdentifier,
+                                1000,
+                                (success, message) => {
+                                    if (success) {
+                                        Store.removeCheckoutData();
+                                        router.open(
+                                            RouterPath.checkout_v2_thankYou,
+                                            router.getParameters(),
+                                            router.isTestEnvironment()
+                                        );
+                                    } else {
+                                        Popup.getBasic()
+                                            .setBody(message)
+                                            .show();
+                                        unblockUserInterface();
+                                    }
                                 }
-                            }
-                        );
-                    }, 1000);
-                });
+                            );
+                        }, 1000);
+                    });
+                } else {
+                    Popup.getBasic()
+                        .setBody(message)
+                        .show();
+                    unblockUserInterface();
+                }
             });
         });
     });
