@@ -587,10 +587,12 @@ const onReady = () => {
                                             router.isTestEnvironment()
                                         );
                                     } else {
-                                        Popup.getBasic()
-                                            .setBody(message)
-                                            .show();
-                                        unblockUserInterface();
+                                        paymentProcessingPopup.hide(() => {
+                                            Popup.getBasic()
+                                                .setBody(message)
+                                                .show();
+                                            unblockUserInterface();
+                                        });
                                     }
                                 }
                             );
