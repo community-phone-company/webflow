@@ -39,10 +39,10 @@ const elements = {
         };
     })(),
     checkCoverageButtons: [
-        document.getElementById("check-coverage"),
-        document.getElementById("check-coverage-2"),
-        document.getElementById("check-coverage-middle"),
-        document.getElementById("check-coverage-middle-2")
+        document.querySelectorAll("#check-coverage")[0],
+        document.querySelectorAll("#check-coverage-2")[0],
+        document.querySelectorAll("#check-coverage-middle")[0],
+        document.querySelectorAll("#check-coverage-middle-2")[0]
     ]
 };
 
@@ -50,6 +50,7 @@ const checkCoverageVM = new Vue({
     el: elements.checkCoveragePopup.form.container,
     data: {
         addressLineOne: "",
+        addressLineTwo: "",
         city: "",
         zip: "",
         state: "AL",
@@ -263,6 +264,12 @@ $(document).ready(() => {
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine1,
             addressLineOne
+        );
+
+        const addressLineTwo = checkCoverageVM.addressLineTwo;
+        Store.local.write(
+            Store.keys.checkoutFlow.shippingAddress_addressLine2,
+            addressLineTwo
         );
 
         const city = checkCoverageVM.city;
