@@ -128,16 +128,14 @@ if (IS_PRODUCTION) {
             $(userPortalLink).remove();
         }
     };
-
-    $(document).ready(() => {
-        if (UserPortalManager.isSupported()) {
-            const userPortalManager = UserPortalManager.getDefault();
-            userPortalManager.setupUI();
-            userPortalManager.setAuthorizationToken(
-                Store.local.read(
-                    Store.keys.userPortal.authorizationToken
-                )
-            );
-        }
-    });
+    
+    if (UserPortalManager.isSupported()) {
+        const userPortalManager = UserPortalManager.getDefault();
+        userPortalManager.setupUI();
+        userPortalManager.setAuthorizationToken(
+            Store.local.read(
+                Store.keys.userPortal.authorizationToken
+            )
+        );
+    }
 })();
