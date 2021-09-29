@@ -150,9 +150,9 @@ class ChargebeeCheckoutCardInformationExpiryDate {
 }
 
 const ChargebeePaymentStatus = Object.freeze({
+    pending: "pending",
     notPaid: "not-paid",
-    paid: "paid",
-    pending: "pending"
+    paid: "paid"
 });
 
 class Chargebee {
