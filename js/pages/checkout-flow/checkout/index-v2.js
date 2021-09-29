@@ -20,7 +20,7 @@ var clipboard = new ClipboardJS('.btn');*/
  * @param {number} intervalBetweenRequests
  * @param {(success: boolean, message: string) => void} callback 
  */
-checkPaymentStatusTillResult = (
+const checkPaymentStatusTillResult = (
     subscriptionIdentifier,
     intervalBetweenRequests,
     callback
@@ -64,6 +64,10 @@ checkPaymentStatusTillResult = (
         }
     );
 }
+
+const paymentProcessingPopup = new Popup(
+    "#payment-processing-basic"
+);
 
 const onReady = () => {
 
@@ -557,26 +561,40 @@ const onReady = () => {
             false
         );
 
+        const unblockUserInterface = () => {
+            $(form.elements.submitButton).show();
+            $(form.elements.submitButtonAnimation).hide();
+            setCheckoutFormAvailable(
+                true
+            );
+        };
+
         exportCheckoutFlowDataToActiveCampaign((response, error, success) => {
             console.log("Active Campaign");
             buyProducts((message, subscriptionIdentifier, success) => {
-                if (success) {
-                    Store.removeCheckoutData();
-                    router.open(
-                        RouterPath.checkout_v2_thankYou,
-                        router.getParameters(),
-                        router.isTestEnvironment()
-                    );
-                } else {
-                    Popup.getBasic()
-                        .setBody(message)
-                        .show();
-                    $(form.elements.submitButton).show();
-                    $(form.elements.submitButtonAnimation).hide();
-                    setCheckoutFormAvailable(
-                        true
-                    );
-                }
+                paymentProcessingPopup.show(() => {
+                    setInterval(() => {
+                        checkPaymentStatusTillResult(
+                            subscriptionIdentifier,
+                            1000,
+                            (success, message) => {
+                                if (success) {
+                                    Store.removeCheckoutData();
+                                    router.open(
+                                        RouterPath.checkout_v2_thankYou,
+                                        router.getParameters(),
+                                        router.isTestEnvironment()
+                                    );
+                                } else {
+                                    Popup.getBasic()
+                                        .setBody(message)
+                                        .show();
+                                    unblockUserInterface();
+                                }
+                            }
+                        );
+                    }, 1000);
+                });
             });
         });
     });
