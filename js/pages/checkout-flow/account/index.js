@@ -1,5 +1,3 @@
-const is_v2 = window.location.href.includes(RouterPath.checkout_v2_account);
-
 // redirectToPreviousCheckoutFlowStepIfNeeded();
 
 var recaptchaCallback = () => {};
@@ -126,7 +124,7 @@ const onReady = () => {
             (response, error, success) => {
                 console.log("Active Campaign");
                 router.open(
-                    is_v2 ? RouterPath.checkout_v2_checkoutStep : RouterPath.checkoutLandline_checkoutStep,
+                    router.getParameterValue("test-animation") != undefined ? "checkout-v2/checkout-step-2" : RouterPath.checkout_v2_checkoutStep,
                     router.getParameters(),
                     router.isTestEnvironment()
                 );
@@ -135,17 +133,7 @@ const onReady = () => {
     });
 
     handleFormDataChange();
-
-    if (is_v2) {
-        findAndUpdateOrderSummaryPanel();
-    } else {
-        const productIdentifiers = Store.local.read(
-            Store.keys.checkoutFlow.selectedProductIdentifiers
-        );
-        updateOrderSummaryColumn(
-            productIdentifiers
-        );
-    }
+    findAndUpdateOrderSummaryPanel();
 };
 
 onReady();
