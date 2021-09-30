@@ -43,11 +43,9 @@ class UserInterface {
      * @param {(event: any) => void} handler 
      */
     static onClick = (element, handler) => {
-        const eventNames = ["click", "tap"];
-        eventNames.forEach(name => {
-            $(element).on(name, event => {
-                handler(event);
-            });
+        const eventName = IS_MOBILE ? "tap" : "click";
+        $(element).on(eventName, event => {
+            handler(event);
         });
     }
 }
