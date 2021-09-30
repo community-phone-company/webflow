@@ -520,7 +520,10 @@ const onReady = () => {
             console.log("Active Campaign");
             buyProducts((message, subscriptionIdentifier, success) => {
                 if (success) {
-                    Store.removeCheckoutData();
+                    if (IS_PRODUCTION) {
+                        Store.removeCheckoutData();
+                    }
+
                     router.open(
                         is_v2 ? RouterPath.checkout_v2_thankYou : RouterPath.checkoutLandline_thankYou,
                         router.getParameters(),

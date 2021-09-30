@@ -580,7 +580,10 @@ const onReady = () => {
                                 1000,
                                 (success, message) => {
                                     if (success) {
-                                        Store.removeCheckoutData();
+                                        if (IS_PRODUCTION) {
+                                            Store.removeCheckoutData();
+                                        }
+                                        
                                         router.open(
                                             RouterPath.checkout_v2_thankYou,
                                             router.getParameters(),
