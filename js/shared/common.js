@@ -146,14 +146,17 @@ $(document).ready(() => {
     if (!IS_PRODUCTION) {
         const link = document.querySelectorAll(".nav-link.w-nav-link")[0];
         if (link) {
-            $(link).on("click", event => {
-                event.preventDefault();
-                alert("Click");
-            });
-            $(link).on("tap", event => {
-                event.preventDefault();
-                alert("Tap");
-            });
+            if (IS_MOBILE) {
+                $(link).on("tap", event => {
+                    event.preventDefault();
+                    alert("Tap");
+                });
+            } else {
+                $(link).on("click", event => {
+                    event.preventDefault();
+                    alert("Click");
+                });
+            }
         }
     }
 });
