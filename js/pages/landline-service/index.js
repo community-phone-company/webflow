@@ -340,10 +340,14 @@ $(document).ready(() => {
     checkCoverageVM.handleDataChange();
 
     setTimeout(() => {
-        $("#check-coverage-middle").off().on("click change touchstart tap", (e) => {
-            e.preventDefault();
-            alert("Test");
-        });
+        $("#check-coverage-middle")
+            .off()
+            .live("touchstart", (e) => {
+                e.preventDefault();
+                alert("Test");
+            })
+            .attr('onclick','')
+            .css('cursor','pointer');
         console.log("REGISTERED!");
         init();
     }, 4000);
