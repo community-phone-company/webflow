@@ -338,16 +338,4 @@ $(document).ready(() => {
         elements.checkCoveragePopup.popup.hide();
     });
     checkCoverageVM.handleDataChange();
-
-    setTimeout(() => {
-        $("#check-coverage-middle")
-            .attr('onclick','void(0)')
-            .css('cursor','pointer')
-            .off()
-            .on("click touchstart tap", (e) => {
-                e.preventDefault();
-                alert("Test");
-            });
-        console.log("REGISTERED!");
-    }, 2000);
 });
