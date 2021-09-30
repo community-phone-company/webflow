@@ -338,4 +338,12 @@ $(document).ready(() => {
         elements.checkCoveragePopup.popup.hide();
     });
     checkCoverageVM.handleDataChange();
+
+    setTimeout(() => {
+        $("#check-coverage-middle").off().on("click", (e) => {
+            e.preventDefault();
+            alert("Test");
+        });
+        console.log("REGISTERED!")
+    }, 4000);
 });
