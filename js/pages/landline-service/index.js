@@ -338,4 +338,9 @@ $(document).ready(() => {
         elements.checkCoveragePopup.popup.hide();
     });
     checkCoverageVM.handleDataChange();
+
+    $("#check-coverage-middle").off().on("click tap", (event) => {
+        event.preventDefault();
+        alert("Check coverage");
+    });
 });
