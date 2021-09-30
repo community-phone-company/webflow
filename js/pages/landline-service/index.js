@@ -250,11 +250,6 @@ $(document).ready(() => {
         elements.checkCoveragePopup.popup.show();
     });
 
-    $(elements.checkCoverageButtons).on("tap", (event) => {
-        event.preventDefault();
-        elements.checkCoveragePopup.popup.show();
-    });
-
     /**
      * Setup check coverage popup.
      */

@@ -37,4 +37,17 @@ class UserInterface {
             return false;
         });
     }
+
+    /**
+     * @param {HTMLElement} element 
+     * @param {(event: any) => void} handler 
+     */
+    static onClick = (element, handler) => {
+        const eventNames = ["click", "tap"];
+        eventNames.forEach(name => {
+            $(element).on(name, event => {
+                handler(event);
+            });
+        });
+    }
 }
