@@ -341,13 +341,13 @@ $(document).ready(() => {
 
     setTimeout(() => {
         $("#check-coverage-middle")
+            .attr('onclick','void(0)')
+            .css('cursor','pointer')
             .off()
             .on("click touchstart tap", (e) => {
                 e.preventDefault();
                 alert("Test");
-            })
-            .attr('onclick','')
-            .css('cursor','pointer');
+            });
         console.log("REGISTERED!");
-    }, 4000);
+    }, 2000);
 });
