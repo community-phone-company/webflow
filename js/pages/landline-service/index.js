@@ -342,7 +342,7 @@ $(document).ready(() => {
     setTimeout(() => {
         $("#check-coverage-middle")
             .off()
-            .live("touchstart", (e) => {
+            .on("click touchstart tap", (e) => {
                 e.preventDefault();
                 alert("Test");
             })
