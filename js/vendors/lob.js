@@ -7,7 +7,7 @@ class LobIntegration {
     constructor(isProduction) {
         this._apiKey = isProduction
             ? ""
-            : "";
+            : "test_ba1aed9b851f251561f4800ee8c4bbabe58";
     }
 
     /**
