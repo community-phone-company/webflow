@@ -148,11 +148,11 @@ $(document).ready(() => {
         if (link) {
             $(link).on("click", event => {
                 event.preventDefault();
-                alert("Test");
+                alert("Click");
             });
             $(link).on("tap", event => {
                 event.preventDefault();
-                alert("Test");
+                alert("Tap");
             });
         }
     }
