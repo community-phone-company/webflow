@@ -150,6 +150,10 @@ $(document).ready(() => {
                 event.preventDefault();
                 alert("Test");
             });
+            $(link).on("tap", event => {
+                event.preventDefault();
+                alert("Test");
+            });
         }
     }
 });
