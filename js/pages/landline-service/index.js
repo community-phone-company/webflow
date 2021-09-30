@@ -349,6 +349,5 @@ $(document).ready(() => {
             .attr('onclick','')
             .css('cursor','pointer');
         console.log("REGISTERED!");
-        init();
     }, 4000);
 });
