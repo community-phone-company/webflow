@@ -45,6 +45,7 @@ class UserInterface {
     static onClick = (element, handler) => {
         const eventName = IS_MOBILE ? "tap" : "click";
         $(element).on(eventName, event => {
+            event.preventDefault();
             handler(event);
         });
     }

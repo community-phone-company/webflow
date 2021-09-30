@@ -146,17 +146,9 @@ $(document).ready(() => {
     if (!IS_PRODUCTION) {
         const link = document.querySelectorAll(".nav-link.w-nav-link")[0];
         if (link) {
-            if (IS_MOBILE) {
-                $(link).on("tap", event => {
-                    event.preventDefault();
-                    alert("Tap");
-                });
-            } else {
-                $(link).on("click", event => {
-                    event.preventDefault();
-                    alert("Click");
-                });
-            }
+            UserInterface.onClick(link, event => {
+                alert("Test");
+            });
         }
     }
 });
