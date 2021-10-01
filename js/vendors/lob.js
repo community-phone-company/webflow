@@ -23,7 +23,7 @@ class LobIntegration {
             },
             dataType: "json",
             data: {
-                "address_prefix": "185 B",
+                "address_prefix": address,
                 "city": "San Francisco",
                 "state": "CA",
                 "zip_code": "94107",
