@@ -25,12 +25,19 @@ const getHtmlForAddressAutocompletionItem = (address, highlightedSubstring) => {
 
 /**
  * @param {string[]} addresses 
- * @param {string} hightlightedSubstring 
+ * @param {string} highlightedSubstring 
  */
-const setAutocompletionItems = (addresses, hightlightedSubstring) => {
-    const html = addresses.reduce(
-        (previous, current) => `${previous}${current}`,
-        ""
-    );
+const setAutocompletionItems = (addresses, highlightedSubstring) => {
+    const html = addresses
+        .map(address => {
+            return getHtmlForAddressAutocompletionItem(
+                address,
+                highlightedSubstring
+            );
+        })
+        .reduce(
+            (previous, current) => `${previous}${current}`,
+            ""
+        );
     $(getAddressAutocompletionContainer()).html(html);
 };
