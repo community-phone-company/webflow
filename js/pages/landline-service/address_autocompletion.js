@@ -1,5 +1,8 @@
-const addressAutocompletion = {
-    container: document.querySelectorAll("#service-address-autocomplete-suggestions-container")[0]
+/**
+ * @returns {HTMLElement}
+ */
+const getAddressAutocompletionContainer = () => {
+    return document.querySelectorAll("#service-address-autocomplete-suggestions-container")[0];
 };
 
 /**
@@ -29,5 +32,5 @@ const setAutocompletionItems = (addresses, hightlightedSubstring) => {
         (previous, current) => `${previous}${current}`,
         ""
     );
-    $(addressAutocompletion).html(html);
+    $(getAddressAutocompletionContainer()).html(html);
 };
