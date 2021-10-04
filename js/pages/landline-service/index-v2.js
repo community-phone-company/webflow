@@ -132,43 +132,6 @@ const onCorrectAddress = () => {
     });
 };
 
-const checkCoverageVM = new Vue({
-    el: elements.checkCoveragePopup.form.container,
-    ,
-    methods: {
-        
-    },
-    watch: {
-        addressLineOne(newValue) {
-            this.handleDataChange();
-            
-            if (!IS_PRODUCTION) {
-                addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
-                    const addresses = results.map(el => {
-                        return `${el.primaryLine}, ${el.city}, ${el.state} ${el.zipCode}`;
-                    });
-                    setAutocompletionItems(
-                        addresses,
-                        newValue
-                    );
-                });
-            }
-        },
-        city(newValue) {
-            this.handleDataChange();
-        },
-        zip(newValue) {
-            this.handleDataChange();
-        },
-        state(newValue) {
-            this.handleDataChange();
-        },
-        isBusiness(newValue) {
-            this.handleDataChange();
-        }
-    }
-});
-
 const openCheckout = () => {
     const path = (() => {
         if (isTestingPortPhoneNumberFunctionality) {
@@ -302,43 +265,43 @@ $(document).ready(() => {
      * Setup check coverage popup.
      */
     $("#Home").off().on("click", (event) => {
-        checkCoverageVM.isBusiness = false;
+        formData.isBusiness = false;
     });
     $("#Business").off().on("click", (event) => {
-        checkCoverageVM.isBusiness = true;
+        formData.isBusiness = true;
     });
     $(elements.checkCoveragePopup.form.submitButton()).off().on("click", (event) => {
-        const addressLineOne = checkCoverageVM.addressLineOne;
+        const addressLineOne = formData.addressLineOne;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine1,
             addressLineOne
         );
 
-        const addressLineTwo = checkCoverageVM.addressLineTwo;
+        const addressLineTwo = formData.addressLineTwo;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine2,
             addressLineTwo
         );
 
-        const city = checkCoverageVM.city;
+        const city = formData.city;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_city,
             city
         );
 
-        const state = checkCoverageVM.state;
+        const state = formData.state;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_state,
             state
         );
 
-        const zip = checkCoverageVM.zip;
+        const zip = formData.zip;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_zip,
             zip
         );
 
-        const isBusiness = checkCoverageVM.isBusiness;
+        const isBusiness = formData.isBusiness;
         Store.local.write(
             Store.keys.checkoutFlow.isBusinessCustomer,
             isBusiness
@@ -365,9 +328,9 @@ $(document).ready(() => {
         /**
          * Uncomment the block below to check address.
          */
-        /*checkCoverageVM.isAddressCorrect((isCorrect) => {
+        /*isAddressCorrect((isCorrect) => {
             if (isCorrect) {
-                checkCoverageVM.onCorrectAddress();
+                onCorrectAddress();
             } else {
                 $("#service-address .success-message-2").hide();
                 $("#service-address #wf-form-service-address").show();
@@ -375,7 +338,7 @@ $(document).ready(() => {
             }
         });*/
 
-        checkCoverageVM.onCorrectAddress();
+        onCorrectAddress();
     });
     $(elements.checkCoveragePopup.startServiceButton).on("click", (event) => {
         event.preventDefault();
@@ -385,5 +348,5 @@ $(document).ready(() => {
         event.preventDefault();
         elements.checkCoveragePopup.popup.hide();
     });
-    checkCoverageVM.handleDataChange();
+    handleDataChange();
 });
