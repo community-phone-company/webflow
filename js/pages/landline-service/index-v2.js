@@ -69,19 +69,10 @@ new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).sta
     if (!IS_PRODUCTION) {
         if (newValue.length) {
             addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
-                const addresses = results.map(el => {
-                    return `${el.primaryLine}, ${el.city}, ${el.state} ${el.zipCode}`;
-                });
-                setAutocompletionItems(
-                    addresses,
-                    newValue
-                );
+                setAutocompletionItems(results, newValue);
             });
         } else {
-            setAutocompletionItems(
-                [],
-                ""
-            );
+            setAutocompletionItems([], "");
         }
     }
 });

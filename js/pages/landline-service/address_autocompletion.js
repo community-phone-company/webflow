@@ -6,26 +6,28 @@ const getAddressAutocompletionContainer = () => {
 };
 
 /**
- * @param {string} address 
+ * @param {AddressSuggestion} addressSuggestion 
  * @param {string} highlightedSubstring 
  * @returns {string}
  */
-const getHtmlForAddressAutocompletionItem = (address, highlightedSubstring) => {
+const getHtmlForAddressAutocompletionItem = (addressSuggestion, highlightedSubstring) => {
+    const address = `${addressSuggestion.primaryLine}, ${addressSuggestion.city}, ${addressSuggestion.state} ${addressSuggestion.zipCode}`;
     return `
         <div class="autocomplete-item">
             <div class="highlited-autocomplete-label">
-                ${address}
+                ${address.replaceAll(
+                    highlightedSubstring,
+                    `<span class="autocomplete-label">${highlightedSubstring}</span>`
+                )}
             </div>
         </div>
-    `.replaceAll(
-        highlightedSubstring,
-        `<span class="autocomplete-label">${highlightedSubstring}</span>`
-    );
+    `;
 }
 
 /**
  * @param {string[]} addresses 
  * @param {string} highlightedSubstring 
+ * @param {}
  */
 const setAutocompletionItems = (addresses, highlightedSubstring) => {
     const container = getAddressAutocompletionContainer();
