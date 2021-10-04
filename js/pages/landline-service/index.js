@@ -4,6 +4,8 @@ const isTestingPortPhoneNumberFunctionality = router.getParameterValue("test-por
 
 Store.removeCheckoutData();
 
+const addressSuggestionsManager = new AddressSuggestionsManager();
+
 const externalServices = {
     msp: {
         enabled: router.getParameterValue("msp") != undefined
@@ -109,6 +111,18 @@ const checkCoverageVM = new Vue({
     watch: {
         addressLineOne(newValue) {
             this.handleDataChange();
+            
+            if (!IS_PRODUCTION) {
+                manager.getAutocompletions("1 sugg", (results, error) => {
+                    const addresses = results.map(el => {
+                        return `${el.primaryLine}, ${el.city}, ${el.state} ${el.zipCode}`;
+                    });
+                    setAutocompletionItems(
+                        addresses,
+                        newValue
+                    );
+                });
+            }
         },
         city(newValue) {
             this.handleDataChange();

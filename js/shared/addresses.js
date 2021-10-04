@@ -1,12 +1,22 @@
 class AddressSuggestionsManager {
 
     /**
+     * @constructor
+     */
+    constructor() {
+        this._api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+    }
+
+    /**
      * @param {string} address
-     * @param {(results: any[], error: any) => void} callback 
+     * @param {(results: AddressSuggestion[], error: any) => void} callback 
      */
     getAutocompletions = (address, callback) => {
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
-        this._lastRequest = api.jsonRequest(
+        if (this._lastRequest) {
+            this._lastRequest.abort();
+        }
+
+        this._lastRequest = this._api.jsonRequest(
             CommunityPhoneAPI.endpoints.search_addresses,
             "POST",
             undefined,
