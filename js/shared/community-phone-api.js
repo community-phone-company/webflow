@@ -149,6 +149,7 @@ CommunityPhoneAPI.endpoints = Object.freeze({
     auth_email: "auth/email",
     auth_token: "auth/token",
     portal_billing: "portal/billing",
+    search_addresses: "search/addresses",
     chargebee_checkout: "chargebee/checkout",
     chargebee_checkPaymentStatus: (subscriptionIdentifier) => {
         return `chargebee/${subscriptionIdentifier}/check-payment-status`;
