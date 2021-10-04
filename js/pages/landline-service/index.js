@@ -245,12 +245,14 @@ $(document).ready(() => {
         });
     });
 
-    if (!window.location.href.includes("landline-service-2")) {
-        $(elements.checkCoverageButtons).off().on("click", (event) => {
-            event.preventDefault();
-            elements.checkCoveragePopup.popup.show();
-        });
+    if (window.location.href.includes("landline-service-2")) {
+        elements.checkCoveragePopup.popup.setWebflowCompatible(true);
     }
+
+    $(elements.checkCoverageButtons).off().on("click", (event) => {
+        event.preventDefault();
+        elements.checkCoveragePopup.popup.show();
+    });
     
     /**
      * Setup check coverage popup.

@@ -47,6 +47,7 @@ class Popup {
 
         this._setupUserInterface();
         this.setAnimationEngine("velocity");
+        this.setWebflowCompatible(false);
     }
 
     _setupUserInterface = () => {
@@ -143,10 +144,21 @@ class Popup {
     }
 
     /**
+     * @param {boolean} compatible 
+     */
+    setWebflowCompatible = (compatible) => {
+        this._isWebflowCompatible = compatible;
+    }
+
+    /**
      * @param {(() => void) | undefined} callback Function that is called when animation has finished.
      * @returns {Popup} Current {@link Popup} instance.
      */
     show = (callback) => {
+        if (this._isWebflowCompatible) {
+            return;
+        }
+
         $(this._userInterface.background).css("opacity", 1);
         const animationEngine = this._animationEngine ?? "jquery";
         const whatToUpdate = {
@@ -209,6 +221,10 @@ class Popup {
      * @returns {Popup} Current {@link Popup} instance.
      */
     hide = (callback) => {
+        if (this._isWebflowCompatible) {
+            return;
+        }
+        
         const container = this._container;
         const animationEngine = this._animationEngine ?? "jquery";
         const whatToUpdate = {
