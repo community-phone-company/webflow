@@ -23,7 +23,7 @@ class AddressSuggestionsManager {
                     const results = (() => {
                         if (response && response.suggestions && response.suggestions instanceof Array) {
                             return response.suggestions.map(el => {
-                                return new LobAddressSuggestionResult(
+                                return new AddressSuggestion(
                                     el.primary_line,
                                     el.city,
                                     el.state,
