@@ -65,6 +65,25 @@ const elements = {
 new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).startObserving(newValue => {
     formData.addressLineOne = newValue;
     handleDataChange();
+
+    if (!IS_PRODUCTION) {
+        if (newValue.length) {
+            addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
+                const addresses = results.map(el => {
+                    return `${el.primaryLine}, ${el.city}, ${el.state} ${el.zipCode}`;
+                });
+                setAutocompletionItems(
+                    addresses,
+                    newValue
+                );
+            });
+        } else {
+            setAutocompletionItems(
+                [],
+                ""
+            );
+        }
+    }
 });
 new InputValueObserver(elements.checkCoveragePopup.form.addressLineTwoInput).startObserving(newValue => {
     formData.addressLineTwo = newValue;

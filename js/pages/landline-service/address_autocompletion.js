@@ -28,16 +28,24 @@ const getHtmlForAddressAutocompletionItem = (address, highlightedSubstring) => {
  * @param {string} highlightedSubstring 
  */
 const setAutocompletionItems = (addresses, highlightedSubstring) => {
-    const html = addresses
-        .map(address => {
-            return getHtmlForAddressAutocompletionItem(
-                address,
-                highlightedSubstring
+    const container = getAddressAutocompletionContainer();
+
+    if (addresses.length) {
+        const html = addresses
+            .map(address => {
+                return getHtmlForAddressAutocompletionItem(
+                    address,
+                    highlightedSubstring
+                );
+            })
+            .reduce(
+                (previous, current) => `${previous}${current}`,
+                ""
             );
-        })
-        .reduce(
-            (previous, current) => `${previous}${current}`,
-            ""
-        );
-    $(getAddressAutocompletionContainer()).html(html);
+        $(container).show();
+        $(container).html(html);
+    } else {
+        $(container).hide();
+        $(container).html(``);
+    }
 };
