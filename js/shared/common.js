@@ -139,3 +139,10 @@ if (IS_PRODUCTION) {
         );
     }
 })();
+
+if (!IS_PRODUCTION) {
+    $(UserPortalManager._getSelectors().userPortalLink).on("click", event => {
+        event.preventDefault();
+        alert("Test");
+    });
+}
