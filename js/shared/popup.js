@@ -46,7 +46,7 @@ class Popup {
         });
 
         this._setupUserInterface();
-        this.setAnimationEngine("velocity");
+        this.setAnimationEngine("jquery");
         this.setWebflowCompatible(false);
     }
 
