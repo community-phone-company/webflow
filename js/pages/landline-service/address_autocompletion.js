@@ -57,7 +57,7 @@ const setAutocompletionItems = (addresses, highlightedSubstring, onSuggestionSel
             );
         $(container).show();
         $(container).html(html);
-        
+
         $(".autocomplete-item").off().on("click", (event) => {
             event.preventDefault();
             const selectedItem = event.currentTarget;

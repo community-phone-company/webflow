@@ -70,11 +70,16 @@ new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).sta
         if (newValue.length) {
             addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
                 setAutocompletionItems(results, newValue, suggestion => {
-                    console.log(`!!!! Selected: `, suggestion);
+                    setAutocompletionItems([]);
+                    elements.checkCoveragePopup.form.addressLineOneInput.value = suggestion.primaryLine;
+                    elements.checkCoveragePopup.form.addressLineTwoInput.value = "";
+                    elements.checkCoveragePopup.form.cityInput.value = suggestion.city;
+                    elements.checkCoveragePopup.form.zipInput.value = suggestion.zipCode;
+                    elements.checkCoveragePopup.form.stateSelect.value = suggestion.state;
                 });
             });
         } else {
-            setAutocompletionItems([], "");
+            setAutocompletionItems([]);
         }
     }
 });
