@@ -19,6 +19,8 @@ const page = {
     }
 };
 
+const addressSuggestionsManager = new AddressSuggestionsManager();
+
 /**
  * @param {string} searchQuery 
  */
