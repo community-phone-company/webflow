@@ -55,8 +55,8 @@ const setAutocompletionItems = (addresses, highlightedSubstring, onSuggestionSel
                 (previous, current) => `${previous}${current}`,
                 ""
             );
-        $(container).show();
         $(container).html(html);
+        showAutocompletionItems();
 
         $(".autocomplete-item").off().on("click", (event) => {
             event.preventDefault();
@@ -72,7 +72,15 @@ const setAutocompletionItems = (addresses, highlightedSubstring, onSuggestionSel
             }
         });
     } else {
-        $(container).hide();
+        hideAutocompletionItems();
         $(container).html(``);
     }
+};
+
+const showAutocompletionItems = () => {
+    $(getAddressAutocompletionContainer()).show();
+};
+
+const hideAutocompletionItems = () => {
+    $(getAddressAutocompletionContainer()).hide();
 };

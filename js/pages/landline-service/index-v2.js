@@ -101,9 +101,8 @@ elements.checkCoveragePopup.form.addressLineOneInput.onfocus = () => {
     );
 };
 elements.checkCoveragePopup.form.addressLineOneInput.onfocusout = () => {
-    setTimeout(() => {
-        setAutocompletionItems([]);
-    }, 50);
+    //setAutocompletionItems([]);
+    hideAutocompletionItems();
 };
 new InputValueObserver(elements.checkCoveragePopup.form.addressLineTwoInput).startObserving(newValue => {
     formData.addressLineTwo = newValue;
