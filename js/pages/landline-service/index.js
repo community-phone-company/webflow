@@ -111,18 +111,6 @@ const checkCoverageVM = new Vue({
     watch: {
         addressLineOne(newValue) {
             this.handleDataChange();
-            
-            if (!IS_PRODUCTION) {
-                addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
-                    const addresses = results.map(el => {
-                        return `${el.primaryLine}, ${el.city}, ${el.state} ${el.zipCode}`;
-                    });
-                    setAutocompletionItems(
-                        addresses,
-                        newValue
-                    );
-                });
-            }
         },
         city(newValue) {
             this.handleDataChange();
