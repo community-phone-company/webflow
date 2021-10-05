@@ -32,9 +32,7 @@ class UserPortalManager {
      * @returns {HTMLElement | undefined}
      */
     getUserPortalLink = () => {
-        return IS_PRODUCTION
-            ? document.querySelectorAll(".user-portal-v1")[0]
-            : document.querySelectorAll("#user-portal-button")[0];
+        return document.querySelectorAll("#user-portal-button")[0];
     }
 
     /**
