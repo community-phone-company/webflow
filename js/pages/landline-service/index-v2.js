@@ -63,19 +63,19 @@ const elements = {
     ]
 };
 
-new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).startObserving(newValue => {
-    formData.addressLineOne = newValue;
-    handleDataChange();
-
+/**
+ * @param {string} searchQuery 
+ */
+const onRequestedAddressSuggestions = (searchQuery) => {
     if (!IS_PRODUCTION) {
-        const isNewValueEmpty = !newValue.length;
-        const isNewValueEqualToLastSelectedSuggestion = newValue === (formData.lastSelectedAddressSuggestion && formData.lastSelectedAddressSuggestion.primaryLine);
+        const isSearchQueryEmpty = !searchQuery.length;
+        const isSearchQueryEqualToLastSelectedSuggestion = searchQuery === (formData.lastSelectedAddressSuggestion && formData.lastSelectedAddressSuggestion.primaryLine);
 
-        if (isNewValueEmpty || isNewValueEqualToLastSelectedSuggestion) {
+        if (isSearchQueryEmpty || isSearchQueryEqualToLastSelectedSuggestion) {
             setAutocompletionItems([]);
         } else {
-            addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
-                setAutocompletionItems(results, newValue, suggestion => {
+            addressSuggestionsManager.getAutocompletions(searchQuery, (results, error) => {
+                setAutocompletionItems(results, searchQuery, suggestion => {
                     setAutocompletionItems([]);
                     formData.lastSelectedAddressSuggestion = suggestion;
                     elements.checkCoveragePopup.form.addressLineOneInput.value = suggestion.primaryLine;
@@ -87,7 +87,22 @@ new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).sta
             });
         }
     }
+};
+new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).startObserving(newValue => {
+    formData.addressLineOne = newValue;
+    handleDataChange();
+    onRequestedAddressSuggestions(
+        newValue
+    );
 });
+elements.checkCoveragePopup.form.addressLineOneInput.onfocus = () => {
+    onRequestedAddressSuggestions(
+        elements.checkCoveragePopup.form.addressLineOneInput.value
+    );
+};
+elements.checkCoveragePopup.form.addressLineOneInput.onfocusout = () => {
+    setAutocompletionItems([]);
+};
 new InputValueObserver(elements.checkCoveragePopup.form.addressLineTwoInput).startObserving(newValue => {
     formData.addressLineTwo = newValue;
     handleDataChange();
