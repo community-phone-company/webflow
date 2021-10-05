@@ -57,6 +57,21 @@ class AddressSuggestionsManager {
 class AddressSuggestion {
 
     /**
+     * @param {string} serialized 
+     * @returns {AddressSuggestion}
+     */
+    static deserialize = (serialized) => {
+        const jsonString = atob(serialized);
+        const json = JSON.parse(jsonString);
+        return new AddressSuggestion(
+            json.primaryLine,
+            json.city,
+            json.state,
+            json.zipCode
+        );
+    }
+
+    /**
      * @constructor
      * @param {string} primaryLine 
      * @param {string} city 
@@ -73,5 +88,13 @@ class AddressSuggestion {
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
+    }
+
+    /**
+     * @returns {string}
+     */
+    serialize = () => {
+        const jsonString = JSON.stringify(this);
+        return btoa(jsonString);
     }
 }

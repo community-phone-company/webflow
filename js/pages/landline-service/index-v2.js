@@ -69,7 +69,9 @@ new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).sta
     if (!IS_PRODUCTION) {
         if (newValue.length) {
             addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
-                setAutocompletionItems(results, newValue);
+                setAutocompletionItems(results, newValue, suggestion => {
+                    console.log(`!!!! Selected: `, suggestion);
+                });
             });
         } else {
             setAutocompletionItems([], "");

@@ -13,7 +13,7 @@ const getAddressAutocompletionContainer = () => {
 const getHtmlForAddressAutocompletionItem = (addressSuggestion, highlightedSubstring) => {
     const address = `${addressSuggestion.primaryLine}, ${addressSuggestion.city}, ${addressSuggestion.state} ${addressSuggestion.zipCode}`;
     return `
-        <div class="autocomplete-item">
+        <div class="autocomplete-item" address-suggestion="${addressSuggestion.serialize()}">
             <div class="highlited-autocomplete-label">
                 ${address.replaceAll(
                     highlightedSubstring,
@@ -25,11 +25,22 @@ const getHtmlForAddressAutocompletionItem = (addressSuggestion, highlightedSubst
 }
 
 /**
+ * @param {HTMLElement} element 
+ * @returns {AddressSuggestion}
+ */
+const getAddressSuggestionFromAutocompletionItem = (element) => {
+    const serialized = $(element).attr("address-suggestion");
+    return AddressSuggestion.deserialize(
+        serialized
+    );
+};
+
+/**
  * @param {string[]} addresses 
  * @param {string} highlightedSubstring 
- * @param {}
+ * @param {(suggestion: AddressSuggestion) => void} onSuggestionSelected
  */
-const setAutocompletionItems = (addresses, highlightedSubstring) => {
+const setAutocompletionItems = (addresses, highlightedSubstring, onSuggestionSelected) => {
     const container = getAddressAutocompletionContainer();
 
     if (addresses.length) {
@@ -46,6 +57,20 @@ const setAutocompletionItems = (addresses, highlightedSubstring) => {
             );
         $(container).show();
         $(container).html(html);
+        
+        $(".autocomplete-item").off().on("click", (event) => {
+            event.preventDefault();
+            const selectedItem = event.currentTarget;
+            const selectedAddressSuggestion = getAddressSuggestionFromAutocompletionItem(
+                selectedItem
+            );
+            
+            if (onSuggestionSelected) {
+                onSuggestionSelected(
+                    selectedAddressSuggestion
+                );
+            }
+        });
     } else {
         $(container).hide();
         $(container).html(``);
