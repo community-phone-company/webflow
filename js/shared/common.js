@@ -141,8 +141,10 @@ if (IS_PRODUCTION) {
 })();
 
 if (!IS_PRODUCTION) {
-    $("#check-coverage").on("click", event => {
-        event.preventDefault();
-        alert("Test");
+    $(document).ready(() => {
+        $("#check-coverage").on("click", event => {
+            event.preventDefault();
+            alert("Test");
+        });
     });
 }
