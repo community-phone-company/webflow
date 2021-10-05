@@ -21,7 +21,8 @@ const formData = {
     city: "",
     zip: "",
     state: "AL",
-    isBusiness: false
+    isBusiness: false,
+    lastSelectedAddressSuggestion: undefined
 };
 
 const elements = {
@@ -67,10 +68,16 @@ new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).sta
     handleDataChange();
 
     if (!IS_PRODUCTION) {
-        if (newValue.length) {
+        const isNewValueEmpty = !newValue.length;
+        const isNewValueEqualToLastSelectedSuggestion = newValue === (formData.lastSelectedAddressSuggestion && formData.lastSelectedAddressSuggestion.primaryLine);
+
+        if (isNewValueEmpty || isNewValueEqualToLastSelectedSuggestion) {
+            setAutocompletionItems([]);
+        } else {
             addressSuggestionsManager.getAutocompletions(newValue, (results, error) => {
                 setAutocompletionItems(results, newValue, suggestion => {
                     setAutocompletionItems([]);
+                    formData.lastSelectedAddressSuggestion = suggestion;
                     elements.checkCoveragePopup.form.addressLineOneInput.value = suggestion.primaryLine;
                     elements.checkCoveragePopup.form.addressLineTwoInput.value = "";
                     elements.checkCoveragePopup.form.cityInput.value = suggestion.city;
@@ -78,8 +85,6 @@ new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).sta
                     elements.checkCoveragePopup.form.stateSelect.value = suggestion.state;
                 });
             });
-        } else {
-            setAutocompletionItems([]);
         }
     }
 });
