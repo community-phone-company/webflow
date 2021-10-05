@@ -139,16 +139,3 @@ if (IS_PRODUCTION) {
         );
     }
 })();
-
-
-///////////////////
-$(document).ready(() => {
-    if (!IS_PRODUCTION) {
-        const link = document.querySelectorAll(".nav-link.w-nav-link")[0];
-        if (link) {
-            UserInterface.onClick(link, event => {
-                alert("Test");
-            });
-        }
-    }
-});

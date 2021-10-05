@@ -13,12 +13,20 @@ class UserPortalManager {
         return this._default;
     }
 
+    static _getSelectors = () => {
+        return {
+            userPortalLink: "#user-portal-button",
+            popup: "#user-portal-login-popup"
+        };
+    }
+
     /**
      * @returns {boolean}
      */
     static isSupported = () => {
-        const hasLink = document.querySelectorAll(".user-portal-v1").length > 0;
-        const hasPopup = document.querySelectorAll("#user-portal-login-popup").length > 0;
+        const selectors = this._getSelectors();
+        const hasLink = document.querySelectorAll(selectors.userPortalLink).length > 0;
+        const hasPopup = document.querySelectorAll(selectors.popup).length > 0;
         return hasLink && hasPopup;
     }
 
@@ -32,14 +40,18 @@ class UserPortalManager {
      * @returns {HTMLElement | undefined}
      */
     getUserPortalLink = () => {
-        return document.querySelectorAll("#user-portal-button")[0];
+        return document.querySelectorAll(
+            UserPortalManager._getSelectors().userPortalLink
+        )[0];
     }
 
     /**
      * @returns {Popup}
      */
     getCreateAccountPopup = () => {
-        return new Popup("#user-portal-login-popup");
+        return new Popup(
+            UserPortalManager._getSelectors().popup
+        );
     }
 
     /**
