@@ -16,9 +16,9 @@ const getHtmlForAddressAutocompletionItem = (addressSuggestion, highlightedSubst
         <div class="autocomplete-item" address-suggestion="${addressSuggestion.serialize()}">
             <div class="highlited-autocomplete-label">
                 ${address.replaceAll(
-        highlightedSubstring,
-        `<span class="autocomplete-label">${highlightedSubstring}</span>`
-    )}
+                    highlightedSubstring,
+                    `<span class="autocomplete-label">${highlightedSubstring}</span>`
+                )}
             </div>
         </div>
     `;

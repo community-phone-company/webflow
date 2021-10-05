@@ -83,7 +83,7 @@ const handleDataChange = () => {
         && page.data.state.length > 0;
     console.log(`is form valid: ${isFormValid}`);
     UserInterface.setElementEnabled(
-        page.elements.submitButton(),
+        page.elements.submitButton,
         isFormValid
     );
 };
