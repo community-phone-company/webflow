@@ -62,8 +62,10 @@ class Store {
         if (jsonString) {
             const json = JSON.parse(jsonString);
 
-            if (json && json.value) {
-                return json.value;
+            if (json) {
+                if (json.value != undefined) {
+                    return json.value;
+                }
             }
         }
 
