@@ -48,37 +48,6 @@ const onRequestedAddressSuggestions = (searchQuery) => {
         }
     }
 };
-new InputValueObserver(page.elements.addressLineOneInput).startObserving(newValue => {
-    page.data.addressLineOne = newValue;
-    handleDataChange();
-    onRequestedAddressSuggestions(
-        newValue
-    );
-});
-page.elements.addressLineOneInput.onfocus = () => {
-    onRequestedAddressSuggestions(
-        page.elements.addressLineOneInput.value
-    );
-};
-page.elements.addressLineOneInput.onfocusout = () => {
-    // setAutocompletionItems([]);
-};
-new InputValueObserver(page.elements.addressLineTwoInput).startObserving(newValue => {
-    page.data.addressLineTwo = newValue;
-    handleDataChange();
-});
-new InputValueObserver(page.elements.cityInput).startObserving(newValue => {
-    page.data.city = newValue;
-    handleDataChange();
-});
-new InputValueObserver(page.elements.zipInput).startObserving(newValue => {
-    page.data.zip = newValue;
-    handleDataChange();
-});
-new InputValueObserver(page.elements.stateSelect).startObserving(newValue => {
-    page.data.state = newValue;
-    handleDataChange();
-});
 
 const handleDataChange = () => {
     const isFormValid = page.data.addressLineOne.length > 0
@@ -186,6 +155,44 @@ const submitForm = () => {
 };
 
 const setupUI = () => {
+    $("#Home").off().on("click", (event) => {
+        formData.isBusiness = false;
+    });
+    $("#Business").off().on("click", (event) => {
+        formData.isBusiness = true;
+    });
+    new InputValueObserver(page.elements.addressLineOneInput).startObserving(newValue => {
+        page.data.addressLineOne = newValue;
+        handleDataChange();
+        onRequestedAddressSuggestions(
+            newValue
+        );
+    });
+    page.elements.addressLineOneInput.onfocus = () => {
+        onRequestedAddressSuggestions(
+            page.elements.addressLineOneInput.value
+        );
+    };
+    page.elements.addressLineOneInput.onfocusout = () => {
+        // setAutocompletionItems([]);
+    };
+    new InputValueObserver(page.elements.addressLineTwoInput).startObserving(newValue => {
+        page.data.addressLineTwo = newValue;
+        handleDataChange();
+    });
+    new InputValueObserver(page.elements.cityInput).startObserving(newValue => {
+        page.data.city = newValue;
+        handleDataChange();
+    });
+    new InputValueObserver(page.elements.zipInput).startObserving(newValue => {
+        page.data.zip = newValue;
+        handleDataChange();
+    });
+    new InputValueObserver(page.elements.stateSelect).startObserving(newValue => {
+        page.data.state = newValue;
+        handleDataChange();
+    });
+    
     $(page.elements.form).submit((event) => {
         event.preventDefault();
         submitForm();
