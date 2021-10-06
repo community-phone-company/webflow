@@ -92,6 +92,7 @@ if (IS_PRODUCTION) {
     };
     
     const data = {
+        "User ID": getOrCreateUserId(),
         "Last Visit": new Date(Date.now()).toISOString(),
         "Email": firstNonNullEmail,
         "Onboarding email": emails.onboardingFlow,
