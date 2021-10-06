@@ -11,6 +11,13 @@ if (IS_PRODUCTION) {
 }
 
 /**
+ * Create user ID.
+ */
+(() => {
+    const userId = getOrCreateUserId();
+})();
+
+/**
  * Write current URL to the storage and check previous URL.
  */
 (() => {
