@@ -71,11 +71,11 @@ const setupUI = () => {
 
     if (isCheckCoverageDataFilled()) {
         const title = "Start your service";
-        
+
         elements.checkCoverageButtons.forEach(button => {
             if (button instanceof HTMLInputElement) {
                 $(button).val(title);
-            } else if (button instanceof HTMLLinkElement) {
+            } else if (button instanceof HTMLAnchorElement) {
                 $(button).find("strong").html(title);
             }
         });
