@@ -182,9 +182,15 @@ const setupUI = () => {
         page.elements.form
     );
 
-    $(page.elements.submitButton).on("cilck", (event) => {
+    /*$(page.elements.submitButton).on("cilck", (event) => {
         event.preventDefault();
         submitForm();
+    });*/
+
+    $(form).submit((event) => {
+        event.preventDefault();
+        submitForm();
+        return false;
     });
 
     handleDataChange();
