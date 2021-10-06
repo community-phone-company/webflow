@@ -26,7 +26,7 @@ const submitForm = () => {
     );
     
     router.open(
-        RouterPath.home,
+        RouterPath.checkCoverage_coverage,
         router.getParameters(),
         router.isTestEnvironment()
     );
