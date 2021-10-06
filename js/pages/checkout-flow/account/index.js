@@ -30,11 +30,11 @@ const onReady = () => {
 
     const handleFormDataChange = () => {
         const isCaptchAccepted = PageSettings.useCaptcha ? form.data.isCaptchaValid : true;
-        const isFormValid = form.data.firstName.length
-            && form.data.lastName.length
-            && form.data.phone.length
-            && form.data.email.length
-            && form.data.howDidYouHearAboutUs.length
+        const isFormValid = form.data.firstName.length > 0
+            && form.data.lastName.length > 0
+            && form.data.phone.length > 0
+            && new EmailValidator().check(form.data.email)
+            && form.data.howDidYouHearAboutUs.length > 0
             && isCaptchAccepted;
         UserInterface.setElementEnabled(
             form.elements.submitButton,
@@ -76,7 +76,7 @@ const onReady = () => {
     new InputValueObserver(
         form.elements.emailTextField
     ).startObserving((newValue) => {
-        form.data.email = newValue;
+        form.data.email = newValue.replaceAll(" ", "");
         handleFormDataChange();
     });
     form.elements.emailTextField.value = Store.local.read(
