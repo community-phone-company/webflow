@@ -23,7 +23,9 @@ const createUserId = () => {
  * @returns {string | undefined} User ID or `undefined`.
  */
 const getUserId = () => {
-    return Store.local.read(StoreKey.userId);
+    return Store.local.read(
+        Store.keys.generalSettings.userId
+    );
 };
 
 /**
@@ -32,14 +34,19 @@ const getUserId = () => {
  * @returns {string} User ID.
  */
 const getOrCreateUserId = () => {
-    const storedId = Store.local.read(StoreKey.userId);
+    const storedId = Store.local.read(
+        Store.keys.generalSettings.userId
+    );
 
     if (storedId) {
         return storedId;
     }
 
     const newId = createUserId();
-    Store.local.write(StoreKey.userId, newId);
+    Store.local.write(
+        Store.keys.generalSettings.userId,
+        newId
+    );
     return newId;
 }
 
@@ -48,5 +55,8 @@ const getOrCreateUserId = () => {
  * @param {string} id String containing user ID.
  */
 const setUserId = (id) => {
-    Store.local.write(StoreKey.userId, id);
+    Store.local.write(
+        Store.keys.generalSettings.userId,
+        id
+    );
 };
