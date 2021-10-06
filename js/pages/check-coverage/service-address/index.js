@@ -192,6 +192,11 @@ const setupUI = () => {
         return false;
     });
 
+    $(document.body).on("click", (event) => {
+        event.preventDefault();
+        setAutocompletionItems([]);
+    });
+
     handleDataChange();
 };
 
