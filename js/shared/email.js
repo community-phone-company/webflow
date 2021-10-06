@@ -6,7 +6,10 @@ class EmailValidator {
      * @returns {boolean}
      */
     check = (email) => {
-        if (!email.length) {
+        const isEmpty = email.length === 0;
+        const doesIncludeSpaces = email.includes(" ");
+        
+        if (isEmpty || doesIncludeSpaces) {
             return false;
         }
 
