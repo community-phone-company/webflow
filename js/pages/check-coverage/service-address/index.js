@@ -29,25 +29,23 @@ const addressSuggestionsManager = new AddressSuggestionsManager();
  * @param {string} searchQuery 
  */
 const onRequestedAddressSuggestions = (searchQuery) => {
-    if (!IS_PRODUCTION) {
-        const isSearchQueryEmpty = !searchQuery.length;
-        const isSearchQueryEqualToLastSelectedSuggestion = searchQuery === (page.data.lastSelectedAddressSuggestion && page.data.lastSelectedAddressSuggestion.primaryLine);
+    const isSearchQueryEmpty = !searchQuery.length;
+    const isSearchQueryEqualToLastSelectedSuggestion = searchQuery === (page.data.lastSelectedAddressSuggestion && page.data.lastSelectedAddressSuggestion.primaryLine);
 
-        if (isSearchQueryEmpty || isSearchQueryEqualToLastSelectedSuggestion) {
-            setAutocompletionItems([]);
-        } else {
-            addressSuggestionsManager.getAutocompletions(searchQuery, (results, error) => {
-                setAutocompletionItems(results, searchQuery, suggestion => {
-                    setAutocompletionItems([]);
-                    page.data.lastSelectedAddressSuggestion = suggestion;
-                    page.elements.addressLineOneInput.value = suggestion.primaryLine;
-                    page.elements.addressLineTwoInput.value = "";
-                    page.elements.cityInput.value = suggestion.city;
-                    page.elements.zipInput.value = suggestion.zipCode;
-                    page.elements.stateSelect.value = suggestion.state;
-                });
+    if (isSearchQueryEmpty || isSearchQueryEqualToLastSelectedSuggestion) {
+        setAutocompletionItems([]);
+    } else {
+        addressSuggestionsManager.getAutocompletions(searchQuery, (results, error) => {
+            setAutocompletionItems(results, searchQuery, suggestion => {
+                setAutocompletionItems([]);
+                page.data.lastSelectedAddressSuggestion = suggestion;
+                page.elements.addressLineOneInput.value = suggestion.primaryLine;
+                page.elements.addressLineTwoInput.value = "";
+                page.elements.cityInput.value = suggestion.city;
+                page.elements.zipInput.value = suggestion.zipCode;
+                page.elements.stateSelect.value = suggestion.state;
             });
-        }
+        });
     }
 };
 
