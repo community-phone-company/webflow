@@ -176,6 +176,12 @@ const submitForm = () => {
                 );
             }
         );
+    } else {
+        router.open(
+            RouterPath.checkCoverage_coverage,
+            router.getParameters(),
+            router.isTestEnvironment()
+        );
     }
 };
 
