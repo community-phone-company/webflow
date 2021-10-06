@@ -24,7 +24,7 @@ const addressSuggestionsManager = new AddressSuggestionsManager();
 /**
  * @param {string} searchQuery 
  */
- const onRequestedAddressSuggestions = (searchQuery) => {
+const onRequestedAddressSuggestions = (searchQuery) => {
     if (!IS_PRODUCTION) {
         const isSearchQueryEmpty = !searchQuery.length;
         const isSearchQueryEqualToLastSelectedSuggestion = searchQuery === (page.data.lastSelectedAddressSuggestion && page.data.lastSelectedAddressSuggestion.primaryLine);
@@ -102,7 +102,7 @@ const isAddressCorrect = (callback) => {
 
     const productCart = new ProductCart();
     productCart.setBillingAddress(
-        billingAddress    
+        billingAddress
     );
     productCart.addProductIdentifier("landline-phone-service-monthly");
     productCart.addProductIdentifier("shipmonk-box-without-handset");
@@ -114,8 +114,72 @@ const isAddressCorrect = (callback) => {
     });
 };
 
-$(page.elements.form).submit(event => {
-    event.preventDefault();
-    console.log("SUBMIT");
-    return false;
+const submitForm = () => {
+    const addressLineOne = page.data.addressLineOne;
+    Store.local.write(
+        Store.keys.checkoutFlow.shippingAddress_addressLine1,
+        addressLineOne
+    );
+
+    const addressLineTwo = page.data.addressLineTwo;
+    Store.local.write(
+        Store.keys.checkoutFlow.shippingAddress_addressLine2,
+        addressLineTwo
+    );
+
+    const city = page.data.city;
+    Store.local.write(
+        Store.keys.checkoutFlow.shippingAddress_city,
+        city
+    );
+
+    const state = page.data.state;
+    Store.local.write(
+        Store.keys.checkoutFlow.shippingAddress_state,
+        state
+    );
+
+    const zip = page.data.zip;
+    Store.local.write(
+        Store.keys.checkoutFlow.shippingAddress_zip,
+        zip
+    );
+
+    const isBusiness = page.data.isBusiness;
+    Store.local.write(
+        Store.keys.checkoutFlow.isBusinessCustomer,
+        isBusiness
+    );
+
+    Store.local.write(
+        Store.keys.checkoutFlow.orderedBySalesperson,
+        orderBySalesperson
+    );
+
+    const sendToServiceAddressCheck = IS_PRODUCTION && !addressLineOne.toLowerCase().startsWith("CommunityPhone");
+
+    if (sendToServiceAddressCheck) {
+        GoogleDocIntegration.addLineToServiceAddressCheck(
+            addressLineOne,
+            city,
+            state,
+            zip,
+            isBusiness,
+            true
+        );
+    }
+};
+
+const setupUI = () => {
+    UserInterface.makeFormUnsubmittable(
+        page.elements.form
+    );
+    $(page.elements.submitButton).on("cilck", (event) => {
+        event.preventDefault();
+        submitForm();
+    });
+};
+
+$(document).ready(() => {
+    setupUI();
 });
