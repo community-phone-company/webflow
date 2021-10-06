@@ -26,7 +26,7 @@ const submitForm = () => {
     );
     
     router.open(
-        RouterPath.landlineService,
+        RouterPath.home,
         router.getParameters(),
         router.isTestEnvironment()
     );
