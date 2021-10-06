@@ -181,10 +181,13 @@ const setupUI = () => {
     UserInterface.makeFormUnsubmittable(
         page.elements.form
     );
+
     $(page.elements.submitButton).on("cilck", (event) => {
         event.preventDefault();
         submitForm();
     });
+
+    handleDataChange();
 };
 
 $(document).ready(() => {
