@@ -3,6 +3,8 @@ const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) !
 const page = {
     elements: {
         form: document.querySelectorAll("#wf-form-service-address")[0],
+        homeRadioButtonField: document.querySelectorAll("#home-radio-button-field")[0],
+        businessRadioButtonField: document.querySelectorAll("#business-radio-button-field")[0],
         addressLineOneInput: document.querySelectorAll("#service-address-line-one-input")[0],
         addressLineTwoInput: document.querySelectorAll("#service-address-line-two-input")[0],
         cityInput: document.querySelectorAll("#service-address-city-input")[0],
@@ -155,12 +157,16 @@ const submitForm = () => {
 };
 
 const setupUI = () => {
-    $("#Home").off().on("click", (event) => {
-        formData.isBusiness = false;
+    const radioButtonFields = [
+        page.elements.homeRadioButtonField,
+        page.elements.businessRadioButtonField
+    ];
+    $(radioButtonFields).off().on("click", (event) => {
+        $(radioButtonFields).find(".radio-button").removeClass("w--redirected-checked");
+        $(event.currentTarget).find(".radio-button").removeClass("w--redirected-checked");
+        page.data.isBusiness = event.currentTarget === page.elements.businessRadioButtonField;
     });
-    $("#Business").off().on("click", (event) => {
-        formData.isBusiness = true;
-    });
+    
     new InputValueObserver(page.elements.addressLineOneInput).startObserving(newValue => {
         page.data.addressLineOne = newValue;
         handleDataChange();
@@ -192,7 +198,7 @@ const setupUI = () => {
         page.data.state = newValue;
         handleDataChange();
     });
-    
+
     $(page.elements.form).submit((event) => {
         event.preventDefault();
         submitForm();
