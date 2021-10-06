@@ -178,16 +178,16 @@ const submitForm = () => {
 };
 
 const setupUI = () => {
-    UserInterface.makeFormUnsubmittable(
+    /*UserInterface.makeFormUnsubmittable(
         page.elements.form
     );
 
-    /*$(page.elements.submitButton).on("cilck", (event) => {
+    $(page.elements.submitButton).on("cilck", (event) => {
         event.preventDefault();
         submitForm();
     });*/
 
-    $(form).submit((event) => {
+    $(page.elements.form).submit((event) => {
         event.preventDefault();
         submitForm();
         return false;
