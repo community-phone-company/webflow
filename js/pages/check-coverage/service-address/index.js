@@ -1,3 +1,5 @@
+const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
+
 const page = {
     elements: {
         form: document.querySelectorAll("#wf-form-service-address")[0],
