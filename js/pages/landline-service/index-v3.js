@@ -20,10 +20,11 @@ const elements = {
         }
     },
     checkCoverageButtons: [
-        document.querySelectorAll("#check-coverage")[0],
-        document.querySelectorAll("#check-coverage-2")[0],
-        document.querySelectorAll("#check-coverage-middle")[0],
-        document.querySelectorAll("#check-coverage-middle-2")[0]
+        document.querySelectorAll("#check-coverage-button-1")[0],
+        document.querySelectorAll("#check-coverage-button-2")[0],
+        document.querySelectorAll("#check-coverage-button-3")[0],
+        document.querySelectorAll("#check-coverage-button-4")[0],
+        document.querySelectorAll("#check-coverage-cta")[0]
     ]
 };
 
@@ -69,7 +70,16 @@ const setupUI = () => {
     }
 
     if (isCheckCoverageDataFilled()) {
-        $(elements.checkCoverageButtons).val("Start your service");
+        const title = "Start your service";
+        
+        elements.checkCoverageButtons.forEach(button => {
+            if (button instanceof HTMLInputElement) {
+                $(button).val(title);
+            } else if (button instanceof HTMLLinkElement) {
+                $(button).find("strong").html(title);
+            }
+        });
+
         $(elements.checkCoverageButtons).on("click", (event) => {
             event.preventDefault();
             openCheckout();
