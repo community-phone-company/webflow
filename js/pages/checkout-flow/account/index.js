@@ -76,9 +76,16 @@ const onReady = () => {
     new InputValueObserver(
         form.elements.emailTextField
     ).startObserving((newValue) => {
-        form.data.email = newValue.replaceAll(" ", "");
+        form.data.email = newValue;
         handleFormDataChange();
     });
+    form.elements.emailTextField.onkeypress = (event) => {
+        const forbiddenKeys = ["Space"];
+
+        if (forbiddenKeys.includes(event.code)) {
+            event.preventDefault();
+        }
+    }
     form.elements.emailTextField.value = Store.local.read(
         Store.keys.checkoutFlow.email
     ) ?? "";
