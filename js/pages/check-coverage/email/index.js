@@ -39,6 +39,10 @@ const setupUI = () => {
         return false;
     });
 
+    new InputValueObserver(page.elements.emailInput).startObserving(newValue => {
+        page.data.email = newValue;
+        handleDataChange();
+    });
     UserInterface.forbidSpaceKeyForInput(
         page.elements.emailInput
     );
