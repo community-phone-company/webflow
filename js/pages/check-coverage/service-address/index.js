@@ -163,7 +163,7 @@ const setupUI = () => {
     ];
     $(radioButtonFields).off().on("click", (event) => {
         $(radioButtonFields).find(".radio-button").removeClass("w--redirected-checked");
-        $(event.currentTarget).find(".radio-button").removeClass("w--redirected-checked");
+        $(event.currentTarget).find(".radio-button").addClass("w--redirected-checked");
         page.data.isBusiness = event.currentTarget === page.elements.businessRadioButtonField;
     });
     
