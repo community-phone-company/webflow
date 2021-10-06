@@ -165,7 +165,14 @@ const submitForm = () => {
             state,
             zip,
             isBusiness,
-            true
+            true,
+            (response, error, success) => {
+                router.open(
+                    RouterPath.checkCoverage_coverage,
+                    router.getParameters(),
+                    router.isTestEnvironment()
+                );
+            }
         );
     }
 };

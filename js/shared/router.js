@@ -106,6 +106,13 @@ const RouterPath = Object.freeze({
     onboarding_porting_previousCarrier: "onboarding/porting/previous-carrier",
     onboarding_porting_numberTransfer: "onboarding/porting/number-transfer",
     onboarding_porting_thankYou: "onboarding/porting/thank-you-for-porting",
+
+    /**
+     * Check coverage
+     */
+    checkCoverage_serviceAddress: "check-coverage/service-address",
+    checkCoverage_coverage: "check-coverage/we-have-coverage-at-your-address",
+    checkCoverage_email: "check-coverage/get-more-info-about-our-landline-service-via-email",
     
     /**
      * Checkout v1
