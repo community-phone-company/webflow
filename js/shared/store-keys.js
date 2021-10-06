@@ -66,6 +66,7 @@ const UserPortalStoreKey = Object.freeze({
 });
 
 const GeneralSettingsStoreKey = Object.freeze({
+    userId: "general-settings-user-id",
     lastUrl: "general-settings-last-url"
 });
 
