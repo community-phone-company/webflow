@@ -10,10 +10,7 @@ const page = {
 };
 
 const handleDataChange = () => {
-    const isFormValid = page.data.addressLineOne.length > 0
-        && page.data.city.length > 0
-        && page.data.zip.length == 5
-        && page.data.state.length > 0;
+    const isFormValid = new EmailValidator().check(page.data.email);
     console.log(`is form valid: ${isFormValid}`);
     UserInterface.setElementEnabled(
         page.elements.submitButton,
