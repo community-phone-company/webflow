@@ -49,4 +49,17 @@ class UserInterface {
             handler(event);
         });
     }
+
+    /**
+     * @param {HTMLInputElement} element 
+     */
+    static forbidSpaceKeyForInput = (element) => {
+        element.onkeypress = (event) => {
+            const forbiddenKeys = ["Space"];
+    
+            if (forbiddenKeys.includes(event.code)) {
+                event.preventDefault();
+            }
+        }
+    }
 }

@@ -39,6 +39,10 @@ const setupUI = () => {
         return false;
     });
 
+    UserInterface.forbidSpaceKeyForInput(
+        page.elements.emailInput
+    );
+
     handleDataChange();
 };
 

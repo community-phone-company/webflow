@@ -79,13 +79,9 @@ const onReady = () => {
         form.data.email = newValue;
         handleFormDataChange();
     });
-    form.elements.emailTextField.onkeypress = (event) => {
-        const forbiddenKeys = ["Space"];
-
-        if (forbiddenKeys.includes(event.code)) {
-            event.preventDefault();
-        }
-    }
+    UserInterface.forbidSpaceKeyForInput(
+        form.elements.emailTextField
+    );
     form.elements.emailTextField.value = Store.local.read(
         Store.keys.checkoutFlow.email
     ) ?? "";
