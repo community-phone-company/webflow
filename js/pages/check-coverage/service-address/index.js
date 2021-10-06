@@ -206,7 +206,6 @@ const setupUI = () => {
     });
 
     $(document.body).on("click", (event) => {
-        event.preventDefault();
         setAutocompletionItems([]);
     });
 
