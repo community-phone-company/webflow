@@ -127,6 +127,10 @@ const submitForm = () => {
         orderBySalesperson
     );
 
+    const email = Store.local.read(
+        Store.keys.checkoutFlow.email
+    );
+
     const sendToServiceAddressCheck = IS_PRODUCTION && !addressLineOne.toLowerCase().startsWith("CommunityPhone");
 
     if (sendToServiceAddressCheck) {
@@ -136,7 +140,7 @@ const submitForm = () => {
             state,
             zip,
             isBusiness,
-            undefined,
+            email,
             getOrCreateUserId(),
             true,
             (response, error, success) => {
