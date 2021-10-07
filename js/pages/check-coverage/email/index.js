@@ -24,11 +24,19 @@ const submitForm = () => {
         Store.keys.checkoutFlow.email,
         email
     );
-    
-    router.open(
-        RouterPath.checkCoverage_coverage,
-        router.getParameters(),
-        router.isTestEnvironment()
+
+    ActiveCampaignIntegration.createOrUpdateContact(
+        new ActiveCampaignContact(
+            email
+        ),
+        ActiveCampaignList.chargebeeAbandonedCarts,
+        (response, error, success) => {
+            router.open(
+                RouterPath.checkCoverage_coverage,
+                router.getParameters(),
+                router.isTestEnvironment()
+            );
+        }
     );
 };
 
