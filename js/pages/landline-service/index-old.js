@@ -15,16 +15,6 @@ const externalServices = {
     }
 };
 
-const formData = {
-    addressLineOne: "",
-    addressLineTwo: "",
-    city: "",
-    zip: "",
-    state: "AL",
-    isBusiness: false,
-    lastSelectedAddressSuggestion: undefined
-};
-
 const elements = {
     externalServices: {
         msp: {
@@ -41,11 +31,6 @@ const elements = {
             closeButton: container.querySelectorAll("#close-button")[0],
             form: {
                 container: container.querySelectorAll("#form-normal")[0],
-                addressLineOneInput: container.querySelectorAll("#service-address-line-one-input")[0],
-                addressLineTwoInput: container.querySelectorAll("#service-address-line-two-input")[0],
-                cityInput: container.querySelectorAll("#service-address-city-input")[0],
-                zipInput: container.querySelectorAll("#service-address-zip-input")[0],
-                stateSelect: container.querySelectorAll("#service-address-state-input")[0],
                 submitButton: () => {
                     return container.querySelectorAll("#form-normal input[type='submit']")[0];
                 },
@@ -63,111 +48,84 @@ const elements = {
     ]
 };
 
-/**
- * @param {string} searchQuery 
- */
-const onRequestedAddressSuggestions = (searchQuery) => {
-    if (!IS_PRODUCTION) {
-        const isSearchQueryEmpty = !searchQuery.length;
-        const isSearchQueryEqualToLastSelectedSuggestion = searchQuery === (formData.lastSelectedAddressSuggestion && formData.lastSelectedAddressSuggestion.primaryLine);
+const checkCoverageVM = new Vue({
+    el: elements.checkCoveragePopup.form.container,
+    data: {
+        addressLineOne: "",
+        addressLineTwo: "",
+        city: "",
+        zip: "",
+        state: "AL",
+        isBusiness: false
+    },
+    methods: {
+        handleDataChange() {
+            const isFormValid = this.addressLineOne.length > 0
+                && this.city.length > 0
+                && this.zip.length == 5
+                && this.state.length > 0;
+            console.log(`is form valid: ${isFormValid}`);
+            UserInterface.setElementEnabled(
+                elements.checkCoveragePopup.form.submitButton(),
+                isFormValid
+            );
+        },
+        /**
+         * @param {(isCorrect: boolean) => void} callback 
+         */
+        isAddressCorrect(callback) {
+            const _this = this;
+            
+            const billingAddress = new ProductCartBillingAddress(
+                _this.city,
+                _this.state,
+                _this.zip
+            );
 
-        if (isSearchQueryEmpty || isSearchQueryEqualToLastSelectedSuggestion) {
-            setAutocompletionItems([]);
-        } else {
-            addressSuggestionsManager.getAutocompletions(searchQuery, (results, error) => {
-                setAutocompletionItems(results, searchQuery, suggestion => {
-                    setAutocompletionItems([]);
-                    formData.lastSelectedAddressSuggestion = suggestion;
-                    elements.checkCoveragePopup.form.addressLineOneInput.value = suggestion.primaryLine;
-                    elements.checkCoveragePopup.form.addressLineTwoInput.value = "";
-                    elements.checkCoveragePopup.form.cityInput.value = suggestion.city;
-                    elements.checkCoveragePopup.form.zipInput.value = suggestion.zipCode;
-                    elements.checkCoveragePopup.form.stateSelect.value = suggestion.state;
-                });
+            const productCart = new ProductCart();
+            productCart.setBillingAddress(
+                billingAddress    
+            );
+            productCart.addProductIdentifier("landline-phone-service-monthly");
+            productCart.addProductIdentifier("shipmonk-box-without-handset");
+            productCart.updatePrices((error) => {
+                const isCorrect = error == undefined;
+                callback(
+                    isCorrect
+                );
+            });
+        },
+        onCorrectAddress() {
+            const checkCoverageButtonTitle = "Start your service";
+            const checkCoverageButtonClickHandler = (event) => {
+                event.preventDefault();
+                $(".popup-service-address").remove();
+                openCheckout();
+            };
+            elements.checkCoverageButtons.forEach(button => {
+                $(button).find("div,strong").html(checkCoverageButtonTitle);
+                $(button).off().on("click", checkCoverageButtonClickHandler);
             });
         }
+    },
+    watch: {
+        addressLineOne(newValue) {
+            this.handleDataChange();
+        },
+        city(newValue) {
+            this.handleDataChange();
+        },
+        zip(newValue) {
+            this.handleDataChange();
+        },
+        state(newValue) {
+            this.handleDataChange();
+        },
+        isBusiness(newValue) {
+            this.handleDataChange();
+        }
     }
-};
-new InputValueObserver(elements.checkCoveragePopup.form.addressLineOneInput).startObserving(newValue => {
-    formData.addressLineOne = newValue;
-    handleDataChange();
-    onRequestedAddressSuggestions(
-        newValue
-    );
 });
-elements.checkCoveragePopup.form.addressLineOneInput.onfocus = () => {
-    onRequestedAddressSuggestions(
-        elements.checkCoveragePopup.form.addressLineOneInput.value
-    );
-};
-elements.checkCoveragePopup.form.addressLineOneInput.onfocusout = () => {
-    // setAutocompletionItems([]);
-};
-new InputValueObserver(elements.checkCoveragePopup.form.addressLineTwoInput).startObserving(newValue => {
-    formData.addressLineTwo = newValue;
-    handleDataChange();
-});
-new InputValueObserver(elements.checkCoveragePopup.form.cityInput).startObserving(newValue => {
-    formData.city = newValue;
-    handleDataChange();
-});
-new InputValueObserver(elements.checkCoveragePopup.form.zipInput).startObserving(newValue => {
-    formData.zip = newValue;
-    handleDataChange();
-});
-new InputValueObserver(elements.checkCoveragePopup.form.stateSelect).startObserving(newValue => {
-    formData.state = newValue;
-    handleDataChange();
-});
-
-const handleDataChange = () => {
-    const isFormValid = formData.addressLineOne.length > 0
-        && formData.city.length > 0
-        && formData.zip.length == 5
-        && formData.state.length > 0;
-    console.log(`is form valid: ${isFormValid}`);
-    UserInterface.setElementEnabled(
-        elements.checkCoveragePopup.form.submitButton(),
-        isFormValid
-    );
-};
-
-/**
- * @param {(isCorrect: boolean) => void} callback 
- */
-const isAddressCorrect = (callback) => {
-    const billingAddress = new ProductCartBillingAddress(
-        formData.city,
-        formData.state,
-        formData.zip
-    );
-
-    const productCart = new ProductCart();
-    productCart.setBillingAddress(
-        billingAddress    
-    );
-    productCart.addProductIdentifier("landline-phone-service-monthly");
-    productCart.addProductIdentifier("shipmonk-box-without-handset");
-    productCart.updatePrices((error) => {
-        const isCorrect = error == undefined;
-        callback(
-            isCorrect
-        );
-    });
-};
-
-const onCorrectAddress = () => {
-    const checkCoverageButtonTitle = "Start your service";
-    const checkCoverageButtonClickHandler = (event) => {
-        event.preventDefault();
-        $(".popup-service-address").remove();
-        openCheckout();
-    };
-    elements.checkCoverageButtons.forEach(button => {
-        $(button).find("div,strong").html(checkCoverageButtonTitle);
-        $(button).off().on("click", checkCoverageButtonClickHandler);
-    });
-};
 
 const openCheckout = () => {
     const path = (() => {
@@ -302,43 +260,43 @@ $(document).ready(() => {
      * Setup check coverage popup.
      */
     $("#Home").off().on("click", (event) => {
-        formData.isBusiness = false;
+        checkCoverageVM.isBusiness = false;
     });
     $("#Business").off().on("click", (event) => {
-        formData.isBusiness = true;
+        checkCoverageVM.isBusiness = true;
     });
     $(elements.checkCoveragePopup.form.submitButton()).off().on("click", (event) => {
-        const addressLineOne = formData.addressLineOne;
+        const addressLineOne = checkCoverageVM.addressLineOne;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine1,
             addressLineOne
         );
 
-        const addressLineTwo = formData.addressLineTwo;
+        const addressLineTwo = checkCoverageVM.addressLineTwo;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_addressLine2,
             addressLineTwo
         );
 
-        const city = formData.city;
+        const city = checkCoverageVM.city;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_city,
             city
         );
 
-        const state = formData.state;
+        const state = checkCoverageVM.state;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_state,
             state
         );
 
-        const zip = formData.zip;
+        const zip = checkCoverageVM.zip;
         Store.local.write(
             Store.keys.checkoutFlow.shippingAddress_zip,
             zip
         );
 
-        const isBusiness = formData.isBusiness;
+        const isBusiness = checkCoverageVM.isBusiness;
         Store.local.write(
             Store.keys.checkoutFlow.isBusinessCustomer,
             isBusiness
@@ -365,9 +323,9 @@ $(document).ready(() => {
         /**
          * Uncomment the block below to check address.
          */
-        /*isAddressCorrect((isCorrect) => {
+        /*checkCoverageVM.isAddressCorrect((isCorrect) => {
             if (isCorrect) {
-                onCorrectAddress();
+                checkCoverageVM.onCorrectAddress();
             } else {
                 $("#service-address .success-message-2").hide();
                 $("#service-address #wf-form-service-address").show();
@@ -375,7 +333,7 @@ $(document).ready(() => {
             }
         });*/
 
-        onCorrectAddress();
+        checkCoverageVM.onCorrectAddress();
     });
     $(elements.checkCoveragePopup.startServiceButton).on("click", (event) => {
         event.preventDefault();
@@ -385,5 +343,5 @@ $(document).ready(() => {
         event.preventDefault();
         elements.checkCoveragePopup.popup.hide();
     });
-    handleDataChange();
+    checkCoverageVM.handleDataChange();
 });
