@@ -30,7 +30,7 @@ class GoogleDocIntegration {
             "State": state,
             "Zip code": zip,
             "Is business": isBusiness ? "yes" : "no",
-            "Email": email,
+            "Email": email ?? "",
             "User ID": userId
         };
         console.log(`Data: `, data);
