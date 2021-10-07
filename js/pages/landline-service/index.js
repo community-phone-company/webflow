@@ -1,5 +1,4 @@
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
-const isTestingPortPhoneNumberFunctionality = router.getParameterValue("test-port-number") != undefined;
 
 const externalServices = {
     msp: {
@@ -29,13 +28,7 @@ const elements = {
 };
 
 const openCheckout = () => {
-    const path = (() => {
-        if (isTestingPortPhoneNumberFunctionality) {
-            return "checkout-v2/choose-plan-and-number-2";
-        } else {
-            return IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
-        }
-    })();
+    const path = IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
     router.open(
         path,
         router.getParameters(),

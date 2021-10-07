@@ -7,6 +7,8 @@ class GoogleDocIntegration {
      * @param {string} state State.
      * @param {string} zip Zip code.
      * @param {boolean} isBusiness Defines, whether the client is a company.
+     * @param {string} email Email.
+     * @param {string} userId User identifier.
      * @param {boolean} sendToLobCom Defines, whether to send the information to Lob.com service.
      * @param {((response: any, error: any, success: boolean) => void) | undefined} callback Function that is called when response comes from the server.
      * @returns {XMLHttpRequest | undefined} Request instance.
@@ -17,6 +19,8 @@ class GoogleDocIntegration {
         state,
         zip,
         isBusiness,
+        email,
+        userId,
         sendToLobCom,
         callback
     ) => {
@@ -25,7 +29,9 @@ class GoogleDocIntegration {
             "City": city,
             "State": state,
             "Zip code": zip,
-            "Is business": isBusiness ? "yes" : "no"
+            "Is business": isBusiness ? "yes" : "no",
+            "Email": email,
+            "User ID": userId
         };
         console.log(`Data: `, data);
         const urls = {
