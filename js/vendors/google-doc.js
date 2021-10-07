@@ -36,7 +36,8 @@ class GoogleDocIntegration {
         console.log(`Data: `, data);
         const urls = {
             simpleZap: "https://hooks.zapier.com/hooks/catch/10558854/b208t38/",
-            lobComIntegration: "https://hooks.zapier.com/hooks/catch/10558854/b6htb82/"
+            //lobComIntegration: "https://hooks.zapier.com/hooks/catch/10558854/b6htb82/"
+            lobComIntegration: "https://hooks.zapier.com/hooks/catch/10210393/b6htb82/"
         };
         return ZapierIntegration.sendToWebhook(
             sendToLobCom ? urls.lobComIntegration : urls.simpleZap,
