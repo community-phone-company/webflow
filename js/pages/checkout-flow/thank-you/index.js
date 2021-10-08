@@ -16,10 +16,6 @@ const page = {
 };
 
 const setupUI = () => {
-    if (IS_PRODUCTION) {
-        return;
-    }
-
     if (page.data.selectedPhoneNumber) {
         $(page.elements.selectedPhoneNumberLink).attr(
             "href",
