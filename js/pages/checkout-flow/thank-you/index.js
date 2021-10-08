@@ -23,7 +23,7 @@ const setupUI = () => {
     if (page.data.selectedPhoneNumber) {
         $(page.elements.selectedPhoneNumberLink).attr(
             "href",
-            `+1${page.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular)}`
+            `tel:+1${page.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular)}`
         );
         $(page.elements.selectedPhoneNumberText).html(
             page.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.brackets)
