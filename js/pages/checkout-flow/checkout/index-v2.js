@@ -57,7 +57,6 @@ const checkPaymentStatusTillResult = (
                     break;
                 }
                 default: {
-                    waitForIntervalAndSendRequestAgain();
                     break;
                 }
             }
