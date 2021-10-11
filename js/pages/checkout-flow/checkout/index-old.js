@@ -4,69 +4,15 @@ const is_v2 = window.location.href.includes(RouterPath.checkout_v2_checkoutStep)
  * Adds Google Maps functionality to the text field.
  * @param {HTMLInputElement} textField `HTMLInputElement` instance.
  */
-/*const makeAddressTextField = (textField) => {
+const makeAddressTextField = (textField) => {
     if ($(textField).hasClass("gpa-input")) {
         var autocomplete = new google.maps.places.Autocomplete(textField);
     }
 };
 
-var clipboard = new ClipboardJS('.btn');*/
-
 // redirectToPreviousCheckoutFlowStepIfNeeded();
 
-/**
- * 
- * @param {string} subscriptionIdentifier 
- * @param {number} intervalBetweenRequests
- * @param {(success: boolean, message: string) => void} callback 
- */
-const checkPaymentStatusTillResult = (
-    subscriptionIdentifier,
-    intervalBetweenRequests,
-    callback
-) => {
-    const waitForIntervalAndSendRequestAgain = () => {
-        setTimeout(() => {
-            checkPaymentStatusTillResult(
-                subscriptionIdentifier,
-                intervalBetweenRequests,
-                callback
-            );
-        }, intervalBetweenRequests);
-    };
-    new Chargebee().checkPaymentStatus(
-        subscriptionIdentifier,
-        (status, message) => {
-            switch (status) {
-                case ChargebeePaymentStatus.pending: {
-                    waitForIntervalAndSendRequestAgain();
-                    break;
-                }
-                case ChargebeePaymentStatus.notPaid: {
-                    callback(
-                        false,
-                        message
-                    );
-                    break;
-                }
-                case ChargebeePaymentStatus.paid: {
-                    callback(
-                        true,
-                        message
-                    );
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
-    );
-}
-
-const paymentProcessingPopup = new Popup(
-    "#payment-processing-basic"
-);
+var clipboard = new ClipboardJS('.btn');
 
 const onReady = () => {
 
@@ -183,15 +129,21 @@ const onReady = () => {
             && form.data.paymentDetails.cardVerificationValue.length >= 3;
         
         const isEverythingCorrect = () => {
-            const isPricingValid = () => {
-                return form.pricing.productCart
-                    && form.pricing.productCart.amounts.dueToday != undefined
-                    && form.pricing.productCart.amounts.subscription != undefined;
-            };
-            return isShippingAddressValid
-                && isBillingAddressValid
-                && isPaymentDetailsValid
-                && isPricingValid();
+            if (is_v2) {
+                const isPricingValid = () => {
+                    return form.pricing.productCart
+                        && form.pricing.productCart.amounts.dueToday != undefined
+                        && form.pricing.productCart.amounts.subscription != undefined;
+                };
+                return isShippingAddressValid
+                    && isBillingAddressValid
+                    && isPaymentDetailsValid
+                    && isPricingValid();
+            } else {
+                return isShippingAddressValid
+                    && isBillingAddressValid
+                    && isPaymentDetailsValid;
+            }
         };
         
         UserInterface.setElementEnabled(
@@ -199,39 +151,41 @@ const onReady = () => {
             isEverythingCorrect()
         );
 
-        const newBillingAddressForOrderSummaryPanel = (() => {
-            if (form.data.useShippingAddressForBilling) {
-                return new ProductCartBillingAddress(
-                    form.data.shippingAddress.city,
-                    form.data.shippingAddress.state,
-                    form.data.shippingAddress.zip
-                );
-            } else {
-                return new ProductCartBillingAddress(
-                    form.data.billingAddress.city,
-                    form.data.billingAddress.state,
-                    form.data.billingAddress.zip
-                );
-            }
-        })();
-        const shouldUpdateOrderSummaryPanel = billingAddressForOrderSummaryPanel
-            ? !billingAddressForOrderSummaryPanel.equalsTo(newBillingAddressForOrderSummaryPanel)
-            : true;
-
-        if (shouldUpdateOrderSummaryPanel) {
-            findAndUpdateOrderSummaryPanel(
-                newBillingAddressForOrderSummaryPanel,
-                (orderSummaryPanel, productStore, productCart) => {
-                    form.pricing.productStore = productStore;
-                    form.pricing.productCart = productCart;
-                    
-                    UserInterface.setElementEnabled(
-                        form.elements.submitButton,
-                        isEverythingCorrect()
+        if (is_v2) {
+            const newBillingAddressForOrderSummaryPanel = (() => {
+                if (form.data.useShippingAddressForBilling) {
+                    return new ProductCartBillingAddress(
+                        form.data.shippingAddress.city,
+                        form.data.shippingAddress.state,
+                        form.data.shippingAddress.zip
+                    );
+                } else {
+                    return new ProductCartBillingAddress(
+                        form.data.billingAddress.city,
+                        form.data.billingAddress.state,
+                        form.data.billingAddress.zip
                     );
                 }
-            );
-            billingAddressForOrderSummaryPanel = newBillingAddressForOrderSummaryPanel;
+            })();
+            const shouldUpdateOrderSummaryPanel = billingAddressForOrderSummaryPanel
+                ? !billingAddressForOrderSummaryPanel.equalsTo(newBillingAddressForOrderSummaryPanel)
+                : true;
+    
+            if (shouldUpdateOrderSummaryPanel) {
+                findAndUpdateOrderSummaryPanel(
+                    newBillingAddressForOrderSummaryPanel,
+                    (orderSummaryPanel, productStore, productCart) => {
+                        form.pricing.productStore = productStore;
+                        form.pricing.productCart = productCart;
+                        
+                        UserInterface.setElementEnabled(
+                            form.elements.submitButton,
+                            isEverythingCorrect()
+                        );
+                    }
+                );
+                billingAddressForOrderSummaryPanel = newBillingAddressForOrderSummaryPanel;
+            }
         }
     };
 
@@ -487,6 +441,8 @@ const onReady = () => {
         handleFormDataChanges();
     });
 
+    //makeAddressTextField(form.elements.shippingAddress.addressLineOneInput);
+
     $(form.elements.form).submit((event) => {
         event.preventDefault();
     });
@@ -560,58 +516,45 @@ const onReady = () => {
             false
         );
 
-        const unblockUserInterface = () => {
-            $(form.elements.submitButton).show();
-            $(form.elements.submitButtonAnimation).hide();
-            setCheckoutFormAvailable(
-                true
-            );
-        };
-
         exportCheckoutFlowDataToActiveCampaign((response, error, success) => {
             console.log("Active Campaign");
             buyProducts((message, subscriptionIdentifier, success) => {
                 if (success) {
-                    paymentProcessingPopup.show(() => {
-                        setInterval(() => {
-                            checkPaymentStatusTillResult(
-                                subscriptionIdentifier,
-                                1000,
-                                (success, message) => {
-                                    if (success) {
-                                        if (IS_PRODUCTION) {
-                                            Store.removeCheckoutData();
-                                        }
-                                        
-                                        router.open(
-                                            RouterPath.checkout_v2_thankYou,
-                                            router.getParameters(),
-                                            router.isTestEnvironment()
-                                        );
-                                    } else {
-                                        paymentProcessingPopup.hide(() => {
-                                            Popup.getBasic()
-                                                .setBody(message)
-                                                .show();
-                                            unblockUserInterface();
-                                        });
-                                    }
-                                }
-                            );
-                        }, 1000);
-                    });
+                    if (IS_PRODUCTION) {
+                        Store.removeCheckoutData();
+                    }
+
+                    router.open(
+                        is_v2 ? RouterPath.checkout_v2_thankYou : RouterPath.checkoutLandline_thankYou,
+                        router.getParameters(),
+                        router.isTestEnvironment()
+                    );
                 } else {
                     Popup.getBasic()
                         .setBody(message)
                         .show();
-                    unblockUserInterface();
+                    $(form.elements.submitButton).show();
+                    $(form.elements.submitButtonAnimation).hide();
+                    setCheckoutFormAvailable(
+                        true
+                    );
                 }
             });
         });
     });
 
     handleFormDataChanges();
-    // findAndUpdateOrderSummaryPanel();
+
+    if (is_v2) {
+        // findAndUpdateOrderSummaryPanel();
+    } else {
+        const productIdentifiers = Store.local.read(
+            Store.keys.checkoutFlow.selectedProductIdentifiers
+        );
+        updateOrderSummaryColumn(
+            productIdentifiers
+        );
+    }
 };
 
 onReady();
