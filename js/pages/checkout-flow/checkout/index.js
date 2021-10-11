@@ -1,5 +1,3 @@
-const is_v2 = window.location.href.includes(RouterPath.checkout_v2_checkoutStep);
-
 /**
  * Adds Google Maps functionality to the text field.
  * @param {HTMLInputElement} textField `HTMLInputElement` instance.
@@ -37,6 +35,7 @@ const checkPaymentStatusTillResult = (
     new Chargebee().checkPaymentStatus(
         subscriptionIdentifier,
         (status, message) => {
+            console.log(`PAYMENT STATUS: ${status}\nMESSAGE: ${message}\n\n`);
             switch (status) {
                 case ChargebeePaymentStatus.pending: {
                     waitForIntervalAndSendRequestAgain();
