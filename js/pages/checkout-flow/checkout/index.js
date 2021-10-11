@@ -572,7 +572,7 @@ const onReady = () => {
             buyProducts((message, subscriptionIdentifier, success) => {
                 if (success) {
                     paymentProcessingPopup.show(() => {
-                        setInterval(() => {
+                        setTimeout(() => {
                             checkPaymentStatusTillResult(
                                 subscriptionIdentifier,
                                 1000,
