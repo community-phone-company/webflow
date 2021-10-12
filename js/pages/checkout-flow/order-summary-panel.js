@@ -54,6 +54,8 @@ class OrderSummaryPanel {
             productCart.amounts.subscription,
             zip
         );
+
+        console.log("UPDATING ORDER SUMMARY PANEL");
     }
 
     /**
