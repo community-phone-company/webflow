@@ -55,7 +55,7 @@ class OrderSummaryPanel {
             zip
         );
 
-        console.log("UPDATING ORDER SUMMARY PANEL");
+        console.log("UPDATING ORDER SUMMARY PANEL...");
     }
 
     /**
