@@ -27,9 +27,13 @@ const submitForm = () => {
 
     ActiveCampaignIntegration.createOrUpdateContact(
         new ActiveCampaignContact(
-            email
+            email,
+            "",
+            "",
+            "",
+            []
         ),
-        ActiveCampaignList.chargebeeAbandonedCarts,
+        ActiveCampaignList.chargebeeAbandonedCarts(),
         (response, error, success) => {
             router.open(
                 RouterPath.checkCoverage_coverage,
