@@ -72,7 +72,7 @@ class Popup {
     }
 
     /**
-     * Container.
+     * Modal container.
      * @returns `HTMLElement` instance.
      */
     getContainer = () => {
