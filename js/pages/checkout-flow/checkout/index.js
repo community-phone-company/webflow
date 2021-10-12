@@ -1,18 +1,4 @@
 /**
- * Adds Google Maps functionality to the text field.
- * @param {HTMLInputElement} textField `HTMLInputElement` instance.
- */
-/*const makeAddressTextField = (textField) => {
-    if ($(textField).hasClass("gpa-input")) {
-        var autocomplete = new google.maps.places.Autocomplete(textField);
-    }
-};
-
-var clipboard = new ClipboardJS('.btn');*/
-
-// redirectToPreviousCheckoutFlowStepIfNeeded();
-
-/**
  * 
  * @param {string} subscriptionIdentifier 
  * @param {number} intervalBetweenRequests
