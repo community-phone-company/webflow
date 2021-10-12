@@ -35,6 +35,7 @@ const submitForm = () => {
         ),
         ActiveCampaignList.chargebeeAbandonedCarts(),
         (response, error, success) => {
+            return;
             router.open(
                 RouterPath.checkCoverage_coverage,
                 router.getParameters(),
