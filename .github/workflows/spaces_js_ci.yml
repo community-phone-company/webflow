@@ -1,0 +1,18 @@
+name: Upload to DO Spaces
+on:
+  push:
+    branches:
+      - main
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: BetaHuhn/do-spaces-action@v2
+        with:
+          access_key: ${{ HSLLWNNP4ZYPYNKAB3KF }}
+          secret_key: ${{ 2r3MlmS/h64/gMOLsmlrl+3qr1/UY/wMc9cXCwz2gG4 }}
+          space_name: ${{ community-phone-bucket }}
+          space_region: ${{ nyc3 }}
+          source: js
+          out_dir: webflow
