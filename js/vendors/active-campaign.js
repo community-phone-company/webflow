@@ -10,6 +10,13 @@ class ActiveCampaignList {
         );
     }
 
+    static landlineCheckCoverage = () => {
+        return new ActiveCampaignList(
+            "Landline check coverage",
+            "https://hooks.zapier.com/hooks/catch/10558854/btggs2x/"
+        );
+    }
+
     static chooseNumber = () => {
         return new ActiveCampaignList(
             "Choose number",

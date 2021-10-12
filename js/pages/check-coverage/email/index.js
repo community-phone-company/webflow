@@ -33,7 +33,7 @@ const submitForm = () => {
             "",
             []
         ),
-        ActiveCampaignList.chargebeeAbandonedCarts(),
+        ActiveCampaignList.landlineCheckCoverage(),
         (response, error, success) => {
             router.open(
                 RouterPath.checkCoverage_coverage,
