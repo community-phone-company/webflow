@@ -16,4 +16,4 @@ jobs:
           space_region: ${{ secrets.SPACE_REGION }}
 
           source: js
-          out_dir: webflow-ci
+          out_dir: webflow-ci/js
