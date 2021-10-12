@@ -10,9 +10,10 @@ jobs:
       - uses: actions/checkout@master
       - uses: BetaHuhn/do-spaces-action@v2
         with:
-          access_key: ${{ HSLLWNNP4ZYPYNKAB3KF }}
-          secret_key: ${{ 2r3MlmS/h64/gMOLsmlrl+3qr1/UY/wMc9cXCwz2gG4 }}
-          space_name: ${{ community-phone-bucket }}
-          space_region: ${{ nyc3 }}
+          access_key: ${{ secrets.ACCESS_KEY }}
+          secret_key: ${{ secrets.SECRET_KEY }}
+          space_name: ${{ secrets.SPACE_NAME }}
+          space_region: ${{ secrets.SPACE_REGION }}
+
           source: js
           out_dir: webflow
