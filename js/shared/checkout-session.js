@@ -27,6 +27,13 @@ class CheckoutSession {
         return this._id;
     }
 
+    storeId() {
+        Store.local.write(
+            Store.keys.checkoutFlow.sessionId,
+            this._id
+        );
+    }
+
     /**
      * @returns {boolean}
      */
@@ -44,13 +51,15 @@ class CheckoutSession {
             undefined,
             undefined,
             (response, error) => {
-                if (error) {
+                if (!error && response) {
+                    const sessionId = response.session_id;
+                    this._id = sessionId;
+                }
+
+                if (callback) {
                     callback(
                         error
                     );
-                } else {
-                    const sessionId = (response && response.session_id) ?? "";
-                    this._id = sessionId;
                 }
             }
         );
