@@ -2,12 +2,17 @@ class CheckoutSession {
 
     static _currentSession;
 
+    /**
+     * @returns {CheckoutSession}
+     */
     static getCurrent() {
         if (!this._currentSession) {
             this._currentSession = new CheckoutSession();
         }
-    }
 
+        return this._currentSession;
+    }
+    
     constructor() {
         this._id = Store.local.read(
             Store.keys.checkoutFlow.sessionId
