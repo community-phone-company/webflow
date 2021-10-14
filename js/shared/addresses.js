@@ -4,7 +4,7 @@ class AddressSuggestionsManager {
      * @constructor
      */
     constructor() {
-        this._api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        this._api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
     }
 
     /**

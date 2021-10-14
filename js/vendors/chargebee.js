@@ -254,7 +254,7 @@ class Chargebee {
             }
         };
         console.log(data);
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         return api.jsonRequest(
             CommunityPhoneAPI.endpoints.chargebee_checkout,
             "POST",
@@ -292,7 +292,7 @@ class Chargebee {
         subscriptionIdentifier,
         callback
     ) => {
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         return api.jsonRequest(
             CommunityPhoneAPI.endpoints.chargebee_checkPaymentStatus(
                 subscriptionIdentifier

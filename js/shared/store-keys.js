@@ -7,6 +7,7 @@ const BusinessFlowStoreKey = Object.freeze({
 });
 
 const CheckoutFlowStoreKey = Object.freeze({
+    sessionId: "checkout-flow-session-id",
     getNewNumber: "checkout-flow-get-new-number",
     period: "checkout-flow-period",
     addHandsetPhone: "checkout-flow-add-handset-phone",

@@ -14,16 +14,16 @@ class CommunityPhoneAPI {
         "staging"
     );
 
-    static latestVersion = "1";
+    static defaultVersion = "1";
 
     /**
      * Creates new {@link CommunityPhoneAPI} instance with production mode and latest API version.
      * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
      */
-    static productionWithLatestVersion = () => {
+    static productionWithDefaultVersion = () => {
         return new CommunityPhoneAPI(
             "production",
-            this.latestVersion
+            this.defaultVersion
         );
     }
 
@@ -31,10 +31,10 @@ class CommunityPhoneAPI {
      * Creates new {@link CommunityPhoneAPI} instance with staging mode and latest API version.
      * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
      */
-    static stagingWithLatestVersion = () => {
+    static stagingWithDefaultVersion = () => {
         return new CommunityPhoneAPI(
             "staging",
-            this.latestVersion
+            this.defaultVersion
         );
     }
 
@@ -43,10 +43,10 @@ class CommunityPhoneAPI {
      * with appropriate mode and latest API version.
      * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
      */
-    static currentEnvironmentWithLatestVersion = () => {
+    static currentEnvironmentWithDefaultVersion = () => {
         return new CommunityPhoneAPI(
             IS_PRODUCTION ? "production" : "staging",
-            this.latestVersion
+            this.defaultVersion
         );
     }
 
@@ -150,6 +150,7 @@ CommunityPhoneAPI.endpoints = Object.freeze({
     auth_token: "auth/token",
     portal_billing: "portal/billing",
     search_addresses: "search/addresses",
+    checkout_sessions: "checkout/sessions",
     chargebee_checkout: "chargebee/checkout",
     chargebee_checkPaymentStatus: (subscriptionIdentifier) => {
         return `chargebee/${subscriptionIdentifier}/check-payment-status`;

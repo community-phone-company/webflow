@@ -50,7 +50,7 @@ class ProductStore {
      */
     loadProducts = (callback) => {
         const _this = this;
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         return $.ajax({
             method: "GET",
             url: api.getAbsoluteUrl("billing/products"),

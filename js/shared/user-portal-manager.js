@@ -74,7 +74,7 @@ class UserPortalManager {
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
     requestAuthorizationCode = (email, callback) => {
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         const data = {
             email: email
         };
@@ -99,7 +99,7 @@ class UserPortalManager {
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
     sendAuthorizationCode = (code, email, callback) => {
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         const data = {
             token: code,
             email: email
@@ -134,7 +134,7 @@ class UserPortalManager {
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
     getAccessUrl = (authorizationToken, callback) => {
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         const headers = {
             "Authorization": `Token ${authorizationToken}`
         };

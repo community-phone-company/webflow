@@ -117,7 +117,7 @@ class ProductCart {
             this._onPricesStartedUpdating();
         }
 
-        const api = CommunityPhoneAPI.currentEnvironmentWithLatestVersion();
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         const request = $.ajax({
             url: api.getAbsoluteUrl("billing/products/tax-estimate"),
             method: "POST",
