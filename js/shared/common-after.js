@@ -149,11 +149,23 @@ if (IS_PRODUCTION) {
     }
 })();
 
-if (!IS_PRODUCTION) {
-    $(document).ready(() => {
-        $("#check-coverage").on("click", event => {
-            event.preventDefault();
-            alert("Test");
+/**
+ * Checkout session.
+ */
+(() => {
+    const session = CheckoutSession.getCurrent();
+
+    if (session.isAuthorized()) {
+        console.log(`Checkout session ID: ${session.getId()}`);
+    } else {
+        console.log(`Checkout session not found. Creating new one.`);
+        session.create(error => {
+            if (error) {
+                console.log(`Can't create new checkout session. Error: `, error);
+            } else {
+                session.storeId();
+                console.log(`Checkout session ID: ${session.getId()}`);
+            }
         });
-    });
-}
+    }
+})();
