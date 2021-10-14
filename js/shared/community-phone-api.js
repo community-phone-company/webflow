@@ -51,6 +51,19 @@ class CommunityPhoneAPI {
     }
 
     /**
+     * Checks {@link IS_PRODUCTION} value and creates new {@link CommunityPhoneAPI} instance
+     * with appropriate mode and API version from parameters.
+     * @param {string} version API version.
+     * @returns {CommunityPhoneAPI} Instance of {@link CommunityPhoneAPI} type.
+     */
+     static currentEnvironmentWithVersion = (version) => {
+        return new CommunityPhoneAPI(
+            IS_PRODUCTION ? "production" : "staging",
+            version
+        );
+    }
+
+    /**
      * @constructor
      * @param {"production" | "staging"} mode API mode.
      * @param {string} version API version name.
