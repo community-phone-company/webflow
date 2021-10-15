@@ -83,4 +83,109 @@ class CheckoutSessionDataMaker {
             }
         };
     }
+
+    /**
+     * @param {string | undefined} firstName 
+     * @param {string | undefined} lastName 
+     * @param {string | undefined} phone 
+     * @param {string | undefined} email 
+     * @param {string | undefined} howDidTheyHearAboutUs 
+     * @returns 
+     */
+    stepThree(
+        firstName,
+        lastName,
+        phone,
+        email,
+        howDidTheyHearAboutUs
+    ) {
+        return {
+            "first_name": firstName,
+            "last_name": lastName,
+            "phone": phone,
+            "email": email,
+            "how_did_they_hear_about_us": howDidTheyHearAboutUs
+        };
+    }
+
+    /**
+     * @param {string | undefined} shippingAddress_firstName 
+     * @param {string | undefined} shippingAddress_lastName 
+     * @param {string | undefined} shippingAddress_email 
+     * @param {string | undefined} shippingAddress_phone 
+     * @param {string | undefined} shippingAddress_addressLineOne 
+     * @param {string | undefined} shippingAddress_addressLineTwo 
+     * @param {string | undefined} shippingAddress_stateCode 
+     * @param {string | undefined} shippingAddress_city 
+     * @param {string | undefined} shippingAddress_zip 
+     * @param {string | undefined} billingAddress_firstName 
+     * @param {string | undefined} billingAddress_lastName 
+     * @param {string | undefined} billingAddress_email 
+     * @param {string | undefined} billingAddress_phone 
+     * @param {string | undefined} billingAddress_addressLineOne 
+     * @param {string | undefined} billingAddress_addressLineTwo 
+     * @param {string | undefined} billingAddress_stateCode 
+     * @param {string | undefined} billingAddress_city 
+     * @param {string | undefined} billingAddress_zip 
+     * @param {string | undefined} cardNumber 
+     * @param {string | undefined} cardExpiryMonth 
+     * @param {string | undefined} cardExpiryYear 
+     * @param {string | undefined} cardControlValue 
+     * @returns 
+     */
+    stepFour(
+        shippingAddress_firstName,
+        shippingAddress_lastName,
+        shippingAddress_email,
+        shippingAddress_phone,
+        shippingAddress_addressLineOne,
+        shippingAddress_addressLineTwo,
+        shippingAddress_stateCode,
+        shippingAddress_city,
+        shippingAddress_zip,
+        billingAddress_firstName,
+        billingAddress_lastName,
+        billingAddress_email,
+        billingAddress_phone,
+        billingAddress_addressLineOne,
+        billingAddress_addressLineTwo,
+        billingAddress_stateCode,
+        billingAddress_city,
+        billingAddress_zip,
+        cardNumber,
+        cardExpiryMonth,
+        cardExpiryYear,
+        cardControlValue
+    ) {
+        return {
+            "shipping_address": {
+                "first_name": shippingAddress_firstName,
+                "last_name": shippingAddress_lastName,
+                "email": shippingAddress_email,
+                "phone": shippingAddress_phone,
+                "line1": shippingAddress_addressLineOne,
+                "line2": shippingAddress_addressLineTwo,
+                "state_code": shippingAddress_stateCode,
+                "city": shippingAddress_city,
+                "zip": shippingAddress_zip
+            },
+            "billing_address": {
+                "first_name": billingAddress_firstName,
+                "last_name": billingAddress_lastName,
+                "email": billingAddress_email,
+                "phone": billingAddress_phone,
+                "line1": billingAddress_addressLineOne,
+                "line2": billingAddress_addressLineTwo,
+                "state_code": billingAddress_stateCode,
+                "city": billingAddress_city,
+                "zip": billingAddress_zip
+            },
+            "card": {
+                "card_number": cardNumber,
+                "card_expiry_month": cardExpiryMonth,
+                "card_expiry_year": cardExpiryYear,
+                "card_cvv": cardControlValue
+            }
+        };
+    }
 }
