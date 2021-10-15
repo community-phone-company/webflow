@@ -71,7 +71,9 @@ class CheckoutSession {
      */
     read(callback) {
         this._api.jsonRequest(
-            CommunityPhoneAPI.endpoints.checkout_sessions,
+            CommunityPhoneAPI.endpoints.checkout_sessions_id(
+                this._id
+            ),
             "GET",
             undefined,
             {
@@ -95,7 +97,9 @@ class CheckoutSession {
      */
     update(data, callback) {
         this._api.jsonRequest(
-            CommunityPhoneAPI.endpoints.checkout_sessions,
+            CommunityPhoneAPI.endpoints.checkout_sessions_id(
+                this._id
+            ),
             "PATCH",
             undefined,
             data,
