@@ -9,6 +9,25 @@ const page = {
     }
 };
 
+/**
+ * @param {() => void} callback 
+ */
+const sendDataToAbandonedCartAPI = (callback) => {
+    const session = CheckoutSession.getCurrent();
+    const data = new CheckoutSessionDataMaker().stepWithData(
+        "step_one",
+        {
+            "email": page.data.email
+        }
+    );
+    session.stopLastUpdateRequest();
+    session.update(data, error => {
+        if (callback) {
+            callback();
+        }
+    });
+};
+
 const handleDataChange = () => {
     const isFormValid = new EmailValidator().check(page.data.email);
     console.log(`is form valid: ${isFormValid}`);
@@ -16,6 +35,9 @@ const handleDataChange = () => {
         page.elements.submitButton,
         isFormValid
     );
+
+    sendDataToAbandonedCartAPI(() => {
+    });
 };
 
 const submitForm = () => {

@@ -1,6 +1,17 @@
 class CheckoutSessionDataMaker {
 
     /**
+     * @param {"step_one" | "step_two" | "step_three" | "step_four"} stepName 
+     * @param {any} data 
+     * @returns 
+     */
+    stepWithData(stepName, data) {
+        return {
+            [stepName]: data
+        };
+    }
+
+    /**
      * @param {"residential" | "business" | undefined} landlineService 
      * @param {string | undefined} addressLineOne 
      * @param {string | undefined} addressLineTwo 
