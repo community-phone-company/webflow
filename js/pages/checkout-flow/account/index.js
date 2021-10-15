@@ -6,7 +6,6 @@ const PageSettings = Object.freeze({
     useCaptcha: false
 });
 
-console.log(`On ready`);
 const form = {
     elements: {
         form: document.getElementById("wf-form-Account-form"),
