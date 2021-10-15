@@ -187,14 +187,10 @@ const submitForm = () => {
 
     if (IS_PRODUCTION) {
         sendDataToServiceAddressCheckGoogleSheet(() => {
-            sendDataToAbandonedCartAPI(() => {
-                makeTransitionAfterSubmit();
-            });
-        });
-    } else {
-        sendDataToAbandonedCartAPI(() => {
             makeTransitionAfterSubmit();
         });
+    } else {
+        makeTransitionAfterSubmit();
     }
 };
 
