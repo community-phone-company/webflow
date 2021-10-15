@@ -153,7 +153,7 @@ if (IS_PRODUCTION) {
  * Checkout session.
  */
 (() => {
-    if (IS_PRODUCTION) {
+    if (typeof CheckoutSession === "undefined") {
         return;
     }
 
