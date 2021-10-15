@@ -679,11 +679,13 @@ $(submitButton).on("click", (event) => {
         formData.selectedPhoneNumber ? formData.selectedPhoneNumber.serialize() : undefined
     );
 
-    router.open(
-        RouterPath.checkout_v2_account,
-        router.getParameters(),
-        router.isTestEnvironment()
-    );
+    sendDataToAbandonedCartAPI(() => {
+        router.open(
+            RouterPath.checkout_v2_account,
+            router.getParameters(),
+            router.isTestEnvironment()
+        );
+    });
 });
 
 /**
@@ -693,6 +695,25 @@ const sendDataToAbandonedCartAPI = (callback) => {
     const session = CheckoutSession.getCurrent();
     const data = new CheckoutSessionDataMaker().stepTwo(
         formData.selectedPhoneNumber,
+        (() => {
+            if (formData.getNewNumber) {
+                return formData.selectedPhoneNumber ? ChargebeeCheckoutPhoneNumberServiceType.selectedNumber : ChargebeeCheckoutPhoneNumberServiceType.getNewNumber;
+            } else {
+                return ChargebeeCheckoutPhoneNumberServiceType.portExistingNumber;
+            }
+        })(),
+        formData.productCart.getProductIdentifiers(),
+        portPhoneNumberPopup.getFormData().technicalData.carrierName,
+        portPhoneNumberPopup.getFormData().technicalData.accountName,
+        portPhoneNumberPopup.getFormData().technicalData.numberToPort,
+        portPhoneNumberPopup.getFormData().technicalData.accountNumber,
+        portPhoneNumberPopup.getFormData().technicalData.pin,
+        portPhoneNumberPopup.getFormData().serviceAddress.firstName,
+        portPhoneNumberPopup.getFormData().serviceAddress.lastName,
+        portPhoneNumberPopup.getFormData().serviceAddress.addressLineOne,
+        portPhoneNumberPopup.getFormData().serviceAddress.city,
+        portPhoneNumberPopup.getFormData().serviceAddress.state,
+        portPhoneNumberPopup.getFormData().serviceAddress.zip
     );
     session.stopLastUpdateRequest();
     session.update(data, error => {
