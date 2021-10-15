@@ -157,7 +157,8 @@ $(form.elements.submitButton).on("click", (event) => {
     );
 });
 
+findAndUpdateOrderSummaryPanel();
+
 $(document).ready(() => {
     handleFormDataChange();
-    findAndUpdateOrderSummaryPanel();
 });
