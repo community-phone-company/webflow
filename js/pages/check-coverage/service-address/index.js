@@ -92,6 +92,13 @@ const isAddressCorrect = (callback) => {
  * @param {() => void} callback 
  */
 const sendDataToAbandonedCartAPI = (callback) => {
+    if (typeof CheckoutSession === "undefined") {
+        if (callback) {
+            callback();
+        }
+        return;
+    }
+    
     const session = CheckoutSession.getCurrent();
     const data = new CheckoutSessionDataMaker().stepOne(
         page.data.isBusiness ? "business" : "residential",
