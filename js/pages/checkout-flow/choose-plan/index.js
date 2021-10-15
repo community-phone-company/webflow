@@ -307,6 +307,41 @@ const formData = {
     userLocation: undefined
 };
 
+/**
+ * @param {() => void} callback 
+ */
+ const sendDataToAbandonedCartAPI = (callback) => {
+    const session = CheckoutSession.getCurrent();
+    const data = new CheckoutSessionDataMaker().stepTwo(
+        formData.selectedPhoneNumber ? formData.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular) : undefined,
+        (() => {
+            if (formData.getNewNumber) {
+                return formData.selectedPhoneNumber ? ChargebeeCheckoutPhoneNumberServiceType.selectedNumber : ChargebeeCheckoutPhoneNumberServiceType.getNewNumber;
+            } else {
+                return ChargebeeCheckoutPhoneNumberServiceType.portExistingNumber;
+            }
+        })(),
+        formData.productCart.getProductIdentifiers(),
+        portPhoneNumberPopup.getFormData().technicalData.carrierName,
+        portPhoneNumberPopup.getFormData().technicalData.accountName,
+        portPhoneNumberPopup.getFormData().technicalData.numberToPort,
+        portPhoneNumberPopup.getFormData().technicalData.accountNumber,
+        portPhoneNumberPopup.getFormData().technicalData.pin,
+        portPhoneNumberPopup.getFormData().serviceAddress.firstName,
+        portPhoneNumberPopup.getFormData().serviceAddress.lastName,
+        portPhoneNumberPopup.getFormData().serviceAddress.addressLineOne,
+        portPhoneNumberPopup.getFormData().serviceAddress.city,
+        portPhoneNumberPopup.getFormData().serviceAddress.state,
+        portPhoneNumberPopup.getFormData().serviceAddress.zip
+    );
+    session.stopLastUpdateRequest();
+    session.update(data, error => {
+        if (callback) {
+            callback();
+        }
+    });
+};
+
 PhoneNumberManager.getUserLocation((city, error) => {
     formData.userLocation = city;
 });
@@ -691,11 +726,13 @@ if (is_v2) {
             formData.selectedPhoneNumber ? formData.selectedPhoneNumber.serialize() : undefined
         );
 
-        router.open(
-            is_v2 ? RouterPath.checkout_v2_account : RouterPath.checkoutLandline_account,
-            router.getParameters(),
-            router.isTestEnvironment()
-        );
+        sendDataToAbandonedCartAPI(() => {
+            router.open(
+                is_v2 ? RouterPath.checkout_v2_account : RouterPath.checkoutLandline_account,
+                router.getParameters(),
+                router.isTestEnvironment()
+            );
+        });
     });
 
     /**
