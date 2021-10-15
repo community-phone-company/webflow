@@ -13,8 +13,27 @@ class CheckoutSession {
         return this._currentSession;
     }
 
-    constructor() {
-        this._id = Store.local.read(
+    /**
+     * @param {string} sessionId 
+     * @returns {string}
+     */
+    static generateAbandonedCartLink(
+        sessionId
+    ) {
+        return router.getAbsoluteUrl(
+            RouterPath.landlineService,
+            {
+                session_id: sessionId
+            },
+            false
+        );
+    }
+
+    /**
+     * @param {string | undefined} id 
+     */
+    constructor(id) {
+        this._id = id ?? Store.local.read(
             Store.keys.checkoutFlow.sessionId
         );
         this._data = undefined;
