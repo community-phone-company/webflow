@@ -44,9 +44,10 @@ class CheckoutSession {
 
     /**
      * @param {((error: any) => void) | undefined} callback 
+     * @returns {XMLHttpRequest | undefined} Request instance.
      */
     create(callback) {
-        this._api.jsonRequest(
+        return this._api.jsonRequest(
             CommunityPhoneAPI.endpoints.checkout_sessions,
             "POST",
             undefined,
@@ -68,9 +69,10 @@ class CheckoutSession {
 
     /**
      * @param {((error: any) => void) | undefined} callback 
+     * @returns {XMLHttpRequest | undefined} Request instance.
      */
     read(callback) {
-        this._api.jsonRequest(
+        return this._api.jsonRequest(
             CommunityPhoneAPI.endpoints.checkout_sessions_id(
                 this._id
             ),
@@ -94,9 +96,10 @@ class CheckoutSession {
     /**
      * @param {any} data
      * @param {((error: any) => void) | undefined} callback 
+     * @returns {XMLHttpRequest | undefined} Request instance.
      */
     update(data, callback) {
-        this._api.jsonRequest(
+        const request = this._api.jsonRequest(
             CommunityPhoneAPI.endpoints.checkout_sessions_id(
                 this._id
             ),
@@ -111,5 +114,13 @@ class CheckoutSession {
                 }
             }
         );
+        this._lastUpdateRequest = request;
+        return request;
+    }
+
+    stopLastUpdateRequest() {
+        if (this._lastUpdateRequest) {
+            this._lastUpdateRequest.abort();
+        }
     }
 }

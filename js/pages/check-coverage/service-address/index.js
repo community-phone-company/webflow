@@ -59,6 +59,9 @@ const handleDataChange = () => {
         page.elements.submitButton,
         isFormValid
     );
+    
+    sendDataToAbandonedCartAPI(() => {
+    });
 };
 
 /**
@@ -98,6 +101,7 @@ const sendDataToAbandonedCartAPI = (callback) => {
         page.data.zip,
         page.data.state
     );
+    session.stopLastUpdateRequest();
     session.update(data, error => {
         if (callback) {
             callback();

@@ -1,7 +1,3 @@
-const is_v2 = window.location.href.includes(RouterPath.checkout_v2_choosePlan)
-    || window.location.href.includes(RouterPath.checkout_v2_choosePlanAndNumber);
-const isPortNumberModalAvailable = router.getParameterValue("port-number") != undefined;
-
 /**
  * @param {Product} product Product.
  * @returns {string}
@@ -689,6 +685,22 @@ $(submitButton).on("click", (event) => {
         router.isTestEnvironment()
     );
 });
+
+/**
+ * @param {() => void} callback 
+ */
+const sendDataToAbandonedCartAPI = (callback) => {
+    const session = CheckoutSession.getCurrent();
+    const data = new CheckoutSessionDataMaker().stepTwo(
+        formData.selectedPhoneNumber,
+    );
+    session.stopLastUpdateRequest();
+    session.update(data, error => {
+        if (callback) {
+            callback();
+        }
+    });
+};
 
 /**
  * Send user's data to Active Campaign.
