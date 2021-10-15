@@ -23,18 +23,17 @@ class CheckoutSession {
         return router.getAbsoluteUrl(
             RouterPath.landlineService,
             {
-                session_id: sessionId
+                [RouterPathParameter.checkoutSessionId]: sessionId
             },
             false
         );
     }
 
-    /**
-     * @param {string | undefined} id 
-     */
-    constructor(id) {
-        this._id = id ?? Store.local.read(
-            Store.keys.checkoutFlow.sessionId
+    constructor() {
+        this.setId(
+            Store.local.read(
+                Store.keys.checkoutFlow.sessionId
+            )
         );
         this._data = undefined;
         this._api = CommunityPhoneAPI.currentEnvironmentWithVersion("2");
@@ -45,6 +44,22 @@ class CheckoutSession {
      */
     getId() {
         return this._id;
+    }
+
+    /**
+     * @param {string} id 
+     */
+    setId(id) {
+        if (this._id === id) {
+            return;
+        }
+
+        this._id = id;
+        this._data = undefined;
+    }
+
+    getData() {
+        return this._data;
     }
 
     storeId() {
@@ -74,7 +89,9 @@ class CheckoutSession {
             (response, error) => {
                 if (!error && response) {
                     const sessionId = response.session_id;
-                    this._id = sessionId;
+                    this.setId(
+                        sessionId
+                    );
                 }
 
                 if (callback) {

@@ -129,14 +129,22 @@ const RouterPath = Object.freeze({
     checkout_v2_choosePlanAndNumber: "checkout-v2/choose-plan-and-number",
     checkout_v2_account: "checkout-v2/account",
     checkout_v2_checkoutStep: "checkout-v2/checkout-step",
-    checkout_v2_thankYou: "checkout-v2/thank-you"
+    checkout_v2_thankYou: "checkout-v2/thank-you",
+
+    /**
+     * Checkout v3
+     */
+    checkout_v3_checkout: "checkout-v3/checkout-flow",
+    checkout_v3_choosePhoneNumber: "checkout-v3/services/choose-phone-number",
+    checkout_v3_portPhoneNumber: "checkout-v3/services/choose-your-previous-carrier"
 });
 
 const RouterPathParameter = Object.freeze({
     portingActivated: "p",
     newNumberActivated: "n",
     checkoutVersion_1: "v1",
-    sales: "sales"
+    sales: "sales",
+    checkoutSessionId: "session_id"
 });
 
 const router = new Router();

@@ -153,13 +153,26 @@ if (IS_PRODUCTION) {
  * Checkout session.
  */
 (() => {
-    if (typeof CheckoutSession === "undefined") {
-        return;
-    }
-
     const session = CheckoutSession.getCurrent();
 
-    if (session.isAuthorized()) {
+    const sessionIdFromUrl = router.getParameterValue(
+        RouterPathParameter.checkoutSessionId
+    );
+
+    if (sessionIdFromUrl) {
+        if (session.getId() === sessionIdFromUrl) {
+            console.log(`Checkout session ID: ${session.getId()}`);
+        } else {
+            Store.removeCheckoutData();
+            session.setId(
+                sessionIdFromUrl
+            );
+            session.storeId();
+            session.read((error) => {
+                console.log(session.getData());
+            });
+        }
+    } else if (session.isAuthorized()) {
         console.log(`Checkout session ID: ${session.getId()}`);
     } else {
         console.log(`Checkout session not found. Creating new one.`);
