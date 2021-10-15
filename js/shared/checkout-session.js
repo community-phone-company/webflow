@@ -12,7 +12,7 @@ class CheckoutSession {
 
         return this._currentSession;
     }
-    
+
     constructor() {
         this._id = Store.local.read(
             Store.keys.checkoutFlow.sessionId
