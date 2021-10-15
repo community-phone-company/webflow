@@ -59,7 +59,7 @@ const handleDataChange = () => {
         page.elements.submitButton,
         isFormValid
     );
-    
+
     sendDataToAbandonedCartAPI(() => {
     });
 };
@@ -207,6 +207,7 @@ const setupUI = () => {
         $(radioButtonFields).find(".radio-button").removeClass("w--redirected-checked");
         $(event.currentTarget).find(".radio-button").addClass("w--redirected-checked");
         page.data.isBusiness = event.currentTarget === page.elements.businessRadioButtonField;
+        handleDataChange();
     });
     
     new InputValueObserver(page.elements.addressLineOneInput).startObserving(newValue => {
