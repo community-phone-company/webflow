@@ -132,9 +132,9 @@ if (PageSettings.useCaptcha) {
     });
 }
 
-$(form.elements.form).submit((event) => {
-    event.preventDefault();
-});
+UserInterface.makeFormUnsubmittable(
+    form.elements.form
+);
 
 $(form.elements.submitButton).on("click", (event) => {
     event.preventDefault();
@@ -157,6 +157,7 @@ $(form.elements.submitButton).on("click", (event) => {
     );
 });
 
+handleFormDataChange();
 findAndUpdateOrderSummaryPanel();
 
 $(document).ready(() => {
