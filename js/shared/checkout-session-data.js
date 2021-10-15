@@ -20,7 +20,7 @@ class CheckoutSessionDataMaker {
      * @param {string | undefined} stateCode 
      * @returns
      */
-    stepOne(
+    step_checkCoverage(
         landlineService,
         addressLineOne,
         addressLineTwo,
@@ -29,7 +29,7 @@ class CheckoutSessionDataMaker {
         stateCode
     ) {
         return {
-            "step_one": {
+            "check_coverage": {
                 "landline_service": landlineService,
                 "address_line_one": addressLineOne,
                 "address_line_two": addressLineTwo,
@@ -57,7 +57,7 @@ class CheckoutSessionDataMaker {
      * @param {string | undefined} porting_serviceAddress_zip 
      * @returns 
      */
-    stepTwo(
+    step_products(
         selectedPhoneNumber,
         phoneNumberService,
         selectedProducts,
@@ -74,7 +74,7 @@ class CheckoutSessionDataMaker {
         porting_serviceAddress_zip
     ) {
         return {
-            "step_two": {
+            "products": {
                 "selected_phonenumber": selectedPhoneNumber,
                 "phonenumber_service": phoneNumberService,
                 "selected_products": selectedProducts,
@@ -107,7 +107,7 @@ class CheckoutSessionDataMaker {
      * @param {string | undefined} howDidTheyHearAboutUs 
      * @returns 
      */
-    stepThree(
+    step_accountDetails(
         firstName,
         lastName,
         phone,
@@ -115,7 +115,7 @@ class CheckoutSessionDataMaker {
         howDidTheyHearAboutUs
     ) {
         return {
-            "step_three": {
+            "account_details": {
                 "first_name": firstName,
                 "last_name": lastName,
                 "phone": phone,
@@ -150,7 +150,7 @@ class CheckoutSessionDataMaker {
      * @param {string | undefined} cardControlValue 
      * @returns 
      */
-    stepFour(
+    step_billingDetails(
         shippingAddress_firstName,
         shippingAddress_lastName,
         shippingAddress_email,
@@ -175,7 +175,7 @@ class CheckoutSessionDataMaker {
         cardControlValue
     ) {
         return {
-            "step_four": {
+            "billing_details": {
                 "shipping_address": {
                     "first_name": shippingAddress_firstName,
                     "last_name": shippingAddress_lastName,
@@ -204,6 +204,20 @@ class CheckoutSessionDataMaker {
                     "card_expiry_year": cardExpiryYear,
                     "card_cvv": cardControlValue
                 }
+            }
+        };
+    }
+
+    /**
+     * @param {string | undefined} email 
+     * @returns 
+     */
+    step_learnMore(
+        email
+    ) {
+        return {
+            "learn_more": {
+                "email": email
             }
         };
     }

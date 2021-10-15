@@ -311,15 +311,8 @@ const formData = {
  * @param {() => void} callback 
  */
 const sendDataToAbandonedCartAPI = (callback) => {
-    if (typeof CheckoutSession === "undefined") {
-        if (callback) {
-            callback();
-        }
-        return;
-    }
-    
     const session = CheckoutSession.getCurrent();
-    const data = new CheckoutSessionDataMaker().stepTwo(
+    const data = new CheckoutSessionDataMaker().step_products(
         formData.selectedPhoneNumber ? formData.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular) : undefined,
         (() => {
             if (formData.getNewNumber) {

@@ -30,15 +30,8 @@ const form = {
  * @param {() => void} callback 
  */
 const sendDataToAbandonedCartAPI = (callback) => {
-    if (typeof CheckoutSession === "undefined") {
-        if (callback) {
-            callback();
-        }
-        return;
-    }
-    
     const session = CheckoutSession.getCurrent();
-    const data = new CheckoutSessionDataMaker().stepThree(
+    const data = new CheckoutSessionDataMaker().step_accountDetails(
         form.data.firstName,
         form.data.lastName,
         form.data.phone,

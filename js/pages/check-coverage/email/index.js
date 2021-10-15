@@ -13,19 +13,9 @@ const page = {
  * @param {() => void} callback 
  */
 const sendDataToAbandonedCartAPI = (callback) => {
-    if (typeof CheckoutSession === "undefined") {
-        if (callback) {
-            callback();
-        }
-        return;
-    }
-    
     const session = CheckoutSession.getCurrent();
-    const data = new CheckoutSessionDataMaker().stepWithData(
-        "email_step",
-        {
-            "email": page.data.email
-        }
+    const data = new CheckoutSessionDataMaker().step_learnMore(
+        page.data.email
     );
     session.stopLastUpdateRequest();
     session.update(data, error => {
@@ -43,8 +33,8 @@ const handleDataChange = () => {
         isFormValid
     );
 
-    /*sendDataToAbandonedCartAPI(() => {
-    });*/
+    sendDataToAbandonedCartAPI(() => {
+    });
 };
 
 const submitForm = () => {

@@ -133,15 +133,8 @@ var billingAddressForOrderSummaryPanel = undefined;
  * @param {() => void} callback 
  */
 const sendDataToAbandonedCartAPI = (callback) => {
-    if (typeof CheckoutSession === "undefined") {
-        if (callback) {
-            callback();
-        }
-        return;
-    }
-    
     const session = CheckoutSession.getCurrent();
-    const data = new CheckoutSessionDataMaker().stepFour(
+    const data = new CheckoutSessionDataMaker().step_billingDetails(
         form.data.shippingAddress.firstName,
         form.data.shippingAddress.lastName,
         undefined,
