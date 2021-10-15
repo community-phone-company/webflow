@@ -153,6 +153,10 @@ if (IS_PRODUCTION) {
  * Checkout session.
  */
 (() => {
+    if (IS_PRODUCTION) {
+        return;
+    }
+
     const session = CheckoutSession.getCurrent();
 
     if (session.isAuthorized()) {
