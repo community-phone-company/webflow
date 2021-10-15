@@ -22,7 +22,7 @@ const sendDataToAbandonedCartAPI = (callback) => {
     
     const session = CheckoutSession.getCurrent();
     const data = new CheckoutSessionDataMaker().stepWithData(
-        "step_one",
+        "email_step",
         {
             "email": page.data.email
         }
@@ -43,8 +43,8 @@ const handleDataChange = () => {
         isFormValid
     );
 
-    sendDataToAbandonedCartAPI(() => {
-    });
+    /*sendDataToAbandonedCartAPI(() => {
+    });*/
 };
 
 const submitForm = () => {
