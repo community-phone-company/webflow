@@ -18,12 +18,14 @@ class CheckoutSessionDataMaker {
         stateCode
     ) {
         return {
-            "landline_service": landlineService,
-            "address_line_one": addressLineOne,
-            "address_line_two": addressLineTwo,
-            "city": city,
-            "zip": zip,
-            "state_code": stateCode
+            "step_one": {
+                "landline_service": landlineService,
+                "address_line_one": addressLineOne,
+                "address_line_two": addressLineTwo,
+                "city": city,
+                "zip": zip,
+                "state_code": stateCode
+            }
         };
     }
 
@@ -61,24 +63,26 @@ class CheckoutSessionDataMaker {
         porting_serviceAddress_zip
     ) {
         return {
-            "selected_phonenumber": selectedPhoneNumber,
-            "phonenumber_service": phoneNumberService,
-            "selected_products": selectedProducts,
-            "porting_data": {
-                "technical_data": {
-                    "carrier_name": porting_technicalData_carrierName,
-                    "account_name": porting_technicalData_accountName,
-                    "number_to_port": porting_technicalData_numberToPort,
-                    "account_number": porting_technicalData_accountNumber,
-                    "pin": porting_technicalData_pin
-                },
-                "service_address": {
-                    "first_name": porting_serviceAddress_firstName,
-                    "last_name": porting_serviceAddress_lastName,
-                    "address_line_one": porting_serviceAddress_addressLineOne,
-                    "city": porting_serviceAddress_city,
-                    "state": porting_serviceAddress_state,
-                    "zip": porting_serviceAddress_zip
+            "step_two": {
+                "selected_phonenumber": selectedPhoneNumber,
+                "phonenumber_service": phoneNumberService,
+                "selected_products": selectedProducts,
+                "porting_data": {
+                    "technical_data": {
+                        "carrier_name": porting_technicalData_carrierName,
+                        "account_name": porting_technicalData_accountName,
+                        "number_to_port": porting_technicalData_numberToPort,
+                        "account_number": porting_technicalData_accountNumber,
+                        "pin": porting_technicalData_pin
+                    },
+                    "service_address": {
+                        "first_name": porting_serviceAddress_firstName,
+                        "last_name": porting_serviceAddress_lastName,
+                        "address_line_one": porting_serviceAddress_addressLineOne,
+                        "city": porting_serviceAddress_city,
+                        "state": porting_serviceAddress_state,
+                        "zip": porting_serviceAddress_zip
+                    }
                 }
             }
         };
@@ -100,11 +104,13 @@ class CheckoutSessionDataMaker {
         howDidTheyHearAboutUs
     ) {
         return {
-            "first_name": firstName,
-            "last_name": lastName,
-            "phone": phone,
-            "email": email,
-            "how_did_they_hear_about_us": howDidTheyHearAboutUs
+            "step_three": {
+                "first_name": firstName,
+                "last_name": lastName,
+                "phone": phone,
+                "email": email,
+                "how_did_they_hear_about_us": howDidTheyHearAboutUs
+            }
         };
     }
 
@@ -158,33 +164,35 @@ class CheckoutSessionDataMaker {
         cardControlValue
     ) {
         return {
-            "shipping_address": {
-                "first_name": shippingAddress_firstName,
-                "last_name": shippingAddress_lastName,
-                "email": shippingAddress_email,
-                "phone": shippingAddress_phone,
-                "line1": shippingAddress_addressLineOne,
-                "line2": shippingAddress_addressLineTwo,
-                "state_code": shippingAddress_stateCode,
-                "city": shippingAddress_city,
-                "zip": shippingAddress_zip
-            },
-            "billing_address": {
-                "first_name": billingAddress_firstName,
-                "last_name": billingAddress_lastName,
-                "email": billingAddress_email,
-                "phone": billingAddress_phone,
-                "line1": billingAddress_addressLineOne,
-                "line2": billingAddress_addressLineTwo,
-                "state_code": billingAddress_stateCode,
-                "city": billingAddress_city,
-                "zip": billingAddress_zip
-            },
-            "card": {
-                "card_number": cardNumber,
-                "card_expiry_month": cardExpiryMonth,
-                "card_expiry_year": cardExpiryYear,
-                "card_cvv": cardControlValue
+            "step_four": {
+                "shipping_address": {
+                    "first_name": shippingAddress_firstName,
+                    "last_name": shippingAddress_lastName,
+                    "email": shippingAddress_email,
+                    "phone": shippingAddress_phone,
+                    "line1": shippingAddress_addressLineOne,
+                    "line2": shippingAddress_addressLineTwo,
+                    "state_code": shippingAddress_stateCode,
+                    "city": shippingAddress_city,
+                    "zip": shippingAddress_zip
+                },
+                "billing_address": {
+                    "first_name": billingAddress_firstName,
+                    "last_name": billingAddress_lastName,
+                    "email": billingAddress_email,
+                    "phone": billingAddress_phone,
+                    "line1": billingAddress_addressLineOne,
+                    "line2": billingAddress_addressLineTwo,
+                    "state_code": billingAddress_stateCode,
+                    "city": billingAddress_city,
+                    "zip": billingAddress_zip
+                },
+                "card": {
+                    "card_number": cardNumber,
+                    "card_expiry_month": cardExpiryMonth,
+                    "card_expiry_year": cardExpiryYear,
+                    "card_cvv": cardControlValue
+                }
             }
         };
     }
