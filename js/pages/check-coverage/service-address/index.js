@@ -85,6 +85,60 @@ const isAddressCorrect = (callback) => {
     });
 };
 
+/**
+ * @param {() => void} callback 
+ */
+const sendDataToAbandonedCartAPI = (callback) => {
+    const session = CheckoutSession.getCurrent();
+    const data = new CheckoutSessionDataMaker().stepOne(
+        page.data.isBusiness ? "business" : "residential",
+        page.data.addressLineOne,
+        page.data.addressLineTwo,
+        page.data.city,
+        page.data.zip,
+        page.data.state
+    );
+    session.update(data, error => {
+        if (callback) {
+            callback();
+        }
+    });
+};
+
+/**
+ * @param {() => void} callback 
+ */
+const sendDataToServiceAddressCheckGoogleSheet = (callback) => {
+    const email = Store.local.read(
+        Store.keys.checkoutFlow.email
+    );
+    GoogleDocIntegration.addLineToServiceAddressCheck(
+        page.data.addressLineOne,
+        page.data.city,
+        page.data.state,
+        page.data.zip,
+        page.data.isBusiness,
+        email,
+        getOrCreateUserId(),
+        true,
+        (response, error, success) => {
+            router.open(
+                RouterPath.checkCoverage_coverage,
+                router.getParameters(),
+                router.isTestEnvironment()
+            );
+        }
+    );
+}
+
+const makeTransitionAfterSubmit = () => {
+    router.open(
+        RouterPath.checkCoverage_coverage,
+        router.getParameters(),
+        router.isTestEnvironment()
+    );
+};
+
 const submitForm = () => {
     const addressLineOne = page.data.addressLineOne;
     Store.local.write(
@@ -127,36 +181,16 @@ const submitForm = () => {
         orderBySalesperson
     );
 
-    const email = Store.local.read(
-        Store.keys.checkoutFlow.email
-    );
-
-    const sendToServiceAddressCheck = IS_PRODUCTION && !addressLineOne.toLowerCase().startsWith("CommunityPhone");
-
-    if (sendToServiceAddressCheck) {
-        GoogleDocIntegration.addLineToServiceAddressCheck(
-            addressLineOne,
-            city,
-            state,
-            zip,
-            isBusiness,
-            email,
-            getOrCreateUserId(),
-            true,
-            (response, error, success) => {
-                router.open(
-                    RouterPath.checkCoverage_coverage,
-                    router.getParameters(),
-                    router.isTestEnvironment()
-                );
-            }
-        );
+    if (IS_PRODUCTION) {
+        sendDataToServiceAddressCheckGoogleSheet(() => {
+            sendDataToAbandonedCartAPI(() => {
+                makeTransitionAfterSubmit();
+            });
+        });
     } else {
-        router.open(
-            RouterPath.checkCoverage_coverage,
-            router.getParameters(),
-            router.isTestEnvironment()
-        );
+        sendDataToAbandonedCartAPI(() => {
+            makeTransitionAfterSubmit();
+        });
     }
 };
 
