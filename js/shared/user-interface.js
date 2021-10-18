@@ -55,11 +55,38 @@ class UserInterface {
      */
     static forbidSpaceKeyForInput = (element) => {
         element.onkeypress = (event) => {
-            const forbiddenKeys = ["Space"];
-    
+            const forbiddenKeys = ["Space"]; Î
+
             if (forbiddenKeys.includes(event.code)) {
                 event.preventDefault();
             }
+        }
+    }
+
+    /**
+     * @param {boolean} scrollable 
+     */
+    static makePageScrollable = (scrollable) => {
+        const body = $(document.body);
+        var scrollPosition = 0;
+
+        if (scrollable) {
+            if (body.css("overflow") != "hidden") {
+                scrollPosition = window.pageYOffset;
+            }
+
+            body.css("overflow", "");
+            body.css("position", "");
+            body.css("top", "");
+            body.width("");
+            $(window).scrollTop(scrollPosition);
+        } else {
+            const oldWidth = body.innerWidth();
+            scrollPosition = window.pageYOffset;
+            body.css("overflow", "hidden");
+            body.css("position", "fixed");
+            body.css("top", `-${scrollPosition}px`);
+            body.width(oldWidth);
         }
     }
 }
