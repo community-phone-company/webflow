@@ -89,12 +89,18 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
                 ),
                 (() => {
                     const session = CheckoutSession.getCurrent();
-                    new ActiveCampaignContactCustomField(
-                        "Abandon cart link",
-                        session.isAuthorized()
-                            ? CheckoutSession.generateAbandonedCartLink(session.getId())
-                            : ""
-                    )
+                    
+                    if (session.isAuthorized()) {
+                        return new ActiveCampaignContactCustomField(
+                            "Abandon cart link",
+                            CheckoutSession.generateAbandonedCartLink(session.getId())
+                        );
+                    } else {
+                        return new ActiveCampaignContactCustomField(
+                            undefined,
+                            undefined
+                        );
+                    }
                 })()
             ]
         ),
