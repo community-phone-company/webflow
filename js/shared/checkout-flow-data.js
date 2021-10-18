@@ -87,12 +87,15 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
                     "Billing address state",
                     Store.local.read(Store.keys.checkoutFlow.billingAddress_state)
                 ),
-                new ActiveCampaignContactCustomField(
-                    "Abandon cart link",
-                    session.isAuthorized()
-                        ? CheckoutSession.generateAbandonedCartLink(session.getId())
-                        : undefined
-                )
+                (() => {
+                    const session = CheckoutSession.getCurrent();
+                    new ActiveCampaignContactCustomField(
+                        "Abandon cart link",
+                        session.isAuthorized()
+                            ? CheckoutSession.generateAbandonedCartLink(session.getId())
+                            : ""
+                    )
+                })()
             ]
         ),
         ActiveCampaignList.chargebeeAbandonedCarts(),
