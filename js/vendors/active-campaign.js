@@ -143,28 +143,6 @@ class ActiveCampaignContact {
      * JSON object.
      * @returns {any}
      */
-    /*toJSON = () => {
-        return {
-            ...this.email ? {"email": this.email} : undefined,
-            ...this.firstName ? {"firstName": this.firstName} : undefined,
-            ...this.lastName ? {"lastName": this.lastName} : undefined,
-            ...this.phone ? {"phone": this.phone} : undefined,
-            ...(() => {
-                if (this.fields) {
-                    const filteredFields = this.fields.filter(field => field.value != undefined);
-
-                    if (filteredFields.length) {
-                        return {
-                            "fieldValues": filteredFields.map(field => field.toJSON())
-                        };
-                    }
-                }
-                
-                return undefined;
-            })()
-        };
-    }*/
-
     toJSON = () => {
         var json = {
             ...this.email ? {"email": this.email} : undefined,

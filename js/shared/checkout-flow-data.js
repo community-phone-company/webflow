@@ -86,6 +86,12 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
                 new ActiveCampaignContactCustomField(
                     "Billing address state",
                     Store.local.read(Store.keys.checkoutFlow.billingAddress_state)
+                ),
+                new ActiveCampaignContactCustomField(
+                    "Abandon cart link",
+                    session.isAuthorized()
+                        ? CheckoutSession.generateAbandonedCartLink(session.getId())
+                        : undefined
                 )
             ]
         ),
