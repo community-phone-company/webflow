@@ -165,6 +165,10 @@ class Popup {
             opacity: 1
         };
         const whenFinished = () => {
+            UserInterface.makePageScrollable(
+                false
+            );
+            
             if (this._onShowHandler) {
                 this._onShowHandler();
             }
@@ -232,6 +236,10 @@ class Popup {
         };
         const whenFinished = () => {
             $(container).css("display", "none");
+            
+            UserInterface.makePageScrollable(
+                true
+            );
 
             if (this._onHideHandler) {
                 this._onHideHandler();
