@@ -174,6 +174,12 @@ if (IS_PRODUCTION) {
                         data
                     );
                     reader.transferDataToStore();
+
+                    router.open(
+                        RouterPath.checkout_v2_choosePlan,
+                        undefined,
+                        false
+                    );
                 }
             });
         }
