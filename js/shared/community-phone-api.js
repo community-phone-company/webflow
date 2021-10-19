@@ -133,6 +133,13 @@ class CommunityPhoneAPI {
             data
         ].forEach(value => console.log(value));
 
+        const startTimestamp = Date.now();
+        const measureDuration = (startTimestamp) => {
+            const endTimestamp = Date.now();
+            const duration = (endTimestamp - startTimestamp) / 1000;
+            console.log(`Finished in ${duration} seconds`);
+        };
+
         return $.ajax({
             url: url,
             method: method,
@@ -141,6 +148,7 @@ class CommunityPhoneAPI {
             data: data ? JSON.stringify(data) : undefined,
             contentType: "application/json; charset=utf-8",
             success: function (response) {
+                measureDuration(startTimestamp);
                 console.log(`Response from URL ${url}: `, response);
                 callback(
                     response,
@@ -148,6 +156,7 @@ class CommunityPhoneAPI {
                 );
             },
             error: function (error) {
+                measureDuration(startTimestamp);
                 console.log(`Error from URL ${url}: `, error);
                 callback(
                     undefined,
