@@ -106,9 +106,85 @@ class CheckoutSessionDataReader {
         }
 
         if (this.data.account_details) {
+            store.write(
+                Store.keys.checkoutFlow.firstName,
+                this.data.account_details.first_name
+            );
+            store.write(
+                Store.keys.checkoutFlow.lastName,
+                this.data.account_details.last_name
+            );
+            store.write(
+                Store.keys.checkoutFlow.phone,
+                this.data.account_details.phone
+            );
+            store.write(
+                Store.keys.checkoutFlow.email,
+                this.data.account_details.email
+            );
+            store.write(
+                Store.keys.checkoutFlow.howDidYouHearAboutUs,
+                this.data.account_details.how_did_they_hear_about_us
+            );
         }
 
         if (this.data.billing_details) {
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_firstName,
+                this.data.billing_details.shipping_address.first_name
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_lastName,
+                this.data.billing_details.shipping_address.last_name
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_addressLine1,
+                this.data.billing_details.shipping_address.line1
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_addressLine2,
+                this.data.billing_details.shipping_address.line2
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_state,
+                this.data.billing_details.shipping_address.state_code
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_city,
+                this.data.billing_details.shipping_address.city
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_zip,
+                this.data.billing_details.shipping_address.zip
+            );
+            store.write(
+                Store.keys.checkoutFlow.billingAddress_firstName,
+                this.data.billing_details.billing_address.first_name
+            );
+            store.write(
+                Store.keys.checkoutFlow.billingAddress_lastName,
+                this.data.billing_details.billing_address.last_name
+            );
+            store.write(
+                Store.keys.checkoutFlow.billingAddress_addressLine1,
+                this.data.billing_details.billing_address.line1
+            );
+            store.write(
+                Store.keys.checkoutFlow.billingAddress_addressLine2,
+                this.data.billing_details.billing_address.line2
+            );
+            store.write(
+                Store.keys.checkoutFlow.billingAddress_state,
+                this.data.billing_details.billing_address.state_code
+            );
+            store.write(
+                Store.keys.checkoutFlow.billingAddress_city,
+                this.data.billing_details.billing_address.city
+            );
+            store.write(
+                Store.keys.checkoutFlow.billingAddress_zip,
+                this.data.billing_details.billing_address.zip
+            );
         }
 
         if (this.data.learn_more) {
