@@ -222,3 +222,65 @@ class CheckoutSessionDataMaker {
         };
     }
 }
+
+class CheckoutSessionDataReader {
+
+    /**
+     * @constructor
+     * @param {any} data 
+     */
+    constructor(data) {
+        this.data = data;
+    }
+
+    transferDataToStore() {
+        if (!this.data) {
+            return;
+        }
+
+        const store = Store.local;
+
+        if (this.data.check_coverage) {
+            store.write(
+                Store.keys.checkoutFlow.isBusinessCustomer,
+                this.data.check_coverage.landline_service === "business"
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_addressLine1,
+                this.data.check_coverage.address_line_one
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_addressLine2,
+                this.data.check_coverage.address_line_two
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_city,
+                this.data.check_coverage.city
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_city,
+                this.data.check_coverage.city
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_zip,
+                this.data.check_coverage.zip
+            );
+            store.write(
+                Store.keys.checkoutFlow.shippingAddress_state,
+                this.data.check_coverage.state_code
+            );
+        }
+
+        if (this.data.products) {
+        }
+
+        if (this.data.account_details) {
+        }
+
+        if (this.data.billing_details) {
+        }
+
+        if (this.data.learn_more) {
+        }
+    }
+}

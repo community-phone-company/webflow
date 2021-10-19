@@ -35,7 +35,6 @@ class CheckoutSession {
                 Store.keys.checkoutFlow.sessionId
             )
         );
-        this._data = undefined;
         this._api = CommunityPhoneAPI.currentEnvironmentWithVersion("2");
     }
 
@@ -55,11 +54,6 @@ class CheckoutSession {
         }
 
         this._id = id;
-        this._data = undefined;
-    }
-
-    getData() {
-        return this._data;
     }
 
     storeId() {
@@ -104,7 +98,7 @@ class CheckoutSession {
     }
 
     /**
-     * @param {((error: any) => void) | undefined} callback 
+     * @param {((data: any, error: any) => void) | undefined} callback 
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
     read(callback) {
@@ -118,10 +112,9 @@ class CheckoutSession {
                 session_id: this._id
             },
             (response, error) => {
-                this._data = response;
-
                 if (callback) {
                     callback(
+                        response,
                         error
                     );
                 }

@@ -168,8 +168,13 @@ if (IS_PRODUCTION) {
                 sessionIdFromUrl
             );
             session.storeId();
-            session.read((error) => {
-                console.log(session.getData());
+            session.read((data, error) => {
+                if (!error && data) {
+                    const reader = new CheckoutSessionDataReader(
+                        data
+                    );
+                    reader.transferDataToStore();
+                }
             });
         }
     } else if (session.isAuthorized()) {
