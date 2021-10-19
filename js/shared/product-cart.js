@@ -118,50 +118,6 @@ class ProductCart {
         }
 
         const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
-        /*const request = $.ajax({
-            url: api.getAbsoluteUrl("billing/products/tax-estimate"),
-            method: "POST",
-            crossDomain: true,
-            dataType: "json",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                console.log(`response: `, response);
-
-                _this.amounts.dueToday = ProductCartPrice.fromJson(
-                    response.price.due_today
-                );
-                _this.amounts.subscription = ProductCartPrice.fromJson(
-                    response.price.subscription
-                );
-                
-                if (callback) {
-                    callback(undefined);
-                }
-
-                if (_this._onPricesUpdatedHandler) {
-                    _this._onPricesUpdatedHandler(
-                        undefined
-                    );
-                }
-            },
-            error: function (error) {
-                console.log(`Error: `, error);
-
-                _this.amounts.dueToday = undefined;
-                _this.amounts.subscription = undefined;
-
-                if (callback) {
-                    callback(error);
-                }
-
-                if (_this._onPricesUpdatedHandler) {
-                    _this._onPricesUpdatedHandler(
-                        error
-                    );
-                }
-            }
-        });*/
         const request = api.jsonRequest(
             CommunityPhoneAPI.endpoints.tax_estimate,
             "POST",
@@ -200,7 +156,7 @@ class ProductCart {
                     }
                 }
             }
-        )
+        );
         this._lastUpdatePricesRequest = request;
         return request;
     }
