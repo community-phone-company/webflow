@@ -170,5 +170,6 @@ CommunityPhoneAPI.endpoints = Object.freeze({
     chargebee_checkout: "chargebee/checkout",
     chargebee_checkPaymentStatus: (subscriptionIdentifier) => {
         return `chargebee/${subscriptionIdentifier}/check-payment-status`;
-    }
+    },
+    tax_estimate: "billing/products/tax-estimate"
 });
