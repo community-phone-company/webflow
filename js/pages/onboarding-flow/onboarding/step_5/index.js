@@ -32,7 +32,6 @@ const updateStepStatistics = (currentStep) => {
         undefined,
         undefined,
         (response, error, success) => {
-            $("form").submit();
         }
     );
 };
@@ -41,18 +40,10 @@ updateStepStatistics(5);
 
 $(document).ready(() => {
     
-    $("#test-call-did-work-button").on("click", (event) => {
+    $("#submit-button").on("click", (event) => {
         event.preventDefault();
         router.open(
-            RouterPath.onboarding_onboarding_setupService,
-            router.getParameters()
-        );
-    });
-
-    $("#test-call-did-not-work-button").on("click", (event) => {
-        event.preventDefault();
-        router.open(
-            RouterPath.onboarding_onboarding_testCallDidNotWork,
+            RouterPath.onboarding_onboarding_step_6,
             router.getParameters()
         );
     });

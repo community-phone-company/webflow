@@ -32,7 +32,6 @@ const updateStepStatistics = (currentStep) => {
         undefined,
         undefined,
         (response, error, success) => {
-            $("form").submit();
         }
     );
 };
