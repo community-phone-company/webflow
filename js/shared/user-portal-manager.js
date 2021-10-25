@@ -129,37 +129,47 @@ class UserPortalManager {
     }
 
     /**
-     * @param {string} authorizationToken 
+     * @param {string} authorizationToken
+     * @param {boolean} useCustomerPortal 
      * @param {(accessUrl: string | undefined, error: any, api: CommunityPhoneAPI) => void} callback 
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
-    getAccessUrl = (authorizationToken, callback) => {
-        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
-        const headers = {
-            "Authorization": `Token ${authorizationToken}`
-        };
-        return api.jsonRequest(
-            CommunityPhoneAPI.endpoints.portal_billing,
-            "GET",
-            headers,
-            undefined,
-            (response, error) => {
-                if (error) {
-                    callback(
-                        undefined,
-                        error,
-                        api
-                    );
-                } else {
-                    const accessUrl = response && response.access_url;
-                    callback(
-                        accessUrl,
-                        undefined,
-                        api
-                    );
+    getAccessUrl = (authorizationToken, useCustomerPortal, callback) => {
+        if (useCustomerPortal) {
+            const url = `https://my.communityphone.org/chargebee/${authorizationToken}`;
+            callback(
+                url,
+                undefined,
+                undefined
+            );
+        } else {
+            const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
+            const headers = {
+                "Authorization": `Token ${authorizationToken}`
+            };
+            return api.jsonRequest(
+                CommunityPhoneAPI.endpoints.portal_billing,
+                "GET",
+                headers,
+                undefined,
+                (response, error) => {
+                    if (error) {
+                        callback(
+                            undefined,
+                            error,
+                            api
+                        );
+                    } else {
+                        const accessUrl = response && response.access_url;
+                        callback(
+                            accessUrl,
+                            undefined,
+                            api
+                        );
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     setupUI = () => {
@@ -172,6 +182,7 @@ class UserPortalManager {
             if (_this._authorizationToken) {
                 _this.getAccessUrl(
                     _this._authorizationToken,
+                    true,
                     (accessUrl, error, api) => {
                         if (accessUrl && !error) {
                             _this.openAccessUrl(
@@ -317,6 +328,7 @@ class UserPortalManager {
                         );
                         _this.getAccessUrl(
                             authorizationToken,
+                            true,
                             (accessUrl, error, api) => {
                                 if (error) {
                                     showErrorMessage(
