@@ -314,7 +314,31 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
         lastPhoneNumbersRequest.abort();
     }
 
+    const currentLocation = {
+        city: Store.local.read(Store.keys.checkoutFlow.shippingAddress_city),
+        state: Store.local.read(Store.keys.checkoutFlow.shippingAddress_state)
+    };
+
     lastPhoneNumbersRequest = PhoneNumberManager.getNumbers(
+        formData.numberSearchFilter.value.length === 0 ? currentLocation.city : "",
+        formData.numberSearchFilter.value.length === 0 ? currentLocation.state : "",
+        formData.numberSearchFilter.value,
+        "",
+        formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.tollFree,
+        (numbers, error) => {
+            if (addToPreviousCollection) {
+                numbers.forEach(number => formData.availablePhoneNumbers.push(number));
+            } else {
+                formData.availablePhoneNumbers = numbers;
+            }
+
+            if (onFinished) {
+                onFinished(numbers, error);
+            }
+        }
+    );
+
+    /*lastPhoneNumbersRequest = PhoneNumberManager.getNumbers(
         formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.city ? formData.numberSearchFilter.value : "",
         "",
         (() => {
@@ -339,7 +363,7 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
                 onFinished(numbers, error);
             }
         }
-    );
+    );*/
 };
 
 /**
