@@ -337,33 +337,6 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
             }
         }
     );
-
-    /*lastPhoneNumbersRequest = PhoneNumberManager.getNumbers(
-        formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.city ? formData.numberSearchFilter.value : "",
-        "",
-        (() => {
-            const areaCodeFilters = [
-                ChoosePhoneNumberPopupFilterMode.areaCode,
-                ChoosePhoneNumberPopupFilterMode.tollFree
-            ];
-            return areaCodeFilters.includes(formData.numberSearchFilter.mode)
-                ? formData.numberSearchFilter.value
-                : "";
-        })(),
-        "",
-        formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.tollFree,
-        (numbers, error) => {
-            if (addToPreviousCollection) {
-                numbers.forEach(number => formData.availablePhoneNumbers.push(number));
-            } else {
-                formData.availablePhoneNumbers = numbers;
-            }
-
-            if (onFinished) {
-                onFinished(numbers, error);
-            }
-        }
-    );*/
 };
 
 /**
