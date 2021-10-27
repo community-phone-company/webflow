@@ -89,7 +89,7 @@ const setupPremiumFeaturesForm = () => {
     });
 
     const phoneTextField = $(form).find("#premium-features-form_phone-number-text-field")[0];
-    InputValueObserver(phoneTextField).startObserving(newValue => {
+    new InputValueObserver(phoneTextField).startObserving(newValue => {
         data.premiumFeaturesForm.phone = newValue;
         onFormChanged();
     });
