@@ -60,12 +60,6 @@ const isCheckCoverageDataFilled = () => {
     );
 };
 
-// Test
-new InputValueObserver($("#premium-features-form_email-text-field")[0]).startObserving(newValue => {
-    data.premiumFeaturesForm.email = newValue;
-    onFormChanged();
-});
-
 const setupPremiumFeaturesForm = () => {
     const form = document.getElementById("premium-features-form");
 
