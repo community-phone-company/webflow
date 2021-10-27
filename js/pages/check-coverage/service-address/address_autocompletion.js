@@ -1,3 +1,14 @@
+var indexOfSelectedAddressSuggestion = undefined;
+var autocompletionItemElements = [];
+
+/**
+ * @param {HTMLInputElement} input 
+ */
+const setupKeyboardSelectionForAddressSuggestions = (input) => {
+    $(input).keyup(event => {
+    });
+};
+
 /**
  * @returns {HTMLElement}
  */
@@ -23,6 +34,15 @@ const getHtmlForAddressAutocompletionItem = (addressSuggestion, highlightedSubst
         </div>
     `;
 }
+
+/**
+ * @returns {HTMLElement[]}
+ */
+const getAllAutocompletionItemCards = () => {
+    return Array.from(
+        $(getAddressAutocompletionContainer()).find("div.autocomplete-item")
+    );
+};
 
 /**
  * @param {HTMLElement} element 

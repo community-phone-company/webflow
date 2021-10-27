@@ -24,6 +24,13 @@ class ActiveCampaignList {
         );
     }
 
+    static premiumFeaturesDemo = () => {
+        return new ActiveCampaignList(
+            "Premium features demo",
+            "https://hooks.zapier.com/hooks/catch/10210393/bh8lvss/"
+        );
+    }
+
     /**
      * @constructor
      * @param {string} name List name.

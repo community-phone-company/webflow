@@ -27,6 +27,13 @@ const elements = {
     ]
 };
 
+const data = {
+    premiumFeaturesForm: {
+        email: "",
+        phone: ""
+    }
+};
+
 const openCheckout = () => {
     const path = IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
     router.open(
@@ -51,6 +58,45 @@ const isCheckCoverageDataFilled = () => {
     return !data.includes(
         undefined
     );
+};
+
+const setupPremiumFeaturesForm = () => {
+    const form = document.getElementById("wf-form-feature-form");
+
+    if (!form) {
+        return;
+    }
+
+    const onFormChanged = () => {
+        const isFormValid = new EmailValidator().check(data.premiumFeaturesForm.email)
+            && data.premiumFeaturesForm.phone.length > 0;
+        UserInterface.setElementEnabled(
+            submitButton,
+            isFormValid
+        );
+    };
+
+    const emailTextField = $(form).find("#feature-form_email-text-field")[0];
+    new InputValueObserver(emailTextField).startObserving(newValue => {
+        data.premiumFeaturesForm.email = newValue;
+        onFormChanged();
+    });
+
+    const phoneTextField = $(form).find("#feature-form_phone-number-text-field")[0];
+    new InputValueObserver(phoneTextField).startObserving(newValue => {
+        data.premiumFeaturesForm.phone = newValue;
+        onFormChanged();
+    });
+
+    const submitButton = $(form).find("input[type='submit']")[0];
+    $(submitButton).on("click", () => {
+        ZapierIntegration.sendToWebhook(
+            ActiveCampaignList.premiumFeaturesDemo,
+            data.premiumFeaturesForm
+        )
+    });
+    
+    onFormChanged();
 };
 
 const setupUI = () => {
@@ -87,6 +133,8 @@ const setupUI = () => {
             );
         });
     }
+
+    setupPremiumFeaturesForm();
 };
 
 $(document).ready(() => {
