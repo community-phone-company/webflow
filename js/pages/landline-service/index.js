@@ -60,10 +60,13 @@ const isCheckCoverageDataFilled = () => {
     );
 };
 
-var emailInputObserver, phoneInputObserver;
+new InputValueObserver($("#feature-form_email-text-field")[0]).startObserving(newValue => {
+    data.premiumFeaturesForm.email = newValue;
+    onFormChanged();
+});
 
 const setupPremiumFeaturesForm = () => {
-    const form = document.getElementById("wf-form-feature-form");
+    const form = document.getElementById("premium-features-form");
 
     if (!form) {
         return;
@@ -78,19 +81,19 @@ const setupPremiumFeaturesForm = () => {
         );
     };
 
-    const emailTextField = $(form).find("#feature-form_email-text-field")[0];
-    emailInputObserver = new InputValueObserver(emailTextField).startObserving(newValue => {
+    const emailTextField = $(form).find("premium-features-form_email-text-field")[0];
+    new InputValueObserver(emailTextField).startObserving(newValue => {
         data.premiumFeaturesForm.email = newValue;
         onFormChanged();
     });
 
-    const phoneTextField = $(form).find("#feature-form_phone-number-text-field")[0];
-    phoneInputObserver = new InputValueObserver(phoneTextField).startObserving(newValue => {
+    const phoneTextField = $(form).find("#premium-features-form_phone-number-text-field")[0];
+    InputValueObserver(phoneTextField).startObserving(newValue => {
         data.premiumFeaturesForm.phone = newValue;
         onFormChanged();
     });
 
-    const submitButton = $(form).find("input[type='submit']")[0];
+    const submitButton = $(form).find("#premium-features-form_submit-button")[0];
     $(submitButton).on("click", () => {
         ZapierIntegration.sendToWebhook(
             ActiveCampaignList.premiumFeaturesDemo,
