@@ -60,6 +60,8 @@ const isCheckCoverageDataFilled = () => {
     );
 };
 
+var emailInputObserver, phoneInputObserver;
+
 const setupPremiumFeaturesForm = () => {
     const form = document.getElementById("wf-form-feature-form");
 
@@ -77,13 +79,13 @@ const setupPremiumFeaturesForm = () => {
     };
 
     const emailTextField = $(form).find("#feature-form_email-text-field")[0];
-    new InputValueObserver(emailTextField).startObserving(newValue => {
+    emailInputObserver = new InputValueObserver(emailTextField).startObserving(newValue => {
         data.premiumFeaturesForm.email = newValue;
         onFormChanged();
     });
 
     const phoneTextField = $(form).find("#feature-form_phone-number-text-field")[0];
-    new InputValueObserver(phoneTextField).startObserving(newValue => {
+    phoneInputObserver = new InputValueObserver(phoneTextField).startObserving(newValue => {
         data.premiumFeaturesForm.phone = newValue;
         onFormChanged();
     });
