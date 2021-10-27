@@ -60,7 +60,8 @@ const isCheckCoverageDataFilled = () => {
     );
 };
 
-new InputValueObserver($("#feature-form_email-text-field")[0]).startObserving(newValue => {
+// Test
+new InputValueObserver($("#premium-features-form_email-text-field")[0]).startObserving(newValue => {
     data.premiumFeaturesForm.email = newValue;
     onFormChanged();
 });
@@ -81,7 +82,7 @@ const setupPremiumFeaturesForm = () => {
         );
     };
 
-    const emailTextField = $(form).find("premium-features-form_email-text-field")[0];
+    const emailTextField = $(form).find("#premium-features-form_email-text-field")[0];
     new InputValueObserver(emailTextField).startObserving(newValue => {
         data.premiumFeaturesForm.email = newValue;
         onFormChanged();
