@@ -61,7 +61,9 @@ const isCheckCoverageDataFilled = () => {
 };
 
 const setupPremiumFeaturesForm = () => {
-    const form = document.getElementById("premium-features-form");
+    const form = Array.from(
+        $("form#premium-features-form")
+    ).pop();
 
     if (!form) {
         return;
