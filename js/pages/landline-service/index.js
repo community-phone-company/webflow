@@ -61,11 +61,57 @@ const isCheckCoverageDataFilled = () => {
 };
 
 const setupPremiumFeaturesForm = () => {
-    const form = Array.from(
+    /*const form = Array.from(
         $("form#premium-features-form")
-    ).pop();
+    ).pop();*/
 
-    if (!form) {
+    const formSelectors = [
+        "form#premium-features-form",
+        "form#premium-features-form-tablet",
+        "form#premium-features-form-mobile"
+    ];
+    formSelectors.forEach(selector => {
+        const form = Array.from(
+            $(selector)
+        ).pop();
+
+        if (!form) {
+            return;
+        }
+    
+        const onFormChanged = () => {
+            const isFormValid = new EmailValidator().check(data.premiumFeaturesForm.email)
+                && data.premiumFeaturesForm.phone.length > 0;
+            UserInterface.setElementEnabled(
+                submitButton,
+                isFormValid
+            );
+        };
+    
+        const emailTextField = $(form).find("#premium-features-form_email-text-field")[0];
+        new InputValueObserver(emailTextField).startObserving(newValue => {
+            data.premiumFeaturesForm.email = newValue;
+            onFormChanged();
+        });
+    
+        const phoneTextField = $(form).find("#premium-features-form_phone-number-text-field")[0];
+        new InputValueObserver(phoneTextField).startObserving(newValue => {
+            data.premiumFeaturesForm.phone = newValue;
+            onFormChanged();
+        });
+    
+        const submitButton = $(form).find("#premium-features-form_submit-button")[0];
+        $(submitButton).on("click", (event) => {
+            ZapierIntegration.sendToWebhook(
+                ActiveCampaignList.premiumFeaturesDemo().webhookUrl,
+                data.premiumFeaturesForm
+            );
+        });
+        
+        onFormChanged();
+    });
+
+    /*if (!form) {
         return;
     }
 
@@ -98,7 +144,7 @@ const setupPremiumFeaturesForm = () => {
         );
     });
     
-    onFormChanged();
+    onFormChanged();*/
 };
 
 const setupUI = () => {
