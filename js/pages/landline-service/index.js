@@ -91,11 +91,11 @@ const setupPremiumFeaturesForm = () => {
     });
 
     const submitButton = $(form).find("#premium-features-form_submit-button")[0];
-    $(submitButton).on("click", () => {
+    $(submitButton).on("click", (event) => {
         ZapierIntegration.sendToWebhook(
-            ActiveCampaignList.premiumFeaturesDemo,
+            ActiveCampaignList.premiumFeaturesDemo().webhookUrl,
             data.premiumFeaturesForm
-        )
+        );
     });
     
     onFormChanged();
