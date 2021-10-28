@@ -64,12 +64,15 @@ const isCheckCoverageDataFilled = () => {
  * @param {HTMLFormElement} form 
  */
 const setupPremiumFeaturesForm = (form) => {
-    const onFormChanged = () => {
-        const isFormValid = new EmailValidator().check(data.premiumFeaturesForm.email)
+    const isFormValid = () => {
+        return new EmailValidator().check(data.premiumFeaturesForm.email)
             && data.premiumFeaturesForm.phone.length > 0;
+    };
+
+    const onFormChanged = () => {
         UserInterface.setElementEnabled(
             submitButton,
-            isFormValid
+            isFormValid()
         );
     };
 
@@ -87,10 +90,12 @@ const setupPremiumFeaturesForm = (form) => {
 
     const submitButton = $(form).find("#premium-features-form_submit-button")[0];
     $(submitButton).on("click", (event) => {
-        ZapierIntegration.sendToWebhook(
-            ActiveCampaignList.premiumFeaturesDemo().webhookUrl,
-            data.premiumFeaturesForm
-        );
+        if (isFormValid()) {
+            ZapierIntegration.sendToWebhook(
+                ActiveCampaignList.premiumFeaturesDemo().webhookUrl,
+                data.premiumFeaturesForm
+            );
+        }
     });
     
     onFormChanged();
