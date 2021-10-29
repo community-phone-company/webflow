@@ -319,6 +319,18 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
         state: Store.local.read(Store.keys.checkoutFlow.shippingAddress_state)
     };
 
+    const handleNumbers = (numbers) => {
+        if (addToPreviousCollection) {
+            numbers.forEach(number => formData.availablePhoneNumbers.push(number));
+        } else {
+            formData.availablePhoneNumbers = numbers;
+        }
+
+        if (onFinished) {
+            onFinished(numbers, error);
+        }
+    };
+
     lastPhoneNumbersRequest = PhoneNumberManager.getNumbers(
         formData.numberSearchFilter.value.length === 0 ? currentLocation.city : "",
         formData.numberSearchFilter.value.length === 0 ? currentLocation.state : "",
@@ -326,14 +338,23 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
         "",
         formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.tollFree,
         (numbers, error) => {
-            if (addToPreviousCollection) {
-                numbers.forEach(number => formData.availablePhoneNumbers.push(number));
+            if (numbers.length) {
+                handleNumbers(
+                    numbers
+                );
             } else {
-                formData.availablePhoneNumbers = numbers;
-            }
-
-            if (onFinished) {
-                onFinished(numbers, error);
+                lastPhoneNumbersRequest = PhoneNumberManager.getNumbers(
+                    "",
+                    "",
+                    formData.numberSearchFilter.value,
+                    "",
+                    formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.tollFree,
+                    (numbers, error) => {
+                        handleNumbers(
+                            numbers
+                        );
+                    }
+                );
             }
         }
     );
