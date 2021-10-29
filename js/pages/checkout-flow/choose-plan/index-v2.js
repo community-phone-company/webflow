@@ -319,7 +319,7 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
         state: Store.local.read(Store.keys.checkoutFlow.shippingAddress_state)
     };
 
-    const handleNumbers = (numbers) => {
+    const handleResponse = (numbers, error) => {
         if (addToPreviousCollection) {
             numbers.forEach(number => formData.availablePhoneNumbers.push(number));
         } else {
@@ -339,8 +339,9 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
         formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.tollFree,
         (numbers, error) => {
             if (numbers.length) {
-                handleNumbers(
-                    numbers
+                handleResponse(
+                    numbers,
+                    error
                 );
             } else {
                 lastPhoneNumbersRequest = PhoneNumberManager.getNumbers(
@@ -350,8 +351,9 @@ const loadPhoneNumbers = (addToPreviousCollection, onFinished) => {
                     "",
                     formData.numberSearchFilter.mode === ChoosePhoneNumberPopupFilterMode.tollFree,
                     (numbers, error) => {
-                        handleNumbers(
-                            numbers
+                        handleResponse(
+                            numbers,
+                            error
                         );
                     }
                 );
