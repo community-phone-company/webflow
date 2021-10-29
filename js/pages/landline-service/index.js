@@ -105,24 +105,20 @@ const setupPremiumFeaturesForm = (form) => {
  * @returns {HTMLFormElement[]}
  */
 const getAllPremiumFeaturesForms = () => {
-    var result = [];
     const formSelectors = [
         "form#premium-features-form",
         "form#premium-features-form-tablet",
         "form#premium-features-form-mobile"
     ];
-    formSelectors.forEach(selector => {
-        const form = Array.from(
-            $(selector)
-        ).pop();
-
-        if (form) {
-            result.push(
-                form
-            );
-        }
-    });
-    return result;
+    return formSelectors
+        .map(selector => {
+            return Array.from(
+                $(selector)
+            ).pop();
+        })
+        .filter(form => {
+            return form != undefined;
+        });
 };
 
 const setupUI = () => {
