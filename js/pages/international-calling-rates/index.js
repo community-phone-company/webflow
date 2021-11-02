@@ -1,5 +1,6 @@
 const page = {
     ui: {
+        searchForm: document.getElementById("search-form"),
         searchField: document.getElementById("search-field")
     },
     data: {
@@ -8,6 +9,9 @@ const page = {
 };
 
 const setupUI = () => {
+    UserInterface.makeFormUnsubmittable(
+        page.ui.searchForm
+    );
     page.ui.searchField.oninput = () => {
         page.data.searchQuery = page.ui.searchField.value;
         onDataChanged();
