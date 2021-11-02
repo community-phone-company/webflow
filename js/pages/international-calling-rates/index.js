@@ -3,7 +3,8 @@ const page = {
         searchForm: document.getElementById("search-form"),
         searchField: document.getElementById("search-field")
     },
-    data: {
+    state: {
+        lastSearchRequest: undefined,
         searchQuery: ""
     }
 };
@@ -13,14 +14,14 @@ const setupUI = () => {
         page.ui.searchForm
     );
     page.ui.searchField.oninput = () => {
-        page.data.searchQuery = page.ui.searchField.value;
+        page.state.searchQuery = page.ui.searchField.value;
         onDataChanged();
     };
 };
 
 const onDataChanged = () => {
     console.log(
-        page.data
+        page.state
     );
 };
 
