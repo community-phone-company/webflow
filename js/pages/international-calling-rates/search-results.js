@@ -83,6 +83,10 @@ const getHtmlForCountrySearchResultsContent = (rates) => {
         
         const rates = ratesSortedInAlphabetOrder[letter];
 
+        if (!rates) {
+            continue;
+        }
+
         for (var i = 0; i < rates.length; i++) {
             const rate = rates[i];
             html += getHtmlForSearchResultItem(
