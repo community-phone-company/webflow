@@ -27,7 +27,7 @@ const getHtmlForSearchResultItem = (rate, color) => {
                     <div class="_w-8">
                     </div>
                     <div class="body-2 color-text">
-                        ${rate.minRate} — ${rate.maxRate} USD
+                        ${Math.formatPrice(rate.minRate, true)} — ${Math.formatPrice(rate.maxRate, true)} USD
                     </div>
                 </div>
             </div>
