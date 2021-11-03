@@ -1,5 +1,4 @@
 /**
- * 
  * @param {CountryCallRate} rate 
  * @param {"grey" | "white"} color
  * @returns {string}
@@ -60,6 +59,25 @@ const getHtmlForSearchResultsDivider = (letter) => {
  * @returns {string}
  */
 const getHtmlForCountrySearchResultsContent = (rates) => {
-    return `
-    `;
+    const ratesSortedInAlphabetOrder = {};
+
+    for (var rate of rates) {
+        const countryFirstLetter = rate.countryName.substring(0, 1).toLowerCase();
+
+        if (!ratesSortedInAlphabetOrder[countryFirstLetter]) {
+            ratesSortedInAlphabetOrder[countryFirstLetter] = [];
+        }
+
+        ratesSortedInAlphabetOrder[countryFirstLetter].push(rate);
+    }
+    
+    var html = ``;
+
+    for (var letter = "a".charCodeAt(0); letter <= "z".charCodeAt(0); letter++) {
+        html += getHtmlForSearchResultsDivider(
+            String.fromCharCode(letter).toUpperCase()
+        );
+    }
+
+    return html;
 };

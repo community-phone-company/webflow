@@ -1,7 +1,8 @@
 const page = {
     ui: {
         searchForm: document.getElementById("search-form"),
-        searchField: document.getElementById("search-field")
+        searchField: document.getElementById("search-field"),
+        searchResultsContainer: document.getElementById("search-results-container")
     },
     state: {
         lastSearchRequest: undefined,
@@ -42,5 +43,9 @@ const onDataChanged = () => {
 $(document).ready(() => {
     setupUI();
     updateCountryCallRates(() => {
+        const html = getHtmlForCountrySearchResultsContent(
+            page.state.countryCallRates
+        );
+        $(page.ui.searchResultsContainer).html(html);
     });
 });
