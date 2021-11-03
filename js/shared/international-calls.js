@@ -19,7 +19,7 @@ class CountryCallRate {
 const getInternationalCallRatesForAllCountries = (callback) => {
     const api = CommunityPhoneAPI.currentEnvironmentWithVersion("2");
     return api.jsonRequest(
-        "",
+        CommunityPhoneAPI.endpoints.internationalCalls_getCallRatesRange,
         "GET",
         undefined,
         undefined,
