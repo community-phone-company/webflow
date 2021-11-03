@@ -14,7 +14,7 @@ class CountryCallRate {
     getCountryFlagUrl() {
         const baseUrl = "https://community-phone-bucket.nyc3.digitaloceanspaces.com/webflow/img/country-flags";
         const imageName = (() => {
-            const countriesWithDefaultFlag = ["N/A", "ASC", "CK", "IO", "FO", "GF", "PYF", "GL", "GP", "KI", "KNA", "XK", "MF", "MH", "YT", "NR", "NC", "NU", "NF", "PS", "PM", "RE", "SS", "TV", "WF"];
+            const countriesWithDefaultFlag = ["N/A", "AQ", "ASC", "CK", "IO", "FO", "GF", "PYF", "GL", "GP", "KI", "KNA", "XK", "MF", "MH", "YT", "NR", "NC", "NU", "NF", "PS", "PM", "RE", "SS", "TV", "WF"];
 
             if (countriesWithDefaultFlag.includes(this.countryCode)) {
                 return `WW.svg`;
