@@ -58,5 +58,6 @@ $(document).ready(() => {
     setupUI();
     updateCountryCallRates(() => {
         onSearchQueryChanged();
+        $(page.ui.searchResultsContainer).show();
     });
 });
