@@ -73,10 +73,23 @@ const getHtmlForCountrySearchResultsContent = (rates) => {
     
     var html = ``;
 
-    for (var letter = "a".charCodeAt(0); letter <= "z".charCodeAt(0); letter++) {
-        html += getHtmlForSearchResultsDivider(
-            String.fromCharCode(letter).toUpperCase()
+    for (var letterCode = "a".charCodeAt(0); letterCode <= "z".charCodeAt(0); letterCode++) {
+        const letter = String.fromCharCode(
+            letterCode
         );
+        html += getHtmlForSearchResultsDivider(
+            letter.toUpperCase()
+        );
+        
+        const rates = ratesSortedInAlphabetOrder[letter];
+
+        for (var i = 0; i < rates.length; i++) {
+            const rate = rates[i];
+            html += getHtmlForSearchResultItem(
+                rate,
+                i % 2 == 0 ? "white" : "grey"
+            );
+        }
     }
 
     return html;
