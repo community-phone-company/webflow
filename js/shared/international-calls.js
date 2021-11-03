@@ -12,7 +12,15 @@ class CountryCallRate {
     }
 
     getCountryFlagUrl() {
-        return `https://community-phone-bucket.nyc3.digitaloceanspaces.com/webflow/img/country-flags/${this.countryCode.toUpperCase()}.svg`;
+        const baseUrl = "https://community-phone-bucket.nyc3.digitaloceanspaces.com/webflow/img/country-flags";
+        const imageName = (() => {
+            if (this.countryCode === "N/A") {
+                return `WW.svg`;
+            } else {
+                return `${this.countryCode.toUpperCase()}.svg`;
+            }
+        })();
+        return `${baseUrl}/${imageName}`;
     }
 }
 
