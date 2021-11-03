@@ -5,8 +5,22 @@ const page = {
     },
     state: {
         lastSearchRequest: undefined,
+        countryCallRates: [],
         searchQuery: ""
     }
+};
+
+/**
+ * @param {(() => void) | undefined} callback 
+ */
+const updateCountryCallRates = (callback) => {
+    getInternationalCallRatesForAllCountries((rates, error) => {
+        page.state.countryCallRates = rates;
+
+        if (callback) {
+            callback();
+        }
+    });
 };
 
 const setupUI = () => {
@@ -27,4 +41,6 @@ const onDataChanged = () => {
 
 $(document).ready(() => {
     setupUI();
+    updateCountryCallRates(() => {
+    });
 });
