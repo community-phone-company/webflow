@@ -17,7 +17,7 @@ const getHtmlForSearchResultItem = (rate, color) => {
                     <div class="_w-8">
                     </div>
                     <div class="body-2">
-                        (+${rate.countryCode})
+                        (+${rate.phoneCode})
                     </div>
                 </div>
                 <div class="right-labels">
