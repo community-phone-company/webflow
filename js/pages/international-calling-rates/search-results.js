@@ -89,7 +89,7 @@ const getHtmlForCountrySearchResultsContent = (rates) => {
                 const rate = rates[i];
                 html += getHtmlForSearchResultItem(
                     rate,
-                    i % 2 == 0 ? "white" : "grey"
+                    i % 2 == 0 ? "grey" : "white"
                 );
             }
         }
