@@ -6,7 +6,8 @@ const page = {
     },
     state: {
         lastSearchRequest: undefined,
-        countryCallRates: [],
+        callRates: [],
+        filteredCallRates: [],
         searchQuery: ""
     }
 };
@@ -16,7 +17,7 @@ const page = {
  */
 const updateCountryCallRates = (callback) => {
     getInternationalCallRatesForAllCountries((rates, error) => {
-        page.state.countryCallRates = rates;
+        page.state.callRates = rates;
 
         if (callback) {
             callback();
@@ -30,22 +31,32 @@ const setupUI = () => {
     );
     page.ui.searchField.oninput = () => {
         page.state.searchQuery = page.ui.searchField.value;
-        onDataChanged();
+        onSearchQueryChanged();
     };
 };
 
-const onDataChanged = () => {
-    console.log(
-        page.state
+const onSearchQueryChanged = () => {
+    const searchQuery = page.state.searchQuery;
+    
+    if (searchQuery.length) {
+        page.state.filteredCallRates = page.state.callRates.filter(rate => {
+            return rate.countryName.toLowerCase().includes(
+                searchQuery.toLowerCase()
+            );
+        });
+    } else {
+        page.state.filteredCallRates = page.state.callRates;
+    }
+    
+    const html = getHtmlForCountrySearchResultsContent(
+        page.state.filteredCallRates
     );
+    $(page.ui.searchResultsContainer).html(html);
 };
 
 $(document).ready(() => {
     setupUI();
     updateCountryCallRates(() => {
-        const html = getHtmlForCountrySearchResultsContent(
-            page.state.countryCallRates
-        );
-        $(page.ui.searchResultsContainer).html(html);
+        onSearchQueryChanged();
     });
 });
