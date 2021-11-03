@@ -4,6 +4,14 @@
  * @returns {string}
  */
 const getHtmlForSearchResultItem = (rate, color) => {
+    const minRate = Math.formatPrice(
+        rate.minRate,
+        true
+    );
+    const maxRate = Math.formatPrice(
+        rate.maxRate,
+        true
+    );
     return `
         <div class="country-item-${color}">
             <img src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/618174cd3fd07d600952ee25_AF.svg" loading="lazy" alt="" class="flag">
@@ -27,7 +35,17 @@ const getHtmlForSearchResultItem = (rate, color) => {
                     <div class="_w-8">
                     </div>
                     <div class="body-2 color-text">
-                        ${Math.formatPrice(rate.minRate, true)} — ${Math.formatPrice(rate.maxRate, true)} USD
+                        ${(() => {
+                            if (minRate === maxRate) {
+                                return `
+                                    ${maxRate} USD
+                                `;
+                            } else {
+                                return `
+                                    ${Math.formatPrice(rate.minRate, true)} — ${Math.formatPrice(rate.maxRate, true)} USD
+                                `;
+                            }
+                        })()}
                     </div>
                 </div>
             </div>
