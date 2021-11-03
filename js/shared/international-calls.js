@@ -10,6 +10,10 @@ class CountryCallRate {
         this.minRate = json.rates.min;
         this.maxRate = json.rates.max;
     }
+
+    getCountryFlagUrl() {
+        return `https://community-phone-bucket.nyc3.digitaloceanspaces.com/webflow/img/country-flags/${this.countryCode.toUpperCase()}.svg`;
+    }
 }
 
 /**
