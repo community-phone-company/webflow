@@ -81,7 +81,16 @@ const getHtmlForCountrySearchResultsContent = (rates) => {
             letter.toUpperCase()
         );
         
-        const rates = ratesSortedInAlphabetOrder[letter];
+        const rates = ratesSortedInAlphabetOrder[letter].sort((a, b) => {
+            const names = [
+                a.countryName.toLowerCase(),
+                b.countryName.toLowerCase()
+            ];
+
+            if (names[0] < names[1]) return -1;
+            if (names[1] > names[1]) return 1;
+            return 0;
+        });
 
         if (!rates) {
             continue;
