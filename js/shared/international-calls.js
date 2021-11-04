@@ -11,18 +11,22 @@ class CountryCallRate {
         this.maxRate = json.rates.max;
     }
 
-    getCountryFlagUrl() {
+    /**
+     * @param {"png" | "svg"} extension 
+     * @returns {string}
+     */
+    getCountryFlagUrl(extension) {
         const baseUrl = "https://community-phone-bucket.nyc3.digitaloceanspaces.com/webflow/img/country-flags";
         const imageName = (() => {
             const countriesWithDefaultFlag = ["N/A", "AQ", "ASC", "CK", "IO", "FO", "GF", "PYF", "GL", "GP", "KI", "KNA", "XK", "MF", "MH", "YT", "NR", "NC", "NU", "NF", "PS", "PM", "RE", "SS", "TV", "WF"];
 
             if (countriesWithDefaultFlag.includes(this.countryCode)) {
-                return `WW.svg`;
+                return `WW`;
             } else {
-                return `${this.countryCode.toUpperCase()}.svg`;
+                return `${this.countryCode.toUpperCase()}`;
             }
         })();
-        return `${baseUrl}/${imageName}`;
+        return `${baseUrl}/${imageName}.${extension}`;
     }
 }
 

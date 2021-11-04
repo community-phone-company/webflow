@@ -14,7 +14,7 @@ const getHtmlForSearchResultItem = (rate, color) => {
     );
     return `
         <div class="country-item-${color}">
-            <img src="${rate.getCountryFlagUrl()}" loading="lazy" alt="" class="flag">
+            <img src="${rate.getCountryFlagUrl("png")}" loading="lazy" alt="" class="flag">
             <div class="_w-20">
             </div>
             <div class="text">
