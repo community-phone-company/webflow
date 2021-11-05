@@ -7,8 +7,18 @@ const page = {
     state: {
         lastSearchRequest: undefined,
         callRates: [],
-        filteredCallRates: [],
-        searchQuery: ""
+        search: {
+            query: "",
+            isPhoneNumber: false,
+            country: {
+                filteredCallRates: [],
+            },
+            phoneNumber: {
+                value: undefined,
+                callRate: undefined,
+                country: undefined
+            }
+        },
     }
 };
 
@@ -30,42 +40,60 @@ const setupUI = () => {
         page.ui.searchForm
     );
     page.ui.searchField.oninput = () => {
-        page.state.searchQuery = page.ui.searchField.value;
+        page.state.search.query = page.ui.searchField.value;
         onSearchQueryChanged();
     };
 };
 
 const onSearchQueryChanged = () => {
-    const searchQuery = page.state.searchQuery;
+    const searchQuery = page.state.search.query;
 
     const updateSearchResultsContainer = () => {
-        const html = getHtmlForCountrySearchResultsContent(
-            page.state.filteredCallRates
+        const html = (() => {
+            if (page.state.search.isPhoneNumber) {
+                return getHtmlForNumberSearchResultsContent(
+                    page.state.search.phoneNumber.value,
+                    page.state.search.phoneNumber.callRate,
+                    page.state.search.phoneNumber.country
+                );
+            } else {
+                return getHtmlForCountrySearchResultsContent(
+                    page.state.search.country.filteredCallRates
+                );
+            }
+        })();
+        $(page.ui.searchResultsContainer).html(
+            html
         );
-        $(page.ui.searchResultsContainer).html(html);
     };
     
     if (searchQuery.length) {
         const isPhoneNumber = /^[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/g.test(
             searchQuery
         );
+        page.state.search.isPhoneNumber = isPhoneNumber;
 
         if (isPhoneNumber) {
+            const phoneNumber = searchQuery
+                .replaceAll(" ", "")
+                .replaceAll("(", "")
+                .replaceAll(")", "");
+            page.state.search.phoneNumber.value = phoneNumber;
+
             getInternationalCallRateForPhoneNumber(
-                searchQuery,
+                phoneNumber,
                 (phoneCallRate, countryCallRate, error) => {
                     if (error) {
                     } else {
-                        page.state.filteredCallRates = [
-                            countryCallRate
-                        ];
+                        page.state.search.phoneNumber.callRate = phoneCallRate;
+                        page.state.search.phoneNumber.country = countryCallRate;
                     }
 
                     updateSearchResultsContainer();
                 }
             );
         } else {
-            page.state.filteredCallRates = page.state.callRates.filter(rate => {
+            page.state.search.country.filteredCallRates = page.state.callRates.filter(rate => {
                 return rate.countryName.toLowerCase().includes(
                     searchQuery.toLowerCase()
                 );
@@ -73,7 +101,7 @@ const onSearchQueryChanged = () => {
             updateSearchResultsContainer();
         }
     } else {
-        page.state.filteredCallRates = page.state.callRates;
+        page.state.search.country.filteredCallRates = page.state.callRates;
         updateSearchResultsContainer();
     }
 };

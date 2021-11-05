@@ -1,31 +1,31 @@
 /**
- * @param {CountryCallRate} rate 
+ * @param {CountryCallRate} countryCallRate 
  * @param {"grey" | "white"} color
  * @returns {string}
  */
-const getHtmlForSearchResultItem = (rate, color) => {
+const getHtmlForCountrySearchResultItem = (countryCallRate, color) => {
     const minRate = Math.formatPrice(
-        rate.minRate,
+        countryCallRate.minRate,
         true
     );
     const maxRate = Math.formatPrice(
-        rate.maxRate,
+        countryCallRate.maxRate,
         true
     );
     return `
         <div class="country-item-${color}">
-            <img src="${rate.getCountryFlagUrl("png")}" loading="lazy" alt="" class="flag">
+            <img src="${countryCallRate.getCountryFlagUrl("png")}" loading="lazy" alt="" class="flag">
             <div class="_w-20">
             </div>
             <div class="text">
                 <div class="left-labels">
                     <div class="body-2 color-text">
-                        ${rate.countryName}
+                        ${countryCallRate.countryName}
                     </div>
                     <div class="_w-8">
                     </div>
                     <div class="body-2">
-                        (+${rate.phoneCode})
+                        (+${countryCallRate.phoneCode})
                     </div>
                 </div>
                 <div class="right-labels">
@@ -42,10 +42,52 @@ const getHtmlForSearchResultItem = (rate, color) => {
                                 `;
                             } else {
                                 return `
-                                    ${Math.formatPrice(rate.minRate, true)} — ${Math.formatPrice(rate.maxRate, true)} USD
+                                    ${minRate} — ${maxRate} USD
                                 `;
                             }
                         })()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+};
+
+/**
+ * @param {string} phoneNumber
+ * @param {number} phoneCallRate
+ * @param {CountryCallRate} countryCallRate
+ * @returns {string}
+ */
+const getHtmlForNumberSearchResultItem = (phoneNumber, phoneCallRate, countryCallRate) => {
+    const rate = Math.formatPrice(
+        phoneCallRate,
+        true
+    );
+    return `
+        <div class="country-item-${color}">
+            <img src="${countryCallRate.getCountryFlagUrl("png")}" loading="lazy" alt="" class="flag">
+            <div class="_w-20">
+            </div>
+            <div class="text">
+                <div class="left-labels">
+                    <div class="body-2 color-text">
+                        ${countryCallRate.countryName}
+                    </div>
+                    <div class="_w-8">
+                    </div>
+                    <div class="body-2">
+                        (${phoneNumber})
+                    </div>
+                </div>
+                <div class="right-labels">
+                    <div class="body-2">
+                        $
+                    </div>
+                    <div class="_w-8">
+                    </div>
+                    <div class="body-2 color-text">
+                        ${phoneCallRate} USD
                     </div>
                 </div>
             </div>
@@ -113,7 +155,7 @@ const getHtmlForCountrySearchResultsContent = (rates) => {
 
             for (var i = 0; i < rates.length; i++) {
                 const rate = rates[i];
-                html += getHtmlForSearchResultItem(
+                html += getHtmlForCountrySearchResultItem(
                     rate,
                     i % 2 == 0 ? "grey" : "white"
                 );
@@ -122,4 +164,18 @@ const getHtmlForCountrySearchResultsContent = (rates) => {
     }
 
     return html;
+};
+
+/**
+ * @param {string} phoneNumber 
+ * @param {number} phoneCallRate 
+ * @param {CountryCallRate} countryCallRate 
+ * @returns {string}
+ */
+const getHtmlForNumberSearchResultsContent = (phoneNumber, phoneCallRate, countryCallRate) => {
+    return getHtmlForNumberSearchResultItem(
+        phoneNumber,
+        phoneCallRate,
+        countryCallRate
+    );
 };
