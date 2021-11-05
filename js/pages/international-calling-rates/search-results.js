@@ -88,7 +88,7 @@ const getHtmlForNumberSearchResultItem = (phoneNumber, phoneCallRate, countryCal
                     <div class="_w-8">
                     </div>
                     <div class="body-2 color-text">
-                        ${phoneCallRate} USD
+                        ${rate} USD
                     </div>
                 </div>
             </div>
@@ -178,6 +178,6 @@ const getHtmlForNumberSearchResultsContent = (phoneNumber, phoneCallRate, countr
         phoneNumber,
         phoneCallRate,
         countryCallRate,
-        "grey"
+        "white"
     );
 };
