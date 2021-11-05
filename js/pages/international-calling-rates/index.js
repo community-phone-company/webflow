@@ -37,21 +37,45 @@ const setupUI = () => {
 
 const onSearchQueryChanged = () => {
     const searchQuery = page.state.searchQuery;
+
+    const updateSearchResultsContainer = () => {
+        const html = getHtmlForCountrySearchResultsContent(
+            page.state.filteredCallRates
+        );
+        $(page.ui.searchResultsContainer).html(html);
+    };
     
     if (searchQuery.length) {
-        page.state.filteredCallRates = page.state.callRates.filter(rate => {
-            return rate.countryName.toLowerCase().includes(
-                searchQuery.toLowerCase()
+        const isPhoneNumber = /^[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/g.test(
+            searchQuery
+        );
+
+        if (isPhoneNumber) {
+            getInternationalCallRateForPhoneNumber(
+                searchQuery,
+                (phoneCallRate, countryCallRate, error) => {
+                    if (error) {
+                    } else {
+                        page.state.filteredCallRates = [
+                            countryCallRate
+                        ];
+                    }
+
+                    updateSearchResultsContainer();
+                }
             );
-        });
+        } else {
+            page.state.filteredCallRates = page.state.callRates.filter(rate => {
+                return rate.countryName.toLowerCase().includes(
+                    searchQuery.toLowerCase()
+                );
+            });
+            updateSearchResultsContainer();
+        }
     } else {
         page.state.filteredCallRates = page.state.callRates;
+        updateSearchResultsContainer();
     }
-    
-    const html = getHtmlForCountrySearchResultsContent(
-        page.state.filteredCallRates
-    );
-    $(page.ui.searchResultsContainer).html(html);
 };
 
 $(document).ready(() => {

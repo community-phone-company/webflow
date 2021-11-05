@@ -181,5 +181,6 @@ CommunityPhoneAPI.endpoints = Object.freeze({
         return `chargebee/${subscriptionIdentifier}/check-payment-status`;
     },
     tax_estimate: "billing/products/tax-estimate",
+    internationalCalls_checkCallRates: "internationalcalls/check-call-rates",
     internationalCalls_getCallRatesRange: "internationalcalls/get-call-rates-range"
 });

@@ -51,3 +51,39 @@ const getInternationalCallRatesForAllCountries = (callback) => {
         }
     );
 };
+
+/**
+ * @param {string} phone 
+ * @param {(phoneCallRate: number, countryCallRate: CountryCallRate, error: any) => void} callback 
+ * @returns {XMLHttpRequest}
+ */
+const getInternationalCallRateForPhoneNumber = (phone, callback) => {
+    const api = CommunityPhoneAPI.currentEnvironmentWithVersion("2");
+    return api.jsonRequest(
+        CommunityPhoneAPI.endpoints.internationalCalls_checkCallRates,
+        "POST",
+        undefined,
+        {
+            phone_number: phone
+        },
+        (response, error) => {
+            if (error) {
+                callback(
+                    undefined,
+                    undefined,
+                    error
+                );
+            } else {
+                const phoneCallRate = response.rate;
+                const countryCallRate = new CountryCallRate(
+                    response.country
+                );
+                callback(
+                    phoneCallRate,
+                    countryCallRate,
+                    undefined
+                );
+            }
+        }
+    );
+};
