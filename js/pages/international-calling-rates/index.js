@@ -45,17 +45,29 @@ const setupUI = () => {
     };
 };
 
+var lastPhoneNumberSearchRequest = undefined;
+
 const onSearchQueryChanged = () => {
     const searchQuery = page.state.search.query;
 
     const updateSearchResultsContainer = () => {
         const html = (() => {
             if (page.state.search.isPhoneNumber) {
-                return getHtmlForNumberSearchResultsContent(
+                const values = [
                     page.state.search.phoneNumber.value,
                     page.state.search.phoneNumber.callRate,
                     page.state.search.phoneNumber.country
-                );
+                ];
+                
+                if (values.includes(undefined)) {
+                    return ``;
+                } else {
+                    return getHtmlForNumberSearchResultsContent(
+                        page.state.search.phoneNumber.value,
+                        page.state.search.phoneNumber.callRate,
+                        page.state.search.phoneNumber.country
+                    );
+                }
             } else {
                 return getHtmlForCountrySearchResultsContent(
                     page.state.search.country.filteredCallRates
@@ -80,7 +92,11 @@ const onSearchQueryChanged = () => {
                 .replaceAll(")", "");
             page.state.search.phoneNumber.value = phoneNumber;
 
-            getInternationalCallRateForPhoneNumber(
+            if (lastPhoneNumberSearchRequest) {
+                lastPhoneNumberSearchRequest.abort();
+            }
+
+            lastPhoneNumberSearchRequest = getInternationalCallRateForPhoneNumber(
                 phoneNumber,
                 (phoneCallRate, countryCallRate, error) => {
                     if (error) {
@@ -103,6 +119,7 @@ const onSearchQueryChanged = () => {
             updateSearchResultsContainer();
         }
     } else {
+        page.state.search.isPhoneNumber = false;
         page.state.search.country.filteredCallRates = page.state.callRates;
         updateSearchResultsContainer();
     }
