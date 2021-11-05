@@ -57,9 +57,10 @@ const getHtmlForCountrySearchResultItem = (countryCallRate, color) => {
  * @param {string} phoneNumber
  * @param {number} phoneCallRate
  * @param {CountryCallRate} countryCallRate
+ * @param {"grey" | "white"} color
  * @returns {string}
  */
-const getHtmlForNumberSearchResultItem = (phoneNumber, phoneCallRate, countryCallRate) => {
+const getHtmlForNumberSearchResultItem = (phoneNumber, phoneCallRate, countryCallRate, color) => {
     const rate = Math.formatPrice(
         phoneCallRate,
         true
@@ -176,6 +177,7 @@ const getHtmlForNumberSearchResultsContent = (phoneNumber, phoneCallRate, countr
     return getHtmlForNumberSearchResultItem(
         phoneNumber,
         phoneCallRate,
-        countryCallRate
+        countryCallRate,
+        "grey"
     );
 };
