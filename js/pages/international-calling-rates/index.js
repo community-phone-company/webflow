@@ -84,6 +84,8 @@ const onSearchQueryChanged = () => {
                 phoneNumber,
                 (phoneCallRate, countryCallRate, error) => {
                     if (error) {
+                        page.state.search.phoneNumber.callRate = undefined;
+                        page.state.search.phoneNumber.country = undefined;
                     } else {
                         page.state.search.phoneNumber.callRate = phoneCallRate;
                         page.state.search.phoneNumber.country = countryCallRate;
