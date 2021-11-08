@@ -121,6 +121,45 @@ const getAllPremiumFeaturesForms = () => {
         });
 };
 
+/**
+ * @param {HTMLFormElement} form
+ */
+const setupNumberSearchForm = (form) => {
+    UserInterface.makeFormUnsubmittable(
+        form
+    );
+
+    const areaCodeInput = $(form).find("#area-code-input")[0];
+    const phoneNumberInput = $(form).find("#phone-number-input")[0];
+    
+    const searchButton = $(form).find("#search-button")[0];
+    $(searchButton).on("click", () => {
+        const areaCode = areaCodeInput.value;
+        const phoneNumber = phoneNumberInput.value;
+
+        const isFormValid = areaCode.length == 3
+            && phoneNumber.length == 7;
+        
+        if (isFormValid) {
+            const selectedPhoneNumber = new PhoneNumber(
+                areaCode,
+                phoneNumber,
+                undefined,
+                undefined
+            );
+            Store.local.write(
+                Store.keys.checkoutFlow.selectedPhoneNumber,
+                selectedPhoneNumber.serialize()
+            );
+            router.open(
+                RouterPath.checkout_v2_choosePlanAndNumber,
+                router.getParameters(),
+                router.isTestEnvironment()
+            );
+        }
+    });
+};
+
 const setupUI = () => {
     if (externalServices.msp.enabled) {
         $(elements.externalServices.msp.logo).show();

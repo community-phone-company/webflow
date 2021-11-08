@@ -658,7 +658,16 @@ $(getChooseNumberSectionContainer()).hide();
 loadPhoneNumbers(
     true,
     (numbers, error) => {
-        formData.selectedPhoneNumber = numbers[0];
+        formData.selectedPhoneNumber = (() => {
+            const serializedPhoneNumber = Store.local.read(
+                Store.keys.checkoutFlow.selectedPhoneNumber,
+                ""
+            );
+            const phoneNumber = PhoneNumber.deserialize(
+                serializedPhoneNumber
+            );
+            return phoneNumber ?? numbers[0];
+        })();
         updateChoosePhoneNumberSection();
         $(getChooseNumberSectionContainer()).fadeTo(300, 1);
         choosePhoneNumberPopup.setPhoneNumbers(
