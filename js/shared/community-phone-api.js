@@ -112,7 +112,7 @@ class CommunityPhoneAPI {
 
     /**
      * @param {string} endpoint 
-     * @param {"GET" | "POST" | "PUT" | "PATCH" | "UPDATE" | "OPTIONS" | "DELETE"} method
+     * @param {"GET" | "POST" | "PUT" | "DELETE" | "OPTIONS" | "HEAD" | "PATCH" | "TRACE" | "CONNECT"} method
      * @param {any} headers
      * @param {any} data 
      * @param {(response: any, error: any) => void} callback 
