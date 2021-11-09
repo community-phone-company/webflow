@@ -160,6 +160,15 @@ const setupNumberSearchForm = (form) => {
     });
 };
 
+/**
+ * @returns {HTMLFormElement[]}
+ */
+const getNumberSearchForms = () => {
+    return [
+        $("#number-search-form")[0]
+    ];
+};
+
 const setupUI = () => {
     if (externalServices.msp.enabled) {
         $(elements.externalServices.msp.logo).show();
@@ -197,6 +206,10 @@ const setupUI = () => {
 
     getAllPremiumFeaturesForms().forEach(form => {
         setupPremiumFeaturesForm(form);
+    });
+
+    getNumberSearchForms().forEach(form => {
+        setupNumberSearchForm(form);
     });
 };
 
