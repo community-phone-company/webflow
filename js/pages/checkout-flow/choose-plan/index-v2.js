@@ -655,6 +655,7 @@ setupChoosePhoneNumberLinks(() => {
     console.log("Choose phone number");
 });
 $(getChooseNumberSectionContainer()).hide();
+
 loadPhoneNumbers(
     true,
     (numbers, error) => {
@@ -663,10 +664,18 @@ loadPhoneNumbers(
                 Store.keys.checkoutFlow.selectedPhoneNumber,
                 ""
             );
-            const phoneNumber = PhoneNumber.deserialize(
-                serializedPhoneNumber
-            );
-            return phoneNumber ?? numbers[0];
+
+            if (serializedPhoneNumber.length) {
+                const phoneNumber = PhoneNumber.deserialize(
+                    serializedPhoneNumber
+                );
+                
+                if (phoneNumber) {
+                    return phoneNumber;
+                }
+            }
+            
+            return numbers[0];
         })();
         updateChoosePhoneNumberSection();
         $(getChooseNumberSectionContainer()).fadeTo(300, 1);
