@@ -134,8 +134,11 @@ const setupNumberSearchForm = (form) => {
     
     const searchButton = $(form).find("#search-button")[0];
     $(searchButton).on("click", () => {
-        const areaCode = areaCodeInput.value;
-        const phoneNumber = phoneNumberInput.value;
+        const areaCode = areaCodeInput.value
+            .replaceAll("(", "")
+            .replaceAll(")", "");
+        const phoneNumber = phoneNumberInput.value
+            .replaceAll("-", "");
 
         const isFormValid = areaCode.length == 3
             && phoneNumber.length == 7;
