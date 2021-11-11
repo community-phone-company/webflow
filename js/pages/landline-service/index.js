@@ -137,25 +137,23 @@ const setupNumberSearchForm = (form) => {
         const areaCode = areaCodeInput.value
             .replaceAll("(", "")
             .replaceAll(")", "");
+        Store.local.write(
+            Store.keys.numberSearch.selectedAreaCode,
+            areaCode
+        );
         const phoneNumber = phoneNumberInput.value
             .replaceAll("-", "");
+        Store.local.write(
+            Store.keys.numberSearch.selectedDigits,
+            phoneNumber
+        );
 
-        const isFormValid = areaCode.length == 3
-            && phoneNumber.length == 7;
+        const isFormValid = areaCode.length > 0
+            || phoneNumber.length > 0;
         
         if (isFormValid) {
-            const selectedPhoneNumber = new PhoneNumber(
-                areaCode,
-                phoneNumber,
-                undefined,
-                undefined
-            );
-            Store.local.write(
-                Store.keys.checkoutFlow.selectedPhoneNumber,
-                selectedPhoneNumber.serialize()
-            );
             router.open(
-                RouterPath.checkout_v2_choosePlanAndNumber,
+                RouterPath.searchNumber_choosePhoneNumber,
                 router.getParameters(),
                 router.isTestEnvironment()
             );

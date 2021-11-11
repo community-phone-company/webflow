@@ -139,7 +139,12 @@ const RouterPath = Object.freeze({
      */
     checkout_v3_checkout: "checkout-v3/checkout-flow",
     checkout_v3_choosePhoneNumber: "checkout-v3/services/choose-phone-number",
-    checkout_v3_portPhoneNumber: "checkout-v3/services/choose-your-previous-carrier"
+    checkout_v3_portPhoneNumber: "checkout-v3/services/choose-your-previous-carrier",
+
+    /**
+     * Search number
+     */
+    searchNumber_choosePhoneNumber: "search-number/choose-phone-number"
 });
 
 const RouterPathParameter = Object.freeze({
