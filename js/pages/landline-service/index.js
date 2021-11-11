@@ -148,8 +148,7 @@ const setupNumberSearchForm = (form) => {
             phoneNumber
         );
 
-        const isFormValid = areaCode.length > 0
-            || phoneNumber.length > 0;
+        const isFormValid = phoneNumber.length > 0;
         
         if (isFormValid) {
             router.open(
