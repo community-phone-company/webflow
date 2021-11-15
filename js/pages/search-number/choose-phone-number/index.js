@@ -1,11 +1,11 @@
 const page = {
     ui: {
-        byAreaCodeSwitcher: document.getElementById("#filter-by-area-code"),
-        byTollFreeSwitcher: document.getElementById("#filter-by-toll-free"),
+        byAreaCodeSwitcher: document.getElementById("filter-by-area-code"),
+        byTollFreeSwitcher: document.getElementById("filter-by-toll-free"),
         filtersForm: document.getElementById("search-form"),
-        stateInput: document.getElementById("#state-input"),
-        areaCodeInput: document.getElementById("#area-code-input"),
-        digitsInput: document.getElementById("#digits-input"),
+        stateInput: document.getElementById("state-input"),
+        areaCodeInput: document.getElementById("area-code-input"),
+        digitsInput: document.getElementById("digits-input"),
         numbersContainer: document.getElementById("list-of-numbers"),
         showMoreButton: document.getElementById("show-more-button"),
         showMoreAnimationContainer: document.getElementById("show-more-button-animation"),
