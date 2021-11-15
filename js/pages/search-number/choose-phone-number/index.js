@@ -19,7 +19,12 @@ const page = {
             digits: "",
             isTollFree: false
         },
-        availableNumbers: []
+        numbers: {
+            availableNumbers: [],
+            currentPage: 0,
+            pageSize: 10,
+            lastRequest: undefined
+        }
     }
 };
 
@@ -60,6 +65,54 @@ const setupSearchForm = () => {
 };
 
 const onSearchFormChanged = () => {
+};
+
+/**
+ * @param {(numbers: PhoneNumber[], error: any) => void} callback 
+ */
+const loadPhoneNumbers = (callback) => {
+    if (page.data.numbers.lastRequest) {
+        page.data.numbers.lastRequest.abort();
+    }
+
+    page.data.numbers.lastRequest = PhoneNumberManager.getNumbers(
+        "",
+        page.data.searchForm.state,
+        page.data.searchForm.areaCode,
+        page.data.searchForm.digits,
+        page.data.searchForm.isTollFree,
+        (numbers, error) => {
+            page.data.numbers.availableNumbers = numbers;
+
+            if (callback) {
+                callback(
+                    numbers,
+                    error
+                );
+            }
+        }
+    );
+};
+
+const clearNumbersContainer = () => {
+    $(page.ui.numbersContainer).html(``);
+};
+
+/**
+ * @param {PhoneNumber[]} phoneNumbers 
+ */
+const addNumbersToContainer = (phoneNumbers) => {
+    const html = phoneNumbers
+        .map(el => {
+            return getCardHtmlForPhoneNumber(el);
+        })
+        .reduce(
+            (previous, current) => {
+                return `${previous}${current}`;
+            },
+            ""
+        );
+    $(page.ui.numbersContainer).html(html);
 };
 
 const setupUI = () => {
