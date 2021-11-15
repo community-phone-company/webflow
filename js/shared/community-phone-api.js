@@ -145,7 +145,8 @@ class CommunityPhoneAPI {
             method: method,
             headers: headers,
             dataType: "json",
-            data: data ? JSON.stringify(data) : undefined,
+            //data: data ? JSON.stringify(data) : undefined,
+            data: data,
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 measureDuration(startTimestamp);
