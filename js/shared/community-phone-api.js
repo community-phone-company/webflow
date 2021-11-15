@@ -71,6 +71,7 @@ class CommunityPhoneAPI {
     constructor(mode, version) {
         this.mode = mode;
         this.version = version;
+        this.useStringifiedDataForJsonRequest = true;
     }
 
     /**
@@ -122,6 +123,15 @@ class CommunityPhoneAPI {
         const url = this.getAbsoluteUrl(
             endpoint
         );
+        const filteredData = (() => {
+            if (data) {
+                return this.useStringifiedDataForJsonRequest
+                    ? JSON.stringify(data)
+                    : data;
+            } else {
+                return undefined;
+            }
+        })();
         
         [
             `Sending request`,
@@ -145,7 +155,7 @@ class CommunityPhoneAPI {
             method: method,
             headers: headers,
             dataType: "json",
-            data: data ? JSON.stringify(data) : undefined,
+            data: filteredData,
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 measureDuration(startTimestamp);

@@ -78,6 +78,7 @@ class PhoneNumberManager {
      */
     static getNumbers = (city, stateCode, areaCode, digits, tollFreeOnly, callback) => {
         const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
+        api.useStringifiedDataForJsonRequest = false;
         return api.jsonRequest(
             CommunityPhoneAPI.endpoints.search_numbers,
             "GET",
