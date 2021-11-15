@@ -122,6 +122,7 @@ const addNumbersToContainer = (phoneNumbers) => {
 
 const setupUI = () => {
     setupSearchForm();
+    $(page.ui.checkCoverageContainer).hide();
     setupCards((selectedPhoneNumber) => {
         console.log(`Selected phone number: ${selectedPhoneNumber.formatted(PhoneNumberFormatStyle.brackets)}`);
     });
