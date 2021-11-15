@@ -66,6 +66,18 @@ const setupSearchForm = () => {
 };
 
 const onSearchFormChanged = () => {
+    page.data.numbers.availableNumbers = [];
+    page.data.numbers.currentPage = 0;
+    clearNumbersContainer();
+    loadNextPage((numbers, error) => {
+        if (error || !numbers.length) {
+        } else {
+            page.data.numbers.currentPage++;
+            addNumbersToContainer(
+                numbers
+            );
+        }
+    });
 };
 
 /**
@@ -98,6 +110,21 @@ const loadPhoneNumbers = (pageIndex, callback) => {
             }
         }
     );
+};
+
+/**
+ * @param {((numbers: PhoneNumber[], error: any) => void) | undefined} callback 
+ */
+const loadNextPage = (callback) => {
+    const nextPageIndex = page.data.numbers.currentPage + 1;
+    loadPhoneNumbers(nextPageIndex, (numbers, error) => {
+        if (callback) {
+            callback(
+                numbers,
+                error
+            );
+        }
+    });
 };
 
 const clearNumbersContainer = () => {
