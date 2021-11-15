@@ -3,6 +3,16 @@
  * @returns {string}
  */
 const getCardHtmlForPhoneNumber = (phoneNumber) => {
+    const formattedPhoneNumber = phoneNumber.formatted(
+        PhoneNumberFormatStyle.brackets
+    );
+    const region = (() => {
+        if (phoneNumber.city && phoneNumber.stateCode) {
+            return `${phoneNumber.city}, ${phoneNumber.stateCode}`;
+        } else {
+            return ``;
+        }
+    })();
     return `
         <div class="div-phone-number" community-phone-phone-number="${phoneNumber.serialize()}">
             <div class="div-block-21">
@@ -11,22 +21,12 @@ const getCardHtmlForPhoneNumber = (phoneNumber) => {
                 <div class="_w-8">
                 </div>
                 <div class="txt-phone-number-2">
-                    ${(() => {
-                        return phoneNumber.formatted(
-                            PhoneNumberFormatStyle.brackets
-                        );
-                    })()}
+                    ${formattedPhoneNumber}
                 </div>
             </div>
             <div class="txt-lacation-2">
                 Portland, OR
-                ${(() => {
-                    if (phoneNumber.city && phoneNumber.stateCode) {
-                        return `${phoneNumber.city}, ${phoneNumber.stateCode}`;
-                    } else {
-                        return ``;
-                    }
-                })()}
+                ${region}
             </div>
         </div>
         <div class="devider-8px">
