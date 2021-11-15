@@ -64,6 +64,9 @@ const onSearchFormChanged = () => {
 
 const setupUI = () => {
     setupSearchForm();
+    setupCards((selectedPhoneNumber) => {
+        console.log(`Selected phone number: ${selectedPhoneNumber.formatted(PhoneNumberFormatStyle.brackets)}`);
+    });
 };
 
 $(document).ready(() => {
