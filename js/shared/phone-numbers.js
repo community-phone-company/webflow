@@ -77,33 +77,32 @@ class PhoneNumberManager {
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
      */
     static getNumbers = (city, stateCode, areaCode, digits, tollFreeOnly, callback) => {
-        console.log(`getNumbers request\ncity: ${city}\nstateCode: ${stateCode}\nareaCode: ${areaCode}\ndigits: ${digits}`);
-        return $.ajax({
-            method: "GET",
-            url: `https://landline.phone.community/api/v1/search/numbers`,
-            dataType: 'json',
-            data: {
-                "city": city,
-                "stateCode": stateCode,
-                "areaCode": areaCode,
-                "numberContains": digits,
-                ...tollFreeOnly ? {"tollFree": true} : undefined
+        const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
+        return api.jsonRequest(
+            CommunityPhoneAPI.endpoints.search_numbers,
+            "GET",
+            undefined,
+            {
+                city: city,
+                stateCode: stateCode,
+                areaCode: areaCode,
+                numberContains: digits,
+                ...tollFreeOnly ? {tollFree: true} : undefined
             },
-            success: function (response) {
-                console.log(`getNumbers response: `, response);
-                const numbers = response.numbers.map(element => new PhoneNumber(
-                    element.area_code,
-                    element.number,
-                    element.city,
-                    element.state_code
-                ));
-                callback(numbers, undefined);
-            },
-            error: function (error) {
-                console.log(`Error: `, error);
-                callback([], error);
+            (response, error) => {
+                if (error) {
+                    callback([], error);
+                } else {
+                    const numbers = response.numbers.map(element => new PhoneNumber(
+                        element.area_code,
+                        element.number,
+                        element.city,
+                        element.state_code
+                    ));
+                    callback(numbers, undefined);
+                }
             }
-        });
+        );
     }
 
     /**

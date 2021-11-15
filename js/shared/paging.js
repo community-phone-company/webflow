@@ -8,4 +8,14 @@ class Paging {
         this.pageIndex = pageIndex;
         this.itemsPerPage = itemsPerPage;
     }
+
+    /**
+     * @returns {any}
+     */
+    toJSON() {
+        return {
+            page: this.pageIndex,
+            numberPerPage: this.itemsPerPage
+        };
+    }
 }

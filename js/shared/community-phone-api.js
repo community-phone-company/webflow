@@ -172,6 +172,7 @@ CommunityPhoneAPI.endpoints = Object.freeze({
     auth_token: "auth/token",
     portal_billing: "portal/billing",
     search_addresses: "search/addresses",
+    search_numbers: "search/numbers",
     checkout_sessions: "checkout/sessions",
     checkout_sessions_id: (id) => {
         return `checkout/sessions/${id}`;
