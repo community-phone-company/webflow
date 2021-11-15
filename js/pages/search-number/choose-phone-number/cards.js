@@ -2,9 +2,9 @@
  * @param {PhoneNumber} phoneNumber 
  * @returns {string}
  */
-const getHtmlForCard = (phoneNumber) => {
+const getCardHtmlForPhoneNumber = (phoneNumber) => {
     return `
-        <div class="div-phone-number">
+        <div class="div-phone-number" community-phone-phone-number="${phoneNumber.serialize()}">
             <div class="div-block-21">
                 <div class="div-radio-button-2">
                 </div>
@@ -36,6 +36,17 @@ const getHtmlForCard = (phoneNumber) => {
 
 /**
  * @param {HTMLElement} card 
+ * @returns {PhoneNumber}
+ */
+const getPhoneNumberFromCard = (card) => {
+    const serializedPhoneNumber = $(card).attr("community-phone-phone-number");
+    return PhoneNumber.deserialize(
+        serializedPhoneNumber
+    );
+};
+
+/**
+ * @param {HTMLElement} card 
  * @param {boolean} deselectOtherCards 
  */
 const selectCard = (card, deselectOtherCards) => {
@@ -46,4 +57,31 @@ const selectCard = (card, deselectOtherCards) => {
     $(card).addClass(
         selectedCardClass
     );
-}
+};
+
+/**
+ * @param {((selectedPhoneNumber: PhoneNumber) => void) | undefined} onSelectedCard 
+ */
+const setupCards = (onSelectedCard) => {
+    $(".div-phone-number").off("click").on("click", (event) => {
+        event.preventDefault();
+        const selectedCard = event.currentTarget;
+
+        const selectedCardClass = "radio-selected";
+        $(".div-phone-number .div-radio-button-2").removeClass(
+            selectedCardClass
+        );
+        $(card).find(".div-radio-button-2").addClass(
+            selectedCardClass
+        );
+
+        if (onSelectedCard) {
+            const selectedPhoneNumber = getPhoneNumberFromCard(
+                selectedCard
+            );
+            onSelectedCard(
+                selectedPhoneNumber
+            );
+        }
+    });
+};
