@@ -71,7 +71,7 @@ const setupCards = (onSelectedCard) => {
         $(".div-phone-number .div-radio-button-2").removeClass(
             selectedCardClass
         );
-        $(card).find(".div-radio-button-2").addClass(
+        $(selectedCard).find(".div-radio-button-2").addClass(
             selectedCardClass
         );
 
