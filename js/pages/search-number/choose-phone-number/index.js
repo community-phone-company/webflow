@@ -68,9 +68,10 @@ const onSearchFormChanged = () => {
 };
 
 /**
+ * @param {number} pageIndex
  * @param {(numbers: PhoneNumber[], error: any) => void} callback 
  */
-const loadPhoneNumbers = (callback) => {
+const loadPhoneNumbers = (pageIndex, callback) => {
     if (page.data.numbers.lastRequest) {
         page.data.numbers.lastRequest.abort();
     }
@@ -81,6 +82,10 @@ const loadPhoneNumbers = (callback) => {
         page.data.searchForm.areaCode,
         page.data.searchForm.digits,
         page.data.searchForm.isTollFree,
+        new Paging(
+            pageIndex,
+            page.data.numbers.pageSize
+        ),
         (numbers, error) => {
             page.data.numbers.availableNumbers = numbers;
 

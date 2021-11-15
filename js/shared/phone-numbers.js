@@ -74,9 +74,10 @@ class PhoneNumberManager {
      * @param {string} digits Digits.
      * @param {boolean} tollFreeOnly Toll free only.
      * @param {(numbers: PhoneNumber[], error: any | undefined) => void} callback Function that is called when response comes from the server.
+     * @param {Paging | undefined} paging Page parameters.
      * @returns {XMLHttpRequest} `XMLHttpRequest` instance.
      */
-    static getNumbers = (city, stateCode, areaCode, digits, tollFreeOnly, callback) => {
+    static getNumbers = (city, stateCode, areaCode, digits, tollFreeOnly, paging, callback) => {
         const api = CommunityPhoneAPI.currentEnvironmentWithDefaultVersion();
         api.useStringifiedDataForJsonRequest = false;
         return api.jsonRequest(
@@ -88,7 +89,8 @@ class PhoneNumberManager {
                 stateCode: stateCode,
                 areaCode: areaCode,
                 numberContains: digits,
-                ...tollFreeOnly ? {tollFree: true} : undefined
+                ...tollFreeOnly ? {tollFree: true} : undefined,
+                ...paging ? paging.toJSON() : undefined
             },
             (response, error) => {
                 if (error) {
