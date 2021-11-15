@@ -23,7 +23,8 @@ const page = {
             availableNumbers: [],
             currentPage: 0,
             pageSize: 10,
-            lastRequest: undefined
+            lastRequest: undefined,
+            selectedNumber: undefined
         }
     }
 };
@@ -122,9 +123,14 @@ const addNumbersToContainer = (phoneNumbers) => {
 
 const setupUI = () => {
     setupSearchForm();
+
     $(page.ui.checkCoverageContainer).hide();
+    $(page.ui.checkCoverageButton).on("click", () => {
+    });
+
     setupCards((selectedPhoneNumber) => {
-        console.log(`Selected phone number: ${selectedPhoneNumber.formatted(PhoneNumberFormatStyle.brackets)}`);
+        page.data.numbers.selectedNumber = selectedPhoneNumber;
+        $(page.ui.checkCoverageContainer).show();
     });
 };
 
