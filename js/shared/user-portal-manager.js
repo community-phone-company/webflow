@@ -56,7 +56,7 @@ class UserPortalManager {
      */
     getUserPortalLinks = () => {
         return UserPortalManager._getSelectors().userPortalLinks
-            .map(el => document.querySelectorAll(el))
+            .map(el => document.querySelectorAll(el)[0])
             .filter(el => el != undefined);
     }
 
