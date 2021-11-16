@@ -153,11 +153,6 @@ const onSearchFormChanged = () => {
     page.data.numbers.currentPage = 0;
     clearNumbersContainer();
     loadNextPage(() => {
-        if (page.data.numbers.availableNumbers.length) {
-            $(page.ui.showMoreButtonContainer).show();
-        } else {
-            $(page.ui.showMoreButtonContainer).hide();
-        }
     });
     setCheckCoverageButtonEnabled(
         false
@@ -200,6 +195,8 @@ const loadPhoneNumbers = (pageIndex, callback) => {
 const loadNextPage = (callback) => {
     const nextPageIndex = page.data.numbers.currentPage + 1;
     
+    onStartedLoadingNextPage();
+
     loadPhoneNumbers(nextPageIndex, (numbers, error) => {
         if (error || !numbers.length) {
             if (callback) {
@@ -236,7 +233,21 @@ const loadNextPage = (callback) => {
                 );
             }
         }
+
+        onFinishedLoadingNextPage();
     });
+};
+
+const onStartedLoadingNextPage = () => {
+    $(page.ui.showMoreButtonContainer).hide();
+};
+
+const onFinishedLoadingNextPage = () => {
+    if (page.data.numbers.availableNumbers.length) {
+        $(page.ui.showMoreButtonContainer).show();
+    } else {
+        $(page.ui.showMoreButtonContainer).hide();
+    }
 };
 
 const clearNumbersContainer = () => {
