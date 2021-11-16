@@ -224,6 +224,10 @@ const setupUI = () => {
             );
         }
     });
+
+    $(page.ui.numbersContainer)
+        .html(``)
+        .show();
 };
 
 $(document).ready(() => {
