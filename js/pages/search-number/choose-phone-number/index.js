@@ -72,6 +72,9 @@ const onSearchFormChanged = () => {
     clearNumbersContainer();
     loadNextPage(() => {
     });
+    setCheckCoverageButtonEnabled(
+        true
+    );
 };
 
 /**
