@@ -11,7 +11,7 @@ const getCardHtmlForPhoneNumber = (phoneNumber) => {
         const stateCode = phoneNumber.stateCode ?? "";
 
         if (city.length > 0 && stateCode.length > 0) {
-            return `${phoneNumber.city}, ${phoneNumber.stateCode}`;
+            return `${city}, ${stateCode}`;
         } else {
             return ``;
         }
@@ -28,7 +28,6 @@ const getCardHtmlForPhoneNumber = (phoneNumber) => {
                 </div>
             </div>
             <div class="txt-lacation-2">
-                Portland, OR
                 ${region}
             </div>
         </div>
