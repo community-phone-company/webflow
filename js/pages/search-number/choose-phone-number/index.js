@@ -162,10 +162,10 @@ const setNumbersInContainer = (phoneNumbers) => {
  */
 const setShowMoreButtonAnimated = (animated) => {
     if (animated) {
-        $(page.ui.showMoreAnimationContainer).hide();
+        $(page.ui.showMoreButtonContainer).hide();
         $(page.ui.showMoreAnimationContainer).show();
     } else {
-        $(page.ui.showMoreAnimationContainer).show();
+        $(page.ui.showMoreButtonContainer).show();
         $(page.ui.showMoreAnimationContainer).hide();
     }
 };
