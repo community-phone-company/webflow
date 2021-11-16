@@ -7,7 +7,10 @@ const getCardHtmlForPhoneNumber = (phoneNumber) => {
         PhoneNumberFormatStyle.brackets
     );
     const region = (() => {
-        if (phoneNumber.city && phoneNumber.stateCode) {
+        const city = phoneNumber.city ?? "";
+        const stateCode = phoneNumber.stateCode ?? "";
+
+        if (city.length > 0 && stateCode.length > 0) {
             return `${phoneNumber.city}, ${phoneNumber.stateCode}`;
         } else {
             return ``;
