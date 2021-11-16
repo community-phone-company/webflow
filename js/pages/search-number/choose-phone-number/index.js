@@ -153,6 +153,11 @@ const onSearchFormChanged = () => {
     page.data.numbers.currentPage = 0;
     clearNumbersContainer();
     loadNextPage(() => {
+        if (page.data.numbers.availableNumbers.length) {
+            $(page.ui.checkCoverageButton).show();
+        } else {
+            $(page.ui.checkCoverageButton).hide();
+        }
     });
     setCheckCoverageButtonEnabled(
         false
