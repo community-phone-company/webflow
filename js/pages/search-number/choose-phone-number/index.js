@@ -30,7 +30,68 @@ const page = {
     }
 };
 
+const setupStateSelect = () => {
+    const defaultOption = {
+        label: "All states",
+        value: ""
+    };
+    const stateOptions = [
+        defaultOption
+    ].concat(
+        getAllStates().map(el => {
+            return {
+                label: el.name,
+                value: el.code
+            };
+        })
+    );
+    $(page.ui.stateSelect).html(
+        stateOptions
+            .map(el => {
+                return `<option value="${el.value}">${el.label}</option>`;
+            })
+            .reduce((previous, current) => `${previous}${current}`, ``)
+    );
+};
+
+const setupAreaCodeSelect = () => {
+    const stateCode = page.data.searchForm.state;
+    const areaCodes = (() => {
+        if (stateCode.length) {
+            return getAreaCodesByStateCode(
+                stateCode
+            );
+        } else {
+            return getAllAreaCodes();
+        }
+    })();
+    const defaultOption = {
+        label: "All states",
+        value: ""
+    };
+    const options = [
+        defaultOption
+    ].concat(
+        areaCodes.map(el => {
+            return {
+                label: el,
+                value: el
+            };
+        })
+    );
+    $(page.ui.areaCodeSelect).html(
+        options
+            .map(el => {
+                return `<option value="${el.value}">${el.label}</option>`;
+            })
+            .reduce((previous, current) => `${previous}${current}`, ``)
+    );
+};
+
 const setupSearchForm = () => {
+    setupStateSelect();
+    setupAreaCodeSelect();
+
     const switchers = [
         page.ui.byAreaCodeSwitcher,
         page.ui.byTollFreeSwitcher
