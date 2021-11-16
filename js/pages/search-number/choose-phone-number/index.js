@@ -239,15 +239,15 @@ const loadNextPage = (callback) => {
 };
 
 const onStartedLoadingNextPage = () => {
-    $(page.ui.showMoreButtonContainer).hide();
+    setShowMoreButtonAnimated(
+        true
+    );
 };
 
 const onFinishedLoadingNextPage = () => {
-    if (page.data.numbers.availableNumbers.length) {
-        $(page.ui.showMoreButtonContainer).show();
-    } else {
-        $(page.ui.showMoreButtonContainer).hide();
-    }
+    setShowMoreButtonAnimated(
+        false
+    );
 };
 
 const clearNumbersContainer = () => {
@@ -299,13 +299,7 @@ const setupUI = () => {
     setupSearchForm();
 
     $(page.ui.showMoreButton).on("click", () => {
-        setShowMoreButtonAnimated(
-            true
-        );
         loadNextPage(() => {
-            setShowMoreButtonAnimated(
-                false
-            );
         });
     });
 
