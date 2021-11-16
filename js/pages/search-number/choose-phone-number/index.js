@@ -113,12 +113,14 @@ const setupSearchForm = () => {
 
     page.ui.stateSelect.oninput = () => {
         page.data.searchForm.state = page.ui.stateSelect.value;
+        page.data.searchForm.areaCode = "";
         page.ui.areaCodeSelect.value = "";
         onSearchFormChanged();
     };
 
     page.ui.areaCodeSelect.oninput = () => {
         page.data.searchForm.areaCode = page.ui.areaCodeSelect.value;
+        page.data.searchForm.state = "";
         page.ui.stateSelect.value = "";
         onSearchFormChanged();
     };
