@@ -3,8 +3,8 @@ const page = {
         byAreaCodeSwitcher: document.getElementById("filter-by-area-code"),
         byTollFreeSwitcher: document.getElementById("filter-by-toll-free"),
         filtersForm: document.getElementById("search-form"),
-        stateInput: document.getElementById("state-input"),
-        areaCodeInput: document.getElementById("area-code-input"),
+        stateSelect: document.querySelectorAll(".state select")[0],
+        areaCodeSelect: document.querySelectorAll(".area-code select")[0],
         digitsInput: document.getElementById("digits-input"),
         numbersContainer: document.getElementById("list-of-numbers"),
         showMoreButtonContainer: document.getElementById("show-more-button-container"),
@@ -50,16 +50,16 @@ const setupSearchForm = () => {
         });
     });
 
-    new InputValueObserver(page.ui.stateInput).startObserving(newValue => {
-        page.data.searchForm.state = newValue;
+    page.ui.areaCodeSelect.oninput = () => {
+        page.data.searchForm.state = page.ui.stateSelect.value;
         onSearchFormChanged();
-    });
+    };
 
-    new InputValueObserver(page.ui.areaCodeInput).startObserving(newValue => {
-        page.data.searchForm.areaCode = newValue;
+    page.ui.areaCodeSelect.oninput = () => {
+        page.data.searchForm.areaCode = page.ui.areaCodeSelect.value;
         onSearchFormChanged();
-    });
-    page.ui.areaCodeInput.value = Store.local.read(
+    };
+    page.ui.areaCodeSelect.value = Store.local.read(
         Store.keys.numberSearch.selectedAreaCode,
         ""
     );
