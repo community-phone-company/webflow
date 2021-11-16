@@ -50,13 +50,15 @@ const setupSearchForm = () => {
         });
     });
 
-    page.ui.areaCodeSelect.oninput = () => {
+    page.ui.stateSelect.oninput = () => {
         page.data.searchForm.state = page.ui.stateSelect.value;
+        page.ui.areaCodeSelect.value = "";
         onSearchFormChanged();
     };
 
     page.ui.areaCodeSelect.oninput = () => {
         page.data.searchForm.areaCode = page.ui.areaCodeSelect.value;
+        page.ui.stateSelect.value = "";
         onSearchFormChanged();
     };
     page.ui.areaCodeSelect.value = Store.local.read(
