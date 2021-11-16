@@ -59,7 +59,7 @@ const setupSearchForm = () => {
         page.data.searchForm.areaCode = newValue;
         onSearchFormChanged();
     });
-    page.ui.areaCodeInput = Store.local.read(
+    page.ui.areaCodeInput.value = Store.local.read(
         Store.keys.numberSearch.selectedAreaCode,
         ""
     );
@@ -68,7 +68,7 @@ const setupSearchForm = () => {
         page.data.searchForm.digits = newValue;
         onSearchFormChanged();
     });
-    page.ui.digitsInput = Store.local.read(
+    page.ui.digitsInput.value = Store.local.read(
         Store.keys.numberSearch.selectedDigits,
         ""
     );
