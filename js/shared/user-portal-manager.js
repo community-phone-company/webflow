@@ -16,6 +16,10 @@ class UserPortalManager {
     static _getSelectors = () => {
         return {
             userPortalLink: "#user-portal-button",
+            userPortalLinks: [
+                "#user-portal-button",
+                "#user-portal-button-2"
+            ],
             popup: "#user-portal-login-popup"
         };
     }
@@ -25,7 +29,9 @@ class UserPortalManager {
      */
     static isSupported = () => {
         const selectors = this._getSelectors();
-        const hasLink = document.querySelectorAll(selectors.userPortalLink).length > 0;
+        const hasLink = selectors.userPortalLinks.find(linkSelector => {
+            return document.querySelectorAll(linkSelector).length > 0;
+        }) != undefined;
         const hasPopup = document.querySelectorAll(selectors.popup).length > 0;
         return hasLink && hasPopup;
     }
@@ -43,6 +49,15 @@ class UserPortalManager {
         return document.querySelectorAll(
             UserPortalManager._getSelectors().userPortalLink
         )[0];
+    }
+
+    /**
+     * @returns {HTMLElement[]}
+     */
+    getUserPortalLinks = () => {
+        return UserPortalManager._getSelectors().userPortalLinks
+            .map(el => document.querySelectorAll(el))
+            .filter(el => el != undefined);
     }
 
     /**
@@ -176,7 +191,7 @@ class UserPortalManager {
         const _this = this;
 
         const popup = this.getCreateAccountPopup();
-        $(this.getUserPortalLink()).on("click", (event) => {
+        $(this.getUserPortalLinks()).on("click", (event) => {
             event.preventDefault();
 
             if (_this._authorizationToken) {
