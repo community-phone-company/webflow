@@ -59,11 +59,19 @@ const setupSearchForm = () => {
         page.data.searchForm.areaCode = newValue;
         onSearchFormChanged();
     });
+    page.ui.areaCodeInput = Store.local.read(
+        Store.keys.numberSearch.selectedAreaCode,
+        ""
+    );
 
     new InputValueObserver(page.ui.digitsInput).startObserving(newValue => {
         page.data.searchForm.digits = newValue;
         onSearchFormChanged();
     });
+    page.ui.digitsInput = Store.local.read(
+        Store.keys.numberSearch.selectedDigits,
+        ""
+    );
 };
 
 const onSearchFormChanged = () => {
