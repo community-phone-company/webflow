@@ -118,7 +118,7 @@ const loadNextPage = (callback) => {
                 );
             }
         } else {
-            page.data.numbers.availableNumbers.push(
+            page.data.numbers.availableNumbers = page.data.numbers.availableNumbers.concat(
                 numbers
             );
             page.data.numbers.currentPage++;
