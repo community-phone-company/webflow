@@ -94,8 +94,6 @@ const loadPhoneNumbers = (pageIndex, callback) => {
             page.data.numbers.pageSize
         ),
         (numbers, error) => {
-            page.data.numbers.availableNumbers = numbers;
-
             if (callback) {
                 callback(
                     numbers,
@@ -120,9 +118,12 @@ const loadNextPage = (callback) => {
                 );
             }
         } else {
-            page.data.numbers.currentPage++;
-            addNumbersToContainer(
+            page.data.numbers.availableNumbers.push(
                 numbers
+            );
+            page.data.numbers.currentPage++;
+            setNumbersInContainer(
+                page.data.numbers.availableNumbers
             );
             setupCards();
 
@@ -142,9 +143,8 @@ const clearNumbersContainer = () => {
 /**
  * @param {PhoneNumber[]} phoneNumbers 
  */
-const addNumbersToContainer = (phoneNumbers) => {
-    const currentHtml = $(page.ui.numbersContainer).html();
-    const updatedHtml = phoneNumbers
+const setNumbersInContainer = (phoneNumbers) => {
+    const html = phoneNumbers
         .map(el => {
             return getCardHtmlForPhoneNumber(el);
         })
@@ -152,9 +152,9 @@ const addNumbersToContainer = (phoneNumbers) => {
             (previous, current) => {
                 return `${previous}${current}`;
             },
-            currentHtml
+            ``
         );
-    $(page.ui.numbersContainer).html(updatedHtml);
+    $(page.ui.numbersContainer).html(html);
 };
 
 /**
@@ -191,4 +191,5 @@ const setupUI = () => {
 
 $(document).ready(() => {
     setupUI();
+    onSearchFormChanged();
 });
