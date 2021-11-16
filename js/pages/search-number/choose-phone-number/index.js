@@ -115,6 +115,7 @@ const setupSearchForm = () => {
         page.data.searchForm.state = page.ui.stateSelect.value;
         page.data.searchForm.areaCode = "";
         page.ui.areaCodeSelect.value = "";
+        setupAreaCodeSelect();
         onSearchFormChanged();
     };
 
