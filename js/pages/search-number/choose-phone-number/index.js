@@ -7,6 +7,7 @@ const page = {
         areaCodeInput: document.getElementById("area-code-input"),
         digitsInput: document.getElementById("digits-input"),
         numbersContainer: document.getElementById("list-of-numbers"),
+        showMoreButtonContainer: document.getElementById("show-more-button-container"),
         showMoreButton: document.getElementById("show-more-button"),
         showMoreAnimationContainer: document.getElementById("show-more-button-animation"),
         checkCoverageContainer: document.getElementById("check-coverage-container"),
@@ -156,11 +157,30 @@ const addNumbersToContainer = (phoneNumbers) => {
     $(page.ui.numbersContainer).html(updatedHtml);
 };
 
+/**
+ * @param {boolean} animated 
+ */
+const setShowMoreButtonAnimated = (animated) => {
+    if (animated) {
+        $(page.ui.showMoreAnimationContainer).hide();
+        $(page.ui.showMoreAnimationContainer).show();
+    } else {
+        $(page.ui.showMoreAnimationContainer).show();
+        $(page.ui.showMoreAnimationContainer).hide();
+    }
+};
+
 const setupUI = () => {
     setupSearchForm();
 
     $(page.ui.showMoreButton).on("click", () => {
+        setShowMoreButtonAnimated(
+            true
+        );
         loadNextPage(() => {
+            setShowMoreButtonAnimated(
+                false
+            );
         });
     });
 
