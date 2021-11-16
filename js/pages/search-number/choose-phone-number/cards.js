@@ -74,15 +74,11 @@ const setupCards = (onSelectedCard) => {
         $(selectedCard).find(".div-radio-button-2").addClass(
             selectedCardClass
         );
-
-        const selectedPhoneNumber = getPhoneNumberFromCard(
-            selectedCard
-        );
-        page.data.numbers.selectedNumber = selectedPhoneNumber;
         
-        $(page.ui.checkCoverageContainer).show();
-
         if (onSelectedCard) {
+            const selectedPhoneNumber = getPhoneNumberFromCard(
+                selectedCard
+            );
             onSelectedCard(
                 selectedPhoneNumber
             );

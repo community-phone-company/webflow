@@ -122,10 +122,18 @@ const loadNextPage = (callback) => {
                 numbers
             );
             page.data.numbers.currentPage++;
+            
             setNumbersInContainer(
                 page.data.numbers.availableNumbers
             );
-            setupCards();
+
+            setupCards((selectedPhoneNumber) => {
+                page.data.numbers.selectedNumber = selectedPhoneNumber;
+
+                setCheckCoverageButtonEnabled(
+                    true
+                );
+            });
 
             if (callback) {
                 callback(
@@ -170,6 +178,17 @@ const setShowMoreButtonAnimated = (animated) => {
     }
 };
 
+/**
+ * @param {boolean} enabled
+ */
+const setCheckCoverageButtonEnabled = (enabled) => {
+    if (enabled) {
+        $(page.ui.checkCoverageContainer).show();
+    } else {
+        $(page.ui.checkCoverageContainer).hide();
+    }
+};
+
 const setupUI = () => {
     setupSearchForm();
 
@@ -184,7 +203,9 @@ const setupUI = () => {
         });
     });
 
-    $(page.ui.checkCoverageContainer).hide();
+    setCheckCoverageButtonEnabled(
+        false
+    );
     $(page.ui.checkCoverageButton).on("click", () => {
     });
 };
