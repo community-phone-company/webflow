@@ -154,9 +154,9 @@ const onSearchFormChanged = () => {
     clearNumbersContainer();
     loadNextPage(() => {
         if (page.data.numbers.availableNumbers.length) {
-            $(page.ui.checkCoverageButton).show();
+            $(page.ui.showMoreButtonContainer).show();
         } else {
-            $(page.ui.checkCoverageButton).hide();
+            $(page.ui.showMoreButtonContainer).hide();
         }
     });
     setCheckCoverageButtonEnabled(
