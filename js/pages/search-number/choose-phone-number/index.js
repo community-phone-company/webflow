@@ -69,14 +69,7 @@ const onSearchFormChanged = () => {
     page.data.numbers.availableNumbers = [];
     page.data.numbers.currentPage = 0;
     clearNumbersContainer();
-    loadNextPage((numbers, error) => {
-        if (error || !numbers.length) {
-        } else {
-            page.data.numbers.currentPage++;
-            addNumbersToContainer(
-                numbers
-            );
-        }
+    loadNextPage(() => {
     });
 };
 
@@ -113,16 +106,30 @@ const loadPhoneNumbers = (pageIndex, callback) => {
 };
 
 /**
- * @param {((numbers: PhoneNumber[], error: any) => void) | undefined} callback 
+ * @param {((loaded: boolean) => void) | undefined} callback 
  */
 const loadNextPage = (callback) => {
     const nextPageIndex = page.data.numbers.currentPage + 1;
+    
     loadPhoneNumbers(nextPageIndex, (numbers, error) => {
-        if (callback) {
-            callback(
-                numbers,
-                error
+        if (error || !numbers.length) {
+            if (callback) {
+                callback(
+                    false
+                );
+            }
+        } else {
+            page.data.numbers.currentPage++;
+            addNumbersToContainer(
+                numbers
             );
+            setupCards();
+
+            if (callback) {
+                callback(
+                    true
+                );
+            }
         }
     });
 };
@@ -151,13 +158,13 @@ const addNumbersToContainer = (phoneNumbers) => {
 const setupUI = () => {
     setupSearchForm();
 
-    $(page.ui.checkCoverageContainer).hide();
-    $(page.ui.checkCoverageButton).on("click", () => {
+    $(page.ui.showMoreButton).on("click", () => {
+        loadNextPage(() => {
+        });
     });
 
-    setupCards((selectedPhoneNumber) => {
-        page.data.numbers.selectedNumber = selectedPhoneNumber;
-        $(page.ui.checkCoverageContainer).show();
+    $(page.ui.checkCoverageContainer).hide();
+    $(page.ui.checkCoverageButton).on("click", () => {
     });
 };
 

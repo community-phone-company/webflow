@@ -75,10 +75,14 @@ const setupCards = (onSelectedCard) => {
             selectedCardClass
         );
 
+        const selectedPhoneNumber = getPhoneNumberFromCard(
+            selectedCard
+        );
+        page.data.numbers.selectedNumber = selectedPhoneNumber;
+        
+        $(page.ui.checkCoverageContainer).show();
+
         if (onSelectedCard) {
-            const selectedPhoneNumber = getPhoneNumberFromCard(
-                selectedCard
-            );
             onSelectedCard(
                 selectedPhoneNumber
             );
