@@ -63,6 +63,10 @@ const setupSearchForm = () => {
         Store.keys.numberSearch.selectedAreaCode,
         ""
     );
+    Store.local.write(
+        Store.keys.numberSearch.selectedAreaCode,
+        undefined
+    );
 
     new InputValueObserver(page.ui.digitsInput).startObserving(newValue => {
         page.data.searchForm.digits = newValue;
@@ -71,6 +75,10 @@ const setupSearchForm = () => {
     page.ui.digitsInput.value = Store.local.read(
         Store.keys.numberSearch.selectedDigits,
         ""
+    );
+    Store.local.write(
+        Store.keys.numberSearch.selectedDigits,
+        undefined
     );
 };
 
