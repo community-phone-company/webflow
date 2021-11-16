@@ -73,7 +73,7 @@ const onSearchFormChanged = () => {
     loadNextPage(() => {
     });
     setCheckCoverageButtonEnabled(
-        true
+        false
     );
 };
 
