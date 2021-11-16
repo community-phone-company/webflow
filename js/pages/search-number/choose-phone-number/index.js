@@ -125,7 +125,8 @@ const loadNextPage = (callback) => {
                 numbers
             );
             page.data.numbers.currentPage++;
-            
+            page.data.numbers.selectedNumber = undefined;
+
             setNumbersInContainer(
                 page.data.numbers.availableNumbers
             );
@@ -137,6 +138,10 @@ const loadNextPage = (callback) => {
                     true
                 );
             });
+
+            setCheckCoverageButtonEnabled(
+                false
+            );
 
             if (callback) {
                 callback(
