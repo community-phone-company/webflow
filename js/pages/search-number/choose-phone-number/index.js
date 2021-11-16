@@ -142,7 +142,8 @@ const clearNumbersContainer = () => {
  * @param {PhoneNumber[]} phoneNumbers 
  */
 const addNumbersToContainer = (phoneNumbers) => {
-    const html = phoneNumbers
+    const currentHtml = $(page.ui.numbersContainer).html();
+    const updatedHtml = phoneNumbers
         .map(el => {
             return getCardHtmlForPhoneNumber(el);
         })
@@ -150,9 +151,9 @@ const addNumbersToContainer = (phoneNumbers) => {
             (previous, current) => {
                 return `${previous}${current}`;
             },
-            ""
+            currentHtml
         );
-    $(page.ui.numbersContainer).html(html);
+    $(page.ui.numbersContainer).html(updatedHtml);
 };
 
 const setupUI = () => {
