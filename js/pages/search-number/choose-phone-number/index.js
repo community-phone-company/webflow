@@ -66,7 +66,7 @@ const setupAreaCodeSelect = () => {
         }
     })();
     const defaultOption = {
-        label: "All states",
+        label: "",
         value: ""
     };
     const options = [
