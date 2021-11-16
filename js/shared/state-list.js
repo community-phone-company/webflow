@@ -1,4 +1,4 @@
-const ALL_STATES = [
+const STATE_LIST = [
     {
         stateName: "Alabama",
         stateCode: "AL",
@@ -630,7 +630,7 @@ const ALL_STATES = [
  * @returns {{name: string, code: string}[]}
  */
 const getAllStates = () => {
-    return ALL_STATES.map(el => {
+    return STATE_LIST.map(el => {
         return {
             name: el.stateName,
             code: el.stateCode
@@ -643,7 +643,7 @@ const getAllStates = () => {
  * @returns {string[]}
  */
 const getAreaCodesByStateCode = (stateCode) => {
-    return ALL_STATES
+    return STATE_LIST
         .find(el => el.stateCode === stateCode)
         .areaCodes;
 };
@@ -652,7 +652,7 @@ const getAreaCodesByStateCode = (stateCode) => {
  * @returns {string[]}
  */
 const getAllAreaCodes = () => {
-    return result
+    return STATE_LIST
         .flatMap(el => el.areaCodes)
         .sort();
 };
