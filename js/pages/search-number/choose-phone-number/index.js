@@ -210,6 +210,19 @@ const setupUI = () => {
         false
     );
     $(page.ui.checkCoverageButton).on("click", () => {
+        const selectedPhoneNumber = page.data.numbers.selectedNumber;
+
+        if (selectedPhoneNumber) {
+            Store.local.write(
+                Store.keys.checkoutFlow.selectedPhoneNumber,
+                selectedPhoneNumber.serialize()
+            );
+            router.open(
+                RouterPath.checkCoverage_serviceAddress,
+                undefined,
+                router.isTestEnvironment()
+            );
+        }
     });
 };
 
