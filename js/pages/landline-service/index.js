@@ -136,13 +136,16 @@ const setupNumberSearchForm = (form) => {
     $(searchButton).on("click", () => {
         const areaCode = areaCodeInput.value
             .replaceAll("(", "")
-            .replaceAll(")", "");
+            .replaceAll(")", "")
+            .replaceAll("_", "");
         Store.local.write(
             Store.keys.numberSearch.selectedAreaCode,
             areaCode
         );
         const phoneNumber = phoneNumberInput.value
-            .replaceAll("-", "");
+            .replaceAll("-", "")
+            .replaceAll("_", "")
+            .replaceAll(" ", "");
         Store.local.write(
             Store.keys.numberSearch.selectedDigits,
             phoneNumber
