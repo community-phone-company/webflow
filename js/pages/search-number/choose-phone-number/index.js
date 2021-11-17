@@ -59,10 +59,6 @@ const setupSearchFormSelect = (select, defaultOptionLabel, otherOptions) => {
 }
 
 const setupStateSelect = () => {
-    const defaultOption = {
-        label: "All states",
-        value: ""
-    };
     const options = getAllStates().map(el => {
         return {
             label: el.name,
@@ -95,7 +91,7 @@ const setupAreaCodeSelect = () => {
     });
     setupSearchFormSelect(
         page.ui.areaCodeSelect,
-        "All codes",
+        "All",
         options
     );
 };
