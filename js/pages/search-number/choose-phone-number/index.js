@@ -30,27 +30,49 @@ const page = {
     }
 };
 
+/**
+ * @param {HTMLSelectElement} select
+ * @param {string | undefined} defaultOptionLabel 
+ * @param {{label: string, value: string}[]} otherOptions 
+ */
+const setupSearchFormSelect = (select, defaultOptionLabel, otherOptions) => {
+    const defaultOption = (() => {
+        if (defaultOptionLabel) {
+            return {
+                label: defaultOptionLabel,
+                value: ""
+            };
+        } else {
+            return undefined;
+        }
+    })();
+    const options = [defaultOption].concat(otherOptions);
+    const html = options
+        .map(el => {
+            return `<option value="${el.value}">${el.label}</option>`;
+        })
+        .reduce(
+            (previous, current) => `${previous}${current}`,
+            ``
+        );
+    $(select).html(html);
+}
+
 const setupStateSelect = () => {
     const defaultOption = {
         label: "All states",
         value: ""
     };
-    const stateOptions = [
-        defaultOption
-    ].concat(
-        getAllStates().map(el => {
-            return {
-                label: el.name,
-                value: el.code
-            };
-        })
-    );
-    $(page.ui.stateSelect).html(
-        stateOptions
-            .map(el => {
-                return `<option value="${el.value}">${el.label}</option>`;
-            })
-            .reduce((previous, current) => `${previous}${current}`, ``)
+    const options = getAllStates().map(el => {
+        return {
+            label: el.name,
+            value: el.code
+        };
+    });
+    setupSearchFormSelect(
+        page.ui.stateSelect,
+        "All states",
+        options
     );
 };
 
@@ -65,26 +87,16 @@ const setupAreaCodeSelect = () => {
             return getAllAreaCodes();
         }
     })();
-    const defaultOption = {
-        label: "",
-        value: ""
-    };
-    const options = [
-        defaultOption
-    ].concat(
-        areaCodes.map(el => {
-            return {
-                label: el,
-                value: el
-            };
-        })
-    );
-    $(page.ui.areaCodeSelect).html(
+    const options = areaCodes.map(el => {
+        return {
+            label: el,
+            value: el
+        };
+    });
+    setupSearchFormSelect(
+        page.ui.areaCodeSelect,
+        "All codes",
         options
-            .map(el => {
-                return `<option value="${el.value}">${el.label}</option>`;
-            })
-            .reduce((previous, current) => `${previous}${current}`, ``)
     );
 };
 
