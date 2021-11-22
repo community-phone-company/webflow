@@ -140,6 +140,7 @@ if (IS_PRODUCTION) {
     
     if (UserPortalManager.isSupported()) {
         const userPortalManager = UserPortalManager.getDefault();
+        userPortalManager.redirectToUserPortalOnClick = true;
         userPortalManager.setupUI();
         userPortalManager.setAuthorizationToken(
             Store.local.read(

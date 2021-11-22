@@ -40,6 +40,7 @@ class UserPortalManager {
      * @constructor
      */
     constructor() {
+        this.redirectToUserPortalOnClick = false;
     }
 
     /**
@@ -193,6 +194,14 @@ class UserPortalManager {
         const popup = this.getCreateAccountPopup();
         $(this.getUserPortalLinks()).on("click", (event) => {
             event.preventDefault();
+
+            if (this.redirectToUserPortalOnClick) {
+                window.open(
+                    Links.userPortal,
+                    "_blank"
+                );
+                return;
+            }
 
             if (_this._authorizationToken) {
                 _this.getAccessUrl(
