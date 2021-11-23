@@ -118,6 +118,7 @@ const sendDataToServiceAddressCheckGoogleSheet = (callback) => {
     );
     GoogleDocIntegration.addLineToServiceAddressCheck(
         page.data.addressLineOne,
+        page.data.addressLineTwo,
         page.data.city,
         page.data.state,
         page.data.zip,

@@ -312,6 +312,7 @@ $(document).ready(() => {
         if (sendToServiceAddressCheck) {
             GoogleDocIntegration.addLineToServiceAddressCheck(
                 addressLineOne,
+                addressLineTwo,
                 city,
                 state,
                 zip,

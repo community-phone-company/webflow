@@ -2,7 +2,8 @@ class GoogleDocIntegration {
 
     /**
      * Adds new line to the service address check document.
-     * @param {string} address Address.
+     * @param {string} addressLineOne Address line one.
+     * @param {string} addressLineTwo Address line two.
      * @param {string} city City.
      * @param {string} state State.
      * @param {string} zip Zip code.
@@ -14,7 +15,8 @@ class GoogleDocIntegration {
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
     static addLineToServiceAddressCheck = (
-        address,
+        addressLineOne,
+        addressLineTwo,
         city,
         state,
         zip,
@@ -25,7 +27,8 @@ class GoogleDocIntegration {
         callback
     ) => {
         const data = {
-            "Address": address,
+            "Address": addressLineOne,
+            "Address line two": addressLineTwo,
             "City": city,
             "State": state,
             "Zip code": zip,
@@ -36,7 +39,6 @@ class GoogleDocIntegration {
         console.log(`Data: `, data);
         const urls = {
             simpleZap: "https://hooks.zapier.com/hooks/catch/10558854/b208t38/",
-            //lobComIntegration: "https://hooks.zapier.com/hooks/catch/10558854/b6htb82/"
             lobComIntegration: "https://hooks.zapier.com/hooks/catch/10210393/b6htb82/"
         };
         return ZapierIntegration.sendToWebhook(
