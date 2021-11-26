@@ -127,11 +127,9 @@ const sendDataToServiceAddressCheckGoogleSheet = (callback) => {
         getOrCreateUserId(),
         true,
         (response, error, success) => {
-            router.open(
-                RouterPath.checkCoverage_coverage,
-                router.getParameters(),
-                router.isTestEnvironment()
-            );
+            if (callback) {
+                callback();
+            }
         }
     );
 }
