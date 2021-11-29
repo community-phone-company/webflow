@@ -48,12 +48,12 @@ const getAddonCardHtmlLayout = (product) => {
     return `
         <a
             href="#"
-            class="addon-card addons-card-bg w-inline-block"
+            class="addons-card-bg w-inline-block addon-card"
             addon-card-product-id="${product.id}"
             addon-card-is-selected="false"
         >
             <div id="handset_addon_div" class="w-layout-grid card-addon-handset-phone card-handset">
-                <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-9142d0b6" style="opacity: 1;" class="div-block-6">
+                <div id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d89-9142d0b6" style="opacity: 1;" class="div-block-6 addon-card-opacity">
                     <div class="text-block-9">
                         ${product.addonInformation.title}
                     </div>
@@ -73,7 +73,7 @@ const getAddonCardHtmlLayout = (product) => {
                     style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
                     id="w-node-da018f8a-8d6d-a283-942a-ee673cd84d8f-9142d0b6"
                     alt=""
-                    class="image-7"
+                    class="image-7 addon-card-add-button"
                 >
             </div>
         </a>
