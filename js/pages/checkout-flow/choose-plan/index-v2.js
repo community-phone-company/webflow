@@ -1,10 +1,17 @@
 /**
+ * Data for debug purposes.
+ */
+const debugSettings = {
+    doNotUpdateAddons: router.getParameterValue("do-not-update-addons") != undefined
+};
+
+/**
  * @param {Product} product Product.
  * @returns {string}
  */
 const getAddonCardHtmlLayout = (product) => {
     const thumbnailUrl = product.thumbnailUrl ?? "https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b174b03cb6cee00203a_img-phone.svg";
-    /*return `
+    return `
         <a
             data-w-id="da018f8a-8d6d-a283-942a-ee673cd84d87"
             href="#"
@@ -37,34 +44,20 @@ const getAddonCardHtmlLayout = (product) => {
                 >
             </div>
         </a>
-    `;*/
+    `;
     return `
-        <a
-            href="#"
-            class="addons-card-bg w-inline-block"
-        >
-            <div class="w-layout-grid">
-                <div style="opacity: 1;" class="div-block-6">
-                    <div class="text-block-9">
-                    ${product.addonInformation.title}
-                    </div>
-                    <div class="text-block-10">
-                        ${product.addonInformation.subtitle}
-                    </div>
+        <a href="#" class="addons-card-bg w-inline-block addon-card">
+        <div class="w-layout-grid card-addon-handset-phone card-handset">
+            <div style="opacity: 1;" class="div-block-6">
+                <div class="text-block-9">
+                Add a handset / phone
                 </div>
-                <img
-                    src="${thumbnailUrl}"
-                    loading="lazy"
-                    alt=""
-                    class="addon-img"
-                >
-                <img
-                    src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b6e068386753c1fe7da_ic-add.svg"
-                    loading="lazy"
-                    style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
-                    id="w-node-_3e5eaffc-2b13-1b55-4907-ad61e936fcd9-9142d0b6"
-                    alt=""
-                    class="image-7">
+                <div class="text-block-10">
+                    Extra $39 for a new landline phone
+                </div>
+            </div>
+            <img src="https://uploads-ssl.webflow.com/60c30ab447d78d3beb1f6c82/60c73b174b03cb6cee00203a_img-phone.svg" loading="lazy" alt="" class="addon-img">
+            <img src="https://assets.website-files.com/60c30ab447d78d3beb1f6c82/60c73b6e068386753c1fe7da_ic-add.svg" loading="lazy" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" id="w-node-_3e5eaffc-2b13-1b55-4907-ad61e936fcd9-9142d0b6" alt="" class="image-7">
             </div>
         </a>
     `;
@@ -215,7 +208,7 @@ const setupChoosePhoneNumberLinks = (onClick) => {
     $("#selected-phone-number, #choose-different-number-button").on("click", (event) => {
         event.preventDefault();
         choosePhoneNumberPopup.getPopup().show();
-        
+
         if (onClick) {
             onClick();
         }
@@ -290,8 +283,8 @@ const setupPortPhoneNumberLinks = (onClick) => {
          */
         //portPhoneNumberPopup.getPopup().show();
         portPhoneNumberPopup.makeAllCarrierCardsCollapsed();
-        $(portPhoneNumberPopup.getContainer()).css({opacity: 1});
-        
+        $(portPhoneNumberPopup.getContainer()).css({ opacity: 1 });
+
         if (onClick) {
             onClick();
         }
@@ -461,11 +454,14 @@ const updateStructure = () => {
         $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan_priceForYear}`);
 
         const addons = getAddonsForCurrentPlan();
-        $("div.addons").html(
-            getAddonSectionInternalHtmlLayout(
-                addons
-            )
-        );
+        
+        if (!debugSettings.doNotUpdateAddons) {
+            $("div.addons").html(
+                getAddonSectionInternalHtmlLayout(
+                    addons
+                )
+            );
+        }
 
         if (formData.insuranceAdded) {
             const insuranceCard = getProductAddonCard(productStore.getStructure().insurance.monthlyId)
@@ -701,12 +697,12 @@ loadPhoneNumbers(
                 const phoneNumber = PhoneNumber.deserialize(
                     serializedPhoneNumber
                 );
-                
+
                 if (phoneNumber) {
                     return phoneNumber;
                 }
             }
-            
+
             return numbers[0];
         })();
         updateChoosePhoneNumberSection();
