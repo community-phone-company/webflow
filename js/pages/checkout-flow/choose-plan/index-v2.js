@@ -431,11 +431,11 @@ const updateStructure = () => {
         $("#keep-existing-number-annual-price-subtitle").html(`* Billed annually at $${keepNumberAnnualPlan_priceForYear}`);
 
         const addons = getAddonsForCurrentPlan();
-        $("div.addons").html(
+        /*$("div.addons").html(
             getAddonSectionInternalHtmlLayout(
                 addons
             )
-        );
+        );*/
 
         if (formData.insuranceAdded) {
             const insuranceCard = getProductAddonCard(productStore.getStructure().insurance.monthlyId)
