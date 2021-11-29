@@ -48,7 +48,7 @@ const getAddonCardHtmlLayout = (product) => {
     return `
         <a
             href="#"
-            class="addons-card-bg w-inline-block"
+            class="addon-card addons-card-bg w-inline-block"
             addon-card-product-id="${product.id}"
             addon-card-is-selected="false"
         >
