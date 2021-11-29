@@ -88,7 +88,7 @@ const exportCheckoutFlowDataToActiveCampaign = (callback) => {
                     Store.local.read(Store.keys.checkoutFlow.billingAddress_state)
                 ),
                 new ActiveCampaignContactCustomField(
-                    "Is this for a business or organization?",
+                    "Is this for a business or organization",
                     Store.local.read(Store.keys.checkoutFlow.isBusinessCustomer) ? "yes" : "no"
                 ),
                 (() => {
