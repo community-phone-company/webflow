@@ -23,6 +23,7 @@ const elements = {
         document.querySelectorAll("#check-coverage-button-2")[0],
         document.querySelectorAll("#check-coverage-button-3")[0],
         document.querySelectorAll("#check-coverage-button-4")[0],
+        document.querySelectorAll("#check-coverage-button-5")[0],
         document.querySelectorAll("#check-coverage-cta")[0]
     ].filter(el => el != undefined)
 };
