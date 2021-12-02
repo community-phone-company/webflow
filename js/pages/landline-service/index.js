@@ -192,12 +192,12 @@ const setupUI = () => {
             }
         });
 
-        $(elements.checkCoverageButtons).on("click", (event) => {
+        $(elements.checkCoverageButtons).off("click").on("click", (event) => {
             event.preventDefault();
             openCheckout();
         });
     } else {
-        $(elements.checkCoverageButtons).on("click", (event) => {
+        $(elements.checkCoverageButtons).off("click").on("click", (event) => {
             event.preventDefault();
             router.open(
                 RouterPath.checkCoverage_serviceAddress,
