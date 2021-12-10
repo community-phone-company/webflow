@@ -11,12 +11,26 @@ const page = {
             return typeof serialized === "string"
                 ? PhoneNumber.deserialize(serialized)
                 : undefined;
+        })(),
+        fromUrlParameters: (() => {
+            const data = router.getParameterValue("data");
+
+            if (typeof data === "string") {
+                return JSON.parse(
+                    atob(
+                        data
+                    )
+                );
+            } else {
+                return undefined;
+            }
         })()
     }
 };
 
 const setupUI = () => {
-    if (page.data.selectedPhoneNumber) {
+    if (page.data.fromUrlParameters) {
+    } else if (page.data.selectedPhoneNumber) {
         $(page.elements.selectedPhoneNumberLink).attr(
             "href",
             `tel:+1${page.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular)}`
