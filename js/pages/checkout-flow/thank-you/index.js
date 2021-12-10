@@ -30,6 +30,7 @@ const page = {
 
 const setupUI = () => {
     if (page.data.fromUrlParameters) {
+        console.log(`Data from parameters: `, page.data.fromUrlParameters);
     } else if (page.data.selectedPhoneNumber) {
         $(page.elements.selectedPhoneNumberLink).attr(
             "href",
