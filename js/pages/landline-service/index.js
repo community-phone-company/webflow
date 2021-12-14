@@ -36,6 +36,41 @@ const data = {
 };
 
 const openCheckout = () => {
+    if (!IS_PRODUCTION) {
+        const data = [
+            {
+                key: "check-coverage-data",
+                value: {
+                    addressLineOne: Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_addressLine1
+                    ),
+                    addressLineTwo: Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_addressLine2
+                    ),
+                    city: Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_city
+                    ),
+                    stateCode: Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_state
+                    ),
+                    zip: Store.local.read(
+                        Store.keys.checkoutFlow.shippingAddress_zip
+                    ),
+                    isBusinessCustomer: Store.local.read(
+                        Store.keys.checkoutFlow.isBusinessCustomer
+                    )
+                }
+            }
+        ];
+        const url = addEncodedStorageItemsToEndOfUrl(
+            data,
+            "https://checkout.communityphone.org",
+            URL_DATA_TRANSFER_PARAMETER_DEFAULT_NAME
+        );
+        window.location.href = url;
+        return;
+    }
+    
     const path = IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
     router.open(
         path,
@@ -98,7 +133,7 @@ const setupPremiumFeaturesForm = (form) => {
             );
         }
     });
-    
+
     onFormChanged();
 };
 
@@ -132,7 +167,7 @@ const setupNumberSearchForm = (form) => {
 
     const areaCodeInput = $(form).find("#area-code-input")[0];
     const phoneNumberInput = $(form).find("#phone-number-input")[0];
-    
+
     const searchButton = $(form).find("#search-button")[0];
     $(searchButton).on("click", () => {
         const areaCode = areaCodeInput.value
@@ -153,7 +188,7 @@ const setupNumberSearchForm = (form) => {
         );
 
         const isFormValid = phoneNumber.length > 0;
-        
+
         if (isFormValid) {
             router.open(
                 RouterPath.searchNumber_choosePhoneNumber,
