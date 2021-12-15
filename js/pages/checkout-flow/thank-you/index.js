@@ -46,9 +46,12 @@ const setupUI = () => {
     if (page.data.fromUrlParameters) {
         console.log(`Data from parameters: `, page.data.fromUrlParameters);
 
-        if (page.data.fromUrlParameters.phoneNumber) {
+        if (page.data.fromUrlParameters.showExample) {
             showPhoneNumber(
-                page.data.fromUrlParameters.phoneNumber
+                new PhoneNumber(
+                    "123",
+                    "4567890"
+                )
             );
         }
     } else {
