@@ -28,18 +28,35 @@ const page = {
     }
 };
 
+/**
+ * @param {PhoneNumber} phoneNumber 
+ */
+const showPhoneNumber = (phoneNumber) => {
+    $(page.elements.selectedPhoneNumberLink).attr(
+        "href",
+        `tel:+1${phoneNumber.formatted(PhoneNumberFormatStyle.regular)}`
+    );
+    $(page.elements.selectedPhoneNumberText).html(
+        phoneNumber.formatted(PhoneNumberFormatStyle.brackets)
+    );
+    $(page.elements.selectedPhoneNumberLink).show();
+};
+
 const setupUI = () => {
     if (page.data.fromUrlParameters) {
         console.log(`Data from parameters: `, page.data.fromUrlParameters);
-    } else if (page.data.selectedPhoneNumber) {
-        $(page.elements.selectedPhoneNumberLink).attr(
-            "href",
-            `tel:+1${page.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.regular)}`
-        );
-        $(page.elements.selectedPhoneNumberText).html(
-            page.data.selectedPhoneNumber.formatted(PhoneNumberFormatStyle.brackets)
-        );
-        $(page.elements.selectedPhoneNumberLink).show();
+
+        if (page.data.fromUrlParameters.phoneNumber) {
+            showPhoneNumber(
+                page.data.fromUrlParameters.phoneNumber
+            );
+        }
+    } else {
+        if (page.data.selectedPhoneNumber) {
+            showPhoneNumber(
+                page.data.selectedPhoneNumber
+            );
+        }
     }
 };
 
