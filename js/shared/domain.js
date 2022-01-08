@@ -4,5 +4,9 @@ const Domain = Object.freeze({
 });
 
 const Links = Object.freeze({
-    userPortal: "https://my.communityphone.org"
+    userPortal: "https://my.communityphone.org",
+    checkout: {
+        production: "https://checkout.communityphone.org",
+        staging: "https://checkout-frontend-staging-da5rg.ondigitalocean.app"
+    }
 });

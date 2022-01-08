@@ -75,7 +75,7 @@ const getCheckoutUrlWithCheckCoverageData = () => {
     ];
     const url = addEncodedStorageItemsToEndOfUrl(
         items,
-        "https://checkout.communityphone.org",
+        IS_PRODUCTION ? Links.checkout.production : Links.checkout.staging,
         URL_DATA_TRANSFER_PARAMETER_DEFAULT_NAME
     );
     return url;
