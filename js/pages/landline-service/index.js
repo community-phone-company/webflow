@@ -1,6 +1,8 @@
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
 const useCheckout_v3 = true;
 
+var didClickTheFirstCheckCoverageButton = false;
+
 const externalServices = {
     msp: {
         enabled: router.getParameterValue("msp") != undefined
@@ -211,6 +213,28 @@ const setupUI = () => {
                 router.isTestEnvironment()
             );
         });
+
+        /**
+         * For the first button we make an exception and change its behavior.
+         */
+        if (!IS_PRODUCTION) {
+            $(elements.checkCoverageButtons[0]).off("click").on("click", (event) => {
+                event.preventDefault();
+    
+                if (didClickTheFirstCheckCoverageButton) {
+                    router.open(
+                        RouterPath.checkCoverage_serviceAddress,
+                        router.getParameters(),
+                        router.isTestEnvironment()
+                    );
+                } else {
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $("#elementtoScrollToID").offset().top
+                    }, 2000);
+                    didClickTheFirstCheckCoverageButton = true;
+                }
+            });
+        }
     }
 
     getAllPremiumFeaturesForms().forEach(form => {
