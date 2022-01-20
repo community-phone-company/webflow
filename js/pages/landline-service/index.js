@@ -218,7 +218,7 @@ const setupUI = () => {
 
     if (isCheckCoverageDataFilled()) {
         $(firstCheckCoverageButton).attr("href", "");
-        
+
         setCheckCoverageButtonsTitle(
             "Start your service"
         );
@@ -245,7 +245,7 @@ const setupUI = () => {
                 setCheckCoverageButtonsTitle(
                     "Check your address for coverage"
                 );
-                $(firstCheckCoverageButton).attr("href", "");
+                //$(firstCheckCoverageButton).attr("href", "");
                 didClickTheFirstCheckCoverageButton = true;
             }
         });
