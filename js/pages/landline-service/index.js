@@ -214,7 +214,11 @@ const setupUI = () => {
         $(elements.externalServices.wirefly.logo).show();
     }
 
+    const firstCheckCoverageButton = $(elements.checkCoverageButtons[0]);
+
     if (isCheckCoverageDataFilled()) {
+        $(firstCheckCoverageButton).attr("href", "");
+        
         setCheckCoverageButtonsTitle(
             "Start your service"
         );
@@ -232,8 +236,6 @@ const setupUI = () => {
         /**
          * Customize behavior of the first check coverage button.
          */
-        const firstCheckCoverageButton = $(elements.checkCoverageButtons[0]);
-
         $(firstCheckCoverageButton).off("click").on("click", (event) => {
             event.preventDefault();
 
