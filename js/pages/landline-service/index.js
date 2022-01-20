@@ -229,7 +229,7 @@ const setupUI = () => {
                     );
                 } else {
                     $([document.documentElement, document.body]).animate({
-                        scrollTop: $("#elementtoScrollToID").offset().top
+                        scrollTop: $(".title").offset().top
                     }, 2000);
                     didClickTheFirstCheckCoverageButton = true;
                 }
