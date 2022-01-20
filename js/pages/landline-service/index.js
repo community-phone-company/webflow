@@ -196,7 +196,11 @@ const setCheckCoverageButtonsTitle = (title) => {
         if (button instanceof HTMLInputElement) {
             $(button).val(title);
         } else if (button instanceof HTMLAnchorElement) {
-            $(button).find("strong").html(title);
+            if (button.getElementsByTagName("strong").length) {
+                $(button).find("strong").html(title);
+            } else {
+                $(button).html(title);
+            }
         }
     });
 }
