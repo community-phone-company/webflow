@@ -245,7 +245,6 @@ const setupUI = () => {
                 setCheckCoverageButtonsTitle(
                     "Check your address for coverage"
                 );
-                //$(firstCheckCoverageButton).attr("href", "");
                 didClickTheFirstCheckCoverageButton = true;
             }
         });
