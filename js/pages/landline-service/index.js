@@ -230,9 +230,11 @@ const setupUI = () => {
         });
 
         /**
-         * For the first button we make an exception and change its behavior.
+         * Customize behavior of the first check coverage button.
          */
-        $(elements.checkCoverageButtons[0]).off("click").on("click", (event) => {
+        const firstCheckCoverageButton = $(elements.checkCoverageButtons[0]);
+
+        $(firstCheckCoverageButton).off("click").on("click", (event) => {
             event.preventDefault();
 
             if (didClickTheFirstCheckCoverageButton) {
@@ -241,6 +243,7 @@ const setupUI = () => {
                 setCheckCoverageButtonsTitle(
                     "Check your address for coverage"
                 );
+                $(firstCheckCoverageButton).attr("href", "");
                 didClickTheFirstCheckCoverageButton = true;
             }
         });
