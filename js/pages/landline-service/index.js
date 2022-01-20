@@ -235,9 +235,6 @@ const setupUI = () => {
                 if (didClickTheFirstCheckCoverageButton) {
                     openCheckCoverage();
                 } else {
-                    $([document.documentElement, document.body]).animate({
-                        scrollTop: $("#featured-section").offset().top
-                    }, 300);
                     didClickTheFirstCheckCoverageButton = true;
                 }
             });
