@@ -228,17 +228,18 @@ const setupUI = () => {
         /**
          * For the first button we make an exception and change its behavior.
          */
-        if (!IS_PRODUCTION) {
-            $(elements.checkCoverageButtons[0]).off("click").on("click", (event) => {
-                event.preventDefault();
-    
-                if (didClickTheFirstCheckCoverageButton) {
-                    openCheckCoverage();
-                } else {
-                    didClickTheFirstCheckCoverageButton = true;
-                }
-            });
-        }
+        $(elements.checkCoverageButtons[0]).off("click").on("click", (event) => {
+            event.preventDefault();
+
+            if (didClickTheFirstCheckCoverageButton) {
+                openCheckCoverage();
+            } else {
+                setCheckCoverageButtonsTitle(
+                    "Check your address for coverage"
+                );
+                didClickTheFirstCheckCoverageButton = true;
+            }
+        });
     }
 
     getAllPremiumFeaturesForms().forEach(form => {
