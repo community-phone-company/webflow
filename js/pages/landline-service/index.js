@@ -51,6 +51,14 @@ const openCheckout = () => {
     }
 };
 
+const openCheckCoverage = () => {
+    router.open(
+        RouterPath.checkCoverage_serviceAddress,
+        router.getParameters(),
+        router.isTestEnvironment()
+    );
+}
+
 /**
  * @returns {boolean}
  */
@@ -180,6 +188,19 @@ const getNumberSearchForms = () => {
     ];
 };
 
+/**
+ * @param {string} title 
+ */
+const setCheckCoverageButtonsTitle = (title) => {
+    elements.checkCoverageButtons.forEach(button => {
+        if (button instanceof HTMLInputElement) {
+            $(button).val(title);
+        } else if (button instanceof HTMLAnchorElement) {
+            $(button).find("strong").html(title);
+        }
+    });
+}
+
 const setupUI = () => {
     if (externalServices.msp.enabled) {
         $(elements.externalServices.msp.logo).show();
@@ -190,15 +211,9 @@ const setupUI = () => {
     }
 
     if (isCheckCoverageDataFilled()) {
-        const title = "Start your service";
-
-        elements.checkCoverageButtons.forEach(button => {
-            if (button instanceof HTMLInputElement) {
-                $(button).val(title);
-            } else if (button instanceof HTMLAnchorElement) {
-                $(button).find("strong").html(title);
-            }
-        });
+        setCheckCoverageButtonsTitle(
+            "Start your service"
+        );
 
         $(elements.checkCoverageButtons).off("click").on("click", (event) => {
             event.preventDefault();
@@ -207,11 +222,7 @@ const setupUI = () => {
     } else {
         $(elements.checkCoverageButtons).off("click").on("click", (event) => {
             event.preventDefault();
-            router.open(
-                RouterPath.checkCoverage_serviceAddress,
-                router.getParameters(),
-                router.isTestEnvironment()
-            );
+            openCheckCoverage();
         });
 
         /**
@@ -222,15 +233,11 @@ const setupUI = () => {
                 event.preventDefault();
     
                 if (didClickTheFirstCheckCoverageButton) {
-                    router.open(
-                        RouterPath.checkCoverage_serviceAddress,
-                        router.getParameters(),
-                        router.isTestEnvironment()
-                    );
+                    openCheckCoverage();
                 } else {
                     $([document.documentElement, document.body]).animate({
-                        scrollTop: $(".title").offset().top
-                    }, 2000);
+                        scrollTop: $("#featured-section").offset().top
+                    }, 300);
                     didClickTheFirstCheckCoverageButton = true;
                 }
             });
