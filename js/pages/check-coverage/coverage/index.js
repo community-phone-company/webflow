@@ -1,19 +1,35 @@
 const useCheckout_v3 = true;
 
-const openCheckout = () => {
-    if (useCheckout_v3) {
-        window.location.href = getCheckoutUrlWithCheckCoverageData();
-    } else {
-        const path = IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
-        router.open(
-            path,
-            router.getParameters(),
-            false
-        );
+const Page = {
+    ui: {
+        startYourServiceButton: document.getElementById("start-your-service-button")
     }
 };
 
-$("#start-your-service-button").off("click").on("click", (event) => {
-    event.preventDefault();
-    openCheckout();
-});
+const getCheckoutUrl = () => {
+    if (useCheckout_v3) {
+        return getCheckoutUrlWithCheckCoverageData();
+    } else {
+        return IS_MOBILE
+            ? RouterPath.checkout_v2_choosePlan
+            : RouterPath.checkout_v2_choosePlanAndNumber;
+    }
+};
+
+const openCheckout = () => {
+    window.location.href = getCheckoutUrl();
+};
+
+const setupUI = () => {
+    $(Page.ui.startYourServiceButton).attr(
+        "href",
+        getCheckoutUrl()
+    );
+
+    $("#start-your-service-button").off("click").on("click", (event) => {
+        event.preventDefault();
+        openCheckout();
+    });
+};
+
+setupUI();
