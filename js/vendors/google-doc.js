@@ -114,18 +114,6 @@ class GoogleDocIntegration {
     }
 }
 
-GoogleDocIntegration.addLineToOnboarding({
-    email: "igor@communityphone.org",
-    currentCarrier: "Carrier",
-    portingDataSent: true,
-    currentStep: 4,
-    furthestStep: 4,
-    callerIdSent: false,
-    voicemailSent: true,
-    firstVisitTimestamp: Date.now(),
-    lastVisitTimestamp: Date.now() + 4.5 * 3600000
-})
-
 /**
  * @param {number} timestamp 
  * @param {number} timezone 
