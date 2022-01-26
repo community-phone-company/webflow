@@ -76,7 +76,7 @@ class GoogleDocIntegration {
         data["Email address"] = settings.email;
         if (settings.currentCarrier != undefined) data["Current carrier"] = settings.currentCarrier;
         if (settings.portingDataSent != undefined) data["Porting data sent"] = settings.portingDataSent ? "yes" : "no";
-        if (settings.currentStepInOnboarding != undefined) data["Current step in onboarding"] = settings.currentStep;
+        if (settings.currentStep != undefined) data["Current step in onboarding"] = settings.currentStep;
         if (settings.furthestStep != undefined) data["Furthest step in onboarding"] = settings.furthestStep;
         if (settings.callerIdSent != undefined) data["Caller ID sent"] = settings.callerIdSent ? "yes" : "no";
         if (settings.voicemailSent != undefined) data["Voicemail sent"] = settings.voicemailSent ? "yes" : "no";
