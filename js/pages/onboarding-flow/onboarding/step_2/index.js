@@ -9,7 +9,7 @@ const updateStepStatistics = (currentStep) => {
     if (!email) {
         return;
     }
-    
+
     var furthestStep = Store.local.read(
         Store.keys.onboardingFlow.furthestStep
     ) ?? currentStep;
@@ -23,23 +23,18 @@ const updateStepStatistics = (currentStep) => {
         furthestStep
     );
 
-    GoogleDocIntegration.addLineToOnboarding(
+    GoogleDocIntegration.addLineToOnboarding({
         email,
-        undefined,
-        undefined,
         currentStep,
         furthestStep,
-        undefined,
-        undefined,
-        (response, error, success) => {
-        }
-    );
+        lastVisitTimestamp: Date.now()
+    });
 };
 
 updateStepStatistics(2);
 
 $(document).ready(() => {
-    
+
     $("#submit-button").on("click", (event) => {
         event.preventDefault();
         router.open(

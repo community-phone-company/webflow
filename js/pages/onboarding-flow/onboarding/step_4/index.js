@@ -23,17 +23,12 @@ const updateStepStatistics = (currentStep) => {
         furthestStep
     );
 
-    GoogleDocIntegration.addLineToOnboarding(
+    GoogleDocIntegration.addLineToOnboarding({
         email,
-        undefined,
-        undefined,
         currentStep,
         furthestStep,
-        undefined,
-        undefined,
-        (response, error, success) => {
-        }
-    );
+        lastVisitTimestamp: Date.now()
+    });
 };
 
 updateStepStatistics(4);

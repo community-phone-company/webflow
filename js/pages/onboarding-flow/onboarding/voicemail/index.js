@@ -39,31 +39,25 @@ $(document).ready(() => {
                     /**
                      * Send data to Google Sheets.
                      */
-                    GoogleDocIntegration.addLineToOnboarding(
+                     GoogleDocIntegration.addLineToOnboarding({
                         email,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        true,
-                        (response, error, success) => {
-
-                            /**
+                        lastVisitTimestamp: Date.now(),
+                        voicemailSent: true
+                    }, (response, error, success) => {
+                        /**
                              * Redirect to the next page.
                              */
-                            const didSetup = {
-                                callerId: Store.local.read(
-                                    Store.keys.onboardingFlow.didSetupCallerId
-                                ),
-                                voicemail: true
-                            };
-                            const didSetupEverything = didSetup.callerId && didSetup.voicemail;
-                            window.location.href = didSetupEverything
-                                ? "/onboarding/onboarding/thank-you-for-onboarding"
-                                : "/onboarding/onboarding/set-up-service";
-                        }
-                    )
+                         const didSetup = {
+                            callerId: Store.local.read(
+                                Store.keys.onboardingFlow.didSetupCallerId
+                            ),
+                            voicemail: true
+                        };
+                        const didSetupEverything = didSetup.callerId && didSetup.voicemail;
+                        window.location.href = didSetupEverything
+                            ? "/onboarding/onboarding/thank-you-for-onboarding"
+                            : "/onboarding/onboarding/set-up-service";
+                    });
                 }
             );
             Store.local.write(

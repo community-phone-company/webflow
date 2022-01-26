@@ -15,17 +15,12 @@ $(document).ready(() => {
         event.preventDefault();
         const link = event.currentTarget;
 
-        GoogleDocIntegration.addLineToOnboarding(
-            formData.email,
-            formData.selectedCarrier,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            (response, error, success) => {
-                window.location.href = link.href;
-            }
-        )
+        GoogleDocIntegration.addLineToOnboarding({
+            email: formData.email,
+            currentCarrier: formData.selectedCarrier,
+            lastVisitTimestamp: Date.now()
+        }, (response, error, success) => {
+            window.location.href = link.href;
+        });
     });
 });

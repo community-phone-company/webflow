@@ -37,38 +37,33 @@ $(document).ready(() => {
             ZendeskIntegration.createTicketForCallerId(
                 data,
                 (response, error, success) => {
-                    
+
                     /**
                      * Send data to Google Sheets.
                      */
-                    GoogleDocIntegration.addLineToOnboarding(
-                        email,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        true,
-                        undefined,
-                        (response, error, success) => {
-                            
-                            /**
-                             * Redirect to the right page.
-                             */
-                            const didSetup = {
-                                callerId: true,
-                                voicemail: Store.local.read(
-                                    Store.keys.onboardingFlow.didSetupVoicemail
-                                )
-                            };
-                            const didSetupEverything = didSetup.callerId && didSetup.voicemail;
-                            router.open(
-                                didSetupEverything
-                                    ? RouterPath.onboarding_onboarding_thankYou
-                                    : RouterPath.onboarding_onboarding_setupService,
-                                router.getParameters()
-                            );
-                        }
-                    )
+                    GoogleDocIntegration.addLineToOnboarding({
+                        email: email,
+                        callerIdSent: true,
+                        lastVisitTimestamp: Date.now()
+                    }, (response, error, success) => {
+
+                        /**
+                         * Redirect to the right page.
+                         */
+                        const didSetup = {
+                            callerId: true,
+                            voicemail: Store.local.read(
+                                Store.keys.onboardingFlow.didSetupVoicemail
+                            )
+                        };
+                        const didSetupEverything = didSetup.callerId && didSetup.voicemail;
+                        router.open(
+                            didSetupEverything
+                                ? RouterPath.onboarding_onboarding_thankYou
+                                : RouterPath.onboarding_onboarding_setupService,
+                            router.getParameters()
+                        );
+                    });
                 }
             );
             Store.local.write(

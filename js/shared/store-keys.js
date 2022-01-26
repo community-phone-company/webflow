@@ -64,7 +64,9 @@ const OnboardingFlowStoreKey = Object.freeze({
     didSetupCallerId: "onboarding-flow-did-setup-caller-id",
     didSetupVoicemail: "onboarding-flow-did-setup-voicemail",
     didShowConfetti: "onboarding-flow-did-show-confetti",
-    furthestStep: "onboarding-flow-furthest-step"
+    furthestStep: "onboarding-flow-furthest-step",
+    firstVisitTimestamp: "onboarding-flow-first-visit-timestamp",
+    numberOfVisits: "onboarding-flow-number-of-visits"
 });
 
 const UserPortalStoreKey = Object.freeze({

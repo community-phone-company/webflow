@@ -77,15 +77,11 @@ $(document).ready(() => {
             formData
         );
 
-        GoogleDocIntegration.addLineToOnboarding(
-            formData.email,
-            undefined,
-            true,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-        );
+        GoogleDocIntegration.addLineToOnboarding({
+            email: formData.email,
+            portingDataSent: true,
+            lastVisitTimestamp: Date.now()
+        });
     });
 
     const formData = {

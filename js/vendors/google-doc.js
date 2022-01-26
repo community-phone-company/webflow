@@ -60,7 +60,7 @@ class GoogleDocIntegration {
      * @param {((response: any, error: any, success: boolean) => void) | undefined} callback Function that is called when response comes from the server.
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
-    static addLineToOnboarding = (
+    static ____addLineToOnboarding = (
         email,
         currentCarrier,
         portingDataSent,
@@ -68,6 +68,9 @@ class GoogleDocIntegration {
         furthestStepInOnboarding,
         callerIdSent,
         voicemailSent,
+        firstVisitTimestamp,
+        lastVisitTimestamp,
+        numberOfVisits,
         callback
     ) => {
         var data = {};
@@ -86,4 +89,71 @@ class GoogleDocIntegration {
             callback
         );
     }
+
+    /**
+     * Adds new line to the onboarding document.
+     * @param {
+            {
+                email: string,
+                currentCarrier: string | undefined,
+                portingDataSent: string | undefined,
+                currentStep: number | undefined,
+                furthestStep: number | undefined,
+                callerIdSent: boolean | undefined,
+                voicemailSent: boolean | undefined,
+                firstVisitTimestamp: number | undefined,
+                lastVisitTimestamp: number | undefined,
+                numberOfVisits: number | undefined
+            }
+        } settings
+     *  
+     * @param {((response: any, error: any, success: boolean) => void) | undefined} callback Function that is called when response comes from the server.
+     * @returns {XMLHttpRequest | undefined} Request instance.
+     */
+    static addLineToOnboarding = (
+        settings,
+        callback
+    ) => {
+        var data = {};
+        data["Email address"] = settings.email;
+        if (settings.currentCarrier != undefined) data["Current carrier"] = settings.currentCarrier;
+        if (settings.portingDataSent != undefined) data["Porting data sent"] = settings.portingDataSent ? "yes" : "no";
+        if (settings.currentStepInOnboarding != undefined) data["Current step in onboarding"] = settings.currentStep;
+        if (settings.furthestStep != undefined) data["Furthest step in onboarding"] = settings.furthestStep;
+        if (settings.callerIdSent != undefined) data["Caller ID sent"] = settings.callerIdSent ? "yes" : "no";
+        if (settings.voicemailSent != undefined) data["Voicemail sent"] = settings.voicemailSent ? "yes" : "no";
+        if (settings.firstVisitTimestamp) data["First visit date"] = getFormattedDateAndTimeForBoston(settings.firstVisitTimestamp);
+        if (settings.lastVisitTimestamp) data["Last visit date"] = getFormattedDateAndTimeForBoston(settings.lastVisitTimestamp);
+        if (settings.numberOfVisits) data["Number of visits"] =  settings.numberOfVisits;
+
+        return ZapierIntegration.sendToWebhook(
+            "https://hooks.zapier.com/hooks/catch/10558854/b2774te/",
+            data,
+            callback
+        );
+    }
 }
+
+/**
+ * @param {number} timestamp 
+ * @param {number} timezone 
+ * @param {string} locale 
+ * @returns {string}
+ */
+const getFormattedDateAndTime = (timestamp, timezone, locale) => {
+    var date = new Date(timestamp);
+    date = new Date(timestamp + (date.getTimezoneOffset() + timezone * 60) * 60000);
+    return date.toLocaleString(locale);
+};
+
+/**
+ * @param {number} timestamp 
+ * @returns {string}
+ */
+const getFormattedDateAndTimeForBoston = (timestamp) => {
+    return getFormattedDateAndTime(
+        timestamp,
+        -5,
+        "en-US"
+    );
+};

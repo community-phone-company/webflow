@@ -42,33 +42,36 @@ $(document).ready(() => {
         const isEmailValid = new EmailValidator().check(email);
         
         if (isEmailValid) {
+            const currentTimestamp = Date.now();
             clearOnboardingFlowSettings();
             Store.local.write(
                 Store.keys.onboardingFlow.email,
                 email
             );
-            GoogleDocIntegration.addLineToOnboarding(
-                email,
-                undefined,
-                false,
-                undefined,
-                undefined,
-                false,
-                false,
-                (response, error, success) => {
-                    if (isPortingActivated || isNewNumberActivated) {
-                        router.open(
-                            RouterPath.onboarding_onboarding_step_1,
-                            router.getParameters()
-                        );
-                    } else {
-                        router.open(
-                            RouterPath.onboarding_general_numberType,
-                            router.getParameters()
-                        );
-                    }
-                }
+            Store.local.write(
+                Store.keys.onboardingFlow.firstVisitTimestamp,
+                email
             );
+            GoogleDocIntegration.addLineToOnboarding({
+                email: email,
+                portingDataSent: false,
+                callerIdSent: false,
+                voicemailSent: false,
+                firstVisitTimestamp: currentTimestamp,
+                lastVisitTimestamp: currentTimestamp
+            }, (response, error, success) => {
+                if (isPortingActivated || isNewNumberActivated) {
+                    router.open(
+                        RouterPath.onboarding_onboarding_step_1,
+                        router.getParameters()
+                    );
+                } else {
+                    router.open(
+                        RouterPath.onboarding_general_numberType,
+                        router.getParameters()
+                    );
+                }
+            });
         } else {
             UserInterface.setElementEnabled(
                 submitButton,
