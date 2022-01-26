@@ -50,48 +50,6 @@ class GoogleDocIntegration {
 
     /**
      * Adds new line to the onboarding document.
-     * @param {string} email Email.
-     * @param {string | undefined} currentCarrier Current carrier.
-     * @param {boolean | undefined} portingDataSent Defines whether porting form was submitted.
-     * @param {string | undefined} currentStepInOnboarding Current step on onboarding flow.
-     * @param {number | undefined} furthestStepInOnboarding Furthest step on onboarding flow.
-     * @param {boolean | undefined} callerIdSent Defines whether caller ID form was submitted.
-     * @param {boolean | undefined} voicemailSent Defines whether voicemail form was submitted.
-     * @param {((response: any, error: any, success: boolean) => void) | undefined} callback Function that is called when response comes from the server.
-     * @returns {XMLHttpRequest | undefined} Request instance.
-     */
-    static ____addLineToOnboarding = (
-        email,
-        currentCarrier,
-        portingDataSent,
-        currentStepInOnboarding,
-        furthestStepInOnboarding,
-        callerIdSent,
-        voicemailSent,
-        firstVisitTimestamp,
-        lastVisitTimestamp,
-        numberOfVisits,
-        callback
-    ) => {
-        var data = {};
-        data["Email address"] = email;
-        if (currentCarrier != undefined) data["Current carrier"] = currentCarrier;
-        if (portingDataSent != undefined) data["Porting data sent"] = portingDataSent ? "yes" : "no";
-        if (currentStepInOnboarding != undefined) data["Current step in onboarding"] = currentStepInOnboarding;
-        if (furthestStepInOnboarding != undefined) data["Furthest step in onboarding"] = furthestStepInOnboarding;
-        if (callerIdSent != undefined) data["Caller ID sent"] = callerIdSent ? "yes" : "no";
-        if (voicemailSent != undefined) data["Voicemail sent"] = voicemailSent ? "yes" : "no";
-
-        console.log(`Data: `, data);
-        return ZapierIntegration.sendToWebhook(
-            "https://hooks.zapier.com/hooks/catch/10558854/b2774te/",
-            data,
-            callback
-        );
-    }
-
-    /**
-     * Adds new line to the onboarding document.
      * @param {
             {
                 email: string,
@@ -127,7 +85,8 @@ class GoogleDocIntegration {
         if (settings.numberOfVisits) data["Number of visits"] =  settings.numberOfVisits;
 
         return ZapierIntegration.sendToWebhook(
-            "https://hooks.zapier.com/hooks/catch/10558854/b2774te/",
+            //"https://hooks.zapier.com/hooks/catch/10558854/b2774te/",
+            "https://hooks.zapier.com/hooks/catch/10210393/b2774te/",
             data,
             callback
         );
