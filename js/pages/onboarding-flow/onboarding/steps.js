@@ -1,7 +1,11 @@
 /**
- * @param {number} currentStep 
+ * @param {number} currentStep
+ * @param {(() => void) | undefined} callback 
  */
-const updateOnboardingStepStatistics = (currentStep) => {
+const updateOnboardingStepStatistics = (
+    currentStep,
+    callback
+) => {
     const email = Store.local.read(
         Store.keys.onboardingFlow.email
     );
@@ -28,5 +32,9 @@ const updateOnboardingStepStatistics = (currentStep) => {
         currentStep,
         furthestStep,
         lastVisitTimestamp: Date.now()
+    }, () => {
+        if (callback) {
+            callback();
+        }
     });
 };

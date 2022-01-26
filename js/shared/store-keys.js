@@ -66,7 +66,15 @@ const OnboardingFlowStoreKey = Object.freeze({
     didShowConfetti: "onboarding-flow-did-show-confetti",
     furthestStep: "onboarding-flow-furthest-step",
     firstVisitTimestamp: "onboarding-flow-first-visit-timestamp",
-    numberOfVisits: "onboarding-flow-number-of-visits"
+    numberOfVisits: "onboarding-flow-number-of-visits",
+    numberOfVisitsToStep_1: "onboarding-flow-number-of-visits-to-step-1",
+    numberOfVisitsToStep_2: "onboarding-flow-number-of-visits-to-step-2",
+    numberOfVisitsToStep_3: "onboarding-flow-number-of-visits-to-step-3",
+    numberOfVisitsToStep_4: "onboarding-flow-number-of-visits-to-step-4",
+    numberOfVisitsToStep_5: "onboarding-flow-number-of-visits-to-step-5",
+    numberOfVisitsToStep_6: "onboarding-flow-number-of-visits-to-step-6",
+    numberOfVisitsToStep_7: "onboarding-flow-number-of-visits-to-step-7",
+    numberOfVisitsToStep_8: "onboarding-flow-number-of-visits-to-step-8"
 });
 
 const UserPortalStoreKey = Object.freeze({
