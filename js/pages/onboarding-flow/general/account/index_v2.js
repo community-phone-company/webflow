@@ -107,7 +107,6 @@ const isFormCorrect = () => {
         && state.firstName.length > 0
         && state.lastName.length > 0
         && state.addressLineOne.length > 0
-        && state.addressLineTwo.length > 0
         && state.city.length > 0
         && state.zip.length > 0;
 }
