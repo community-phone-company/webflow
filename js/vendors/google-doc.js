@@ -53,6 +53,9 @@ class GoogleDocIntegration {
      * @param {
             {
                 email: string,
+                firstName: string,
+                lastName: string,
+                servicePhoneNumber: string,
                 currentCarrier: string | undefined,
                 portingDataSent: boolean | undefined,
                 currentStep: number | undefined,
@@ -84,6 +87,9 @@ class GoogleDocIntegration {
     ) => {
         var data = {};
         data["Email address"] = settings.email;
+        if (settings.firstName != undefined) data["First name"] = settings.firstName;
+        if (settings.lastName != undefined) data["Last name"] = settings.lastName;
+        if (settings.servicePhoneNumber != undefined) data["Service phone number"] = settings.servicePhoneNumber;
         if (settings.currentCarrier != undefined) data["Current carrier"] = settings.currentCarrier;
         if (settings.portingDataSent != undefined) data["Porting data sent"] = settings.portingDataSent ? "yes" : "no";
         if (settings.currentStep != undefined) data["Current step in onboarding"] = settings.currentStep;

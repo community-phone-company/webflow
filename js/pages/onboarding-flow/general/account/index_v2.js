@@ -116,14 +116,14 @@ const submitForm = () => {
     clearOnboardingFlowSettings();
     Store.local.write(
         Store.keys.onboardingFlow.email,
-        email
+        state.email
     );
     Store.local.write(
         Store.keys.onboardingFlow.firstVisitTimestamp,
-        email
+        state.email
     );
     GoogleDocIntegration.addLineToOnboarding({
-        email: email,
+        email: state.email,
         portingDataSent: false,
         callerIdSent: false,
         voicemailSent: false,
