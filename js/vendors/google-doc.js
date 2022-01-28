@@ -61,7 +61,7 @@ class GoogleDocIntegration {
                 voicemailSent: boolean | undefined,
                 firstVisitTimestamp: number | undefined,
                 lastVisitTimestamp: number | undefined,
-                numberOfVisits: number | undefined,
+                totalNumberOfVisits: number | undefined,
                 numberOfVisitsToStep: {
                     step_1: number | undefined,
                     step_2: number | undefined,
@@ -92,7 +92,7 @@ class GoogleDocIntegration {
         if (settings.voicemailSent != undefined) data["Voicemail sent"] = settings.voicemailSent ? "yes" : "no";
         if (settings.firstVisitTimestamp) data["First visit date"] = getFormattedDateAndTimeForBoston(settings.firstVisitTimestamp);
         if (settings.lastVisitTimestamp) data["Last visit date"] = getFormattedDateAndTimeForBoston(settings.lastVisitTimestamp);
-        if (settings.numberOfVisits) data["Number of visits"] =  settings.numberOfVisits;
+        if (settings.totalNumberOfVisits) data["Number of visits"] =  settings.totalNumberOfVisits;
 
         if (settings.numberOfVisitsToStep) {
             if (settings.numberOfVisitsToStep.step_1) data["Step 1"] =  settings.numberOfVisitsToStep.step_1;
