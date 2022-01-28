@@ -124,6 +124,14 @@ const submitForm = () => {
     );
     GoogleDocIntegration.addLineToOnboarding({
         email: state.email,
+        firstName: state.firstName,
+        lastName: state.lastName,
+        addressLineOne: state.addressLineOne,
+        addressLineTwo: state.addressLineTwo,
+        city: state.city,
+        zip: state.zip,
+        state: state.state,
+        servicePhoneNumber: state.servicePhoneNumber,
         portingDataSent: false,
         callerIdSent: false,
         voicemailSent: false,
