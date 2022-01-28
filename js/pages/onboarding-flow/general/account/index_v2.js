@@ -103,7 +103,7 @@ const setSubmitButtonEnabled = (enabled) => {
 }
 
 const isFormCorrect = () => {
-    return new EmailValidator().check(email)
+    return new EmailValidator().check(state.email)
         && state.firstName.length > 0
         && state.lastName.length > 0
         && state.addressLineOne.length > 0
