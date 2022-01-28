@@ -78,7 +78,7 @@ const setupUI = () => {
         handleStateChanges();
     };
 
-    document.getElementById("state-input").oninput = (event) => {
+    document.getElementById("state-select").oninput = (event) => {
         state.state = event.currentTarget.value;
         handleStateChanges();
     };
