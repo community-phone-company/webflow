@@ -79,7 +79,8 @@ class GoogleDocIntegration {
                     step_6: number | undefined,
                     step_7: number | undefined,
                     step_8: number | undefined,
-                } | undefined
+                } | undefined,
+                troubleshootingLinkClickCount: number | undefined
             }
         } settings
      *  
@@ -104,7 +105,7 @@ class GoogleDocIntegration {
         if (settings.firstVisitTimestamp) data["First visit date"] = getFormattedDateAndTimeForBoston(settings.firstVisitTimestamp);
         if (settings.lastVisitTimestamp) data["Last visit date"] = getFormattedDateAndTimeForBoston(settings.lastVisitTimestamp);
         if (settings.totalNumberOfVisits) data["Number of visits"] =  settings.totalNumberOfVisits;
-
+        
         if (settings.numberOfVisitsToStep) {
             if (settings.numberOfVisitsToStep.step_1) data["Step 1"] =  settings.numberOfVisitsToStep.step_1;
             if (settings.numberOfVisitsToStep.step_2) data["Step 2"] =  settings.numberOfVisitsToStep.step_2;
@@ -115,6 +116,8 @@ class GoogleDocIntegration {
             if (settings.numberOfVisitsToStep.step_7) data["Step 7"] =  settings.numberOfVisitsToStep.step_7;
             if (settings.numberOfVisitsToStep.step_8) data["Step 8"] =  settings.numberOfVisitsToStep.step_8;
         }
+
+        if (settings.troubleshootingLinkClickCount) data["Troubleshooting link click count"] = settings.troubleshootingLinkClickCount;
 
         return ZapierIntegration.sendToWebhook(
             //"https://hooks.zapier.com/hooks/catch/10558854/b2774te/",
