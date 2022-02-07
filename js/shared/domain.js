@@ -8,5 +8,7 @@ const Links = Object.freeze({
     checkout: {
         production: "https://checkout.communityphone.org",
         staging: "https://checkout-frontend-staging-da5rg.ondigitalocean.app"
+    },
+    onboarding: {
     }
 });

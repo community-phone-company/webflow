@@ -60,6 +60,13 @@ const PortPhoneNumberStoreKey = Object.freeze({
 
 const OnboardingFlowStoreKey = Object.freeze({
     email: "onboarding-flow-email",
+    firstName: "onboarding-flow-first-name",
+    lastName: "onboarding-flow-last-name",
+    addressLineOne: "onboarding-flow-address-line-one",
+    addressLineTwo: "onboarding-flow-address-line-two",
+    city: "onboarding-flow-city",
+    zip: "onboarding-flow-zip",
+    stateCode: "onboarding-flow-state-code",
     callerId: "onboarding-flow-caller-id",
     didSetupCallerId: "onboarding-flow-did-setup-caller-id",
     didSetupVoicemail: "onboarding-flow-did-setup-voicemail",
@@ -74,7 +81,8 @@ const OnboardingFlowStoreKey = Object.freeze({
     numberOfVisitsToStep_5: "onboarding-flow-number-of-visits-to-step-5",
     numberOfVisitsToStep_6: "onboarding-flow-number-of-visits-to-step-6",
     numberOfVisitsToStep_7: "onboarding-flow-number-of-visits-to-step-7",
-    numberOfVisitsToStep_8: "onboarding-flow-number-of-visits-to-step-8"
+    numberOfVisitsToStep_8: "onboarding-flow-number-of-visits-to-step-8",
+    troubleshootingLinkClickCount: "onboarding-flow-troubleshooting-link-click-count"
 });
 
 const UserPortalStoreKey = Object.freeze({

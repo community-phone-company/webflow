@@ -7,7 +7,7 @@ const state = {
     addressLineTwo: "",
     city: "",
     zip: "",
-    state: "AL"
+    stateCode: "AL"
 };
 
 const ui = {
@@ -79,7 +79,7 @@ const setupUI = () => {
     };
 
     document.getElementById("state-select").oninput = (event) => {
-        state.state = event.currentTarget.value;
+        state.stateCode = event.currentTarget.value;
         handleStateChanges();
     };
 
@@ -114,14 +114,7 @@ const isFormCorrect = () => {
 const submitForm = () => {
     const currentTimestamp = Date.now();
     clearOnboardingFlowSettings();
-    Store.local.write(
-        Store.keys.onboardingFlow.email,
-        state.email
-    );
-    Store.local.write(
-        Store.keys.onboardingFlow.firstVisitTimestamp,
-        state.email
-    );
+    saveFormToLocalStorage();
     GoogleDocIntegration.addLineToOnboarding({
         email: state.email,
         firstName: state.firstName,
@@ -130,7 +123,7 @@ const submitForm = () => {
         addressLineTwo: state.addressLineTwo,
         city: state.city,
         zip: state.zip,
-        state: state.state,
+        state: state.stateCode,
         servicePhoneNumber: state.servicePhoneNumber,
         portingDataSent: false,
         callerIdSent: false,
@@ -150,6 +143,45 @@ const submitForm = () => {
             );
         }
     });
+};
+
+const saveFormToLocalStorage = () => {
+    Store.local.write(
+        Store.keys.onboardingFlow.email,
+        state.email
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.firstName,
+        state.firstName
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.lastName,
+        state.lastName
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.addressLineOne,
+        state.addressLineOne
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.addressLineTwo,
+        state.addressLineTwo
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.city,
+        state.city
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.zip,
+        state.zip
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.stateCode,
+        state.stateCode
+    );
+    Store.local.write(
+        Store.keys.onboardingFlow.firstVisitTimestamp,
+        state.email
+    );
 };
 
 const handleStateChanges = () => {
