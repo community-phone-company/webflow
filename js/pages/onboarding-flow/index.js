@@ -1,4 +1,12 @@
 $("#troubleshooting-link").on("click", (event) => {
+    const email = Store.local.read(
+        Store.keys.onboardingFlow.email
+    ) ?? "";
+
+    if (!email.length) {
+        return;
+    }
+
     var clickCount = Store.local.read(
         Store.keys.onboardingFlow.troubleshootingLinkClickCount
     ) ?? 0;
@@ -11,7 +19,7 @@ $("#troubleshooting-link").on("click", (event) => {
     );
 
     GoogleDocIntegration.addLineToOnboarding({
-        email: state.email,
+        email: email,
         troubleshootingLinkClickCount: clickCount
     }, (response, error, success) => {
     });
