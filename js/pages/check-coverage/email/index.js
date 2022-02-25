@@ -25,12 +25,17 @@ const sendDataToAbandonedCartAPI = (callback) => {
     });
 };
 
+const isFormValid = () => {
+    const requirements = [
+        new EmailValidator().check(page.data.email)
+    ];
+    return !requirements.includes(false);
+};
+
 const handleDataChange = () => {
-    const isFormValid = new EmailValidator().check(page.data.email);
-    console.log(`is form valid: ${isFormValid}`);
     UserInterface.setElementEnabled(
         page.elements.submitButton,
-        isFormValid
+        isFormValid()
     );
 
     sendDataToAbandonedCartAPI(() => {
@@ -66,7 +71,11 @@ const submitForm = () => {
 const setupUI = () => {
     $(page.elements.form).submit((event) => {
         event.preventDefault();
-        submitForm();
+        
+        if (isFormValid()) {
+            submitForm();
+        }
+
         return false;
     });
 
