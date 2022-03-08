@@ -107,14 +107,14 @@ class GoogleDocIntegration {
         if (settings.totalNumberOfVisits) data["Number of visits"] =  settings.totalNumberOfVisits;
         
         if (settings.numberOfVisitsToStep) {
-            if (settings.numberOfVisitsToStep.step_1) data["Step 1"] =  settings.numberOfVisitsToStep.step_1;
-            if (settings.numberOfVisitsToStep.step_2) data["Step 2"] =  settings.numberOfVisitsToStep.step_2;
-            if (settings.numberOfVisitsToStep.step_3) data["Step 3"] =  settings.numberOfVisitsToStep.step_3;
-            if (settings.numberOfVisitsToStep.step_4) data["Step 4"] =  settings.numberOfVisitsToStep.step_4;
-            if (settings.numberOfVisitsToStep.step_5) data["Step 5"] =  settings.numberOfVisitsToStep.step_5;
-            if (settings.numberOfVisitsToStep.step_6) data["Step 6"] =  settings.numberOfVisitsToStep.step_6;
-            if (settings.numberOfVisitsToStep.step_7) data["Step 7"] =  settings.numberOfVisitsToStep.step_7;
-            if (settings.numberOfVisitsToStep.step_8) data["Step 8"] =  settings.numberOfVisitsToStep.step_8;
+            if (settings.numberOfVisitsToStep.step_1) data["Step 1 views"] =  settings.numberOfVisitsToStep.step_1;
+            if (settings.numberOfVisitsToStep.step_2) data["Step 2 views"] =  settings.numberOfVisitsToStep.step_2;
+            if (settings.numberOfVisitsToStep.step_3) data["Step 3 views"] =  settings.numberOfVisitsToStep.step_3;
+            if (settings.numberOfVisitsToStep.step_4) data["Step 4 views"] =  settings.numberOfVisitsToStep.step_4;
+            if (settings.numberOfVisitsToStep.step_5) data["Step 5 views"] =  settings.numberOfVisitsToStep.step_5;
+            if (settings.numberOfVisitsToStep.step_6) data["Step 6 views"] =  settings.numberOfVisitsToStep.step_6;
+            if (settings.numberOfVisitsToStep.step_7) data["Step 7 views"] =  settings.numberOfVisitsToStep.step_7;
+            if (settings.numberOfVisitsToStep.step_8) data["Step 8 views"] =  settings.numberOfVisitsToStep.step_8;
         }
 
         if (settings.troubleshootingLinkClickCount) data["Troubleshooting link click count"] = settings.troubleshootingLinkClickCount;
