@@ -71,7 +71,7 @@ if (IS_PRODUCTION) {
     const firstNonNullEmail = emails.businessFlow
         ?? emails.onboardingFlow
         ?? emails.checkoutFlow;
-    
+
     const address = {
         shipping: (() => {
             const line1 = Store.local.read(Store.keys.checkoutFlow.shippingAddress_addressLine1) ?? "";
@@ -90,7 +90,7 @@ if (IS_PRODUCTION) {
             return `${line1}${line2.length ? ` ${line2}` : ""}, ${city}, ${state} ${zip}`;
         })()
     };
-    
+
     const data = {
         "User ID": getOrCreateUserId(),
         "Last Visit": new Date(Date.now()).toISOString(),
@@ -132,12 +132,12 @@ if (IS_PRODUCTION) {
 (() => {
     const removeUserPortalLink = () => {
         const userPortalLink = UserPortalManager.getDefault().getUserPortalLink();
-    
+
         if (userPortalLink) {
             $(userPortalLink).remove();
         }
     };
-    
+
     if (UserPortalManager.isSupported()) {
         const userPortalManager = UserPortalManager.getDefault();
         userPortalManager.redirectToUserPortalOnClick = true;
@@ -197,4 +197,25 @@ if (IS_PRODUCTION) {
             }
         });
     }
+})();
+
+/**
+ * Setup Zendesk chat link.
+ */
+(() => {
+    $(".zendesk-chat-link").on("click", (event) => {
+        const widget = document.getElementById("launcher");
+
+        if (widget && widget.contentDocument) {
+            const buttons = widget.contentDocument.getElementsByTagName("button");
+
+            if (buttons.length) {
+                const launchButton = buttons[0];
+
+                if (typeof launchButton.click === "function") {
+                    launchButton.click();
+                }
+            }
+        }
+    });
 })();
