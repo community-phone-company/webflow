@@ -1,5 +1,6 @@
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
 const useCheckout_v3 = true;
+const useNewServiceAddressFlow = false;
 
 var didClickTheFirstCheckCoverageButton = false;
 
@@ -52,15 +53,18 @@ const openCheckout = () => {
 };
 
 const openCheckCoverage = () => {
-    /*router.open(
-        RouterPath.checkCoverage_serviceAddress,
-        router.getParameters(),
-        router.isTestEnvironment()
-    );*/
-    window.open(
-        "https://checkout.communityphone.org/coverage/check",
-        "_self"
-    );
+    if (useNewServiceAddressFlow) {
+        window.open(
+            "https://checkout.communityphone.org/coverage/check",
+            "_self"
+        );
+    } else {
+        router.open(
+            RouterPath.checkCoverage_serviceAddress,
+            router.getParameters(),
+            router.isTestEnvironment()
+        );
+    }
 }
 
 /**
