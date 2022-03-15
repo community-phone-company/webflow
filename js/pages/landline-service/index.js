@@ -52,8 +52,10 @@ const openCheckout = () => {
 };
 
 const openCheckCoverage = () => {
+    //const url = RouterPath.checkCoverage_serviceAddress;
+    const url = "https://checkout.communityphone.org/coverage/check";
     router.open(
-        RouterPath.checkCoverage_serviceAddress,
+        url,
         router.getParameters(),
         router.isTestEnvironment()
     );
