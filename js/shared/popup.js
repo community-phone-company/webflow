@@ -46,7 +46,7 @@ class Popup {
         });
 
         this._setupUserInterface();
-        this.setAnimationEngine("velocity");
+        this.setAnimationEngine("jquery");
         this.setWebflowCompatible(false);
     }
 
@@ -192,14 +192,14 @@ class Popup {
                     whatToUpdate,
                     animationParameters
                 );
-        } else if (animationEngine === "velocity") {
+        } /*else if (animationEngine === "velocity") {
             $(this._container)
                 .velocity("stop")
                 .velocity(
                     whatToUpdate,
                     animationParameters
                 );
-        } else if (animationEngine === "no-animation") {
+        }*/ else if (animationEngine === "no-animation") {
             $(this._container).css(
                 whatToUpdate
             );
@@ -262,14 +262,14 @@ class Popup {
                     whatToUpdate,
                     animationParameters
                 );
-        } else if (animationEngine === "velocity") {
+        } /*else if (animationEngine === "velocity") {
             $(container)
                 .velocity("stop")
                 .velocity(
                     whatToUpdate,
                     animationParameters
                 );
-        } else if (animationEngine === "no-animation") {
+        }*/ else if (animationEngine === "no-animation") {
             $(this._container).css(
                 whatToUpdate
             );
