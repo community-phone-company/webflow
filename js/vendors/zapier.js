@@ -12,6 +12,7 @@ class ZapierIntegration {
             "Request timestamp": getFormattedDateAndTimeForBoston(
                 Date.now()
             ),
+            "Page": window.location.href,
             ...data
         };
         return $.ajax({
