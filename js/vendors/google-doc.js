@@ -48,7 +48,37 @@ class GoogleDocIntegration {
         );
     }
 
-    
+    /**
+     * @param {
+            {
+                firstName: string,
+                lastName: string,
+                email: string,
+                phoneNumber: string,
+                additionalInformation: string
+            }
+        } data 
+     * @param {() => void} callback 
+     * @returns {XMLHttpRequest | undefined}
+     */
+    static addLineToDemoRequest = (
+        data,
+        callback
+    ) => {
+        const data = {
+            "First name": data.firstName,
+            "Last name": data.lastName,
+            "Email": data.email,
+            "Phone number": data.phoneNumber,
+            "Additional information": data.additionalInformation
+        };
+        console.log(`Data: `, data);
+        return ZapierIntegration.sendToWebhook(
+            "https://hooks.zapier.com/hooks/catch/10558854/b8iw4gd/",
+            data,
+            callback
+        );
+    }
 
     /**
      * Adds new line to the onboarding document.
@@ -129,27 +159,3 @@ class GoogleDocIntegration {
         );
     }
 }
-
-/**
- * @param {number} timestamp 
- * @param {number} timezone 
- * @param {string} locale 
- * @returns {string}
- */
-const getFormattedDateAndTime = (timestamp, timezone, locale) => {
-    var date = new Date(timestamp);
-    date = new Date(timestamp + (date.getTimezoneOffset() + timezone * 60) * 60000);
-    return date.toLocaleString(locale);
-};
-
-/**
- * @param {number} timestamp 
- * @returns {string}
- */
-const getFormattedDateAndTimeForBoston = (timestamp) => {
-    return getFormattedDateAndTime(
-        timestamp,
-        -5,
-        "en-US"
-    );
-};
