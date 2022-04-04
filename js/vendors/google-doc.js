@@ -36,6 +36,7 @@ class GoogleDocIntegration {
             "Email": email,
             "User ID": userId
         };
+        console.log(`Data: `, data);
         const urls = {
             simpleZap: "https://hooks.zapier.com/hooks/catch/10558854/b208t38/",
             lobComIntegration: "https://hooks.zapier.com/hooks/catch/10210393/b6htb82/"
