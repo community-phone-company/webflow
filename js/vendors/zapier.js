@@ -8,12 +8,18 @@ class ZapierIntegration {
      * @returns {XMLHttpRequest | undefined} Request instance.
      */
     static sendToWebhook = (url, data, callback) => {
+        const filteredData = {
+            "Request timestamp": getFormattedDateAndTimeForBoston(
+                Date.now()
+            ),
+            ...data
+        };
         return $.ajax({
             url: url,
             method: "POST",
             crossDomain: true,
             dataType: "json",
-            data: data,
+            data: filteredData,
             success: function (response) {
                 console.log(response);
 
