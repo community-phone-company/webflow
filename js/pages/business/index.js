@@ -17,10 +17,10 @@ const state = {
 
 const updateUI = () => {
     const requirements = [
-        state.firstName.length > 0,
-        state.lastName.length > 0,
-        state.email.length > 0,
-        state.phoneNumber.length > 0
+        // state.firstName.length > 0,
+        // state.lastName.length > 0,
+        // state.email.length > 0,
+        // state.phoneNumber.length > 0
     ];
     const isFormCompleted = !requirements.includes(false);
     UserInterface.setElementEnabled(
@@ -56,7 +56,6 @@ const setupRequestForm = () => {
     }
 
     $(elements.submitButton).on("click", (event) => {
-        event.preventDefault();
         GoogleDocIntegration.addLineToDemoRequest(
             {
                 ...state
