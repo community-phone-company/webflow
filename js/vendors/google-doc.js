@@ -62,15 +62,15 @@ class GoogleDocIntegration {
      * @returns {XMLHttpRequest | undefined}
      */
     static addLineToDemoRequest = (
-        data,
+        settings,
         callback
     ) => {
         const data = {
-            "First name": data.firstName,
-            "Last name": data.lastName,
-            "Email": data.email,
-            "Phone number": data.phoneNumber,
-            "Additional information": data.additionalInformation
+            "First name": settings.firstName,
+            "Last name": settings.lastName,
+            "Email": settings.email,
+            "Phone number": settings.phoneNumber,
+            "Additional information": settings.additionalInformation
         };
         console.log(`Data: `, data);
         return ZapierIntegration.sendToWebhook(
@@ -159,3 +159,27 @@ class GoogleDocIntegration {
         );
     }
 }
+
+/**
+ * @param {number} timestamp 
+ * @param {number} timezone 
+ * @param {string} locale 
+ * @returns {string}
+ */
+const getFormattedDateAndTime = (timestamp, timezone, locale) => {
+    var date = new Date(timestamp);
+    date = new Date(timestamp + (date.getTimezoneOffset() + timezone * 60) * 60000);
+    return date.toLocaleString(locale);
+};
+
+/**
+ * @param {number} timestamp 
+ * @returns {string}
+ */
+const getFormattedDateAndTimeForBoston = (timestamp) => {
+    return getFormattedDateAndTime(
+        timestamp,
+        -5,
+        "en-US"
+    );
+};
