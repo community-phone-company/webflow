@@ -44,7 +44,7 @@ export const getFormattedDateAndTime = (
 const getFormattedDateAndTimeForBoston = (timestamp) => {
     return getFormattedDateAndTime(
         timestamp,
-        -5,
+        -4,
         "en-US"
     );
 }
