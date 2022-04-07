@@ -4,7 +4,7 @@
  * @param {boolean} shortened 
  * @returns 
  */
-export const getStringFromDayAndMonth = (
+const getStringFromDayAndMonth = (
     day,
     month,
     shortened
@@ -27,7 +27,7 @@ export const getStringFromDayAndMonth = (
  * @param {string} locale 
  * @returns {string}
  */
-export const getFormattedDateAndTime = (
+const getFormattedDateAndTime = (
     timestamp,
     timezone,
     locale
