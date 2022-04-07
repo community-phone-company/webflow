@@ -159,27 +159,3 @@ class GoogleDocIntegration {
         );
     }
 }
-
-/**
- * @param {number} timestamp 
- * @param {number} timezone 
- * @param {string} locale 
- * @returns {string}
- */
-const getFormattedDateAndTime = (timestamp, timezone, locale) => {
-    var date = new Date(timestamp);
-    date = new Date(timestamp + (date.getTimezoneOffset() + timezone * 60) * 60000);
-    return date.toLocaleString(locale);
-};
-
-/**
- * @param {number} timestamp 
- * @returns {string}
- */
-const getFormattedDateAndTimeForBoston = (timestamp) => {
-    return getFormattedDateAndTime(
-        timestamp,
-        -5,
-        "en-US"
-    );
-};
