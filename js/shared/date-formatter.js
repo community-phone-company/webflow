@@ -42,9 +42,10 @@ const getFormattedDateAndTime = (
  * @returns {string}
  */
 const getFormattedDateAndTimeForBoston = (timestamp) => {
-    return getFormattedDateAndTime(
-        timestamp,
-        -4,
-        "en-US"
+    return new Date().toLocaleString(
+        "en-US",
+        {
+            timeZone: "America/New_York"
+        }
     );
 }
