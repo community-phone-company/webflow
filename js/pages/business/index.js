@@ -15,18 +15,21 @@ const state = {
     additionalInformation: ""
 }
 
-const updateUI = () => {
+const isFormCompleted = () => {
     const requirements = [
         state.firstName.length > 0,
         state.lastName.length > 0,
         state.email.length > 0,
         state.phoneNumber.length > 0
     ];
-    const isFormCompleted = !requirements.includes(false);
-    UserInterface.setElementEnabled(
+    return !requirements.includes(false);
+}
+
+const updateUI = () => {
+    /*UserInterface.setElementEnabled(
         elements.submitButton,
-        isFormCompleted
-    );
+        isFormCompleted()
+    );*/
 }
 
 const setupRequestForm = () => {
@@ -56,13 +59,15 @@ const setupRequestForm = () => {
     }
 
     $(elements.submitButton).on("click", (event) => {
-        GoogleDocIntegration.addLineToDemoRequest(
-            {
-                ...state
-            },
-            () => {
-            }
-        );
+        if (isFormCompleted()) {
+            GoogleDocIntegration.addLineToDemoRequest(
+                {
+                    ...state
+                },
+                () => {
+                }
+            );
+        }
     })
 }
 
