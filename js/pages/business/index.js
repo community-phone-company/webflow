@@ -17,10 +17,8 @@ const state = {
 
 const isFormCompleted = () => {
     const requirements = [
-        state.firstName.length > 0,
-        state.lastName.length > 0,
-        state.email.length > 0,
-        state.phoneNumber.length > 0
+        state.firstName.length > 0 || state.lastName.length > 0,
+        state.email.length > 0 || state.phoneNumber.length > 0
     ];
     return !requirements.includes(false);
 }
