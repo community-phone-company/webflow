@@ -24,10 +24,10 @@ const isFormCompleted = () => {
 }
 
 const updateUI = () => {
-    /*UserInterface.setElementEnabled(
+    UserInterface.setElementEnabled(
         elements.submitButton,
         isFormCompleted()
-    );*/
+    );
 }
 
 const setupRequestForm = () => {
