@@ -10,7 +10,6 @@ const useForm = (container) => {
         additionalInformationInput: container.querySelectorAll(".request-form__additional-information-input")[0],
         submitButton: container.querySelectorAll(".request-form__submit-button")[0]
     })
-    console.log(elements);
     
     const state = {
         firstName: "",
@@ -63,6 +62,7 @@ const useForm = (container) => {
         }
     
         $(elements.submitButton).on("click", (event) => {
+            console.log("SUBMIT BUTTON CLICKED");return;
             if (isFormCompleted()) {
                 GoogleDocIntegration.addLineToDemoRequest(
                     {
