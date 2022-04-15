@@ -80,17 +80,14 @@ const useForm = (container) => {
 }
 
 $(document).ready(() => {
-    //setupRequestForm();
-    //updateUI();
-
     useForm(
         document.getElementById(
-            "bottom-request-demo-form"
+            "top-request-demo-form"
         )
     );
     useForm(
         document.getElementById(
-            "top-request-demo-form"
+            "bottom-request-demo-form"
         )
     );
 })
