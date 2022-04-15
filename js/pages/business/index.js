@@ -85,12 +85,12 @@ $(document).ready(() => {
 
     useForm(
         document.getElementById(
-            "top-request-demo-form"
+            "bottom-request-demo-form"
         )
     );
     useForm(
         document.getElementById(
-            "bottom-request-demo-form"
+            "top-request-demo-form"
         )
     );
 })
