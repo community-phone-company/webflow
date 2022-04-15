@@ -10,6 +10,7 @@ const useForm = (container) => {
         additionalInformationInput: container.querySelectorAll(".request-form__additional-information-input")[0],
         submitButton: container.querySelectorAll(".request-form__submit-button")[0]
     })
+    console.log(elements);
     
     const state = {
         firstName: "",
