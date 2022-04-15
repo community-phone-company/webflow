@@ -21,17 +21,18 @@ const useForm = (container) => {
     
     const isFormCompleted = () => {
         const requirements = [
-            state.firstName.length > 0 || state.lastName.length > 0,
-            state.email.length > 0 || state.phoneNumber.length > 0
+            state.firstName.length > 0,
+            state.email.length > 0,
+            state.phoneNumber.length > 0
         ];
         return !requirements.includes(false);
     }
     
     const updateUI = () => {
-        UserInterface.setElementEnabled(
+        /*UserInterface.setElementEnabled(
             elements.submitButton,
             isFormCompleted()
-        );
+        );*/
     }
     
     const setupRequestForm = () => {
@@ -82,6 +83,13 @@ $(document).ready(() => {
     //updateUI();
 
     useForm(
-        document.getElementById("top-request-demo-form")
+        document.getElementById(
+            "top-request-demo-form"
+        )
+    );
+    useForm(
+        document.getElementById(
+            "bottom-request-demo-form"
+        )
     );
 })
