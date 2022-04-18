@@ -62,7 +62,7 @@ const useForm = (container) => {
         }
     
         $(elements.submitButton).on("click", (event) => {
-            console.log("SUBMIT BUTTON CLICKED");return;
+            console.log("SUBMIT BUTTON CLICKED");
             if (isFormCompleted()) {
                 GoogleDocIntegration.addLineToDemoRequest(
                     {
