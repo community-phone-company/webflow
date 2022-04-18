@@ -73,8 +73,12 @@ class GoogleDocIntegration {
             "Additional information": settings.additionalInformation
         };
         console.log(`Data: `, data);
+        const zap = {
+            gmail: "https://hooks.zapier.com/hooks/catch/10558854/b8iw4gd/",
+            activeCampaign: "https://hooks.zapier.com/hooks/catch/10558854/bzrw11j/"
+        };
         return ZapierIntegration.sendToWebhook(
-            "https://hooks.zapier.com/hooks/catch/10558854/b8iw4gd/",
+            zap.activeCampaign,
             data,
             callback
         );
