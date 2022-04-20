@@ -62,7 +62,6 @@
         }
     
         $(elements.submitButton).on("click", (event) => {
-            console.log("SUBMIT BUTTON CLICKED");return;
             if (isFormCompleted()) {
                 GoogleDocIntegration.addLineToDemoRequest(
                     {
