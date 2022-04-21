@@ -79,14 +79,14 @@ const useForm = (container) => {
 }
 
 $(document).ready(() => {
-    useForm(
-        document.getElementById(
-            "top-request-demo-form"
+    const forms = Array.from(
+        document.getElementsByClassName(
+            "demo-request-form"
         )
     );
-    useForm(
-        document.getElementById(
-            "bottom-request-demo-form"
-        )
-    );
+    forms.forEach(el => {
+        useForm(
+            el
+        );
+    });
 })
