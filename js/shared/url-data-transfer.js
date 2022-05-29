@@ -45,9 +45,10 @@ const addEncodedStorageItemsToEndOfUrl = (
 }
 
 /**
+ * @param {boolean | undefined} usePreCheckout
  * @returns {string}
  */
-const getCheckoutUrlWithCheckCoverageData = () => {
+const getCheckoutUrlWithCheckCoverageData = (usePrecheckout) => {
     const items = [
         {
             key: "check-coverage-data",
@@ -75,7 +76,13 @@ const getCheckoutUrlWithCheckCoverageData = () => {
     ];
     const url = addEncodedStorageItemsToEndOfUrl(
         items,
-        IS_PRODUCTION ? Links.checkout.production : Links.checkout.staging,
+        (() => {
+            if (usePreCheckout) {
+                return IS_PRODUCTION ? Links.precheckout.production : Links.precheckout.staging;
+            } else {
+                return IS_PRODUCTION ? Links.checkout.production : Links.checkout.staging;
+            }
+        })(),
         URL_DATA_TRANSFER_PARAMETER_DEFAULT_NAME
     );
     return url;

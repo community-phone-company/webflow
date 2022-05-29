@@ -41,7 +41,9 @@ const data = {
 
 const openCheckout = () => {
     if (useCheckout_v3) {
-        window.location.href = getCheckoutUrlWithCheckCoverageData();
+        window.location.href = getCheckoutUrlWithCheckCoverageData(
+            true
+        );
     } else {
         const path = IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
         router.open(

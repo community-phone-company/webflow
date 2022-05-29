@@ -1,4 +1,5 @@
 const useCheckout_v3 = true;
+const usePreCheckout = false;
 
 const Page = {
     ui: {
@@ -8,7 +9,9 @@ const Page = {
 
 const getCheckoutUrl = () => {
     if (useCheckout_v3) {
-        return getCheckoutUrlWithCheckCoverageData();
+        return getCheckoutUrlWithCheckCoverageData(
+            true
+        );
     } else {
         return IS_MOBILE
             ? RouterPath.checkout_v2_choosePlan
