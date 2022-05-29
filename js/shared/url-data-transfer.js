@@ -48,7 +48,7 @@ const addEncodedStorageItemsToEndOfUrl = (
  * @param {boolean | undefined} usePreCheckout
  * @returns {string}
  */
-const getCheckoutUrlWithCheckCoverageData = (usePrecheckout) => {
+const getCheckoutUrlWithCheckCoverageData = (usePreCheckout) => {
     const items = [
         {
             key: "check-coverage-data",
