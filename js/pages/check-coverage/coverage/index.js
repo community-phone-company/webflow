@@ -10,7 +10,7 @@ const Page = {
 const getCheckoutUrl = () => {
     if (useCheckout_v3) {
         return getCheckoutUrlWithCheckCoverageData(
-            true
+            false
         );
     } else {
         return IS_MOBILE
