@@ -1,6 +1,3 @@
-const useCheckout_v3 = true;
-const usePreCheckout = false;
-
 const Page = {
     ui: {
         startYourServiceButton: document.getElementById("start-your-service-button")
@@ -8,15 +5,9 @@ const Page = {
 };
 
 const getCheckoutUrl = () => {
-    if (useCheckout_v3) {
-        return getCheckoutUrlWithCheckCoverageData(
-            false
-        );
-    } else {
-        return IS_MOBILE
-            ? RouterPath.checkout_v2_choosePlan
-            : RouterPath.checkout_v2_choosePlanAndNumber;
-    }
+    return getCheckoutUrlWithCheckCoverageData(
+        CONFIGURATION.checkout.usePreCheckout
+    );
 };
 
 const openCheckout = () => {

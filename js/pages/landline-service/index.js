@@ -1,5 +1,4 @@
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
-const useCheckout_v3 = true;
 const useNewServiceAddressFlow = false;
 
 var didClickTheFirstCheckCoverageButton = false;
@@ -40,18 +39,9 @@ const data = {
 };
 
 const openCheckout = () => {
-    if (useCheckout_v3) {
-        window.location.href = getCheckoutUrlWithCheckCoverageData(
-            false
-        );
-    } else {
-        const path = IS_MOBILE ? RouterPath.checkout_v2_choosePlan : RouterPath.checkout_v2_choosePlanAndNumber;
-        router.open(
-            path,
-            router.getParameters(),
-            false
-        );
-    }
+    window.location.href = getCheckoutUrlWithCheckCoverageData(
+        CONFIGURATION.checkout.usePreCheckout
+    );
 };
 
 const openCheckCoverage = () => {
