@@ -1,5 +1,5 @@
 const orderBySalesperson = router.getParameterValue(RouterPathParameter.sales) != undefined;
-const useNewServiceAddressFlow = false;
+const useNewServiceAddressFlow = true;
 
 var didClickTheFirstCheckCoverageButton = false;
 
