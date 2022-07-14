@@ -33,10 +33,14 @@ const getMainButtonText = (
 }
 
 const scrollToHeaderSection = () => {
-    $("#header-section")[0].scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+    const headerSection = $("#header-section")[0];
+    
+    if (headerSection) {
+        headerSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
 }
 
 const setupUI = () => {
@@ -44,22 +48,25 @@ const setupUI = () => {
         $(".check-coverage-button")
     );
     const mainButton = $(".main-check-coverage-button")[0];
-    mainButton.innerText = getMainButtonText(
-        didClickMainButton()
-    );
-
-    $(mainButton).on("click", event => {
-        if (!didClickMainButton()) {
-            event.preventDefault();
-            scrollToHeaderSection();
-            setClickedMainButton(
-                true
-            );
-            mainButton.innerText = getMainButtonText(
-                true
-            );
-        }
-    });
+    
+    if (mainButton) {
+        mainButton.innerText = getMainButtonText(
+            didClickMainButton()
+        );
+    
+        $(mainButton).on("click", event => {
+            if (!didClickMainButton()) {
+                event.preventDefault();
+                scrollToHeaderSection();
+                setClickedMainButton(
+                    true
+                );
+                mainButton.innerText = getMainButtonText(
+                    true
+                );
+            }
+        });
+    }
 };
 
 setupUI();
