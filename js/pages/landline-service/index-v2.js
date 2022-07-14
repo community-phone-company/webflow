@@ -1,5 +1,8 @@
 const DID_CLICK_MAIN_BUTTON_KEY = "landline-page-did-click-main-button";
 
+/**
+ * @returns {boolean}
+ */
 const didClickMainButton = () => {
     const value = localStorage.getItem(
         DID_CLICK_MAIN_BUTTON_KEY
@@ -17,10 +20,23 @@ const setClickedMainButton = (clicked) => {
     );
 }
 
-const getMainButtonText = () => {
-    return didClickMainButton()
+/**
+ * @param {boolean} isClicked 
+ * @returns {string}
+ */
+const getMainButtonText = (
+    isClicked
+) => {
+    return isClicked
         ? "Check your address for coverage"
         : "Click to learn more";
+}
+
+const scrollToHeaderSection = () => {
+    $("#header-section")[0].scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }
 
 const setupUI = () => {
@@ -28,15 +44,20 @@ const setupUI = () => {
         $(".check-coverage-button")
     );
     const mainButton = $(".main-check-coverage-button")[0];
-    mainButton.innerText = getMainButtonText();
+    mainButton.innerText = getMainButtonText(
+        didClickMainButton()
+    );
 
     $(mainButton).on("click", event => {
         if (!didClickMainButton()) {
             event.preventDefault();
+            scrollToHeaderSection();
             setClickedMainButton(
                 true
             );
-            mainButton.innerText = getMainButtonText();
+            mainButton.innerText = getMainButtonText(
+                true
+            );
         }
     });
 };
