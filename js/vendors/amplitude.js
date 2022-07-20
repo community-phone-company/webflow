@@ -26,4 +26,8 @@ for(var r=0;r<d.length;r++){t(d[r])}}v(r);r.getInstance=function(e){
 e=(!e||e.length===0?"$default_instance":e).toLowerCase()
 ;if(!Object.prototype.hasOwnProperty.call(r._iq,e)){r._iq[e]={_q:[]};v(r._iq[e])
 }return r._iq[e]};e.amplitude=r})(window,document);
-};
+}
+
+const getAmplitudeInstance = () => {
+    return window.amplitude && window.amplitude.getInstance();
+}

@@ -224,25 +224,28 @@ if (IS_PRODUCTION) {
  * Setup Amplitude.
  */
 (() => {
-    const amplitudeInstance = window.amplitude && window.amplitude.getInstance();
-    amplitudeInstance.setUserId(
-        getOrCreateUserId()
-    );
+    const amplitudeInstance = getAmplitudeInstance();
 
-    const language = (() => {
-        const value = navigator.language;
-        
-        if (typeof value === "string") {
-            const components = value.split("-");
+    if (amplitudeInstance) {
+        amplitudeInstance.setUserId(
+            getOrCreateUserId()
+        );
 
-            if (components.length > 0) {
-                return components[0];
+        const language = (() => {
+            const value = navigator.language;
+
+            if (typeof value === "string") {
+                const components = value.split("-");
+
+                if (components.length > 0) {
+                    return components[0];
+                }
             }
-        }
 
-        return "";
-    })();
-    amplitudeInstance.setUserProperties({
-        "Language": language
-    });
+            return "";
+        })();
+        amplitudeInstance.setUserProperties({
+            "Language": language
+        });
+    }
 })();
