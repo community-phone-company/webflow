@@ -53,7 +53,7 @@ const setupUI = () => {
     );
     $(buttons).on("click", event => {
         sendEventToAmplitude(
-            "Clicked CTA button"
+            "Landline: clicked CTA button"
         );
     });
 
