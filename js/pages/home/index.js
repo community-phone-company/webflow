@@ -1,0 +1,3 @@
+sendEventToAmplitude(
+    "Open main page"
+);

@@ -1,3 +1,7 @@
+sendEventToAmplitude(
+    "Open landline page"
+);
+
 const DID_CLICK_MAIN_BUTTON_KEY = "landline-page-did-click-main-button";
 
 /**
@@ -47,6 +51,12 @@ const setupUI = () => {
     const buttons = Array.from(
         $(".check-coverage-button")
     );
+    $(buttons).on("click", event => {
+        sendEventToAmplitude(
+            "Clicked CTA button"
+        );
+    });
+
     const mainButton = $(".main-check-coverage-button")[0];
     
     if (mainButton) {

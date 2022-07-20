@@ -31,3 +31,21 @@ e=(!e||e.length===0?"$default_instance":e).toLowerCase()
 const getAmplitudeInstance = () => {
     return window.amplitude && window.amplitude.getInstance();
 }
+
+/**
+ * @param {string} eventName 
+ * @param {any} eventData 
+ */
+const sendEventToAmplitude = (
+    eventName,
+    eventData
+) => {
+    const amplitudeInstance = getAmplitudeInstance();
+
+    if (amplitudeInstance) {
+        amplitudeInstance.logEvent(
+            eventName,
+            eventData
+        );
+    }
+}
