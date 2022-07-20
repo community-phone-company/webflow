@@ -38,7 +38,7 @@ const getOrCreateUserId = () => {
         Store.keys.generalSettings.userId
     );
 
-    if (storedId) {
+    if (typeof storedId === "string") {
         return storedId;
     }
 
