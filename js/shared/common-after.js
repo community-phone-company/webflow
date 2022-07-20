@@ -230,22 +230,8 @@ if (IS_PRODUCTION) {
         amplitudeInstance.setUserId(
             getOrCreateUserId()
         );
-
-        const language = (() => {
-            const value = navigator.language;
-
-            if (typeof value === "string") {
-                const components = value.split("-");
-
-                if (components.length > 0) {
-                    return components[0];
-                }
-            }
-
-            return "";
-        })();
         amplitudeInstance.setUserProperties({
-            "Language": language
+            "Locale": navigator.language
         });
     }
 })();
